@@ -1,0 +1,115 @@
+import { Building2, PenTool, Users, Wrench, Calculator, Settings, Heart, GraduationCap } from 'lucide-react';
+
+export const teamMembers = [
+  {
+    id: 1,
+    name: 'Reto Amonn',
+    position: 'Geschäftsführer / CEO',
+    email: 'reto@reto-amonn.ch',
+    education: 'Hochbauzeichner und Architekt',
+    experience: '40+ Jahre Erfahrung',
+    specialization: 'Unternehmensführung, Architektur, Bauprojekte',
+    description: 'Reto Amonn übernahm 1983 die Verantwortung für das Familienunternehmen und führt die Hans Amonn AG mit Engagement und Weitblick. Seine fundierte Ausbildung als Hochbauzeichner und Architekt bildet das Fundament für die erfolgreiche Unternehmensführung.',
+    icon: Building2,
+    hasPhoto: true,
+    photoUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/05f7934d1fa6e7fbf7cffe5310da5806.jpg'
+  },
+  {
+    id: 2,
+    name: 'Roberta Amonn',
+    position: 'Administration & Organisation',
+    email: 'roberta@reto-amonn.ch',
+    education: 'Kaufmännische Ausbildung',
+    experience: '25+ Jahre Erfahrung',
+    specialization: 'Administration, Organisation, Familienunternehmen',
+    description: 'Roberta Amonn ist die Ehefrau von Reto und eine wichtige Stütze des Familienunternehmens. Mit ihrer umfassenden Erfahrung in Administration und Organisation sorgt sie für reibungslose Abläufe und unterstützt das Team in allen organisatorischen Belangen.',
+    icon: Heart,
+    hasPhoto: false
+  },
+  {
+    id: 3,
+    name: 'Martin Brand',
+    position: 'Architekt',
+    email: 'brand@reto-amonn.ch',
+    education: 'Zeichner und Architekt',
+    experience: '35+ Jahre Erfahrung',
+    specialization: 'Architekturplanung, Projektentwicklung, Technische Zeichnungen',
+    description: 'Martin Brand ist seit fast den Anfängen ein treuer Begleiter von Reto Amonn. Mit seiner Doppelausbildung als Zeichner und Architekt verbindet er technische Präzision mit kreativer Gestaltung. Seine langjährige Partnerschaft mit Reto prägt die Qualität und den Erfolg der Hans Amonn AG.',
+    icon: PenTool,
+    hasPhoto: false
+  },
+  {
+    id: 4,
+    name: 'Beatriz Soares Araujo',
+    position: 'Architektin BA FH',
+    email: 'beatriz@reto-amonn.ch',
+    education: 'Bachelor of Arts FH Architektur (Juni 2023)',
+    experience: '1+ Jahr Berufserfahrung',
+    specialization: 'Innovative Materialien, Berechnungen, Nachhaltiges Bauen',
+    description: 'Beatriz Soares Araujo bringt als frischgebackene Architektin (Abschluss Juni 2023) neue Energie und innovative Ideen ins Team. Ihre Leidenschaft für neue Materialien und präzise Berechnungen bereichert unsere Projekte mit zukunftsweisenden Lösungen und modernen Ansätzen.',
+    icon: Calculator,
+    hasPhoto: false
+  },
+  {
+    id: 5,
+    name: 'Jasmina Jungi',
+    position: 'Kaufmännische Administration',
+    email: 'jungi@reto-amonn.ch',
+    education: 'Kaufmännische Ausbildung',
+    experience: 'X Jahre Berufserfahrung',
+    specialization: 'Administrative Tätigkeiten, Büroorganisation, Kundenbetreuung',
+    description: 'Jasmina Jungi tritt als Mitarbeiterin der kaufmännischen Administration in die Firma ein. Ihr Tätigkeitsbereich umfasst insbesondere administrative Aufgaben zur Unterstützung des Teams und Sicherstellung reibungsloser Abläufe.',
+    icon: Users,
+    hasPhoto: false
+  },
+  {
+    id: 6,
+    name: 'Cristian Amaya Orrego',
+    position: 'Polybauer EFZ / Zeichner EFZ',
+    email: 'amaya@reto-amonn.ch',
+    education: 'Polybauer EFZ, Zeichner EFZ',
+    experience: '8+ Jahre Erfahrung',
+    specialization: 'Technische Zeichnungen, Bauausführung',
+    description: 'Cristian Amaya Orrego kombiniert praktische Bauerfahrung als Polybauer mit technischen Zeichnerfähigkeiten. Diese einzigartige Kombination ermöglicht es ihm, realitätsnahe und umsetzbare Planungen zu erstellen.',
+    icon: Wrench,
+    hasPhoto: true,
+    photoUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/75002ab94a7e2acf71825e9363087e6d.jpg'
+  },
+  {
+    id: 8,
+    name: 'Daniel',
+    position: 'IT Support',
+    email: 'help@doktor-pc.ch',
+    education: 'IT-Spezialist',
+    experience: '10+ Jahre Erfahrung',
+    specialization: 'IT-Support, Systemadministration, Technische Betreuung',
+    description: 'Daniel ist unser zuverlässiger IT-Experte, der für die technische Infrastruktur und den reibungslosen Betrieb aller IT-Systeme sorgt. Mit seiner umfassenden Erfahrung gewährleistet er, dass unsere digitalen Arbeitsabläufe stets optimal funktionieren.',
+    icon: Settings,
+    hasPhoto: false
+  },
+  {
+    id: 9,
+    name: 'Jhon Alexander Orrego',
+    position: 'Organisation & Facility Management',
+    email: 'orrego@reto-amonn.ch',
+    education: 'Facility Management Spezialist',
+    experience: '8+ Jahre Erfahrung',
+    specialization: 'Buchhaltung, Büroorganisation, Gebäudereinigung, Hotel-Facility Management',
+    description: 'Jhon Alexander Orrego unterstützt unser Team in vielfältigen organisatorischen Bereichen. Von der Buchhaltung über die Büroorganisation bis hin zur professionellen Reinigung unserer Gebäude und des N\'s Hotels - er sorgt dafür, dass alle Abläufe reibungslos funktionieren und unsere Räumlichkeiten stets in bestem Zustand sind.',
+    icon: Users,
+    hasPhoto: true,
+    photoUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/a986703e201596e3783e0cc31154064e.png'
+  },
+  {
+    id: 10,
+    name: 'Rayna Mridha',
+    position: 'Zeichnerin EFZ iA',
+    email: 'mridha@reto-amonn.ch',
+    education: 'In Ausbildung (1. Lehrjahr)',
+    experience: 'Start 2025',
+    specialization: 'CAD-Zeichnungen, Planungsassistenz',
+    description: 'Rayna Mridha ist unsere neueste Auszubildende und startet ihre Karriere als Zeichnerin. Wir freuen uns, sie auf ihrem Weg zu begleiten und ihr Talent zu fördern.',
+    icon: GraduationCap,
+    hasPhoto: false
+  }
+];

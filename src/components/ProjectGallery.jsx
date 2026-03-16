@@ -1,0 +1,40 @@
+import React from 'react';
+
+const ProjectGallery = ({ project, onImageClick }) => {
+  const mainImage = project.gallery.find(item => item.type === 'image');
+  const sideImages = project.gallery.filter(item => item.type === 'image').slice(1, 3);
+
+  if (!mainImage) return null;
+
+  return (
+    <div className="grid lg:grid-cols-3 gap-2 mb-0">
+      <div className="lg:col-span-2">
+        <div className="relative overflow-hidden h-80 lg:h-96 cursor-pointer group" onClick={() => onImageClick(mainImage.url)}>
+          <img
+            src={mainImage.url}
+            alt={mainImage.alt}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+          <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            Featured Project
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-rows-2 gap-2">
+        {sideImages.map((image, index) => (
+          <div key={index} className="relative overflow-hidden h-38 lg:h-[11.5rem] cursor-pointer group" onClick={() => onImageClick(image.url)}>
+            <img
+              src={image.url}
+              alt={image.alt}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ProjectGallery;
