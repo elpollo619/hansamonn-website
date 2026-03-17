@@ -1,0 +1,44 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Building2 } from "lucide-react";
+
+export default function MunchenbuchseePage() {
+  return (
+    <div className="bg-white text-slate-900">
+      <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">
+        <div className="container mx-auto px-6 py-20">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white px-4 py-2 text-sm text-sky-700 mb-6">
+              <Building2 size={16} />
+              Long Stay
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Münchenbuchsee</h1>
+
+            <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-8">
+              Long-Stay-Angebot mit Einzel- und Doppelzimmern für längere Aufenthalte.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-6 py-16">
+        <div className="rounded-3xl border border-slate-200 p-8 md:p-10 bg-white shadow-sm">
+          <h2 className="text-3xl font-bold mb-4">Interesse an Münchenbuchsee?</h2>
+          <p className="text-slate-600 leading-8 mb-8">
+            Für dieses Objekt können Sie direkt die Mietanfrage öffnen. Die Angaben
+            für Long Stay und Münchenbuchsee werden automatisch übernommen.
+          </p>
+
+          <Link
+            to="/vermieten?anfrageart=Long%20Stay&objekt=M%C3%BCnchenbuchsee"
+            className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-white font-semibold hover:bg-sky-700 transition"
+          >
+            Mietanfrage für Münchenbuchsee
+            <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
