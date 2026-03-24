@@ -1,0 +1,280 @@
+// English
+const en = {
+  nav: {
+    home: 'Home',
+    about: 'About',
+    team: 'Team',
+    projects: 'Projects',
+    services: 'Services',
+    rentals: 'Rentals',
+    contact: 'Contact',
+  },
+
+  common: {
+    back: 'Back',
+    loading: 'Loading…',
+    notFound: 'Not found',
+    phone: 'Phone',
+    email: 'Email',
+    address: 'Address',
+    hours: 'Opening hours',
+    learnMore: 'Learn more',
+    contactUs: 'Contact us',
+    callNow: 'Call now',
+    sendEmail: 'Send email',
+    close: 'Close',
+    all: 'All',
+    yes: 'Yes',
+    no: 'No',
+    chf: 'CHF',
+    perMonth: '/ month',
+    sqm: 'm²',
+  },
+
+  vermietung: {
+    meta: {
+      title: 'Apartments for Rent – Hans Amonn AG',
+      description:
+        'Modern apartments for rent in Kerzers and surroundings. Hans Amonn AG – your real estate partner since 1968.',
+    },
+    hero: {
+      title: 'Stay & Live in Kerzers',
+      subtitle:
+        'Apartments, furnished long stays, hotel and exclusive projects – everything in Kerzers and the region.',
+      badge: 'Current Listings',
+      offeringTypes: 'Apartments · Long Stay · Hotel · Projects',
+      serviceApartments: 'Modern rental apartments in Kerzers',
+      serviceLongStay: 'Furnished rooms from 1 month',
+      serviceHotel: 'Self-check-in boutique hotel',
+      serviceCasaReto: 'Holiday house at Lago Maggiore',
+    },
+    filter: {
+      all: 'All listings',
+      available: 'Available only',
+      apartment: 'Apartments',
+      longStay: 'Long Stay',
+      hotel: 'Hotel & Short',
+      project: 'Projects',
+    },
+    card: {
+      rooms: 'Rooms',
+      size: 'Size',
+      floor: 'Floor',
+      price: 'Rent/month',
+      available: 'Available',
+      rented: 'Rented',
+      cta: 'Details & Enquiry',
+      ctaRented: 'Rented',
+      availableFrom: 'Available from',
+      nightPrice: '/ night',
+      minStay: 'Minimum stay',
+      furnished: 'Furnished',
+      bookNow: 'Book now',
+      requestInquiry: 'Send inquiry',
+      requestAvailability: 'Check availability',
+      viewProject: 'View project',
+    },
+    detail: {
+      back: 'Back to listings',
+      overview: 'Overview',
+      description: 'Description',
+      features: 'Features & Amenities',
+      availableFrom: 'Available from',
+      contact: {
+        title: 'Interested? We are happy to help',
+        subtitle:
+          'Call us or write to us – we respond quickly and straightforwardly.',
+        call: 'Call',
+        email: 'Send email',
+        form: 'Enquiry form',
+      },
+      rented: {
+        title: 'This apartment is currently rented.',
+        subtitle:
+          'Contact us – we will notify you as soon as an apartment becomes available.',
+      },
+      gallery: 'Gallery',
+      backToList: 'View all apartments',
+    },
+    empty: {
+      title: 'No apartments available',
+      subtitle:
+        'No apartments are currently available. Leave your contact details – we will get in touch as soon as something becomes free.',
+    },
+    cta: {
+      title: "Didn't find what you were looking for?",
+      subtitle:
+        'We may have other properties not yet listed online. Contact us directly.',
+      button: 'Contact us',
+    },
+    types: {
+      apartment: 'Apartment',
+      longStay: 'Long Stay',
+      hotel: 'Hotel',
+      project: 'Project',
+    },
+    hotel: {
+      bookingTitle: 'Book directly',
+      bookingSubtitle: 'Available on ns-hotel.ch, Booking.com and Airbnb',
+      bookDirectly: 'Book now directly',
+      directBookingNote: 'fast & easy booking',
+      orPlatforms: 'or via platforms',
+      bookOnBooking: 'Book on Booking.com',
+      bookOnAirbnb: 'Book on Airbnb',
+      orContact: 'or contact us directly',
+      priceFrom: 'from CHF',
+      perNight: 'per night',
+    },
+    longStay: {
+      minimumStay: 'Minimum stay',
+      furnished: 'Fully furnished',
+      requestTitle: 'Check availability',
+      requestSubtitle: 'Write to us for current availability and terms.',
+      deposit: 'Deposit',
+      includes: 'Included in price',
+      pricingTitle: 'Room prices',
+      singleRoom: 'Single room',
+      doubleRoom: 'Double room',
+      parking: 'Parking',
+      from: 'from',
+    },
+    project: {
+      viewProject: 'View project',
+      requestUnit: 'Request unit',
+      viewUnits: 'All units',
+      onRequest: 'On request',
+    },
+    mietanfrage: {
+      title: 'Send rental inquiry',
+      subtitle: 'We will get back to you within 24 hours.',
+      step1: 'Personal details',
+      step2: 'Rental property',
+      step3: 'Additional information',
+      step4: 'Documents',
+      step5: 'Confirmation',
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email',
+      phone: 'Phone',
+      object: 'Desired property',
+      selectObject: 'Please select…',
+      moveIn: 'Desired move-in date',
+      duration: 'Rental duration',
+      dur3: '3 months',
+      dur6: '6 months',
+      dur12: '12 months',
+      dur24: '24+ months',
+      durOpen: 'Open-ended',
+      job: 'Occupation (optional)',
+      income: 'Monthly net income (optional)',
+      notes: 'Comments (optional)',
+      documents: 'Documents (optional)',
+      documentsHint: 'Debt register extract, pay slip, etc.',
+      agb: 'I accept the Terms & Conditions of Hans Amonn AG.',
+      next: 'Continue',
+      back: 'Back',
+      submit: 'Send inquiry',
+      stepOf: 'Step {{step}} of {{total}}',
+      required: 'Required',
+      successTitle: 'Inquiry sent!',
+      successText: 'Thank you. We will get back to you within 24 hours.',
+      backToListing: 'Back to listings',
+    },
+  },
+
+  home: {
+    hero: {
+      title: 'Hans Amonn AG',
+      subtitle: 'Construction & Real Estate',
+      tagline:
+        'Your partner for construction and real estate since 1968 – tradition and innovation united',
+      ctaProjects: 'View projects',
+      ctaContact: 'Request consultation',
+    },
+  },
+
+  about: {
+    title: 'About us',
+    meta: {
+      title: 'About – Hans Amonn AG',
+      description: 'Since 1968 Hans Amonn AG has stood for quality in construction and real estate.',
+    },
+  },
+
+  team: {
+    title: 'Our team',
+    meta: {
+      title: 'Team – Hans Amonn AG',
+      description: 'Meet the team of Hans Amonn AG.',
+    },
+    back: 'Back to team',
+    profile: 'View profile',
+    sendEmail: 'Send email',
+    about: 'About {{name}}',
+    specialization: 'Specialization',
+    allMembers: 'All team members',
+  },
+
+  projects: {
+    title: 'Projects',
+    meta: {
+      title: 'Projects – Hans Amonn AG',
+      description: 'Our completed architecture projects.',
+    },
+    back: 'Back to projects',
+    all: 'All projects',
+    viewDetails: 'View details',
+  },
+
+  services: {
+    title: 'Services',
+    meta: {
+      title: 'Services – Hans Amonn AG',
+      description: 'Architecture and real estate services from Hans Amonn AG.',
+    },
+    back: 'All services',
+    learnMore: 'Learn more',
+    relatedServices: 'More services',
+    cta: {
+      title: 'Any questions?',
+      subtitle: 'We are happy to advise you without obligation.',
+      call: '+41 (0)31 951 85 54',
+      email: 'Send email',
+      form: 'Contact form',
+    },
+  },
+
+  contact: {
+    title: 'Get in touch',
+    meta: {
+      title: 'Contact – Hans Amonn AG',
+      description: 'Contact Hans Amonn AG for your construction or real estate project.',
+    },
+    form: {
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email',
+      phone: 'Phone',
+      subject: 'Subject',
+      message: 'Message',
+      submit: 'Send message',
+      success: 'Message received',
+      successDetail:
+        'Thank you for your enquiry. We will get back to you as soon as possible.',
+      required: 'Required',
+    },
+  },
+
+  footer: {
+    tagline:
+      'Your partner for construction and real estate since 1968. Quality, reliability, and innovation.',
+    navigation: 'Navigation',
+    services: 'Services',
+    contact: 'Contact',
+    copyright: '© {{year}} Hans Amonn AG. All rights reserved.',
+    impressum: 'Legal notice',
+    privacy: 'Privacy policy',
+  },
+};
+
+export default en;

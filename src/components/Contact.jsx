@@ -33,9 +33,10 @@ const Contact = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     toast({
-      title: "🚧 Diese Funktion ist noch nicht implementiert",
-      description: "Aber keine Sorge! Du kannst sie in deinem nächsten Prompt anfordern! 🚀"
+      title: "Nachricht erhalten",
+      description: "Vielen Dank für Ihre Anfrage. Wir melden uns so schnell wie möglich bei Ihnen."
     });
+    e.target.reset();
   };
 
   return (

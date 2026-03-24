@@ -2,40 +2,44 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import { useTranslation } from '@/i18n';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const Footer = () => {
   const location = useLocation();
-
-  const handleSocialClick = () => {
-    toast({
-      title: "🚧 Diese Funktion ist noch nicht implementiert",
-      description: "Aber keine Sorge! Du kannst sie in deinem nächsten Prompt anfordern! 🚀"
-    });
-  };
+  const { t } = useTranslation();
+  const year = new Date().getFullYear();
 
   const handleServiceLinkClick = (hash) => {
     if (location.pathname === '/leistungen') {
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const servicesLinks = [
-    { to: '/leistungen#architekturplanung', label: 'Architekturplanung' },
-    { to: '/leistungen#neubauten', label: 'Neubauten' },
-    { to: '/leistungen#sanierungen', label: 'Sanierungen & Umbauten' },
-    { to: '/leistungen#immobilienvermittlung', label: 'Immobilienvermittlung' },
-    { to: '/leistungen#kauf-verkauf', label: 'Kauf & Verkauf' },
-    { to: '/leistungen#projektentwicklung', label: 'Projektentwicklung' }
+  const navLinks = [
+    { to: '/',           label: t('nav.home') },
+    { to: '/uber-uns',   label: t('nav.about') },
+    { to: '/projekte',   label: t('nav.projects') },
+    { to: '/leistungen', label: t('nav.services') },
+    { to: '/vermietung', label: t('nav.rentals') },
+    { to: '/kontakt',    label: t('nav.contact') },
+  ];
+
+  const serviceLinks = [
+    { to: '/leistungen/planung-entwurf',          label: 'Architekturplanung' },
+    { to: '/leistungen/neubauten',                 label: 'Neubauten' },
+    { to: '/leistungen/sanierungen-umbauten',      label: 'Sanierungen & Umbauten' },
+    { to: '/leistungen/kauf-verkauf',              label: 'Kauf & Verkauf' },
+    { to: '/leistungen/projektentwicklung',        label: 'Projektentwicklung' },
+    { to: '/leistungen/immobilienbewirtschaftung', label: 'Bewirtschaftung' },
   ];
 
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
           {/* Company Info */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,56 +47,69 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Link to="/" className="text-2xl font-bold mb-4 gradient-text">
+            <Link to="/" className="text-xl font-bold gradient-text block mb-4">
               HANS AMONN AG
             </Link>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Ihr Partner für Bau und Immobilien seit 1968. Qualität, Zuverlässigkeit 
-              und Innovation in der Bau- und Immobilienbranche.
+            <p className="text-gray-400 mb-5 leading-relaxed text-sm">
+              {t('footer.tagline')}
             </p>
-            <div className="flex space-x-4">
+
+            {/* Social icons */}
+            <div className="flex space-x-3 mb-5">
               <a
                 href="https://www.facebook.com/people/Hans-Amonn-AG/100084327557360/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
-                aria-label="Besuchen Sie uns auf Facebook"
+                className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"
+                aria-label="Facebook"
               >
-                <Facebook size={18} />
+                <Facebook size={16} />
               </a>
               <a
                 href="https://www.instagram.com/amonnarchitektur/?hl=de"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
-                aria-label="Besuchen Sie uns auf Instagram"
+                className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-pink-600 transition-colors"
+                aria-label="Instagram"
               >
-                <Instagram size={18} />
+                <Instagram size={16} />
               </a>
-              <button
-                onClick={handleSocialClick}
-                className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
-                aria-label="Besuchen Sie uns auf LinkedIn"
+              <a
+                href="https://www.linkedin.com/in/hans-amonn-689b7938b"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-blue-700 transition-colors"
+                aria-label="LinkedIn"
               >
-                <Linkedin size={18} />
-              </button>
+                <Linkedin size={16} />
+              </a>
             </div>
+
+            {/* Language switcher in footer */}
+            <LanguageSwitcher variant="dark" />
           </motion.div>
 
-          {/* Quick Links */}
+          {/* Navigation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">Navigation</h3>
-            <ul className="space-y-3">
-              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Startseite</Link></li>
-              <li><Link to="/uber-uns" className="text-gray-400 hover:text-white transition-colors">Über uns</Link></li>
-              <li><Link to="/projekte" className="text-gray-400 hover:text-white transition-colors">Projekte</Link></li>
-              <li><Link to="/leistungen" className="text-gray-400 hover:text-white transition-colors">Leistungen</Link></li>
-              <li><Link to="/kontakt" className="text-gray-400 hover:text-white transition-colors">Kontakt</Link></li>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">
+              {t('footer.navigation')}
+            </h3>
+            <ul className="space-y-2.5">
+              {navLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-gray-400 hover:text-white text-sm transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </motion.div>
 
@@ -103,13 +120,15 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">Leistungen</h3>
-            <ul className="space-y-3">
-              {servicesLinks.map(link => (
-                <li key={link.label}>
-                  <Link 
-                    to={link.to} 
-                    className="text-gray-400 hover:text-white transition-colors"
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">
+              {t('footer.services')}
+            </h3>
+            <ul className="space-y-2.5">
+              {serviceLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-gray-400 hover:text-white text-sm transition-colors"
                     onClick={() => handleServiceLinkClick(link.to.split('#')[1])}
                   >
                     {link.label}
@@ -119,51 +138,65 @@ const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Contact Info */}
+          {/* Contact */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-lg font-semibold mb-4">Kontakt</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">
+              {t('footer.contact')}
+            </h3>
             <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <MapPin size={18} className="text-gray-400 mt-1 flex-shrink-0" />
-                <div className="text-gray-400">
+              <div className="flex items-start gap-2.5">
+                <MapPin size={15} className="text-gray-500 mt-0.5 flex-shrink-0" />
+                <div className="text-gray-400 text-sm leading-relaxed">
                   <p>Hans Amonn AG</p>
                   <p>Blümlisalpstrasse 4</p>
                   <p>3074 Muri bei Bern</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3">
-                <Phone size={18} className="text-gray-400 flex-shrink-0" />
-                <a href="tel:+41319518554" className="text-gray-400 hover:text-white transition-colors">+41 (0)31 951 85 54</a>
+              <div className="flex items-center gap-2.5">
+                <Phone size={15} className="text-gray-500 flex-shrink-0" />
+                <a
+                  href="tel:+41319518554"
+                  className="text-gray-400 hover:text-white text-sm transition-colors"
+                >
+                  +41 (0)31 951 85 54
+                </a>
               </div>
-              <div className="flex items-center space-x-3">
-                <Mail size={18} className="text-gray-400 flex-shrink-0" />
-                <a href="mailto:office@reto-amonn.ch" className="text-gray-400 hover:text-white transition-colors">office@reto-amonn.ch</a>
+              <div className="flex items-center gap-2.5">
+                <Mail size={15} className="text-gray-500 flex-shrink-0" />
+                <a
+                  href="mailto:office@reto-amonn.ch"
+                  className="text-gray-400 hover:text-white text-sm transition-colors"
+                >
+                  office@reto-amonn.ch
+                </a>
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom bar */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="border-t border-gray-800 mt-12 pt-8"
+          className="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              Copyright © 2025 Hans Amonn AG. Alle Rechte vorbehalten.
-            </p>
-            <div className="flex space-x-6 text-sm">
-              <Link to="/impressum" className="text-gray-400 hover:text-white transition-colors">Impressum</Link>
-              <Link to="/datenschutz" className="text-gray-400 hover:text-white transition-colors">Datenschutzerklärung</Link>
-            </div>
+          <p className="text-gray-500 text-sm">
+            {t('footer.copyright', { year })}
+          </p>
+          <div className="flex gap-5 text-sm">
+            <Link to="/impressum" className="text-gray-500 hover:text-white transition-colors">
+              {t('footer.impressum')}
+            </Link>
+            <Link to="/datenschutz" className="text-gray-500 hover:text-white transition-colors">
+              {t('footer.privacy')}
+            </Link>
           </div>
         </motion.div>
       </div>

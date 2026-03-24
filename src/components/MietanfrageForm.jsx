@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
@@ -895,3 +896,404 @@ export default function MietanfrageForm() {
     </div>
   );
 }
+=======
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  User, Mail, Phone, MapPin, Calendar, Users,
+  MessageSquare, CheckCircle2, ChevronRight, ChevronLeft,
+  Send, Check, ArrowRight,
+} from 'lucide-react';
+import { useTranslation } from '@/i18n';
+import { getMietanfrageOptions } from '@/data/rentalData';
+
+// ─── Progress bar ────────────────────────────────────────────────────────────
+
+const ProgressBar = ({ step, total }) => (
+  <div className="flex items-center gap-0">
+    {Array.from({ length: total }, (_, i) => (
+      <React.Fragment key={i}>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 transition-all duration-300 ${
+          step > i + 1
+            ? 'bg-gray-900 text-white'
+            : step === i + 1
+            ? 'bg-gray-900 text-white ring-4 ring-gray-900/10'
+            : 'bg-gray-100 text-gray-400'
+        }`}>
+          {step > i + 1 ? <Check size={13} /> : i + 1}
+        </div>
+        {i < total - 1 && (
+          <div className={`flex-1 h-px mx-1 transition-colors duration-300 ${step > i + 1 ? 'bg-gray-900' : 'bg-gray-200'}`} />
+        )}
+      </React.Fragment>
+    ))}
+  </div>
+);
+
+// ─── Input primitives ────────────────────────────────────────────────────────
+
+const inputBase = (err) =>
+  `w-full border rounded-xl px-4 py-3.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all ${
+    err ? 'border-red-300 bg-red-50/50' : 'border-gray-200 bg-white hover:border-gray-300'
+  }`;
+
+const Field = ({ label, required, hint, error, children }) => (
+  <div className="space-y-1.5">
+    <div className="flex items-baseline justify-between">
+      <label className="text-sm font-medium text-gray-900">
+        {label}{required && <span className="text-red-500 ml-0.5">*</span>}
+      </label>
+      {hint && <span className="text-xs text-gray-400">{hint}</span>}
+    </div>
+    {children}
+    {error && <p className="text-xs text-red-500 flex items-center gap-1"><span>↑</span>{error}</p>}
+  </div>
+);
+
+// ─── Duration options ────────────────────────────────────────────────────────
+
+const DURATIONS = [
+  { value: '1month',  label: '1 Monat' },
+  { value: '3months', label: '3 Monate' },
+  { value: '6months', label: '6 Monate' },
+  { value: '12months',label: '12 Monate' },
+  { value: '24months',label: '24+ Monate' },
+  { value: 'open',    label: 'Offen / unbefristet' },
+];
+
+// ─── Main component ──────────────────────────────────────────────────────────
+
+const TOTAL = 5;
+
+const MietanfrageForm = ({ preselectedSlug, onSuccess }) => {
+  const { t }    = useTranslation();
+  const options  = getMietanfrageOptions();
+
+  const [step, setStep]     = useState(1);
+  const [done, setDone]     = useState(false);
+  const [errors, setErrors] = useState({});
+  const [form, setForm]     = useState({
+    firstName: '',
+    lastName:  '',
+    email:     '',
+    phone:     '',
+    interest:  preselectedSlug || options[0]?.value || '',
+    moveIn:    '',
+    duration:  '',
+    people:    '1',
+    message:   '',
+    agb:       false,
+  });
+
+  const set = (k, v) => {
+    setForm((f) => ({ ...f, [k]: v }));
+    setErrors((e) => ({ ...e, [k]: undefined }));
+  };
+
+  const validate = (s) => {
+    const e = {};
+    if (s === 1) {
+      if (!form.firstName.trim()) e.firstName = 'Pflichtfeld';
+      if (!form.lastName.trim())  e.lastName  = 'Pflichtfeld';
+      if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = 'Gültige E-Mail eingeben';
+      if (!form.phone.trim())     e.phone     = 'Pflichtfeld';
+    }
+    if (s === 2) {
+      if (!form.interest) e.interest = 'Bitte auswählen';
+    }
+    if (s === 3) {
+      if (!form.moveIn)   e.moveIn   = 'Pflichtfeld';
+      if (!form.duration) e.duration = 'Bitte auswählen';
+    }
+    if (s === 5) {
+      if (!form.agb) e.agb = 'Bitte bestätigen';
+    }
+    return e;
+  };
+
+  const next = () => {
+    const e = validate(step);
+    if (Object.keys(e).length) { setErrors(e); return; }
+    setStep((s) => Math.min(s + 1, TOTAL));
+  };
+
+  const back = () => {
+    setErrors({});
+    setStep((s) => Math.max(s - 1, 1));
+  };
+
+  const submit = () => {
+    const e = validate(5);
+    if (Object.keys(e).length) { setErrors(e); return; }
+
+    const label    = options.find((o) => o.value === form.interest)?.label ?? form.interest;
+    const duration = DURATIONS.find((d) => d.value === form.duration)?.label ?? form.duration;
+
+    const body = [
+      `Name: ${form.firstName} ${form.lastName}`,
+      `E-Mail: ${form.email}`,
+      `Telefon: ${form.phone}`,
+      '',
+      `Interesse: ${label}`,
+      `Einzug: ${form.moveIn}`,
+      `Dauer: ${duration}`,
+      `Personen: ${form.people}`,
+      form.message ? `\nNachricht:\n${form.message}` : '',
+    ].filter(Boolean).join('\n');
+
+    window.location.href = `mailto:office@reto-amonn.ch?subject=${encodeURIComponent(`Anfrage – ${label}`)}&body=${encodeURIComponent(body)}`;
+    setDone(true);
+    onSuccess?.();
+  };
+
+  // ── Success ────────────────────────────────────────────────────────────────
+
+  if (done) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-12 px-6"
+      >
+        <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+          <CheckCircle2 size={28} className="text-green-600" />
+        </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          {t('vermietung.mietanfrage.successTitle')}
+        </h3>
+        <p className="text-sm text-gray-500 max-w-xs mx-auto">
+          {t('vermietung.mietanfrage.successText')}
+        </p>
+      </motion.div>
+    );
+  }
+
+  const stepTitles = [
+    t('vermietung.mietanfrage.step1'),
+    t('vermietung.mietanfrage.step2'),
+    t('vermietung.mietanfrage.step3'),
+    t('vermietung.mietanfrage.step4'),
+    t('vermietung.mietanfrage.step5'),
+  ];
+
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      {/* Header */}
+      <div className="px-6 pt-6 pb-5 border-b border-gray-100">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-base font-semibold text-gray-900">
+              {t('vermietung.mietanfrage.title')}
+            </h3>
+            <p className="text-xs text-gray-400 mt-0.5">{stepTitles[step - 1]}</p>
+          </div>
+          <span className="text-xs text-gray-400 font-medium">
+            {step} / {TOTAL}
+          </span>
+        </div>
+        <ProgressBar step={step} total={TOTAL} />
+      </div>
+
+      {/* Step content */}
+      <div className="p-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, x: 12 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -12 }}
+            transition={{ duration: 0.18 }}
+            className="space-y-4"
+          >
+
+            {/* Step 1 — Personal */}
+            {step === 1 && (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <Field label="Vorname" required error={errors.firstName}>
+                    <input type="text" autoComplete="given-name" value={form.firstName}
+                      onChange={(e) => set('firstName', e.target.value)}
+                      className={inputBase(errors.firstName)} placeholder="Hans" />
+                  </Field>
+                  <Field label="Nachname" required error={errors.lastName}>
+                    <input type="text" autoComplete="family-name" value={form.lastName}
+                      onChange={(e) => set('lastName', e.target.value)}
+                      className={inputBase(errors.lastName)} placeholder="Muster" />
+                  </Field>
+                </div>
+                <Field label="E-Mail" required error={errors.email}>
+                  <input type="email" autoComplete="email" value={form.email}
+                    onChange={(e) => set('email', e.target.value)}
+                    className={inputBase(errors.email)} placeholder="hans@muster.ch" />
+                </Field>
+                <Field label="Telefon" required error={errors.phone}>
+                  <input type="tel" autoComplete="tel" value={form.phone}
+                    onChange={(e) => set('phone', e.target.value)}
+                    className={inputBase(errors.phone)} placeholder="+41 79 000 00 00" />
+                </Field>
+              </>
+            )}
+
+            {/* Step 2 — Interest */}
+            {step === 2 && (
+              <Field label="Was interessiert Sie?" required error={errors.interest}>
+                <div className="space-y-2">
+                  {options.map((o) => (
+                    <label
+                      key={o.value}
+                      className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
+                        form.interest === o.value
+                          ? 'border-gray-900 bg-gray-50'
+                          : 'border-gray-200 hover:border-gray-300'
+                      }`}
+                    >
+                      <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${
+                        form.interest === o.value ? 'border-gray-900 bg-gray-900' : 'border-gray-300'
+                      }`}>
+                        {form.interest === o.value && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                      </div>
+                      <input type="radio" name="interest" value={o.value} checked={form.interest === o.value}
+                        onChange={(e) => set('interest', e.target.value)} className="sr-only" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{o.label}</p>
+                        <p className="text-xs text-gray-400">{o.group}</p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+                {errors.interest && <p className="text-xs text-red-500">{errors.interest}</p>}
+              </Field>
+            )}
+
+            {/* Step 3 — Dates & people */}
+            {step === 3 && (
+              <>
+                <Field label="Gewünschter Einzug / Ankunft" required error={errors.moveIn}>
+                  <input type="date" value={form.moveIn}
+                    onChange={(e) => set('moveIn', e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                    className={inputBase(errors.moveIn)} />
+                </Field>
+                <Field label="Aufenthaltsdauer" required error={errors.duration}>
+                  <select value={form.duration} onChange={(e) => set('duration', e.target.value)}
+                    className={inputBase(errors.duration)}>
+                    <option value="">Bitte wählen…</option>
+                    {DURATIONS.map((d) => (
+                      <option key={d.value} value={d.value}>{d.label}</option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label="Anzahl Personen" hint="optional">
+                  <div className="flex items-center gap-2">
+                    {['1', '2', '3', '4', '5+'].map((n) => (
+                      <button
+                        key={n}
+                        type="button"
+                        onClick={() => set('people', n)}
+                        className={`flex-1 py-3 rounded-xl text-sm font-medium border transition-all ${
+                          form.people === n
+                            ? 'bg-gray-900 text-white border-gray-900'
+                            : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
+                        }`}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </Field>
+              </>
+            )}
+
+            {/* Step 4 — Optional message */}
+            {step === 4 && (
+              <>
+                <Field label="Nachricht" hint="optional">
+                  <textarea rows={5} value={form.message}
+                    onChange={(e) => set('message', e.target.value)}
+                    className={`${inputBase(false)} resize-none`}
+                    placeholder="Besondere Wünsche, Fragen, oder weitere Angaben…" />
+                </Field>
+                <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-500 space-y-1">
+                  <p className="font-medium text-gray-700">Dokumente</p>
+                  <p>Betreibungsregister, Lohnausweis oder andere Unterlagen können Sie nach Ihrer Anfrage per E-Mail senden an:</p>
+                  <a href="mailto:office@reto-amonn.ch" className="text-blue-600 hover:underline font-medium">
+                    office@reto-amonn.ch
+                  </a>
+                </div>
+              </>
+            )}
+
+            {/* Step 5 — Confirm */}
+            {step === 5 && (
+              <>
+                {/* Summary */}
+                <div className="bg-gray-50 rounded-xl divide-y divide-gray-200/70">
+                  {[
+                    { icon: User,          label: 'Name',       value: `${form.firstName} ${form.lastName}` },
+                    { icon: Mail,          label: 'E-Mail',     value: form.email },
+                    { icon: Phone,         label: 'Telefon',    value: form.phone },
+                    { icon: MapPin,        label: 'Interesse',  value: options.find((o) => o.value === form.interest)?.label ?? '–' },
+                    { icon: Calendar,      label: 'Einzug',     value: form.moveIn || '–' },
+                    { icon: ArrowRight,    label: 'Dauer',      value: DURATIONS.find((d) => d.value === form.duration)?.label ?? '–' },
+                    { icon: Users,         label: 'Personen',   value: form.people },
+                  ].map(({ icon: Icon, label, value }) => (
+                    <div key={label} className="flex items-center gap-3 px-4 py-3">
+                      <Icon size={14} className="text-gray-400 flex-shrink-0" />
+                      <span className="text-xs text-gray-500 w-20 flex-shrink-0">{label}</span>
+                      <span className="text-sm font-medium text-gray-900 truncate">{value}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* AGB */}
+                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
+                  form.agb ? 'border-gray-900 bg-gray-50' : errors.agb ? 'border-red-300 bg-red-50/50' : 'border-gray-200 hover:border-gray-300'
+                }`}>
+                  <div className={`w-5 h-5 rounded-md border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-colors ${
+                    form.agb ? 'bg-gray-900 border-gray-900' : errors.agb ? 'border-red-400' : 'border-gray-300'
+                  }`}>
+                    {form.agb && <Check size={12} className="text-white" />}
+                  </div>
+                  <input type="checkbox" checked={form.agb}
+                    onChange={(e) => set('agb', e.target.checked)} className="sr-only" />
+                  <span className="text-sm text-gray-700 leading-snug">
+                    {t('vermietung.mietanfrage.agb')}
+                  </span>
+                </label>
+                {errors.agb && <p className="text-xs text-red-500">{errors.agb}</p>}
+              </>
+            )}
+
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Navigation */}
+        <div className={`mt-6 flex gap-3 ${step > 1 ? 'justify-between' : 'justify-end'}`}>
+          {step > 1 && (
+            <button onClick={back}
+              className="flex items-center gap-2 px-5 py-3 text-sm font-medium text-gray-500 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+              <ChevronLeft size={15} />
+              Zurück
+            </button>
+          )}
+          {step < TOTAL ? (
+            <button onClick={next}
+              className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gray-900 hover:bg-gray-800 rounded-xl transition-colors">
+              Weiter
+              <ChevronRight size={15} />
+            </button>
+          ) : (
+            <button onClick={submit}
+              className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gray-900 hover:bg-gray-800 rounded-xl transition-colors">
+              <Send size={14} />
+              Anfrage senden
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MietanfrageForm;
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)

@@ -1,18 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { toast } from '@/components/ui/use-toast';
 
 const TeamInfo = () => {
-  const handleContactMember = (email) => {
-    if (email) {
-      window.location.href = `mailto:${email}`;
-    } else {
-      toast({
-        title: "🚧 Diese Funktion ist noch nicht implementiert",
-        description: "Aber keine Sorge! Du kannst sie in deinem nächsten Prompt anfordern! 🚀"
-      });
-    }
-  };
 
   return (
     <>
@@ -91,12 +80,12 @@ const TeamInfo = () => {
           Vereinbaren Sie einen Termin für ein persönliches Gespräch und lernen Sie 
           die Menschen hinter Ihren zukünftigen Projekten kennen.
         </p>
-        <button
-          onClick={() => handleContactMember('office@reto-amonn.ch')}
-          className="brand-gradient hover:brand-gradient-hover text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg"
+        <a
+          href="mailto:office@reto-amonn.ch"
+          className="brand-gradient hover:brand-gradient-hover text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg inline-block"
         >
           Termin vereinbaren
-        </button>
+        </a>
       </motion.div>
     </>
   );

@@ -2,16 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
-  const handleContactClick = () => {
-    toast({
-      title: "🚧 Diese Funktion ist noch nicht implementiert",
-      description: "Aber keine Sorge! Du kannst sie in deinem nächsten Prompt anfordern! 🚀"
-    });
-  };
-
   const scrollToProjects = () => {
     window.location.href = '/projekte';
   };
@@ -69,14 +62,15 @@ const Hero = () => {
           >
             Projekte ansehen
           </Button>
-          <Button
-            onClick={handleContactClick}
-            variant="outline-white"
-            size="lg"
-            className="px-8 py-3 text-lg font-medium"
-          >
-            Beratung anfragen
-          </Button>
+          <Link to="/kontakt">
+            <Button
+              variant="outline-white"
+              size="lg"
+              className="px-8 py-3 text-lg font-medium"
+            >
+              Beratung anfragen
+            </Button>
+          </Link>
         </motion.div>
       </div>
 

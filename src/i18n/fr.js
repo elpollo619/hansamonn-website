@@ -1,0 +1,280 @@
+// French (Français)
+const fr = {
+  nav: {
+    home: 'Accueil',
+    about: 'À propos',
+    team: 'Équipe',
+    projects: 'Projets',
+    services: 'Services',
+    rentals: 'Location',
+    contact: 'Contact',
+  },
+
+  common: {
+    back: 'Retour',
+    loading: 'Chargement…',
+    notFound: 'Introuvable',
+    phone: 'Téléphone',
+    email: 'E-mail',
+    address: 'Adresse',
+    hours: "Heures d'ouverture",
+    learnMore: 'En savoir plus',
+    contactUs: 'Nous contacter',
+    callNow: 'Appeler maintenant',
+    sendEmail: 'Envoyer un e-mail',
+    close: 'Fermer',
+    all: 'Tous',
+    yes: 'Oui',
+    no: 'Non',
+    chf: 'CHF',
+    perMonth: '/ mois',
+    sqm: 'm²',
+  },
+
+  vermietung: {
+    meta: {
+      title: 'Appartements à louer – Hans Amonn AG',
+      description:
+        'Appartements modernes à louer à Kerzers et environs. Hans Amonn AG – votre partenaire immobilier depuis 1968.',
+    },
+    hero: {
+      title: 'Logement & Séjour',
+      subtitle:
+        'Appartements, longs séjours meublés, hôtel et projets exclusifs – tout à Kerzers et dans la région.',
+      badge: 'Offres actuelles',
+      offeringTypes: 'Appartements · Long Stay · Hôtel · Projets',
+      serviceApartments: 'Appartements modernes à Kerzers',
+      serviceLongStay: 'Chambres meublées dès 1 mois',
+      serviceHotel: 'Hôtel boutique self-check-in',
+      serviceCasaReto: 'Maison de vacances au Lago Maggiore',
+    },
+    filter: {
+      all: 'Toutes les offres',
+      available: 'Disponibles uniquement',
+      apartment: 'Appartements',
+      longStay: 'Long Stay',
+      hotel: 'Hôtel & Court',
+      project: 'Projets',
+    },
+    card: {
+      rooms: 'Pièces',
+      size: 'Surface',
+      floor: 'Étage',
+      price: 'Loyer/mois',
+      available: 'Disponible',
+      rented: 'Loué',
+      cta: 'Détails & demande',
+      ctaRented: 'Loué',
+      availableFrom: 'Disponible dès',
+      nightPrice: '/ nuit',
+      minStay: 'Séjour minimum',
+      furnished: 'Meublé',
+      bookNow: 'Réserver',
+      requestInquiry: 'Envoyer une demande',
+      requestAvailability: 'Vérifier disponibilité',
+      viewProject: 'Voir le projet',
+    },
+    detail: {
+      back: "Retour à l'aperçu",
+      overview: "Vue d'ensemble",
+      description: 'Description',
+      features: 'Équipements & caractéristiques',
+      availableFrom: 'Disponible dès',
+      contact: {
+        title: 'Intéressé(e)? Nous vous conseillons volontiers',
+        subtitle:
+          'Appelez-nous ou écrivez-nous – nous répondons rapidement et sans formalités.',
+        call: 'Appeler',
+        email: 'Envoyer un e-mail',
+        form: 'Formulaire de demande',
+      },
+      rented: {
+        title: 'Cet appartement est actuellement loué.',
+        subtitle:
+          "Contactez-nous – nous vous informerons dès qu'un appartement se libère.",
+      },
+      gallery: 'Galerie',
+      backToList: 'Voir tous les appartements',
+    },
+    empty: {
+      title: 'Aucun appartement disponible',
+      subtitle:
+        "Pour l'instant, aucun appartement n'est libre. Laissez vos coordonnées – nous vous contacterons dès qu'un logement se libère.",
+    },
+    cta: {
+      title: "Vous n'avez pas trouvé ce que vous cherchez?",
+      subtitle:
+        "Nous avons peut-être d'autres biens qui ne sont pas encore en ligne. Contactez-nous directement.",
+      button: 'Nous contacter',
+    },
+    types: {
+      apartment: 'Appartement',
+      longStay: 'Long Stay',
+      hotel: 'Hôtel',
+      project: 'Projet',
+    },
+    hotel: {
+      bookingTitle: 'Réserver directement',
+      bookingSubtitle: 'Disponible sur ns-hotel.ch, Booking.com et Airbnb',
+      bookDirectly: 'Réserver maintenant',
+      directBookingNote: 'réservation rapide & facile',
+      orPlatforms: 'ou via les plateformes',
+      bookOnBooking: 'Réserver sur Booking.com',
+      bookOnAirbnb: 'Réserver sur Airbnb',
+      orContact: 'ou nous contacter directement',
+      priceFrom: 'dès CHF',
+      perNight: 'par nuit',
+    },
+    longStay: {
+      minimumStay: 'Séjour minimum',
+      furnished: 'Entièrement meublé',
+      requestTitle: 'Vérifier la disponibilité',
+      requestSubtitle: 'Contactez-nous pour nos disponibilités et conditions actuelles.',
+      deposit: 'Caution',
+      includes: 'Inclus dans le prix',
+      pricingTitle: 'Prix des chambres',
+      singleRoom: 'Chambre individuelle',
+      doubleRoom: 'Chambre double',
+      parking: 'Parking',
+      from: 'dès',
+    },
+    project: {
+      viewProject: 'Voir le projet',
+      requestUnit: 'Demander une unité',
+      viewUnits: 'Toutes les unités',
+      onRequest: 'Sur demande',
+    },
+    mietanfrage: {
+      title: 'Envoyer une demande de location',
+      subtitle: 'Nous vous répondrons dans les 24 heures.',
+      step1: 'Vos coordonnées',
+      step2: 'Bien souhaité',
+      step3: 'Informations complémentaires',
+      step4: 'Documents',
+      step5: 'Confirmation',
+      firstName: 'Prénom',
+      lastName: 'Nom de famille',
+      email: 'E-mail',
+      phone: 'Téléphone',
+      object: 'Bien souhaité',
+      selectObject: 'Veuillez sélectionner…',
+      moveIn: "Date d'emménagement souhaitée",
+      duration: 'Durée de location',
+      dur3: '3 mois',
+      dur6: '6 mois',
+      dur12: '12 mois',
+      dur24: '24+ mois',
+      durOpen: 'Indéterminée',
+      job: 'Profession (facultatif)',
+      income: 'Revenu mensuel net (facultatif)',
+      notes: 'Remarques (facultatif)',
+      documents: 'Documents (facultatif)',
+      documentsHint: 'Extrait des poursuites, fiche de salaire, etc.',
+      agb: "J'accepte les conditions générales de Hans Amonn AG.",
+      next: 'Continuer',
+      back: 'Retour',
+      submit: 'Envoyer la demande',
+      stepOf: 'Étape {{step}} sur {{total}}',
+      required: 'Obligatoire',
+      successTitle: 'Demande envoyée !',
+      successText: 'Merci. Nous vous répondrons dans les 24 heures.',
+      backToListing: "Retour à l'aperçu",
+    },
+  },
+
+  home: {
+    hero: {
+      title: 'Hans Amonn AG',
+      subtitle: 'Construction & Immobilier',
+      tagline:
+        'Votre partenaire en construction et immobilier depuis 1968 – tradition et innovation réunies',
+      ctaProjects: 'Voir les projets',
+      ctaContact: 'Demander un conseil',
+    },
+  },
+
+  about: {
+    title: 'À propos de nous',
+    meta: {
+      title: 'À propos – Hans Amonn AG',
+      description: "Depuis 1968, Hans Amonn AG est synonyme de qualité dans la construction et l'immobilier.",
+    },
+  },
+
+  team: {
+    title: 'Notre équipe',
+    meta: {
+      title: 'Équipe – Hans Amonn AG',
+      description: "Découvrez l'équipe de Hans Amonn AG.",
+    },
+    back: "Retour à l'équipe",
+    profile: 'Voir le profil',
+    sendEmail: 'Envoyer un e-mail',
+    about: 'À propos de {{name}}',
+    specialization: 'Spécialisation',
+    allMembers: "Tous les membres de l'équipe",
+  },
+
+  projects: {
+    title: 'Projets',
+    meta: {
+      title: 'Projets – Hans Amonn AG',
+      description: 'Nos projets architecturaux réalisés.',
+    },
+    back: 'Retour aux projets',
+    all: 'Tous les projets',
+    viewDetails: 'Voir les détails',
+  },
+
+  services: {
+    title: 'Services',
+    meta: {
+      title: 'Services – Hans Amonn AG',
+      description: 'Services en architecture et immobilier de Hans Amonn AG.',
+    },
+    back: 'Tous les services',
+    learnMore: 'En savoir plus',
+    relatedServices: 'Autres services',
+    cta: {
+      title: 'Des questions?',
+      subtitle: 'Nous vous conseillons volontiers et sans engagement.',
+      call: '+41 (0)31 951 85 54',
+      email: 'Envoyer un e-mail',
+      form: 'Formulaire de contact',
+    },
+  },
+
+  contact: {
+    title: 'Nous contacter',
+    meta: {
+      title: 'Contact – Hans Amonn AG',
+      description: 'Contactez Hans Amonn AG pour votre projet de construction ou immobilier.',
+    },
+    form: {
+      firstName: 'Prénom',
+      lastName: 'Nom de famille',
+      email: 'E-mail',
+      phone: 'Téléphone',
+      subject: 'Objet',
+      message: 'Message',
+      submit: 'Envoyer le message',
+      success: 'Message reçu',
+      successDetail:
+        'Merci pour votre demande. Nous vous répondrons dans les plus brefs délais.',
+      required: 'Obligatoire',
+    },
+  },
+
+  footer: {
+    tagline:
+      'Votre partenaire en construction et immobilier depuis 1968. Qualité, fiabilité et innovation.',
+    navigation: 'Navigation',
+    services: 'Services',
+    contact: 'Contact',
+    copyright: '© {{year}} Hans Amonn AG. Tous droits réservés.',
+    impressum: 'Mentions légales',
+    privacy: 'Politique de confidentialité',
+  },
+};
+
+export default fr;

@@ -3,6 +3,7 @@ import { Building2, PenTool, Users, Wrench, Calculator, Settings, Heart, Graduat
 export const teamMembers = [
   {
     id: 1,
+    slug: 'reto-amonn',
     name: 'Reto Amonn',
     position: 'Geschäftsführer / CEO',
     email: 'reto@reto-amonn.ch',
@@ -16,6 +17,7 @@ export const teamMembers = [
   },
   {
     id: 2,
+    slug: 'roberta-amonn',
     name: 'Roberta Amonn',
     position: 'Administration & Organisation',
     email: 'roberta@reto-amonn.ch',
@@ -28,6 +30,7 @@ export const teamMembers = [
   },
   {
     id: 3,
+    slug: 'martin-brand',
     name: 'Martin Brand',
     position: 'Architekt',
     email: 'brand@reto-amonn.ch',
@@ -40,6 +43,7 @@ export const teamMembers = [
   },
   {
     id: 4,
+    slug: 'beatriz-soares-araujo',
     name: 'Beatriz Soares Araujo',
     position: 'Architektin BA FH',
     email: 'beatriz@reto-amonn.ch',
@@ -52,6 +56,7 @@ export const teamMembers = [
   },
   {
     id: 5,
+    slug: 'jasmina-jungi',
     name: 'Jasmina Jungi',
     position: 'Kaufmännische Administration',
     email: 'jungi@reto-amonn.ch',
@@ -64,6 +69,7 @@ export const teamMembers = [
   },
   {
     id: 6,
+    slug: 'cristian-amaya-orrego',
     name: 'Cristian Amaya Orrego',
     position: 'Polybauer EFZ / Zeichner EFZ',
     email: 'amaya@reto-amonn.ch',
@@ -77,6 +83,7 @@ export const teamMembers = [
   },
   {
     id: 8,
+    slug: 'daniel-it-support',
     name: 'Daniel',
     position: 'IT Support',
     email: 'help@doktor-pc.ch',
@@ -89,6 +96,7 @@ export const teamMembers = [
   },
   {
     id: 9,
+    slug: 'jhon-alexander-orrego',
     name: 'Jhon Alexander Orrego',
     position: 'Organisation & Facility Management',
     email: 'orrego@reto-amonn.ch',
@@ -102,6 +110,7 @@ export const teamMembers = [
   },
   {
     id: 10,
+    slug: 'rayna-mridha',
     name: 'Rayna Mridha',
     position: 'Zeichnerin EFZ iA',
     email: 'mridha@reto-amonn.ch',

@@ -1,8 +1,18 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+=======
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useTranslation } from '@/i18n';
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,14 +21,41 @@ export default function Header() {
   const [openMobileDropdown, setOpenMobileDropdown] = useState(false);
 
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
+<<<<<<< HEAD
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const isActive = (path) => location.pathname === path;
+=======
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  const isActive = (path) =>
+    path === '/'
+      ? location.pathname === '/'
+      : location.pathname.startsWith(path);
+
+  const navItems = [
+    { path: '/',          label: t('nav.home') },
+    { path: '/uber-uns',  label: t('nav.about') },
+    { path: '/team',      label: t('nav.team') },
+    { path: '/projekte',  label: t('nav.projects') },
+    { path: '/leistungen',label: t('nav.services') },
+    { path: '/vermietung',label: t('nav.rentals') },
+  ];
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
 
   return (
     <motion.header
@@ -26,21 +63,34 @@ export default function Header() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
+<<<<<<< HEAD
           ? "bg-white/95 backdrop-blur-md shadow-lg"
           : "bg-white/90 backdrop-blur-sm"
+=======
+          ? 'bg-white/95 backdrop-blur-md shadow-lg'
+          : 'bg-white/90 backdrop-blur-sm'
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
       }`}
     >
-      <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <Link to="/">
+      <nav className="container mx-auto px-4 sm:px-6 py-3">
+        <div className="flex items-center justify-between gap-4">
+
+          {/* Logo */}
+          <Link to="/" className="flex-shrink-0">
             <motion.div
+<<<<<<< HEAD
               whileHover={{ scale: 1.02 }}
               className="text-2xl font-bold text-slate-800 tracking-tight"
+=======
+              whileHover={{ scale: 1.03 }}
+              className="text-xl font-bold gradient-text leading-none"
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
             >
               AMONN ARCHITEKTUR
             </motion.div>
           </Link>
 
+<<<<<<< HEAD
           <div className="hidden md:flex items-center gap-8">
             <div
               className="relative"
@@ -213,10 +263,36 @@ export default function Header() {
             <Link to="/kontakt">
               <Button className="bg-sky-600 hover:bg-sky-700 text-white">
                 Kontakt
+=======
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive(item.path)
+                    ? 'text-blue-600 bg-blue-50 font-semibold'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right controls */}
+          <div className="hidden lg:flex items-center gap-3">
+            <LanguageSwitcher variant="light" />
+            <Link to="/kontakt">
+              <Button className="brand-gradient hover:brand-gradient-hover text-white text-sm px-4 py-2">
+                {t('nav.contact')}
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
               </Button>
             </Link>
           </div>
 
+<<<<<<< HEAD
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2"
@@ -377,3 +453,57 @@ export default function Header() {
     </motion.header>
   );
 }
+=======
+          {/* Mobile: language switcher + hamburger */}
+          <div className="lg:hidden flex items-center gap-2">
+            <LanguageSwitcher variant="light" />
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Menü öffnen"
+            >
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden overflow-hidden"
+            >
+              <div className="mt-3 pb-3 border-t border-gray-100 pt-3 flex flex-col gap-1">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'text-blue-600 bg-blue-50 font-semibold'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <Link to="/kontakt" className="mt-2">
+                  <Button className="brand-gradient text-white w-full">
+                    {t('nav.contact')}
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </motion.header>
+  );
+};
+
+export default Header;
+>>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
