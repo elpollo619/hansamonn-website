@@ -6,44 +6,47 @@ import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
 
-const ImmobilienDropdown = ({ onClose }) => (
-  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-64">
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.15 }}
-      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-3"
-    >
-      <Link
-        to="/immobilien/vermietung"
-        onClick={onClose}
-        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group"
+const ImmobilienDropdown = ({ onClose }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-64">
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        transition={{ duration: 0.15 }}
+        className="bg-white shadow-xl border border-gray-100 rounded-2xl p-3"
       >
-        <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-          <BedDouble size={15} className="text-blue-600" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold">Vermietung</p>
-          <p className="text-xs text-gray-400 group-hover:text-blue-500">Long Stay, Short Stay & Apartments</p>
-        </div>
-      </Link>
-      <Link
-        to="/immobilien/verkauf"
-        onClick={onClose}
-        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors group"
-      >
-        <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
-          <Building2 size={15} className="text-emerald-600" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold">Verkauf</p>
-          <p className="text-xs text-gray-400 group-hover:text-emerald-500">Eigentumswohnungen & Objekte</p>
-        </div>
-      </Link>
-    </motion.div>
-  </div>
-);
+        <Link
+          to="/immobilien/vermietung"
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <BedDouble size={15} className="text-blue-600" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold">{t('nav.vermietung')}</p>
+            <p className="text-xs text-gray-400 group-hover:text-blue-500">Long Stay, Short Stay & Apartments</p>
+          </div>
+        </Link>
+        <Link
+          to="/immobilien/verkauf"
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <Building2 size={15} className="text-emerald-600" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold">{t('nav.verkauf')}</p>
+            <p className="text-xs text-gray-400 group-hover:text-emerald-500">Eigentumswohnungen & Objekte</p>
+          </div>
+        </Link>
+      </motion.div>
+    </div>
+  );
+};
 
 const SECTION_LOGOS = [
   { paths: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto'], logo: 'AMONN IMMOBILIEN' },
@@ -148,7 +151,7 @@ const Header = () => {
                     : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
                 }`}
               >
-                Immobilien
+                {t('nav.immobilien')}
                 <ChevronDown size={14} className={`transition-transform duration-200 ${showImmobilienDropdown ? 'rotate-180' : ''}`} />
               </Link>
               <AnimatePresence>
@@ -210,7 +213,7 @@ const Header = () => {
                       isActive('/immobilien') ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
-                    Immobilien
+                    {t('nav.immobilien')}
                     <ChevronDown size={14} className={`transition-transform ${showMobileImmobilien ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
@@ -221,10 +224,10 @@ const Header = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden pl-4 mt-1 space-y-0.5"
                       >
-                        <Link to="/immobilien" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Übersicht</Link>
-                        <Link to="/immobilien/vermietung" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={14} className="text-gray-400" /> Vermietung</Link>
-                        <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={14} className="text-gray-400" /> Verkauf</Link>
-                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">Mietanfrage</Link>
+                        <Link to="/immobilien" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">{t('nav.overview')}</Link>
+                        <Link to="/immobilien/vermietung" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={14} className="text-gray-400" /> {t('nav.vermietung')}</Link>
+                        <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={14} className="text-gray-400" /> {t('nav.verkauf')}</Link>
+                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">{t('nav.mietanfrage')}</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>

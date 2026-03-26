@@ -3,29 +3,32 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
+import { useTranslation } from '@/i18n';
 
 const Contact = () => {
+  const { t } = useTranslation();
+
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Adresse',
+      title: t('common.address'),
       details: ['Hans Amonn AG', 'Blümlisalpstrasse 4', '3074 Muri bei Bern']
     },
     {
       icon: Phone,
-      title: 'Telefon',
+      title: t('common.phone'),
       details: ['+41 (0)31 951 85 54'],
       href: 'tel:+41319518554'
     },
     {
       icon: Mail,
-      title: 'E-Mail',
+      title: t('common.email'),
       details: ['office@reto-amonn.ch'],
       href: 'mailto:office@reto-amonn.ch'
     },
     {
       icon: Clock,
-      title: 'Öffnungszeiten',
+      title: t('common.hours'),
       details: ['Mo-Fr: 08:00 - 18:00', 'Sa: Nach Vereinbarung']
     }
   ];
@@ -33,8 +36,8 @@ const Contact = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     toast({
-      title: "Nachricht erhalten",
-      description: "Vielen Dank für Ihre Anfrage. Wir melden uns so schnell wie möglich bei Ihnen."
+      title: t('contact.form.success'),
+      description: t('contact.form.successDetail'),
     });
     e.target.reset();
   };
@@ -51,11 +54,10 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900">
-            <span className="font-bold">Kontakt</span> aufnehmen
+            {t('contact.title')}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Wir freuen uns auf Ihre Anfrage und beraten Sie gerne zu Ihrem Bau- oder Immobilienprojekt. 
-            Kontaktieren Sie uns für ein persönliches Gespräch.
+            {t('contact.meta.description')}
           </p>
         </motion.div>
 
@@ -68,7 +70,7 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-semibold text-gray-900 mb-8">
-              Kontaktinformationen
+              {t('contact.infoTitle')}
             </h3>
             
             <div className="space-y-6">
@@ -110,12 +112,11 @@ const Contact = () => {
               viewport={{ once: true }}
               className="mt-8 bg-gray-50 p-6 rounded-lg"
             >
-              <h4 className="font-semibold text-gray-900 mb-4">Warum Hans Amonn AG?</h4>
+              <h4 className="font-semibold text-gray-900 mb-4">{t('contact.whyUs')}</h4>
               <ul className="space-y-2 text-gray-600">
-                <li>• Über 50 Jahre Erfahrung in der Architektur und Bauplanung</li>
-                <li>• Individuelle Beratung und enge Zusammenarbeit mit unseren Kunden</li>
-                <li>• Nachhaltige Lösungen, die ökologisch und wirtschaftlich überzeugen</li>
-                <li>• Vertrauen Sie auf unsere Expertise und Leidenschaft</li>
+                {(t('contact.whyUsItems') || []).map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
               </ul>
             </motion.div>
           </motion.div>
@@ -128,81 +129,81 @@ const Contact = () => {
             viewport={{ once: true }}
           >
             <h3 className="text-2xl font-semibold text-gray-900 mb-8">
-              Nachricht senden
+              {t('contact.sendMessage')}
             </h3>
-            
+
             <form onSubmit={handleFormSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Vorname *
+                    {t('contact.form.firstName')} *
                   </label>
                   <input
                     type="text"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                    placeholder="Ihr Vorname"
+                    placeholder={t('contact.form.firstNamePlaceholder')}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Nachname *
+                    {t('contact.form.lastName')} *
                   </label>
                   <input
                     type="text"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                    placeholder="Ihr Nachname"
+                    placeholder={t('contact.form.lastNamePlaceholder')}
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  E-Mail *
+                  {t('contact.form.email')} *
                 </label>
                 <input
                   type="email"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                  placeholder="ihre.email@beispiel.ch"
+                  placeholder={t('contact.form.emailPlaceholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Telefon
+                  {t('contact.form.phone')}
                 </label>
                 <input
                   type="tel"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                  placeholder="+41 XX XXX XX XX"
+                  placeholder={t('contact.form.phonePlaceholder')}
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Projekttyp
+                  {t('contact.form.projectType')}
                 </label>
                 <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
-                  <option value="">Bitte wählen</option>
-                  <option value="architektur">Architekturplanung</option>
-                  <option value="neubau">Neubau</option>
-                  <option value="sanierung">Sanierung & Umbau</option>
-                  <option value="immobilien">Immobilienvermittlung</option>
-                  <option value="beratung">Beratung</option>
+                  <option value="">{t('contact.form.projectPlaceholder')}</option>
+                  <option value="architektur">{t('contact.form.optArchitektur')}</option>
+                  <option value="neubau">{t('contact.form.optNeubau')}</option>
+                  <option value="sanierung">{t('contact.form.optSanierung')}</option>
+                  <option value="immobilien">{t('contact.form.optImmobilien')}</option>
+                  <option value="beratung">{t('contact.form.optBeratung')}</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nachricht *
+                  {t('contact.form.message')} *
                 </label>
                 <textarea
                   required
                   rows={5}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
-                  placeholder="Beschreiben Sie Ihr Projekt..."
+                  placeholder={t('contact.form.messagePlaceholder')}
                 ></textarea>
               </div>
 
@@ -211,7 +212,7 @@ const Contact = () => {
                 size="lg"
                 className="w-full brand-gradient hover:brand-gradient-hover text-white py-3"
               >
-                Nachricht senden
+                {t('contact.form.submit')}
               </Button>
             </form>
           </motion.div>

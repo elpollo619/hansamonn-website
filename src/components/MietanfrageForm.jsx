@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { jsPDF } from "jspdf";
+import { useTranslation } from "@/i18n";
 import {
   User, Building2, Car, PhoneCall, FileText, CheckSquare,
   Upload, X, AlertCircle, CheckCircle2, Loader2, CalendarDays,
@@ -311,7 +312,7 @@ function RadioGroup({ name, value, onChange, options }) {
 
 // ─── File upload area ─────────────────────────────────────────────────────────
 
-function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*", hint }) {
+function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*", hint, uploadText }) {
   const ref = useRef(null);
   return (
     <div>
@@ -335,7 +336,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
         />
         <div className="flex flex-col items-center gap-2 text-slate-400 group-hover:text-blue-500 transition">
           <Upload size={24} />
-          <span className="text-sm font-medium">Dateien hier ablegen oder klicken</span>
+          <span className="text-sm font-medium">{uploadText || 'Dateien hier ablegen oder klicken'}</span>
           {hint && <span className="text-xs">{hint}</span>}
         </div>
       </div>
@@ -362,6 +363,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function MietanfrageForm() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [form, setForm] = useState(INITIAL);
   const [idFiles, setIdFiles] = useState([]);
@@ -399,25 +401,26 @@ export default function MietanfrageForm() {
   };
 
   const validate = () => {
+    const required = t('mietanfrage.errRequired') || 'Pflichtfeld';
     const e = {};
-    if (!form.mietbeginn) e.mietbeginn = "Pflichtfeld";
-    if (form.mietort.length === 0) e.mietort = "Bitte mindestens einen Mietort wählen";
-    if (!form.vorname.trim()) e.vorname = "Pflichtfeld";
-    if (!form.nachname.trim()) e.nachname = "Pflichtfeld";
-    if (!form.strasse.trim()) e.strasse = "Pflichtfeld";
-    if (!form.plz.trim()) e.plz = "Pflichtfeld";
-    if (!form.ort.trim()) e.ort = "Pflichtfeld";
-    if (!form.geburtsdatum) e.geburtsdatum = "Pflichtfeld";
-    if (!form.nationalitaet) e.nationalitaet = "Pflichtfeld";
-    if (!form.sprache) e.sprache = "Pflichtfeld";
-    if (!form.beruf.trim()) e.beruf = "Pflichtfeld";
-    if (!form.handynummer.trim()) e.handynummer = "Pflichtfeld";
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Gültige E-Mail erforderlich";
-    if (idFiles.length === 0) e.idFiles = "Bitte laden Sie Ihren Pass oder Ihre ID hoch";
-    if (!form.notfallVorname.trim() || !form.notfallNachname.trim()) e.notfall = "Name des Notfallkontakts erforderlich";
-    if (!form.notfallHandynummer.trim()) e.notfallHandynummer = "Pflichtfeld";
-    if (!form.notfallEmail.trim()) e.notfallEmail = "Pflichtfeld";
-    if (!form.akzept1 || !form.akzept2 || !form.akzept3) e.akzept = "Bitte alle Punkte bestätigen";
+    if (!form.mietbeginn) e.mietbeginn = required;
+    if (form.mietort.length === 0) e.mietort = t('mietanfrage.errLocation') || required;
+    if (!form.vorname.trim()) e.vorname = required;
+    if (!form.nachname.trim()) e.nachname = required;
+    if (!form.strasse.trim()) e.strasse = required;
+    if (!form.plz.trim()) e.plz = required;
+    if (!form.ort.trim()) e.ort = required;
+    if (!form.geburtsdatum) e.geburtsdatum = required;
+    if (!form.nationalitaet) e.nationalitaet = required;
+    if (!form.sprache) e.sprache = required;
+    if (!form.beruf.trim()) e.beruf = required;
+    if (!form.handynummer.trim()) e.handynummer = required;
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = t('mietanfrage.errEmail') || 'Gültige E-Mail erforderlich';
+    if (idFiles.length === 0) e.idFiles = t('mietanfrage.errId') || required;
+    if (!form.notfallVorname.trim() || !form.notfallNachname.trim()) e.notfall = required;
+    if (!form.notfallHandynummer.trim()) e.notfallHandynummer = required;
+    if (!form.notfallEmail.trim()) e.notfallEmail = required;
+    if (!form.akzept1 || !form.akzept2 || !form.akzept3) e.akzept = t('mietanfrage.errConsent') || 'Bitte alle Punkte bestätigen';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -464,7 +467,7 @@ export default function MietanfrageForm() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       console.error(err);
-      alert("Unerwarteter Fehler beim Senden. Bitte versuchen Sie es erneut.");
+      alert(t('mietanfrage.errSend') || "Unerwarteter Fehler beim Senden. Bitte versuchen Sie es erneut.");
     } finally {
       setLoading(false);
     }
@@ -473,29 +476,28 @@ export default function MietanfrageForm() {
   // ─── Success screen ───────────────────────────────────────────────────────
 
   if (done) {
+    const successText = (t('mietanfrage.successText') || 'Vielen Dank, {{name}}!')
+      .replace('{{name}}', `${form.vorname} ${form.nachname}`);
     return (
       <div className="max-w-2xl mx-auto py-16 text-center">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle2 size={40} className="text-green-600" />
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-3">Anfrage erfolgreich gesendet</h2>
-        <p className="text-slate-600 mb-4 leading-relaxed">
-          Vielen Dank, <strong>{form.vorname} {form.nachname}</strong>!<br />
-          Ihre Mietanfrage wurde erfolgreich übermittelt und Ihre Dokumente wurden sicher gespeichert.
-        </p>
+        <h2 className="text-3xl font-bold text-slate-900 mb-3">{t('mietanfrage.successTitle')}</h2>
+        <p className="text-slate-600 mb-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: successText.replace('\n', '<br />') }} />
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 text-left mb-6">
-          <p className="text-sm font-semibold text-blue-800 mb-2">Was passiert als nächstes?</p>
+          <p className="text-sm font-semibold text-blue-800 mb-2">{t('mietanfrage.successNext') || 'Was passiert als nächstes?'}</p>
           <ul className="text-sm text-blue-700 space-y-1.5 list-disc list-inside">
-            <li>Eine PDF-Kopie Ihrer Anfrage wurde automatisch heruntergeladen.</li>
-            <li>Wir prüfen Ihre Unterlagen und melden uns innerhalb von 1–2 Werktagen bei Ihnen.</li>
-            <li>Bei Fragen: <a href="mailto:office@reto-amonn.ch" className="underline">office@reto-amonn.ch</a> oder +41 31 951 85 54</li>
+            <li>{t('mietanfrage.successPdf')}</li>
+            <li>{t('mietanfrage.successReply')}</li>
+            <li>{t('mietanfrage.successContact')} <a href="mailto:office@reto-amonn.ch" className="underline">office@reto-amonn.ch</a> {t('common.or') || 'oder'} +41 31 951 85 54</li>
           </ul>
         </div>
         <button
           onClick={() => { setDone(false); setForm(INITIAL); setIdFiles([]); setExtraFiles([]); }}
           className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition text-sm"
         >
-          Neue Anfrage stellen
+          {t('mietanfrage.newRequest')}
         </button>
       </div>
     );
@@ -514,28 +516,27 @@ export default function MietanfrageForm() {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">Mietanfrage</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">{t('mietanfrage.title')}</h1>
         <p className="text-slate-500 text-base leading-relaxed max-w-2xl">
-          Füllen Sie dieses Formular vollständig aus. Wir melden uns innerhalb von 1–2 Werktagen
-          mit einer massgeschneiderten Offerte bei Ihnen.
+          {t('mietanfrage.subtitle')}
         </p>
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-6">
 
         {/* ── 1. Angaben Miete ── */}
-        <Section icon={CalendarDays} title="Angaben Miete">
+        <Section icon={CalendarDays} title={t('mietanfrage.sectionMiete')}>
           <Grid>
-            <Field label="Mietbeginn" required>
+            <Field label={t('mietanfrage.mietbeginn')} required>
               <input type="date" name="mietbeginn" value={form.mietbeginn} onChange={handleChange} className={inp} />
               {errMsg("mietbeginn")}
             </Field>
-            <Field label="Mietende (optional)">
+            <Field label={t('mietanfrage.mietende')}>
               <input type="date" name="mietende" value={form.mietende} onChange={handleChange} className={inp} />
             </Field>
           </Grid>
 
-          <Field label="Mietort" required>
+          <Field label={t('mietanfrage.mietort')} required>
             <div className="flex flex-wrap gap-3 mt-1">
               {MIETORTE.map((ort) => (
                 <button
@@ -558,41 +559,41 @@ export default function MietanfrageForm() {
         </Section>
 
         {/* ── 2. Angaben Bewerber ── */}
-        <Section icon={User} title="Angaben Bewerber">
+        <Section icon={User} title={t('mietanfrage.sectionBewerber')}>
           <Grid>
-            <Field label="Vorname" required>
-              <input name="vorname" value={form.vorname} onChange={handleChange} placeholder="Vorname" className={inp} />
+            <Field label={t('mietanfrage.vorname')} required>
+              <input name="vorname" value={form.vorname} onChange={handleChange} placeholder={t('mietanfrage.vorname')} className={inp} />
               {errMsg("vorname")}
             </Field>
-            <Field label="Name" required>
-              <input name="nachname" value={form.nachname} onChange={handleChange} placeholder="Name" className={inp} />
+            <Field label={t('mietanfrage.nachname')} required>
+              <input name="nachname" value={form.nachname} onChange={handleChange} placeholder={t('mietanfrage.nachname')} className={inp} />
               {errMsg("nachname")}
             </Field>
           </Grid>
 
-          <Field label="Adresse" required>
+          <Field label={t('mietanfrage.strasse')} required>
             <input name="strasse" value={form.strasse} onChange={handleChange} placeholder="Strasse und Hausnummer" className={inp} />
             {errMsg("strasse")}
           </Field>
           <Grid cols={2}>
-            <Field label="PLZ" required>
+            <Field label={t('mietanfrage.plz')} required>
               <input name="plz" value={form.plz} onChange={handleChange} placeholder="PLZ" className={inp} />
               {errMsg("plz")}
             </Field>
-            <Field label="Ort" required>
-              <input name="ort" value={form.ort} onChange={handleChange} placeholder="Ort" className={inp} />
+            <Field label={t('mietanfrage.ort')} required>
+              <input name="ort" value={form.ort} onChange={handleChange} placeholder={t('mietanfrage.ort')} className={inp} />
               {errMsg("ort")}
             </Field>
           </Grid>
 
           <Grid>
-            <Field label="Geburtsdatum" required>
+            <Field label={t('mietanfrage.geburtsdatum')} required>
               <input type="date" name="geburtsdatum" value={form.geburtsdatum} onChange={handleChange} className={inp} />
               {errMsg("geburtsdatum")}
             </Field>
-            <Field label="Nationalität" required>
+            <Field label={t('mietanfrage.nationalitaet')} required>
               <select name="nationalitaet" value={form.nationalitaet} onChange={handleChange} className={sel}>
-                <option value="">Bitte wählen...</option>
+                <option value="">{t('common.selectOption') || 'Bitte wählen...'}</option>
                 {NATIONALITIES.map((n) => <option key={n}>{n}</option>)}
               </select>
               {errMsg("nationalitaet")}
@@ -600,42 +601,43 @@ export default function MietanfrageForm() {
           </Grid>
 
           <Grid>
-            <Field label="Sprache" required>
+            <Field label={t('mietanfrage.sprache')} required>
               <select name="sprache" value={form.sprache} onChange={handleChange} className={sel}>
-                <option value="">Bitte wählen...</option>
+                <option value="">{t('common.selectOption') || 'Bitte wählen...'}</option>
                 {LANGUAGES.map((l) => <option key={l}>{l}</option>)}
               </select>
               {errMsg("sprache")}
             </Field>
-            <Field label="Beruf" required>
-              <input name="beruf" value={form.beruf} onChange={handleChange} placeholder="Beruf / Tätigkeit" className={inp} />
+            <Field label={t('mietanfrage.beruf')} required>
+              <input name="beruf" value={form.beruf} onChange={handleChange} placeholder={t('mietanfrage.beruf')} className={inp} />
               {errMsg("beruf")}
             </Field>
           </Grid>
 
           <Grid>
-            <Field label="Handynummer" required>
+            <Field label={t('mietanfrage.handynummer')} required>
               <input name="handynummer" value={form.handynummer} onChange={handleChange} placeholder="+41 79 000 00 00" className={inp} />
               {errMsg("handynummer")}
             </Field>
-            <Field label="E-Mail" required>
+            <Field label={t('mietanfrage.email')} required>
               <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="beispiel@gmail.com" className={inp} />
               {errMsg("email")}
             </Field>
           </Grid>
 
-          <Field label="WhatsApp verfügbar?">
+          <Field label={t('mietanfrage.whatsapp')}>
             <RadioGroup name="whatsapp" value={form.whatsapp} onChange={handleChange} options={["Ja", "Nein"]} />
           </Field>
 
           <FileUploadArea
-            label="Passkopie / Ausweis"
+            label={t('mietanfrage.idUpload')}
             required
             files={idFiles}
             onAdd={(f) => setIdFiles((prev) => [...prev, f])}
             onRemove={(i) => setIdFiles((prev) => prev.filter((_, idx) => idx !== i))}
             accept="image/*,.pdf"
-            hint="Pass, ID-Karte oder Aufenthaltstitel (JPG, PNG oder PDF)"
+            hint={t('mietanfrage.idHint')}
+            uploadText={t('mietanfrage.uploadArea')}
           />
           {errors.idFiles && (
             <p data-error className="text-xs text-red-500 flex items-center gap-1">
@@ -644,58 +646,59 @@ export default function MietanfrageForm() {
           )}
 
           <FileUploadArea
-            label="Weitere Dokumente (optional)"
+            label={t('mietanfrage.extraDocs')}
             files={extraFiles}
             onAdd={(f) => setExtraFiles((prev) => [...prev, f])}
             onRemove={(i) => setExtraFiles((prev) => prev.filter((_, idx) => idx !== i))}
-            hint="Lohnausweis, Arbeitsvertrag, Referenzschreiben o.ä."
+            hint={t('mietanfrage.extraDocsHint')}
+            uploadText={t('mietanfrage.uploadArea')}
           />
         </Section>
 
         {/* ── 3. Angaben Firma ── */}
-        <Section icon={Building2} title="Angaben Firma (optional)">
-          <p className="text-xs text-slate-400 -mt-1">Nur ausfüllen, wenn die Miete über eine Firma läuft.</p>
-          <Field label="Firmenname">
-            <input name="firma" value={form.firma} onChange={handleChange} placeholder="Name der Firma" className={inp} />
+        <Section icon={Building2} title={t('mietanfrage.sectionFirma')}>
+          <p className="text-xs text-slate-400 -mt-1">{t('mietanfrage.sectionFirmaHint')}</p>
+          <Field label={t('mietanfrage.firma')}>
+            <input name="firma" value={form.firma} onChange={handleChange} placeholder={t('mietanfrage.firma')} className={inp} />
           </Field>
           <Grid>
-            <Field label="Kontaktperson Vorname">
-              <input name="firmaKontaktVorname" value={form.firmaKontaktVorname} onChange={handleChange} placeholder="Vorname" className={inp} />
+            <Field label={t('mietanfrage.firmaKontaktVorname')}>
+              <input name="firmaKontaktVorname" value={form.firmaKontaktVorname} onChange={handleChange} placeholder={t('mietanfrage.vorname')} className={inp} />
             </Field>
-            <Field label="Kontaktperson Name">
-              <input name="firmaKontaktNachname" value={form.firmaKontaktNachname} onChange={handleChange} placeholder="Name" className={inp} />
+            <Field label={t('mietanfrage.firmaKontaktNachname')}>
+              <input name="firmaKontaktNachname" value={form.firmaKontaktNachname} onChange={handleChange} placeholder={t('mietanfrage.nachname')} className={inp} />
             </Field>
           </Grid>
-          <Field label="Adresse Firma">
+          <Field label={t('mietanfrage.firmaStrasse')}>
             <input name="firmaStrasse" value={form.firmaStrasse} onChange={handleChange} placeholder="Strasse und Hausnummer" className={inp} />
           </Field>
           <Grid>
-            <Field label="PLZ">
+            <Field label={t('mietanfrage.firmaPlz')}>
               <input name="firmaPlz" value={form.firmaPlz} onChange={handleChange} placeholder="PLZ" className={inp} />
             </Field>
-            <Field label="Ort">
-              <input name="firmaOrt" value={form.firmaOrt} onChange={handleChange} placeholder="Ort" className={inp} />
+            <Field label={t('mietanfrage.firmaOrt')}>
+              <input name="firmaOrt" value={form.firmaOrt} onChange={handleChange} placeholder={t('mietanfrage.ort')} className={inp} />
             </Field>
           </Grid>
-          <Field label="Telefonnummer">
+          <Field label={t('mietanfrage.firmaTelefon')}>
             <input name="firmaTelefon" value={form.firmaTelefon} onChange={handleChange} placeholder="+41 31 000 00 00" className={inp} />
           </Field>
         </Section>
 
         {/* ── 4. Angaben Fahrzeug ── */}
-        <Section icon={Car} title="Angaben Fahrzeug">
-          <Field label="Fahrzeug vorhanden?">
+        <Section icon={Car} title={t('mietanfrage.sectionFahrzeug')}>
+          <Field label={t('mietanfrage.fahrzeugVorhanden')}>
             <RadioGroup name="fahrzeug" value={form.fahrzeug} onChange={handleChange} options={["Ja", "Nein"]} />
           </Field>
           {form.fahrzeug === "Ja" && (
             <Grid cols={3}>
-              <Field label="Fahrzeugmarke">
+              <Field label={t('mietanfrage.fahrzeugmarke')}>
                 <input name="fahrzeugmarke" value={form.fahrzeugmarke} onChange={handleChange} placeholder="z.B. VW, BMW" className={inp} />
               </Field>
-              <Field label="Fahrzeugfarbe">
+              <Field label={t('mietanfrage.fahrzeugfarbe')}>
                 <input name="fahrzeugfarbe" value={form.fahrzeugfarbe} onChange={handleChange} placeholder="z.B. Schwarz" className={inp} />
               </Field>
-              <Field label="Kennzeichen">
+              <Field label={t('mietanfrage.kennzeichen')}>
                 <input name="kennzeichen" value={form.kennzeichen} onChange={handleChange} placeholder="z.B. BE 123 456" className={inp} />
               </Field>
             </Grid>
@@ -703,22 +706,22 @@ export default function MietanfrageForm() {
         </Section>
 
         {/* ── 5. Notfallkontakt ── */}
-        <Section icon={PhoneCall} title="Angaben Notfallkontakt">
+        <Section icon={PhoneCall} title={t('mietanfrage.sectionNotfall')}>
           <Grid>
-            <Field label="Vorname" required>
-              <input name="notfallVorname" value={form.notfallVorname} onChange={handleChange} placeholder="Vorname" className={inp} />
+            <Field label={t('mietanfrage.notfallVorname')} required>
+              <input name="notfallVorname" value={form.notfallVorname} onChange={handleChange} placeholder={t('mietanfrage.vorname')} className={inp} />
             </Field>
-            <Field label="Name" required>
-              <input name="notfallNachname" value={form.notfallNachname} onChange={handleChange} placeholder="Name" className={inp} />
+            <Field label={t('mietanfrage.notfallNachname')} required>
+              <input name="notfallNachname" value={form.notfallNachname} onChange={handleChange} placeholder={t('mietanfrage.nachname')} className={inp} />
             </Field>
           </Grid>
           {errMsg("notfall")}
           <Grid>
-            <Field label="Handynummer" required>
+            <Field label={t('mietanfrage.notfallHandynummer')} required>
               <input name="notfallHandynummer" value={form.notfallHandynummer} onChange={handleChange} placeholder="+41 79 000 00 00" className={inp} />
               {errMsg("notfallHandynummer")}
             </Field>
-            <Field label="E-Mail" required>
+            <Field label={t('mietanfrage.notfallEmail')} required>
               <input name="notfallEmail" value={form.notfallEmail} onChange={handleChange} placeholder="beispiel@gmail.com" className={inp} />
               {errMsg("notfallEmail")}
             </Field>
@@ -726,23 +729,23 @@ export default function MietanfrageForm() {
         </Section>
 
         {/* ── 6. Bemerkungen ── */}
-        <Section icon={FileText} title="Bemerkungen (optional)">
+        <Section icon={FileText} title={t('mietanfrage.sectionBemerkungen')}>
           <textarea
             name="bemerkungen"
             rows={4}
             value={form.bemerkungen}
             onChange={handleChange}
-            placeholder="Zusätzliche Informationen, besondere Wünsche oder Anmerkungen zur Anfrage..."
+            placeholder={t('mietanfrage.bemerkungen')}
             className={inp}
           />
         </Section>
 
         {/* ── 7. Einwilligung ── */}
-        <Section icon={CheckSquare} title="Einwilligung">
+        <Section icon={CheckSquare} title={t('mietanfrage.sectionEinwilligung')}>
           {[
-            { key: "akzept1", text: "Ich habe sämtliche Informationen dieses Gesuchs wahrheitsgetreu und richtig angegeben." },
-            { key: "akzept2", text: "Ich habe die Hausordnung gelesen und akzeptiere diese." },
-            { key: "akzept3", text: "Ich habe die Allgemeinen Geschäftsbedingungen gelesen und akzeptiere diese." },
+            { key: "akzept1", text: t('mietanfrage.consent1') },
+            { key: "akzept2", text: t('mietanfrage.consent2') },
+            { key: "akzept3", text: t('mietanfrage.consent3') },
           ].map(({ key, text }) => (
             <label key={key} className="flex items-start gap-3 cursor-pointer group">
               <div className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition ${form[key] ? "border-blue-600 bg-blue-600" : "border-slate-300 group-hover:border-blue-400"}`}>
@@ -757,8 +760,7 @@ export default function MietanfrageForm() {
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-2">
             <p className="text-xs text-amber-700 flex items-start gap-2">
               <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
-              Nach dem Absenden wird automatisch eine PDF-Kopie Ihrer Anfrage heruntergeladen.
-              Bitte speichern Sie diese für Ihre Unterlagen.
+              {t('mietanfrage.pdfNote')}
             </p>
           </div>
         </Section>
@@ -772,12 +774,12 @@ export default function MietanfrageForm() {
           {loading ? (
             <>
               <Loader2 size={20} className="animate-spin" />
-              Anfrage wird gesendet...
+              {t('mietanfrage.submitting')}
             </>
           ) : (
             <>
               <CheckCircle2 size={20} />
-              Mietanfrage absenden &amp; PDF herunterladen
+              {t('mietanfrage.submit')}
             </>
           )}
         </button>

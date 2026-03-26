@@ -38,7 +38,6 @@ const LanguageSwitcher = ({ variant = 'light' }) => {
             : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-gray-200'
           }`}
       >
-        <span className="text-base leading-none" aria-hidden="true">{current.flag}</span>
         <span>{current.label}</span>
         <ChevronDown
           size={13}

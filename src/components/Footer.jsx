@@ -22,18 +22,20 @@ const Footer = () => {
     { to: '/uber-uns',   label: t('nav.about') },
     { to: '/projekte',   label: t('nav.projects') },
     { to: '/leistungen', label: t('nav.services') },
-    { to: '/immobilien', label: 'Immobilien' },
+    { to: '/immobilien', label: t('nav.immobilien') },
     { to: '/kontakt',    label: t('nav.contact') },
   ];
 
-  const serviceLinks = [
-    { to: '/leistungen/planung-entwurf',          label: 'Architekturplanung' },
-    { to: '/leistungen/neubauten',                 label: 'Neubauten' },
-    { to: '/leistungen/sanierungen-umbauten',      label: 'Sanierungen & Umbauten' },
-    { to: '/leistungen/kauf-verkauf',              label: 'Kauf & Verkauf' },
-    { to: '/leistungen/projektentwicklung',        label: 'Projektentwicklung' },
-    { to: '/leistungen/immobilienbewirtschaftung', label: 'Bewirtschaftung' },
+  const serviceLabels = t('footer.servicesList') || ['Architekturplanung', 'Neubauten', 'Sanierungen & Umbauten', 'Kauf & Verkauf', 'Projektentwicklung', 'Bewirtschaftung'];
+  const servicePaths = [
+    '/leistungen/planung-entwurf',
+    '/leistungen/neubauten',
+    '/leistungen/sanierungen-umbauten',
+    '/leistungen/kauf-verkauf',
+    '/leistungen/projektentwicklung',
+    '/leistungen/immobilienbewirtschaftung',
   ];
+  const serviceLinks = servicePaths.map((to, i) => ({ to, label: serviceLabels[i] || servicePaths[i] }));
 
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">

@@ -3,53 +3,53 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BedDouble, Building2, ArrowRight, MapPin, Clock, Tag } from 'lucide-react';
+import { useTranslation } from '@/i18n';
 
-const CARDS = [
-  {
-    to: '/immobilien/vermietung',
-    icon: BedDouble,
-    tag: 'Mieten',
-    tagColor: 'bg-blue-100 text-blue-700',
-    title: 'Vermietung',
-    subtitle: 'Wohnen auf Zeit & Dauermiete',
-    description:
-      'Entdecken Sie unser vielfältiges Angebot an Mietobjekten – von möblierten Zimmern im Long Stay über Kurzaufenthalte im N\'s Hotel bis hin zu exklusiven Ferienwohnungen in Casa Reto.',
-    highlights: [
-      { icon: BedDouble, text: 'Long Stay – möblierte Zimmer' },
-      { icon: Clock,     text: 'Short Stay – N\'s Hotel & Casa Reto' },
-      { icon: MapPin,    text: 'Standorte in Kerzers, Münchenbuchsee & Muri' },
-    ],
-    cta: 'Alle Mietobjekte ansehen',
-    accentFrom: 'from-blue-600',
-    accentTo: 'to-blue-800',
-    bgLight: 'bg-blue-50',
-    borderColor: 'border-blue-100 hover:border-blue-300',
-    ctaClass: 'bg-blue-600 hover:bg-blue-700 text-white',
-  },
-  {
-    to: '/immobilien/verkauf',
-    icon: Building2,
-    tag: 'Kaufen',
-    tagColor: 'bg-emerald-100 text-emerald-700',
-    title: 'Verkauf',
-    subtitle: 'Immobilien zum Erwerb',
-    description:
-      'Investieren Sie in hochwertige Immobilien der Hans Amonn AG. Wir bieten ausgewählte Objekte zum Kauf an – von Eigentumswohnungen bis hin zu Renditeobjekten.',
-    highlights: [
-      { icon: Building2, text: 'Eigentumswohnungen & Häuser' },
-      { icon: Tag,       text: 'Transparente Kaufpreise in CHF' },
-      { icon: MapPin,    text: 'Attraktive Lagen in der Region' },
-    ],
-    cta: 'Kaufobjekte ansehen',
-    accentFrom: 'from-emerald-600',
-    accentTo: 'to-emerald-800',
-    bgLight: 'bg-emerald-50',
-    borderColor: 'border-emerald-100 hover:border-emerald-300',
-    ctaClass: 'bg-emerald-600 hover:bg-emerald-700 text-white',
-  },
-];
+const ImmobilienOverviewPage = () => {
+  const { t } = useTranslation();
 
-const ImmobilienOverviewPage = () => (
+  const CARDS = [
+    {
+      to: '/immobilien/vermietung',
+      icon: BedDouble,
+      tag: t('immobilien.vermietung.tag'),
+      tagColor: 'bg-blue-100 text-blue-700',
+      title: t('immobilien.vermietung.title'),
+      subtitle: t('immobilien.vermietung.subtitle'),
+      description: t('immobilien.vermietung.desc'),
+      highlights: (t('immobilien.vermietung.highlights') || []).map((text, i) => ({
+        icon: [BedDouble, Clock, MapPin][i] || MapPin,
+        text,
+      })),
+      cta: t('immobilien.vermietung.cta'),
+      accentFrom: 'from-blue-600',
+      accentTo: 'to-blue-800',
+      bgLight: 'bg-blue-50',
+      borderColor: 'border-blue-100 hover:border-blue-300',
+      ctaClass: 'bg-blue-600 hover:bg-blue-700 text-white',
+    },
+    {
+      to: '/immobilien/verkauf',
+      icon: Building2,
+      tag: t('immobilien.verkauf.tag'),
+      tagColor: 'bg-emerald-100 text-emerald-700',
+      title: t('immobilien.verkauf.title'),
+      subtitle: t('immobilien.verkauf.subtitle'),
+      description: t('immobilien.verkauf.desc'),
+      highlights: (t('immobilien.verkauf.highlights') || []).map((text, i) => ({
+        icon: [Building2, Tag, MapPin][i] || MapPin,
+        text,
+      })),
+      cta: t('immobilien.verkauf.cta'),
+      accentFrom: 'from-emerald-600',
+      accentTo: 'to-emerald-800',
+      bgLight: 'bg-emerald-50',
+      borderColor: 'border-emerald-100 hover:border-emerald-300',
+      ctaClass: 'bg-emerald-600 hover:bg-emerald-700 text-white',
+    },
+  ];
+
+  return (
   <>
     <Helmet>
       <title>Immobilien – Vermietung & Verkauf | Hans Amonn AG</title>
@@ -67,10 +67,10 @@ const ImmobilienOverviewPage = () => (
         >
           <p className="text-xs font-semibold tracking-widest uppercase text-blue-600 mb-3">Hans Amonn AG</p>
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
-            Unsere <span className="font-bold">Immobilien</span>
+            {t('immobilien.hero.title')}
           </h1>
           <p className="text-lg text-gray-500 max-w-xl mx-auto">
-            Mieten oder kaufen — wir begleiten Sie bei jedem Schritt rund um Ihre Immobilie.
+            {t('immobilien.hero.subtitle')}
           </p>
         </motion.div>
 
@@ -137,20 +137,21 @@ const ImmobilienOverviewPage = () => (
           className="mt-12 max-w-5xl mx-auto bg-white border border-gray-200 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <div>
-            <p className="text-sm font-semibold text-gray-900">Haben Sie Fragen?</p>
-            <p className="text-sm text-gray-500">Unser Team berät Sie gerne persönlich.</p>
+            <p className="text-sm font-semibold text-gray-900">{t('immobilien.contact.title')}</p>
+            <p className="text-sm text-gray-500">{t('immobilien.hero.subtitle')}</p>
           </div>
           <Link
             to="/immobilien/anfrage"
             className="inline-flex items-center gap-2 bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-700 transition-colors flex-shrink-0"
           >
-            Mietanfrage stellen
+            {t('immobilien.contact.cta')}
             <ArrowRight size={14} />
           </Link>
         </motion.div>
       </div>
     </section>
   </>
-);
+  );
+};
 
 export default ImmobilienOverviewPage;
