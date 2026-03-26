@@ -13,6 +13,7 @@ import { LanguageProvider } from '@/i18n';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import VirtualAgent from '@/components/VirtualAgent';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 // Pages
 import HomePage from '@/pages/HomePage';
@@ -126,6 +127,7 @@ function AppRoutes() {
       </main>
       <Footer />
       <Toaster />
+      <WhatsAppButton />
       <VirtualAgent />
     </>
   );
