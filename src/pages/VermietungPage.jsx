@@ -8,7 +8,7 @@ import {
   Bell,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
-import { getVisibleListings } from '@/data/rentalData';
+import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 import InteractiveMapSection from '@/components/InteractiveMapSection';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
@@ -95,7 +95,7 @@ const LongStayCTA = ({ item, t }) => (
 const ProjectCTA = ({ item, t }) => (
   <div className="space-y-2">
     <Link
-      to="/casa-reto"
+      to={item.link || '/casa-reto'}
       className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
     >
       {t('vermietung.card.viewProject')}
@@ -104,13 +104,24 @@ const ProjectCTA = ({ item, t }) => (
   </div>
 );
 
+const ApartmentCTA = ({ item }) => (
+  <Link
+    to={item.link || '/immobilien/anfrage'}
+    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+  >
+    <Mail size={14} />
+    Anfrage senden
+  </Link>
+);
+
 // ─── Listing Card ─────────────────────────────────────────────────────────────
 
 const ListingCard = ({ item, index, t }) => {
-  const image    = item.images[0];
-  const isHotel  = item.type === 'hotel';
-  const isProject = item.type === 'project';
+  const image      = (item.images && item.images[0]) || { url: '', alt: item.title };
+  const isHotel    = item.type === 'hotel';
+  const isProject  = item.type === 'project';
   const isLongStay = item.type === 'long-stay';
+  const isApartment = item.type === 'apartment';
 
   return (
     <motion.div
@@ -194,11 +205,21 @@ const ListingCard = ({ item, index, t }) => {
           </div>
         )}
 
+        {/* Features fallback for long-stay without room data */}
+        {isLongStay && !item.longStayRooms && item.features?.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {item.features.slice(0, 3).map((f) => (
+              <span key={f} className="bg-amber-50 text-amber-700 text-xs px-2.5 py-1 rounded-full border border-amber-100">{f}</span>
+            ))}
+          </div>
+        )}
+
         {/* CTA */}
         <div className="mt-auto">
-          {isHotel    && <HotelCTA item={item} t={t} />}
-          {isProject  && <ProjectCTA item={item} t={t} />}
-          {isLongStay && <LongStayCTA item={item} t={t} />}
+          {isHotel     && <HotelCTA item={item} t={t} />}
+          {isProject   && <ProjectCTA item={item} t={t} />}
+          {isLongStay  && <LongStayCTA item={item} t={t} />}
+          {isApartment && <ApartmentCTA item={item} />}
         </div>
       </div>
     </motion.div>
@@ -243,10 +264,10 @@ const VermietungPage = () => {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('all');
 
-  const allItems = getVisibleListings();
+  const allItems = getNormalizedVisibleProperties();
 
   const counts = {
-    apartment:   0, // hidden
+    apartment:   allItems.filter((a) => a.type === 'apartment').length,
     'long-stay': allItems.filter((a) => a.type === 'long-stay').length,
     hotel:       allItems.filter((a) => a.type === 'hotel').length,
     project:     allItems.filter((a) => a.type === 'project').length,
@@ -254,8 +275,6 @@ const VermietungPage = () => {
 
   const filtered = filter === 'all'
     ? allItems
-    : filter === 'apartment'
-    ? []                                               // show empty state
     : allItems.filter((a) => a.type === filter);
 
   const tabs = [
@@ -263,7 +282,7 @@ const VermietungPage = () => {
     { key: 'long-stay', label: 'Long Stay',       count: counts['long-stay'] },
     { key: 'hotel',     label: 'Hotel',           count: counts.hotel },
     { key: 'project',   label: 'Casa Reto',       count: counts.project },
-    { key: 'apartment', label: 'Wohnungen',       count: 0, disabled: true },
+    { key: 'apartment', label: 'Wohnungen',       count: counts.apartment, disabled: counts.apartment === 0 },
   ];
 
   // Service cards for hero
@@ -443,7 +462,7 @@ const VermietungPage = () => {
               transition={{ duration: 0.2 }}
               className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch"
             >
-              {filter === 'apartment' ? (
+              {filter === 'apartment' && counts.apartment === 0 ? (
                 <ApartmentsEmptyState />
               ) : filtered.length > 0 ? (
                 filtered.map((item, i) => (

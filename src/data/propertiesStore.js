@@ -4,14 +4,24 @@
 
 const STORAGE_KEY = 'ha_properties';
 
+// Known coordinates for default properties (used for migration when lat/lng is missing)
+const COORDS_DEFAULTS = {
+  'kerzers-ls':        { lat: 46.9949, lng: 7.1985 },
+  'munchenbuchsee-ls': { lat: 47.0214, lng: 7.4484 },
+  'muri-ls':           { lat: 46.9261, lng: 7.5039 },
+  'ns-hotel':          { lat: 47.002,  lng: 7.199  },
+  'casa-reto':         { lat: 46.0503, lng: 8.7026 },
+};
+
 const DEFAULT_PROPERTIES = [
   {
     id: 'kerzers-ls',
     name: 'Kerzers — Long Stay',
     type: 'long-stay',
+    address: 'Kerzers, 3210',
     location: 'Kerzers, 3210',
     description: 'Möblierte Zimmer im Herzen des Seelandes.',
-    status: 'verfügbar', // 'verfügbar' | 'nicht-verfügbar' | 'coming-soon'
+    status: 'verfügbar',
     priceFrom: 900,
     priceCurrency: 'CHF',
     pricePeriod: 'Mt.',
@@ -22,6 +32,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Strom inkl.', 'Internet inkl.', 'Wasser inkl.'],
+    lat: 46.9949,
+    lng: 7.1985,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -29,6 +41,7 @@ const DEFAULT_PROPERTIES = [
     id: 'munchenbuchsee-ls',
     name: 'Münchenbuchsee — Long Stay',
     type: 'long-stay',
+    address: 'Münchenbuchsee, 3053',
     location: 'Münchenbuchsee, 3053',
     description: 'Ruhige Lage, gute Anbindung an Bern.',
     status: 'verfügbar',
@@ -42,6 +55,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Möbliert', 'Gemeinschaftsküche', 'Parking möglich'],
+    lat: 47.0214,
+    lng: 7.4484,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -49,6 +64,7 @@ const DEFAULT_PROPERTIES = [
     id: 'muri-ls',
     name: 'Muri bei Bern — Long Stay',
     type: 'long-stay',
+    address: 'Blümlisalpstrasse 4, 3074 Muri bei Bern',
     location: 'Blümlisalpstrasse 4, 3074 Muri bei Bern',
     description: 'Komfortables Wohnen in der Agglomeration Bern.',
     status: 'verfügbar',
@@ -62,6 +78,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Möbliert', 'Zentral gelegen', 'ÖV-nah'],
+    lat: 46.9261,
+    lng: 7.5039,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -69,6 +87,7 @@ const DEFAULT_PROPERTIES = [
     id: 'ns-hotel',
     name: "N's Hotel",
     type: 'short-stay',
+    address: 'Kerzers, 3210',
     location: 'Kerzers, 3210',
     description: 'Modernes Boutique-Hotel mit Self Check-in.',
     status: 'verfügbar',
@@ -82,6 +101,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Self Check-in', 'Boutique', 'Geschäftsreisen'],
+    lat: 47.002,
+    lng: 7.199,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -89,6 +110,7 @@ const DEFAULT_PROPERTIES = [
     id: 'casa-reto',
     name: 'Casa Reto',
     type: 'ferienhaus',
+    address: 'Gordemo / Lago Maggiore, Tessin',
     location: 'Gordemo / Lago Maggiore, Tessin',
     description: 'Privates Ferienhaus am Lago Maggiore.',
     status: 'verfügbar',
@@ -102,10 +124,22 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Lago Maggiore', 'Privater Garten', 'Naturlage'],
+    lat: 46.0503,
+    lng: 8.7026,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
 ];
+
+// ── Migration: add lat/lng/address to existing stored properties that lack them ──
+function migrate(props) {
+  return props.map((p) => ({
+    address: p.location || '',
+    ...p,
+    lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
+    lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
+  }));
+}
 
 export function getProperties() {
   try {
@@ -114,7 +148,13 @@ export function getProperties() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_PROPERTIES));
       return DEFAULT_PROPERTIES;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    const migrated = migrate(parsed);
+    // Persist migration silently
+    if (JSON.stringify(migrated) !== raw) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+    }
+    return migrated;
   } catch {
     return DEFAULT_PROPERTIES;
   }
@@ -132,6 +172,9 @@ export function getVisibleProperties(type) {
 export function createProperty(data) {
   const props = getProperties();
   const newProp = {
+    address: data.location || '',
+    lat: null,
+    lng: null,
     ...data,
     id: `prop-${Date.now()}`,
     createdAt: Date.now(),
@@ -152,4 +195,38 @@ export function updateProperty(id, data) {
 export function deleteProperty(id) {
   const props = getProperties();
   saveProperties(props.filter((p) => p.id !== id));
+}
+
+export function getPropertyById(id) {
+  return getProperties().find((p) => p.id === id) ?? null;
+}
+
+// ── Normalizer: maps propertiesStore format → VermietungPage ListingCard format ──
+// type mapping: short-stay → hotel | ferienhaus → project | rest unchanged
+const TYPE_MAP = { 'short-stay': 'hotel', ferienhaus: 'project' };
+
+export function getNormalizedVisibleProperties() {
+  return getVisibleProperties().map((p) => {
+    const mappedType = TYPE_MAP[p.type] || p.type;
+    const images = (Array.isArray(p.images) ? p.images : [])
+      .filter(Boolean)
+      .map((img) => (typeof img === 'string' ? { url: img, alt: p.name } : img));
+    if (images.length === 0) images.push({ url: '', alt: p.name });
+
+    return {
+      ...p,
+      title: p.name,
+      subtitle: p.description || '',
+      type: mappedType,
+      price: p.priceFrom || null,
+      images,
+      features: Array.isArray(p.features) ? p.features : [],
+      directBookingUrl: p.bookingUrl || '',
+      bookingUrls: {
+        booking: p.bookingUrl || '',
+        airbnb: p.airbnbUrl || '',
+      },
+      link: p.link || `/immobilien/${p.id}`,
+    };
+  });
 }

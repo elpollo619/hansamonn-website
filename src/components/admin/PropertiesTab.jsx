@@ -11,6 +11,8 @@ import {
   ExternalLink,
   AlertTriangle,
   ImagePlus,
+  Upload,
+  MapPin,
 } from 'lucide-react';
 import {
   getProperties,
@@ -43,6 +45,7 @@ const PERIOD_OPTIONS = [
 const EMPTY_FORM = {
   name: '',
   type: 'long-stay',
+  address: '',
   location: '',
   description: '',
   status: 'verfügbar',
@@ -56,6 +59,8 @@ const EMPTY_FORM = {
   contactEmail: '',
   visible: true,
   features: [],
+  lat: '',
+  lng: '',
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -146,6 +151,7 @@ function PropertyForm({ property, onSave, onClose }) {
   });
   const [featureInput, setFeatureInput] = useState('');
   const [imageInput, setImageInput] = useState('');
+  const fileInputRef = React.useRef(null);
 
   const set = (field, value) => setForm((f) => ({ ...f, [field]: value }));
 
@@ -171,6 +177,22 @@ function PropertyForm({ property, onSave, onClose }) {
 
   const removeImage = (idx) => {
     set('images', form.images.filter((_, i) => i !== idx));
+  };
+
+  const handleFileUpload = (e) => {
+    const files = Array.from(e.target.files || []);
+    files.forEach((file) => {
+      if (file.size > 3 * 1024 * 1024) {
+        alert(`"${file.name}" ist zu groß (max. 3 MB pro Bild).`);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        setForm((f) => ({ ...f, images: [...f.images, ev.target.result] }));
+      };
+      reader.readAsDataURL(file);
+    });
+    e.target.value = '';
   };
 
   const handleSubmit = (e) => {
@@ -247,15 +269,58 @@ function PropertyForm({ property, onSave, onClose }) {
             </div>
           </div>
 
-          {/* Location */}
+          {/* Address + Location */}
           <div>
-            <label className={labelCls}>Standort</label>
+            <label className={labelCls}>Adresse (für Karte)</label>
+            <input
+              className={inputCls}
+              value={form.address || ''}
+              onChange={(e) => set('address', e.target.value)}
+              placeholder="z.B. Insstrasse 16, 3236 Gampelen"
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Standort (Anzeige)</label>
             <input
               className={inputCls}
               value={form.location}
               onChange={(e) => set('location', e.target.value)}
-              placeholder="z.B. Kerzers, 3210"
+              placeholder="z.B. Gampelen, 3236"
             />
+          </div>
+
+          {/* Coordinates for map */}
+          <div>
+            <label className={labelCls}>
+              <span className="flex items-center gap-1"><MapPin size={11} /> Koordinaten (für interaktive Karte)</span>
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <input
+                  className={inputCls}
+                  value={form.lat || ''}
+                  onChange={(e) => set('lat', e.target.value ? parseFloat(e.target.value) : '')}
+                  placeholder="Breitengrad z.B. 47.033"
+                  type="number"
+                  step="any"
+                />
+                <p className="text-xs text-gray-400 mt-1">Latitude</p>
+              </div>
+              <div>
+                <input
+                  className={inputCls}
+                  value={form.lng || ''}
+                  onChange={(e) => set('lng', e.target.value ? parseFloat(e.target.value) : '')}
+                  placeholder="Längengrad z.B. 7.062"
+                  type="number"
+                  step="any"
+                />
+                <p className="text-xs text-gray-400 mt-1">Longitude</p>
+              </div>
+            </div>
+            <p className="text-xs text-gray-400 mt-1.5">
+              Koordinaten finden: <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Google Maps</a> → rechtsklick auf Adresse → Koordinaten kopieren
+            </p>
           </div>
 
           {/* Description */}
@@ -350,7 +415,27 @@ function PropertyForm({ property, onSave, onClose }) {
 
           {/* Images */}
           <div>
-            <label className={labelCls}>Bilder (URL)</label>
+            <label className={labelCls}>Bilder</label>
+            {/* Upload from computer */}
+            <div className="mb-2 p-3 border border-dashed border-blue-200 rounded-lg bg-blue-50/50">
+              <p className="text-xs text-gray-500 mb-2">Vom Computer hochladen (max. 3 MB pro Bild):</p>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={handleFileUpload}
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <Upload size={13} /> Fotos vom Computer wählen
+              </button>
+            </div>
+            {/* URL input */}
             <div className="flex gap-2 mb-2">
               <input
                 className={inputCls}
@@ -359,34 +444,36 @@ function PropertyForm({ property, onSave, onClose }) {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') { e.preventDefault(); addImage(); }
                 }}
-                placeholder="/images/objekt/titel.jpg"
+                placeholder="oder URL eingeben: https://..."
               />
               <button
                 type="button"
                 onClick={addImage}
-                className="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors flex-shrink-0"
+                className="px-3 py-2 bg-gray-600 text-white text-sm rounded-lg hover:bg-gray-700 transition-colors flex-shrink-0"
               >
                 <ImagePlus size={14} />
               </button>
             </div>
             {form.images.length > 0 && (
-              <div className="space-y-2">
+              <div className="grid grid-cols-3 gap-2 mt-2">
                 {form.images.map((img, i) => (
-                  <div key={i} className="flex items-center gap-2 bg-gray-50 rounded-lg p-2">
+                  <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200 bg-gray-50 aspect-video">
                     <img
                       src={img}
                       alt=""
-                      className="w-12 h-10 object-cover rounded"
+                      className="w-full h-full object-cover"
                       onError={(e) => { e.target.style.display = 'none'; }}
                     />
-                    <span className="flex-1 text-xs text-gray-600 truncate">{img}</span>
                     <button
                       type="button"
                       onClick={() => removeImage(i)}
-                      className="text-gray-400 hover:text-red-500 transition-colors"
+                      className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                     >
-                      <X size={14} />
+                      <X size={10} />
                     </button>
+                    {i === 0 && (
+                      <span className="absolute bottom-1 left-1 text-xs bg-black/60 text-white px-1.5 py-0.5 rounded">Titelbild</span>
+                    )}
                   </div>
                 ))}
               </div>
