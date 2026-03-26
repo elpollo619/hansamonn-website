@@ -41,17 +41,25 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           </p>
 
           {/* Amenities */}
-          <div className="mb-6">
-            <h4 className="font-semibold text-gray-900 mb-3">Leistungen:</h4>
-            <div className="grid grid-cols-2 gap-3">
-              {project.amenities.map((amenity, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <amenity.icon size={16} className="text-blue-600" />
-                  <span className="text-sm text-gray-700">{amenity.label}</span>
-                </div>
-              ))}
+          {project.amenities?.length > 0 && (
+            <div className="mb-6">
+              <h4 className="font-semibold text-gray-900 mb-3">Leistungen:</h4>
+              <div className="grid grid-cols-2 gap-3">
+                {project.amenities.map((amenity, index) => {
+                  const Icon = amenity.icon ?? null;
+                  return (
+                    <div key={index} className="flex items-center space-x-2">
+                      {Icon
+                        ? <Icon size={16} className="text-blue-600" />
+                        : <span className="w-4 h-4 rounded-full bg-blue-100 flex-shrink-0" />
+                      }
+                      <span className="text-sm text-gray-700">{amenity.label}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Right Column - Stats & Features */}
@@ -71,19 +79,21 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           </div>
 
           {/* Features */}
-          <div className="mb-6">
-            <h4 className="font-semibold text-gray-900 mb-3">Besonderheiten:</h4>
-            <div className="flex flex-wrap gap-2">
-              {project.features.map((feature, index) => (
-                <span
-                  key={index}
-                  className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm"
-                >
-                  {feature}
-                </span>
-              ))}
+          {project.features?.length > 0 && (
+            <div className="mb-6">
+              <h4 className="font-semibold text-gray-900 mb-3">Besonderheiten:</h4>
+              <div className="flex flex-wrap gap-2">
+                {project.features.map((feature, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm"
+                  >
+                    {feature}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Documents */}
           {project.documents && project.documents.length > 0 && (

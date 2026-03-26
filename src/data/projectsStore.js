@@ -13,10 +13,26 @@ function buildSeed() {
   }));
 }
 
+// Re-attach non-serializable fields (React component icons) from the static source
+// after loading from localStorage, since JSON.stringify drops function references.
+function rehydrate(projects) {
+  return projects.map((p) => {
+    const staticMatch = staticProjects.find((s) => String(s.id) === String(p.id));
+    if (!staticMatch) return p;
+    return {
+      ...p,
+      amenities: (p.amenities || []).map((a, i) => ({
+        ...a,
+        icon: staticMatch.amenities?.[i]?.icon ?? null,
+      })),
+    };
+  });
+}
+
 export function getProjects() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) return rehydrate(JSON.parse(raw));
     const seed = buildSeed();
     _save(seed);
     return seed;

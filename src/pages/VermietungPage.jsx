@@ -188,7 +188,7 @@ const ListingCard = ({ item, index, t }) => {
         )}
 
         {/* Hotel: feature chips */}
-        {isHotel && (
+        {isHotel && item.features?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.features.slice(0, 3).map((f) => (
               <span key={f} className="bg-indigo-50 text-indigo-600 text-xs px-2 py-0.5 rounded-full">{f}</span>
@@ -197,7 +197,7 @@ const ListingCard = ({ item, index, t }) => {
         )}
 
         {/* Project: feature chips */}
-        {isProject && (
+        {isProject && item.features?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.features.slice(0, 3).map((f) => (
               <span key={f} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5 rounded-full">{f}</span>

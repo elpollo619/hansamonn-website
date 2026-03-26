@@ -60,9 +60,9 @@ const ProjectDetailPage = () => {
           </Link>
 
           <div className="bg-white rounded-lg overflow-hidden shadow-xl">
-            {project.gallery.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
+            {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
             <ProjectInfo project={project} onButtonClick={handleContactClick} />
-            <ProjectImages project={project} onImageClick={openLightbox} />
+            {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}
           </div>
         </div>
       </motion.div>

@@ -1,8 +1,9 @@
 import React from 'react';
 
 const ProjectGallery = ({ project, onImageClick }) => {
-  const mainImage = project.gallery.find(item => item.type === 'image');
-  const sideImages = project.gallery.filter(item => item.type === 'image').slice(1, 3);
+  const gallery = project.gallery || [];
+  const mainImage = gallery.find(item => item.type === 'image');
+  const sideImages = gallery.filter(item => item.type === 'image').slice(1, 3);
 
   if (!mainImage) return null;
 

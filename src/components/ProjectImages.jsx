@@ -9,7 +9,7 @@ const ProjectImages = ({ project, onImageClick }) => {
       </h4>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {project.gallery.map((item, index) => {
+        {(project.gallery || []).map((item, index) => {
           if (item.type === 'header') {
             return (
               <div key={index} className="col-span-full mt-6 mb-2">
