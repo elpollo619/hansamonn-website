@@ -33,12 +33,13 @@ const Lightbox = ({ images = [], initialIndex = 0, onClose }) => {
     return () => window.removeEventListener('keydown', onKey);
   }, [prev, next, onClose]);
 
-  // Prevent body scroll while open
+  // Prevent body scroll while open (only when there are images to show)
   useEffect(() => {
+    if (!images.length) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = prev; };
-  }, []);
+  }, [images.length]);
 
   // Touch swipe support
   const onTouchStart = (e) => {

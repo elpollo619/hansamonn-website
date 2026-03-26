@@ -67,7 +67,13 @@ const ProjectDetailPage = () => {
         </div>
       </motion.div>
 
-      <Lightbox imageUrl={lightboxImage} onClose={closeLightbox} />
+      {lightboxImage && (
+        <Lightbox
+          images={[{ url: lightboxImage }]}
+          initialIndex={0}
+          onClose={closeLightbox}
+        />
+      )}
     </>
   );
 };
