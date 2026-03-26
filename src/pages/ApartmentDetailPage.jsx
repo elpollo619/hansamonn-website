@@ -23,7 +23,10 @@ import VirtualTour from '@/components/VirtualTour';
 import OccupancyBadge from '@/components/OccupancyBadge';
 import RecentlyViewedSection from '@/components/RecentlyViewedSection';
 import ShareButtons from '@/components/ShareButtons';
+import FavoriteButton from '@/components/FavoriteButton';
 import { addRecentlyViewed } from '@/hooks/useRecentlyViewed';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import TerminbuchungForm from '@/components/TerminbuchungForm';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -57,6 +60,8 @@ function normalizeStoreProperty(p) {
     videoUrl: p.videoUrl || '',
     tourUrl: p.tourUrl || '',
     occupancy: p.occupancy || 'frei',
+    beforeImage: p.beforeImage || '',
+    afterImage: p.afterImage || '',
   };
 }
 
@@ -189,8 +194,9 @@ const HotelSidebar = ({ apt, t }) => (
         {apt.contact?.email ?? 'office@reto-amonn.ch'}
       </a>
 
-      {/* Share */}
-      <div className="pt-1">
+      {/* Share + Favorite */}
+      <div className="pt-1 flex items-center gap-2">
+        <FavoriteButton propertyId={apt.id} size="md" />
         <ShareButtons title={apt.title} />
       </div>
     </div>
@@ -283,7 +289,8 @@ const LongStaySidebar = ({ apt, t }) => (
         {t('vermietung.longStay.requestTitle')}
       </a>
       <p className="text-xs text-gray-400 text-center mt-2">{t('vermietung.longStay.requestSubtitle')}</p>
-      <div className="mt-3">
+      <div className="mt-3 flex items-center gap-2">
+        <FavoriteButton propertyId={apt.id} size="md" />
         <ShareButtons title={apt.title} />
       </div>
     </div>
@@ -345,8 +352,9 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
           {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
         </a>
 
-        {/* Share */}
-        <div className="pt-1">
+        {/* Share + Favorite */}
+        <div className="pt-1 flex items-center gap-2">
+          <FavoriteButton propertyId={apt.id} size="md" />
           <ShareButtons title={apt.title} />
         </div>
       </div>
@@ -427,8 +435,9 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
             </>
           )}
 
-          {/* Share */}
-          <div className="pt-1">
+          {/* Share + Favorite */}
+          <div className="pt-1 flex items-center gap-2">
+            <FavoriteButton propertyId={apt.id} size="md" />
             <ShareButtons title={apt.title} />
           </div>
         </div>
@@ -1013,6 +1022,28 @@ const ApartmentDetailPage = () => {
                 </div>
               </div>
             )}
+
+            {/* Vorher / Nachher Slider */}
+            {apt.beforeImage && apt.afterImage && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-3">Vorher / Nachher</h2>
+                <BeforeAfterSlider
+                  beforeImage={apt.beforeImage}
+                  afterImage={apt.afterImage}
+                />
+              </div>
+            )}
+
+            {/* Terminbuchung */}
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Termin vereinbaren</h2>
+              <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+                <TerminbuchungForm
+                  propertyId={apt.id ?? apt.slug}
+                  propertyName={apt.title}
+                />
+              </div>
+            </div>
 
             {/* Recently viewed */}
             <RecentlyViewedSection currentId={apt.id ?? apt.slug} />

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, BedDouble, Building2, Map } from 'lucide-react';
+import { Menu, X, ChevronDown, BedDouble, Building2, Map, Calculator, Search, Heart } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
+import { useFavorites } from '@/context/FavoritesContext';
+import GlobalSearch from '@/components/GlobalSearch';
 
 const ImmobilienDropdown = ({ onClose }) => {
   const { t } = useTranslation();
@@ -56,6 +58,19 @@ const ImmobilienDropdown = ({ onClose }) => {
             <p className="text-xs text-gray-400 group-hover:text-slate-500">Alle Objekte auf der Karte</p>
           </div>
         </Link>
+        <Link
+          to="/hyporechner"
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+            <Calculator size={15} className="text-amber-600" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold">Hypothekenrechner</p>
+            <p className="text-xs text-gray-400 group-hover:text-amber-500">Rate & Tragbarkeit berechnen</p>
+          </div>
+        </Link>
       </motion.div>
     </div>
   );
@@ -82,9 +97,11 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showImmobilienDropdown, setShowImmobilienDropdown] = useState(false);
   const [showMobileImmobilien, setShowMobileImmobilien] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
   const sectionLogo = useSectionLogo(location.pathname);
+  const { favorites } = useFavorites();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -191,12 +208,54 @@ const Header = () => {
           </div>
 
           {/* Right controls */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2">
+            {/* Search button */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+              aria-label="Suche öffnen"
+            >
+              <Search size={18} />
+            </button>
+
+            {/* Favorites link */}
+            <Link
+              to="/favoriten"
+              className="relative p-2 rounded-lg text-gray-500 hover:text-red-500 hover:bg-red-50 transition-colors"
+              aria-label="Meine Favoriten"
+            >
+              <Heart size={18} className={favorites.length > 0 ? 'fill-red-500 text-red-500' : ''} />
+              {favorites.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
+                  {favorites.length > 9 ? '9+' : favorites.length}
+                </span>
+              )}
+            </Link>
+
             <LanguageSwitcher variant="light" />
           </div>
 
-          {/* Mobile: language + hamburger */}
-          <div className="lg:hidden flex items-center gap-2">
+          {/* Mobile: search + favorites + language + hamburger */}
+          <div className="lg:hidden flex items-center gap-1">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+              aria-label="Suche"
+            >
+              <Search size={18} />
+            </button>
+            <Link
+              to="/favoriten"
+              className="relative p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+              aria-label="Favoriten"
+            >
+              <Heart size={18} className={favorites.length > 0 ? 'fill-red-500 text-red-500' : ''} />
+              {favorites.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
+                  {favorites.length > 9 ? '9+' : favorites.length}
+                </span>
+              )}
+            </Link>
             <LanguageSwitcher variant="light" />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -242,6 +301,7 @@ const Header = () => {
                         <Link to="/immobilien/vermietung" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={14} className="text-gray-400" /> {t('nav.vermietung')}</Link>
                         <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={14} className="text-gray-400" /> {t('nav.verkauf')}</Link>
                         <Link to="/karte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-slate-700 rounded-lg hover:bg-gray-50"><Map size={14} className="text-gray-400" /> Karte</Link>
+                        <Link to="/hyporechner" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-amber-700 rounded-lg hover:bg-gray-50"><Calculator size={14} className="text-gray-400" /> Hypothekenrechner</Link>
                         <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">{t('nav.mietanfrage')}</Link>
                       </motion.div>
                     )}
@@ -264,6 +324,9 @@ const Header = () => {
           )}
         </AnimatePresence>
       </nav>
+
+      {/* Global Search overlay */}
+      <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </motion.header>
   );
 };

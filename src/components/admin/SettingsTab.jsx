@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   MessageCircle, Mail, Phone, MapPin, Clock,
-  Save, RotateCcw, CheckCircle2, Building2, Calendar,
+  Save, RotateCcw, CheckCircle2, Building2, Calendar, Bell,
 } from 'lucide-react';
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from '@/data/settingsStore';
 
@@ -204,6 +204,62 @@ export default function SettingsTab() {
               Kalender aktiv — wird auf der Casa Reto Seite angezeigt.
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── E-Mail Benachrichtigungen ── */}
+      <section>
+        <h3 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
+          <span className="w-6 h-6 rounded-lg bg-amber-100 flex items-center justify-center">
+            <Bell size={13} className="text-amber-600" />
+          </span>
+          E-Mail Benachrichtigungen
+        </h3>
+        <div className="space-y-4 bg-gray-50 rounded-xl p-4 border border-gray-100">
+          {/* Toggle switches */}
+          {[
+            { key: 'notifyMietanfragen', label: 'Neue Mietanfragen' },
+            { key: 'notifyKontakt',      label: 'Neue Kontaktanfragen' },
+            { key: 'notifyTermine',      label: 'Neue Terminanfragen' },
+            { key: 'notifyNewsletter',   label: 'Newsletter Anmeldungen' },
+          ].map(({ key, label }) => (
+            <div key={key} className="flex items-center justify-between">
+              <span className="text-sm text-gray-700">{label}</span>
+              <button
+                type="button"
+                onClick={() => set(key, !form[key])}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+                  form[key] ? 'bg-amber-500' : 'bg-gray-300'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
+                    form[key] ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          ))}
+
+          {/* Notification email */}
+          <div className="pt-2 border-t border-gray-200">
+            <label className={labelCls}>
+              <span className="inline-flex items-center gap-1.5">
+                <Mail size={11} />
+                Benachrichtigungen senden an
+              </span>
+            </label>
+            <input
+              type="email"
+              className={inputCls}
+              value={form.notificationEmail ?? ''}
+              onChange={(e) => set('notificationEmail', e.target.value)}
+              placeholder="office@reto-amonn.ch"
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              An diese Adresse werden E-Mail-Benachrichtigungen gesendet.
+            </p>
+          </div>
         </div>
       </section>
 

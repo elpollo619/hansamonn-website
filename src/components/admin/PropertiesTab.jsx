@@ -21,6 +21,7 @@ import {
   deleteProperty,
   savePropertyOrder,
 } from '@/data/propertiesStore';
+import { logActivity } from '@/data/activityLogStore';
 import PropertyDocumentsManager from '@/components/admin/PropertyDocumentsManager';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -110,6 +111,8 @@ const EMPTY_FORM = {
   features: [],
   lat: '',
   lng: '',
+  beforeImage: '',
+  afterImage: '',
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -711,6 +714,34 @@ function PropertyForm({ property, onSave, onClose }) {
             </p>
           </div>
 
+          {/* Vorher / Nachher Bilder */}
+          <div className="rounded-xl border border-purple-100 bg-purple-50 p-4 space-y-3">
+            <p className="text-sm font-semibold text-purple-800">Vorher / Nachher Bilder (optional)</p>
+            <p className="text-xs text-purple-600">
+              Wenn beide URLs angegeben sind, erscheint auf der Detailseite ein interaktiver Vorher/Nachher-Slider.
+            </p>
+            <div>
+              <label className={labelCls}>Vorher Bild URL</label>
+              <input
+                className={inputCls}
+                type="url"
+                value={form.beforeImage}
+                onChange={(e) => set('beforeImage', e.target.value)}
+                placeholder="https://..."
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Nachher Bild URL</label>
+              <input
+                className={inputCls}
+                type="url"
+                value={form.afterImage}
+                onChange={(e) => set('afterImage', e.target.value)}
+                placeholder="https://..."
+              />
+            </div>
+          </div>
+
           {/* Contact email */}
           <div>
             <label className={labelCls}>Kontakt E-Mail</label>
@@ -800,6 +831,7 @@ export default function PropertiesTab() {
   const [isNewForm, setIsNewForm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [filterType, setFilterType] = useState('all');
+  const [selectedIds, setSelectedIds] = useState(new Set());
   const dragIndexRef = useRef(null);
 
   const reload = useCallback(() => {
@@ -813,8 +845,10 @@ export default function PropertiesTab() {
   const handleSave = (data) => {
     if (editingProperty?.id) {
       updateProperty(editingProperty.id, data);
+      logActivity('Immobilie gespeichert', 'Immobilien', data.name || editingProperty.name);
     } else {
-      createProperty(data);
+      const created = createProperty(data);
+      logActivity('Immobilie erstellt', 'Immobilien', data.name);
     }
     reload();
     setEditingProperty(null);
@@ -828,8 +862,72 @@ export default function PropertiesTab() {
 
   const handleDelete = () => {
     if (!deleteTarget) return;
+    logActivity('Immobilie gelöscht', 'Immobilien', deleteTarget.name);
     deleteProperty(deleteTarget.id);
     setDeleteTarget(null);
+    reload();
+  };
+
+  // ── Bulk selection helpers ─────────────────────────────────────────────────
+
+  const toggleSelect = (id) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = (visibleIds) => {
+    if (visibleIds.every((id) => selectedIds.has(id))) {
+      // all selected → deselect all
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        visibleIds.forEach((id) => next.delete(id));
+        return next;
+      });
+    } else {
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        visibleIds.forEach((id) => next.add(id));
+        return next;
+      });
+    }
+  };
+
+  const handleBulkHide = () => {
+    selectedIds.forEach((id) => {
+      const prop = properties.find((p) => p.id === id);
+      updateProperty(id, { visible: false });
+      if (prop) logActivity('Immobilie ausgeblendet', 'Immobilien', prop.name);
+    });
+    setSelectedIds(new Set());
+    reload();
+  };
+
+  const handleBulkShow = () => {
+    selectedIds.forEach((id) => {
+      const prop = properties.find((p) => p.id === id);
+      updateProperty(id, { visible: true });
+      if (prop) logActivity('Immobilie eingeblendet', 'Immobilien', prop.name);
+    });
+    setSelectedIds(new Set());
+    reload();
+  };
+
+  const handleBulkDelete = () => {
+    const names = [...selectedIds]
+      .map((id) => properties.find((p) => p.id === id)?.name)
+      .filter(Boolean)
+      .join(', ');
+    if (!window.confirm(`${selectedIds.size} Immobilie(n) wirklich löschen?\n\n${names}`)) return;
+    selectedIds.forEach((id) => {
+      const prop = properties.find((p) => p.id === id);
+      if (prop) logActivity('Immobilie gelöscht', 'Immobilien', prop.name);
+      deleteProperty(id);
+    });
+    setSelectedIds(new Set());
     reload();
   };
 
@@ -920,6 +1018,39 @@ export default function PropertiesTab() {
         ))}
       </div>
 
+      {/* Bulk action bar */}
+      {selectedIds.size > 0 && (
+        <div className="mb-4 flex items-center gap-3 bg-gray-900 text-white px-4 py-2.5 rounded-xl">
+          <span className="text-sm font-semibold">{selectedIds.size} ausgewählt</span>
+          <div className="flex-1" />
+          <button
+            onClick={handleBulkHide}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+          >
+            <EyeOff size={13} /> Alle ausblenden
+          </button>
+          <button
+            onClick={handleBulkShow}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+          >
+            <Eye size={13} /> Alle anzeigen
+          </button>
+          <button
+            onClick={handleBulkDelete}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
+          >
+            <Trash2 size={13} /> Alle löschen
+          </button>
+          <button
+            onClick={() => setSelectedIds(new Set())}
+            className="p-1 text-white/60 hover:text-white transition-colors"
+            title="Auswahl aufheben"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
       {/* Properties table */}
       {filtered.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
@@ -936,6 +1067,15 @@ export default function PropertiesTab() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="w-8 px-3 py-3">
+                  <input
+                    type="checkbox"
+                    className="rounded border-gray-300 text-gray-900 focus:ring-gray-900"
+                    checked={filtered.length > 0 && filtered.every((p) => selectedIds.has(p.id))}
+                    onChange={() => toggleSelectAll(filtered.map((p) => p.id))}
+                    title="Alle auswählen"
+                  />
+                </th>
                 <th className="w-8 px-2 py-3" />
                 <th className="text-left px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide">
                   Name
@@ -968,8 +1108,16 @@ export default function PropertiesTab() {
                     onDragOver={(e) => handleDragOver(e, propIndexInAll)}
                     onDrop={(e) => handleDrop(e, propIndexInAll)}
                     onDragEnd={handleDragEnd}
-                    className="hover:bg-gray-50 transition-colors"
+                    className={`hover:bg-gray-50 transition-colors ${selectedIds.has(prop.id) ? 'bg-blue-50' : ''}`}
                   >
+                    <td className="px-3 py-3 w-8">
+                      <input
+                        type="checkbox"
+                        className="rounded border-gray-300 text-gray-900 focus:ring-gray-900"
+                        checked={selectedIds.has(prop.id)}
+                        onChange={() => toggleSelect(prop.id)}
+                      />
+                    </td>
                     <td className="px-2 py-3 w-8">
                       <span className="cursor-grab text-gray-300 hover:text-gray-500 flex items-center justify-center">
                         <GripVertical size={16} />

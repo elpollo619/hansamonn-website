@@ -24,6 +24,7 @@ const Footer = () => {
     { to: '/leistungen', label: t('nav.services') },
     { to: '/immobilien', label: t('nav.immobilien') },
     { to: '/kontakt',    label: t('nav.contact') },
+    { to: '/faq',        label: 'FAQ' },
   ];
 
   const serviceLabels = t('footer.servicesList') || ['Architekturplanung', 'Neubauten', 'Sanierungen & Umbauten', 'Kauf & Verkauf', 'Projektentwicklung', 'Bewirtschaftung'];

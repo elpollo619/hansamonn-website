@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Hero from '@/components/Hero';
+import StatsSection from '@/components/StatsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import StructuredData from '@/components/StructuredData';
@@ -33,6 +34,7 @@ const HomePage = () => {
       <StructuredData data={organizationSchema} />
 
       <Hero />
+      <StatsSection />
       <TestimonialsSection />
       <NewsletterSection />
     </>

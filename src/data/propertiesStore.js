@@ -132,7 +132,7 @@ const DEFAULT_PROPERTIES = [
   },
 ];
 
-// ── Migration: add lat/lng/address/occupancy/sort_order to existing stored properties ──
+// ── Migration: add lat/lng/address/occupancy/sort_order/beforeImage/afterImage to existing stored properties ──
 function migrate(props) {
   return props.map((p, index) => ({
     address: p.location || '',
@@ -141,6 +141,8 @@ function migrate(props) {
     lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
     occupancy: p.occupancy || 'frei',
     sort_order: p.sort_order ?? index,
+    beforeImage: p.beforeImage ?? '',
+    afterImage: p.afterImage ?? '',
   }));
 }
 

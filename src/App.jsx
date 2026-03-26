@@ -10,6 +10,7 @@ import {
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/i18n';
 import { ComparisonProvider } from '@/context/ComparisonContext';
+import { FavoritesProvider } from '@/context/FavoritesContext';
 import CompareBar from '@/components/CompareBar';
 
 import Header from '@/components/Header';
@@ -48,14 +49,18 @@ import KerzersPage from '@/pages/KerzersPage';
 import MunchenbuchseePage from '@/pages/MunchenbuchseePage';
 import MuriPage from '@/pages/MuriPage';
 import MietanfragePage from '@/pages/MietanfragePage';
+import TerminbuchungPage from '@/pages/TerminbuchungPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import NeuigkeitenPage from '@/pages/NeuigkeitenPage';
 import BlogPostPage from '@/pages/BlogPostPage';
+import FAQPage from '@/pages/FAQPage';
 
 // New feature pages
+import FavoritenPage from '@/pages/FavoritenPage';
 import PreisrechnerPage from '@/pages/PreisrechnerPage';
 import VergleichPage from '@/pages/VergleichPage';
 import KartePage from '@/pages/KartePage';
+import HyporechnerPage from '@/pages/HyporechnerPage';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -128,10 +133,20 @@ function AppRoutes() {
           <Route path="/neuigkeiten" element={<NeuigkeitenPage />} />
           <Route path="/neuigkeiten/:slug" element={<BlogPostPage />} />
 
+          {/* FAVORITEN */}
+          <Route path="/favoriten" element={<FavoritenPage />} />
+
           {/* TOOLS */}
           <Route path="/preisrechner" element={<PreisrechnerPage />} />
+          <Route path="/hyporechner" element={<HyporechnerPage />} />
           <Route path="/vergleich" element={<VergleichPage />} />
           <Route path="/karte" element={<KartePage />} />
+
+          {/* FAQ */}
+          <Route path="/faq" element={<FAQPage />} />
+
+          {/* TERMINBUCHUNG */}
+          <Route path="/termin" element={<TerminbuchungPage />} />
 
           {/* CONTACT */}
           <Route path="/kontakt" element={<ContactPage />} />
@@ -161,13 +176,15 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
-      <ComparisonProvider>
-        <Router>
-          <div className="min-h-screen bg-white">
-            <AppRoutes />
-          </div>
-        </Router>
-      </ComparisonProvider>
+      <FavoritesProvider>
+        <ComparisonProvider>
+          <Router>
+            <div className="min-h-screen bg-white">
+              <AppRoutes />
+            </div>
+          </Router>
+        </ComparisonProvider>
+      </FavoritesProvider>
     </LanguageProvider>
   );
 }

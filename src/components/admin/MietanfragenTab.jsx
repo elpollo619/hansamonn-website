@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Inbox, Eye, X, ChevronDown, ChevronUp, Loader2, AlertCircle, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/use-toast';
+import { logActivity } from '@/data/activityLogStore';
 
 const STATUS_CONFIG = {
   neu:        { label: 'Neu',        cls: 'bg-blue-100 text-blue-700' },
@@ -27,6 +28,12 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
     setSaving(false);
     onStatusChange(row.id, s);
     toast({ title: '✓ Status aktualisiert' });
+    logActivity(
+      `Status auf "${STATUS_CONFIG[s]?.label ?? s}" gesetzt`,
+      'Mietanfragen',
+      `${row.vorname} ${row.nachname}`,
+      row.objekt ?? undefined
+    );
   }
 
   const Field = ({ label, value }) => value ? (

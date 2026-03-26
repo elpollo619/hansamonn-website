@@ -13,6 +13,7 @@ import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 import InteractiveMapSection from '@/components/InteractiveMapSection';
 import CompareButton from '@/components/CompareButton';
 import OccupancyBadge from '@/components/OccupancyBadge';
+import FavoriteButton from '@/components/FavoriteButton';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
@@ -165,6 +166,11 @@ const ListingCard = ({ item, index, t }) => {
         {/* Top-left type badge */}
         <div className="absolute top-3 left-3">
           <TypeBadge type={item.type} t={t} />
+        </div>
+
+        {/* Top-right favorite button */}
+        <div className="absolute top-3 right-3">
+          <FavoriteButton propertyId={item.id} size="md" />
         </div>
 
         {/* Price chip */}
