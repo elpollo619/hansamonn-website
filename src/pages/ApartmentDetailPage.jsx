@@ -10,7 +10,9 @@ import {
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
 import { getPropertyById } from '@/data/propertiesStore';
+import { getSetting } from '@/data/settingsStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
+import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -282,54 +284,60 @@ const LongStaySidebar = ({ apt, t }) => (
 
 // ─── CASA RETO / PROJECT SIDEBAR ───────────────────────────────────────────
 
-const ProjectSidebar = ({ apt, t }) => (
+const ProjectSidebar = ({ apt, t, icalUrl }) => (
   <motion.div
     initial={{ opacity: 0, x: 10 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.4, delay: 0.2 }}
-    className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24"
+    className="space-y-4 sticky top-24"
   >
-    {/* Header */}
-    <div className="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-5 text-white">
-      <TypeBadge type="project" t={t} />
-      <h3 className="text-xl font-semibold mt-3 mb-0.5">{apt.title}</h3>
-      <p className="text-sm opacity-75">{apt.location}</p>
-    </div>
-
-    <div className="p-5 space-y-3">
-      {/* Features */}
-      <div className="flex flex-wrap gap-1.5">
-        {apt.features.map((f) => (
-          <span key={f} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-full border border-emerald-100">
-            {f}
-          </span>
-        ))}
+    {/* Main card */}
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-5 text-white">
+        <TypeBadge type="project" t={t} />
+        <h3 className="text-xl font-semibold mt-3 mb-0.5">{apt.title}</h3>
+        <p className="text-sm opacity-75">{apt.location}</p>
       </div>
 
-      {/* Price info */}
-      <div className="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3 text-center">
-        <p className="text-sm font-semibold text-emerald-800">{t('vermietung.project.onRequest')}</p>
-        <p className="text-xs text-emerald-600 mt-0.5">Wir senden Ihnen gerne alle Details</p>
+      <div className="p-5 space-y-3">
+        {/* Features */}
+        <div className="flex flex-wrap gap-1.5">
+          {apt.features.map((f) => (
+            <span key={f} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-full border border-emerald-100">
+              {f}
+            </span>
+          ))}
+        </div>
+
+        {/* Price info */}
+        <div className="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3 text-center">
+          <p className="text-sm font-semibold text-emerald-800">{t('vermietung.project.onRequest')}</p>
+          <p className="text-xs text-emerald-600 mt-0.5">Wir senden Ihnen gerne alle Details</p>
+        </div>
+
+        {/* Primary CTA */}
+        <a
+          href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
+          className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
+        >
+          <Mail size={18} />
+          Aufenthalt anfragen
+        </a>
+
+        {/* Phone */}
+        <a
+          href="tel:+41319518554"
+          className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 rounded-xl transition-colors text-sm"
+        >
+          <Phone size={15} />
+          {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
+        </a>
       </div>
-
-      {/* Primary CTA */}
-      <a
-        href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
-        className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
-      >
-        <Mail size={18} />
-        Aufenthalt anfragen
-      </a>
-
-      {/* Phone */}
-      <a
-        href="tel:+41319518554"
-        className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 rounded-xl transition-colors text-sm"
-      >
-        <Phone size={15} />
-        {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
-      </a>
     </div>
+
+    {/* Availability calendar */}
+    {icalUrl && <AvailabilityCalendar icalUrl={icalUrl} />}
   </motion.div>
 );
 
@@ -740,7 +748,7 @@ const ApartmentDetailPage = () => {
           <div className="lg:col-span-1">
             {apt.type === 'hotel'      && <HotelSidebar apt={apt} t={t} />}
             {apt.type === 'long-stay'  && <LongStaySidebar apt={apt} t={t} />}
-            {apt.type === 'project'    && <ProjectSidebar apt={apt} t={t} />}
+            {apt.type === 'project'    && <ProjectSidebar apt={apt} t={t} icalUrl={getSetting('casaRetoIcalUrl')} />}
             {apt.type === 'apartment'  && (
               <ApartmentSidebar apt={apt} t={t} showForm={showForm} setShowForm={setShowForm} />
             )}

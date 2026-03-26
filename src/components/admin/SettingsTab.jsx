@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   MessageCircle, Mail, Phone, MapPin, Clock,
-  Save, RotateCcw, CheckCircle2, Building2,
+  Save, RotateCcw, CheckCircle2, Building2, Calendar,
 } from 'lucide-react';
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from '@/data/settingsStore';
 
@@ -167,6 +167,43 @@ export default function SettingsTab() {
             onChange={set}
             placeholder="Blümlisalpstrasse 4, 3074 Muri bei Bern"
           />
+        </div>
+      </section>
+
+      {/* ── Casa Reto iCal ── */}
+      <section>
+        <h3 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
+          <span className="w-6 h-6 rounded-lg bg-emerald-100 flex items-center justify-center">
+            <Calendar size={13} className="text-emerald-600" />
+          </span>
+          Casa Reto – Verfügbarkeitskalender
+        </h3>
+        <div className="space-y-4 bg-gray-50 rounded-xl p-4 border border-gray-100">
+          <div>
+            <label className={labelCls}>
+              <span className="inline-flex items-center gap-1.5">
+                <Calendar size={11} />
+                Airbnb iCal-Export-URL
+              </span>
+            </label>
+            <input
+              type="url"
+              className={inputCls}
+              value={form.casaRetoIcalUrl}
+              onChange={(e) => set('casaRetoIcalUrl', e.target.value)}
+              placeholder="https://www.airbnb.com/calendar/ical/XXXXXXXX.ics?s=..."
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              Airbnb → Kalender → Verfügbarkeit exportieren → Link kopieren.
+              Da Airbnb mit Booking.com synchronisiert ist, genügt dieser eine Link.
+            </p>
+          </div>
+          {form.casaRetoIcalUrl && (
+            <div className="text-xs text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2 flex items-center gap-2">
+              <Calendar size={12} />
+              Kalender aktiv — wird auf der Casa Reto Seite angezeigt.
+            </div>
+          )}
         </div>
       </section>
 
