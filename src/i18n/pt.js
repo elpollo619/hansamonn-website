@@ -13,6 +13,8 @@ const pt = {
     verkauf: 'Venda',
     overview: 'Visão geral',
     mietanfrage: 'Pedido de arrendamento',
+    neuigkeiten: 'Notícias',
+    karte: 'Mapa',
   },
 
   common: {

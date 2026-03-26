@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, BedDouble, Building2 } from 'lucide-react';
+import { Menu, X, ChevronDown, BedDouble, Building2, Map } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -41,6 +41,19 @@ const ImmobilienDropdown = ({ onClose }) => {
           <div>
             <p className="text-sm font-semibold">{t('nav.verkauf')}</p>
             <p className="text-xs text-gray-400 group-hover:text-emerald-500">Eigentumswohnungen & Objekte</p>
+          </div>
+        </Link>
+        <Link
+          to="/karte"
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-slate-50 hover:text-slate-700 transition-colors group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+            <Map size={15} className="text-slate-600" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold">Karte</p>
+            <p className="text-xs text-gray-400 group-hover:text-slate-500">Alle Objekte auf der Karte</p>
           </div>
         </Link>
       </motion.div>
@@ -92,7 +105,7 @@ const Header = () => {
     { path: '/team',        label: t('nav.team') },
     { path: '/projekte',    label: t('nav.projects') },
     { path: '/leistungen',  label: t('nav.services') },
-    { path: '/neuigkeiten', label: 'Neuigkeiten' },
+    { path: '/neuigkeiten', label: t('nav.neuigkeiten') },
     { path: '/kontakt',     label: t('nav.contact') },
   ];
 
@@ -228,6 +241,7 @@ const Header = () => {
                         <Link to="/immobilien" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">{t('nav.overview')}</Link>
                         <Link to="/immobilien/vermietung" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={14} className="text-gray-400" /> {t('nav.vermietung')}</Link>
                         <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={14} className="text-gray-400" /> {t('nav.verkauf')}</Link>
+                        <Link to="/karte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-slate-700 rounded-lg hover:bg-gray-50"><Map size={14} className="text-gray-400" /> Karte</Link>
                         <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">{t('nav.mietanfrage')}</Link>
                       </motion.div>
                     )}

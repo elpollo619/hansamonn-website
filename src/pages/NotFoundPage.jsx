@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Home, ArrowLeft } from 'lucide-react';
 
 export default function NotFoundPage() {
   return (
@@ -9,25 +8,26 @@ export default function NotFoundPage() {
         <p className="text-xs font-black tracking-widest text-gray-400 uppercase mb-6">
           HANS AMONN AG
         </p>
-        <h1 className="text-8xl font-black text-gray-900 mb-4">404</h1>
-        <p className="text-lg text-gray-500 mb-10">
-          Diese Seite existiert nicht oder wurde verschoben.
+        <h1 className="text-8xl font-black text-gray-900 mb-3">404</h1>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Seite nicht gefunden
+        </h2>
+        <p className="text-base text-gray-500 mb-10">
+          Die gesuchte Seite existiert nicht oder wurde verschoben.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 text-sm font-semibold tracking-wide hover:bg-gray-700 transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-gray-900 text-white px-6 py-3 text-sm font-semibold tracking-wide hover:bg-gray-700 transition-colors rounded"
           >
-            <Home size={16} />
             Zur Startseite
           </Link>
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center gap-2 border border-gray-300 text-gray-700 px-6 py-3 text-sm font-semibold tracking-wide hover:border-gray-500 transition-colors"
+          <Link
+            to="/immobilien"
+            className="inline-flex items-center justify-center gap-2 border border-gray-300 text-gray-700 px-6 py-3 text-sm font-semibold tracking-wide hover:border-gray-500 transition-colors rounded"
           >
-            <ArrowLeft size={16} />
-            Zurück
-          </button>
+            Immobilien ansehen
+          </Link>
         </div>
       </div>
     </div>

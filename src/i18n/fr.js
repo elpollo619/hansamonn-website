@@ -13,6 +13,8 @@ const fr = {
     verkauf: 'Vente',
     overview: 'Aperçu',
     mietanfrage: 'Demande de location',
+    neuigkeiten: 'Actualités',
+    karte: 'Carte',
   },
 
   common: {

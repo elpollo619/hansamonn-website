@@ -13,6 +13,8 @@ const it = {
     verkauf: 'Vendita',
     overview: 'Panoramica',
     mietanfrage: 'Richiesta di locazione',
+    neuigkeiten: 'Notizie',
+    karte: 'Mappa',
   },
 
   common: {

@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft, Phone, Mail, MapPin, Home, Maximize2,
-  CheckCircle2, Calendar, ChevronLeft, ChevronRight, X,
-  ExternalLink, Sun, Coffee, Building2, Car, Wifi,
+  CheckCircle2, Calendar, ExternalLink, Sun, Coffee,
+  Building2, Car, Wifi, Download,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
@@ -13,6 +13,8 @@ import { getPropertyById } from '@/data/propertiesStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import PropertyDocuments from '@/components/PropertyDocuments';
+import Lightbox from '@/components/Lightbox';
+import StructuredData from '@/components/StructuredData';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -59,28 +61,7 @@ const RentalImage = ({ src, alt, className }) => {
   );
 };
 
-// ─── Lightbox ──────────────────────────────────────────────────────────────
-
-const ImageLightbox = ({ images, activeIndex, onClose, onPrev, onNext }) => (
-  <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4" onClick={onClose}>
-    <button onClick={onClose} className="absolute top-4 right-4 text-white/70 hover:text-white p-2 rounded-full hover:bg-white/10">
-      <X size={24} />
-    </button>
-    <button onClick={(e) => { e.stopPropagation(); onPrev(); }} className="absolute left-4 text-white/70 hover:text-white p-3 rounded-full hover:bg-white/10">
-      <ChevronLeft size={28} />
-    </button>
-    <img
-      src={images[activeIndex].url}
-      alt={images[activeIndex].alt}
-      className="max-h-[85vh] max-w-full object-contain rounded-lg"
-      onClick={(e) => e.stopPropagation()}
-    />
-    <button onClick={(e) => { e.stopPropagation(); onNext(); }} className="absolute right-4 text-white/70 hover:text-white p-3 rounded-full hover:bg-white/10">
-      <ChevronRight size={28} />
-    </button>
-    <p className="absolute bottom-4 text-white/50 text-sm">{activeIndex + 1} / {images.length}</p>
-  </div>
-);
+// ─── Lightbox: imported from @/components/Lightbox ─────────────────────────
 
 // ─── Type badge ────────────────────────────────────────────────────────────
 
@@ -496,11 +477,189 @@ const ApartmentDetailPage = () => {
 
   const openLightbox  = (i) => setLightbox({ open: true, index: i });
   const closeLightbox = ()  => setLightbox({ open: false, index: 0 });
-  const imgCount = apt.images?.length ?? 1;
-  const prevImg = () => setLightbox((l) => ({ ...l, index: (l.index - 1 + imgCount) % imgCount }));
-  const nextImg = () => setLightbox((l) => ({ ...l, index: (l.index + 1) % imgCount }));
+
+  // ── PDF Exposé export ──────────────────────────────────────────────────
+  const handleExposeDownload = async () => {
+    try {
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pageW = 210;
+      const margin = 18;
+      const contentW = pageW - margin * 2;
+      let y = 20;
+
+      const line = (h = 6) => { y += h; };
+      const checkPage = (needed = 12) => {
+        if (y + needed > 275) { doc.addPage(); y = 20; }
+      };
+
+      // Header bar
+      doc.setFillColor(30, 64, 175);
+      doc.rect(0, 0, pageW, 14, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Hans Amonn AG · Immobilien · office@reto-amonn.ch · +41 (0)31 951 85 54', margin, 9);
+
+      y = 26;
+
+      // Title
+      doc.setTextColor(17, 24, 39);
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      const titleLines = doc.splitTextToSize(apt.title, contentW);
+      doc.text(titleLines, margin, y);
+      y += titleLines.length * 9;
+
+      // Subtitle / location
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(107, 114, 128);
+      if (apt.subtitle) {
+        const subLines = doc.splitTextToSize(apt.subtitle, contentW);
+        doc.text(subLines, margin, y);
+        y += subLines.length * 6;
+      }
+      if (apt.location) { doc.text(`Standort: ${apt.location}`, margin, y); line(6); }
+
+      // Divider
+      line(3);
+      doc.setDrawColor(229, 231, 235);
+      doc.line(margin, y, pageW - margin, y);
+      line(6);
+
+      // Key stats
+      const stats = [];
+      if (apt.price)         stats.push({ label: 'Preis', value: `${apt.currency ?? 'CHF'} ${apt.price?.toLocaleString('de-CH')}${apt.type === 'apartment' ? ' / Mt.' : apt.type === 'hotel' ? ' / Nacht' : ''}` });
+      if (apt.rooms)         stats.push({ label: 'Zimmer', value: String(apt.rooms) });
+      if (apt.size)          stats.push({ label: 'Fläche', value: `${apt.size} m²` });
+      if (apt.availableFrom) stats.push({ label: 'Verfügbar ab', value: new Date(apt.availableFrom).toLocaleDateString('de-CH') });
+
+      if (stats.length) {
+        checkPage(20);
+        const colW = contentW / Math.min(stats.length, 4);
+        stats.slice(0, 4).forEach((s, i) => {
+          const x = margin + i * colW;
+          doc.setFillColor(239, 246, 255);
+          doc.roundedRect(x, y, colW - 3, 16, 2, 2, 'F');
+          doc.setFontSize(7);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(107, 114, 128);
+          doc.text(s.label.toUpperCase(), x + 4, y + 5.5);
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(17, 24, 39);
+          doc.text(s.value, x + 4, y + 12.5);
+        });
+        y += 22;
+      }
+
+      // Description
+      if (apt.description) {
+        checkPage(16);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(17, 24, 39);
+        doc.text('Beschreibung', margin, y);
+        line(7);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(55, 65, 81);
+        const descLines = doc.splitTextToSize(apt.description, contentW);
+        descLines.forEach((dl) => { checkPage(6); doc.text(dl, margin, y); line(5.5); });
+        line(2);
+      }
+
+      // Features
+      if (apt.features?.length) {
+        checkPage(16);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(17, 24, 39);
+        doc.text('Ausstattung', margin, y);
+        line(7);
+        const cols = 2;
+        const fColW = contentW / cols;
+        apt.features.forEach((f, i) => {
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          if (col === 0) checkPage(7);
+          const fx = margin + col * fColW;
+          const fy = y + row * 7;
+          doc.setFillColor(59, 130, 246);
+          doc.circle(fx + 2, fy - 1.5, 1.2, 'F');
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(55, 65, 81);
+          doc.text(f, fx + 6, fy);
+        });
+        y += Math.ceil(apt.features.length / cols) * 7 + 4;
+      }
+
+      // Contact
+      checkPage(28);
+      doc.setDrawColor(229, 231, 235);
+      doc.line(margin, y, pageW - margin, y);
+      line(6);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(17, 24, 39);
+      doc.text('Kontakt', margin, y);
+      line(7);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(55, 65, 81);
+      doc.text('Hans Amonn AG', margin, y); line(5.5);
+      doc.text(`Tel: ${apt.contact?.phone ?? '+41 (0)31 951 85 54'}`, margin, y); line(5.5);
+      doc.text(`E-Mail: ${apt.contact?.email ?? 'office@reto-amonn.ch'}`, margin, y);
+
+      // Page footers
+      const pages = doc.getNumberOfPages();
+      for (let p = 1; p <= pages; p++) {
+        doc.setPage(p);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(156, 163, 175);
+        doc.text(
+          `Exposé – ${apt.title} · ${new Date().toLocaleDateString('de-CH')} · Seite ${p} / ${pages}`,
+          margin, 291,
+        );
+      }
+
+      const filename = `expose-${(apt.title ?? 'objekt').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.pdf`;
+      doc.save(filename);
+    } catch (err) {
+      console.error('PDF export failed:', err);
+      window.print();
+    }
+  };
 
   const pageTitle = `${apt.title} – ${apt.location} | Hans Amonn AG`;
+  const pageUrl   = `https://www.hansamonn.ch/immobilien/${apt.slug}`;
+
+  const schemaType = apt.type === 'hotel' || apt.type === 'project' ? 'Accommodation' : 'RealEstateListing';
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': schemaType,
+    name: apt.title,
+    description: apt.description,
+    url: pageUrl,
+    image: apt.images?.[0]?.url
+      ? `https://www.hansamonn.ch${apt.images[0].url}`
+      : undefined,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: apt.location,
+      addressCountry: 'CH',
+    },
+    ...(apt.price && {
+      offers: {
+        '@type': 'Offer',
+        price: apt.price,
+        priceCurrency: apt.currency ?? 'CHF',
+      },
+    }),
+  };
 
   return (
     <>
@@ -508,20 +667,19 @@ const ApartmentDetailPage = () => {
         <title>{pageTitle}</title>
         <meta name="description" content={apt.description?.slice(0, 160)} />
       </Helmet>
+      <StructuredData data={structuredData} />
 
       {lightbox.open && (
-        <ImageLightbox
+        <Lightbox
           images={apt.images}
-          activeIndex={lightbox.index}
+          initialIndex={lightbox.index}
           onClose={closeLightbox}
-          onPrev={prevImg}
-          onNext={nextImg}
         />
       )}
 
-      {/* ── Back nav ── */}
-      <div className="border-b border-gray-100 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl py-3">
+      {/* ── Back nav + Exposé button ── */}
+      <div className="border-b border-gray-100 bg-white print:hidden">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl py-3 flex items-center justify-between">
           <Link
             to="/immobilien/vermietung"
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition-colors"
@@ -529,6 +687,13 @@ const ApartmentDetailPage = () => {
             <ArrowLeft size={16} />
             {t('vermietung.detail.back')}
           </Link>
+          <button
+            onClick={handleExposeDownload}
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-blue-700 border border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-colors"
+          >
+            <Download size={14} />
+            Exposé herunterladen
+          </button>
         </div>
       </div>
 

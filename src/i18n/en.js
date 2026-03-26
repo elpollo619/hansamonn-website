@@ -13,6 +13,8 @@ const en = {
     verkauf: 'For Sale',
     overview: 'Overview',
     mietanfrage: 'Rental Inquiry',
+    neuigkeiten: 'News',
+    karte: 'Map',
   },
 
   common: {

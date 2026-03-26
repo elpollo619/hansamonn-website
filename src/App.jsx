@@ -16,6 +16,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import VirtualAgent from '@/components/VirtualAgent';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import CookieBanner from '@/components/CookieBanner';
+import LiveChat from '@/components/LiveChat';
 
 // Pages
 import HomePage from '@/pages/HomePage';
@@ -52,6 +54,7 @@ import BlogPostPage from '@/pages/BlogPostPage';
 // New feature pages
 import PreisrechnerPage from '@/pages/PreisrechnerPage';
 import VergleichPage from '@/pages/VergleichPage';
+import KartePage from '@/pages/KartePage';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -126,6 +129,7 @@ function AppRoutes() {
           {/* TOOLS */}
           <Route path="/preisrechner" element={<PreisrechnerPage />} />
           <Route path="/vergleich" element={<VergleichPage />} />
+          <Route path="/karte" element={<KartePage />} />
 
           {/* CONTACT */}
           <Route path="/kontakt" element={<ContactPage />} />
@@ -146,6 +150,8 @@ function AppRoutes() {
       <Toaster />
       <WhatsAppButton />
       <VirtualAgent />
+      <CookieBanner />
+      <LiveChat />
     </>
   );
 }

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   MapPin, Home, Phone, Mail, ArrowRight,
   CheckCircle2, ExternalLink, Coffee, Building2, Sun,
-  Bell,
+  Bell, Search, X, SlidersHorizontal,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
@@ -285,11 +285,55 @@ const ApartmentsEmptyState = () => (
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+// ─── Price range helper ───────────────────────────────────────────────────────
+
+const PRICE_RANGES = [
+  { key: 'all',    label: 'Alle Preise' },
+  { key: 'under1000', label: 'Bis CHF 1000' },
+  { key: '1000-2000', label: 'CHF 1000–2000' },
+  { key: 'over2000',  label: 'Über CHF 2000' },
+];
+
+const priceInRange = (price, rangeKey) => {
+  if (rangeKey === 'all') return true;
+  if (price === null || price === undefined) return false;
+  if (rangeKey === 'under1000') return price < 1000;
+  if (rangeKey === '1000-2000') return price >= 1000 && price <= 2000;
+  if (rangeKey === 'over2000')  return price > 2000;
+  return true;
+};
+
+// ─── Type label map for filter dropdown ──────────────────────────────────────
+
+const TYPE_LABELS = {
+  'all':        'Alle Typen',
+  'long-stay':  'Langzeitmiete',
+  'hotel':      'Hotel',
+  'project':    'Ferienhaus',
+  'apartment':  'Ferienwohnung',
+};
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 const VermietungPage = () => {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('all');
 
+  // Search & filter state
+  const [searchQuery, setSearchQuery]   = useState('');
+  const [typeFilter,  setTypeFilter]    = useState('all');
+  const [locationFilter, setLocationFilter] = useState('all');
+  const [priceFilter, setPriceFilter]   = useState('all');
+
   const allItems = getNormalizedVisibleProperties();
+
+  // Derive unique locations from data
+  const uniqueLocations = useMemo(() => {
+    const locs = allItems
+      .map((item) => item.location)
+      .filter(Boolean);
+    return ['all', ...Array.from(new Set(locs))];
+  }, [allItems]);
 
   const counts = {
     apartment:   allItems.filter((a) => a.type === 'apartment').length,
@@ -298,9 +342,46 @@ const VermietungPage = () => {
     project:     allItems.filter((a) => a.type === 'project').length,
   };
 
-  const filtered = filter === 'all'
+  // Tab-filtered items (existing tab behaviour)
+  const tabFiltered = filter === 'all'
     ? allItems
     : allItems.filter((a) => a.type === filter);
+
+  // Apply search + dropdowns on top of the tab result
+  const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return tabFiltered.filter((item) => {
+      // Search
+      if (q) {
+        const haystack = [
+          item.title   || '',
+          item.location || '',
+          item.subtitle || item.description || '',
+        ].join(' ').toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
+      // Type dropdown
+      if (typeFilter !== 'all' && item.type !== typeFilter) return false;
+      // Location dropdown
+      if (locationFilter !== 'all' && item.location !== locationFilter) return false;
+      // Price range
+      if (!priceInRange(item.price, priceFilter)) return false;
+      return true;
+    });
+  }, [tabFiltered, searchQuery, typeFilter, locationFilter, priceFilter]);
+
+  const hasActiveFilters =
+    searchQuery.trim() !== '' ||
+    typeFilter !== 'all' ||
+    locationFilter !== 'all' ||
+    priceFilter !== 'all';
+
+  const resetFilters = () => {
+    setSearchQuery('');
+    setTypeFilter('all');
+    setLocationFilter('all');
+    setPriceFilter('all');
+  };
 
   const tabs = [
     { key: 'all',       label: 'Alle Angebote',  count: allItems.length },
@@ -449,7 +530,7 @@ const VermietungPage = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
 
           {/* Filter tabs */}
-          <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          <div className="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             {tabs.map((tab) => (
               <button
                 key={tab.key}
@@ -477,26 +558,149 @@ const VermietungPage = () => {
             ))}
           </div>
 
+          {/* ── Search & filter bar ── */}
+          <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row gap-3">
+
+              {/* Search input */}
+              <div className="relative flex-1 min-w-0">
+                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Suchen nach Titel, Ort, Beschreibung …"
+                  className="w-full pl-9 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    aria-label="Suche löschen"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+
+              {/* Typ dropdown */}
+              <div className="relative sm:w-44">
+                <SlidersHorizontal size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                <select
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                  className="w-full appearance-none pl-8 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors cursor-pointer"
+                >
+                  {Object.entries(TYPE_LABELS).map(([val, label]) => (
+                    <option key={val} value={val}>{label}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Standort dropdown */}
+              <div className="relative sm:w-52">
+                <MapPin size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+                <select
+                  value={locationFilter}
+                  onChange={(e) => setLocationFilter(e.target.value)}
+                  className="w-full appearance-none pl-8 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors cursor-pointer"
+                >
+                  {uniqueLocations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc === 'all' ? 'Alle Standorte' : loc}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+
+              {/* Preis dropdown */}
+              <div className="relative sm:w-44">
+                <select
+                  value={priceFilter}
+                  onChange={(e) => setPriceFilter(e.target.value)}
+                  className="w-full appearance-none pl-4 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors cursor-pointer"
+                >
+                  {PRICE_RANGES.map((r) => (
+                    <option key={r.key} value={r.key}>{r.label}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Results count + reset */}
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <p className="text-xs text-gray-500">
+                <span className="font-semibold text-gray-700">{filtered.length}</span>{' '}
+                {filtered.length === 1 ? 'Ergebnis' : 'Ergebnisse'}
+              </p>
+              {hasActiveFilters && (
+                <button
+                  onClick={resetFilters}
+                  className="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                >
+                  <X size={12} />
+                  Filter zurücksetzen
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Grid */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={filter}
+              key={`${filter}-${searchQuery}-${typeFilter}-${locationFilter}-${priceFilter}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch"
             >
-              {filter === 'apartment' && counts.apartment === 0 ? (
+              {filter === 'apartment' && counts.apartment === 0 && !hasActiveFilters ? (
                 <ApartmentsEmptyState />
               ) : filtered.length > 0 ? (
                 filtered.map((item, i) => (
                   <ListingCard key={item.id} item={item} index={i} t={t} />
                 ))
               ) : (
-                <div className="col-span-full text-center py-20">
-                  <p className="text-gray-400">Keine Angebote in dieser Kategorie.</p>
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="col-span-full"
+                >
+                  <div className="bg-white rounded-2xl border border-gray-100 p-10 md:p-14 text-center max-w-lg mx-auto">
+                    <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <Search size={20} className="text-gray-400" />
+                    </div>
+                    <h3 className="text-base font-semibold text-gray-900 mb-2">
+                      Keine Ergebnisse gefunden
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-5 max-w-xs mx-auto">
+                      Für Ihre aktuellen Filter wurden keine Angebote gefunden. Passen Sie die Suchkriterien an.
+                    </p>
+                    <button
+                      onClick={resetFilters}
+                      className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm"
+                    >
+                      <X size={14} />
+                      Filter zurücksetzen
+                    </button>
+                  </div>
+                </motion.div>
               )}
             </motion.div>
           </AnimatePresence>
