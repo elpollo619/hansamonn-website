@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare, HelpCircle, Calendar, Activity } from 'lucide-react';
+import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare, HelpCircle, Calendar, Activity, KeyRound, X, Eye, EyeOff, Check } from 'lucide-react';
+import { changeOwnPassword } from '@/data/usersStore';
+import { toast } from '@/components/ui/use-toast';
 import PropertiesTab from '@/components/admin/PropertiesTab';
 import TeamEditTab from '@/components/admin/TeamEditTab';
 import ProjectsEditTab from '@/components/admin/ProjectsEditTab';
@@ -33,10 +35,83 @@ const TABS = [
   { id: 'termine',      label: 'Termine',       icon: Calendar },
 ];
 
+function ChangePasswordModal({ userId, onClose }) {
+  const [form, setForm] = useState({ current: '', next: '', confirm: '' });
+  const [show, setShow] = useState({ current: false, next: false, confirm: false });
+  const [loading, setLoading] = useState(false);
+
+  function submit(e) {
+    e.preventDefault();
+    if (form.next !== form.confirm) {
+      toast({ title: 'Passwörter stimmen nicht überein', variant: 'destructive' }); return;
+    }
+    setLoading(true);
+    try {
+      changeOwnPassword(userId, form.current, form.next);
+      toast({ title: '✓ Passwort geändert', description: 'Ihr Passwort wurde erfolgreich aktualisiert.' });
+      onClose();
+    } catch (err) {
+      toast({ title: 'Fehler', description: err.message, variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const inp = 'w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 pr-10';
+  const PasswordField = ({ field, label }) => (
+    <div>
+      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
+      <div className="relative">
+        <input
+          type={show[field] ? 'text' : 'password'}
+          value={form[field]}
+          onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
+          className={inp}
+          required
+        />
+        <button type="button" onClick={() => setShow(s => ({ ...s, [field]: !s[field] }))}
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700">
+          {show[field] ? <EyeOff size={15} /> : <Eye size={15} />}
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center gap-2">
+            <KeyRound size={18} className="text-gray-700" />
+            <h3 className="font-bold text-gray-900">Passwort ändern</h3>
+          </div>
+          <button onClick={onClose} className="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"><X size={18} /></button>
+        </div>
+        <form onSubmit={submit} className="p-6 space-y-4">
+          <PasswordField field="current" label="Aktuelles Passwort *" />
+          <PasswordField field="next" label="Neues Passwort * (min. 6 Zeichen)" />
+          <PasswordField field="confirm" label="Neues Passwort bestätigen *" />
+          <div className="flex gap-3 pt-2">
+            <button type="submit" disabled={loading}
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50">
+              <Check size={15} /> Speichern
+            </button>
+            <button type="button" onClick={onClose}
+              className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+              Abbrechen
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPanel() {
   const { logout, user, isAdmin } = useAdminAuth();
   const [activeTab, setActiveTab] = useState('stats');
   const [quickStats, setQuickStats] = useState({ mietanfragen: 0, termine: 0, kontakt: 0 });
+  const [showChangePw, setShowChangePw] = useState(false);
 
   useEffect(() => {
     async function loadQuickStats() {
@@ -80,12 +155,19 @@ export default function AdminPanel() {
             <span className="text-gray-300">|</span>
             <p className="text-xs text-gray-500">Admin Panel</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
               <span className={`w-2 h-2 rounded-full ${isAdmin ? 'bg-gray-900' : 'bg-blue-500'}`} />
               <span className="font-medium">{user?.name}</span>
               <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${isAdmin ? 'bg-gray-900 text-white' : 'bg-blue-100 text-blue-700'}`}>{isAdmin ? 'Admin' : 'Staff'}</span>
             </div>
+            <button
+              onClick={() => setShowChangePw(true)}
+              className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              title="Passwort ändern"
+            >
+              <KeyRound size={15} /> <span className="hidden sm:inline">Passwort</span>
+            </button>
             <button onClick={logout} className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors">
               <LogOut size={15} /> Abmelden
             </button>
@@ -193,6 +275,10 @@ export default function AdminPanel() {
           </div>
         </div>
       </div>
+
+      {showChangePw && user && (
+        <ChangePasswordModal userId={user.id} onClose={() => setShowChangePw(false)} />
+      )}
     </div>
   );
 }

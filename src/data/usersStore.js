@@ -64,3 +64,31 @@ export function deleteUser(id) {
   if (id === 'admin-root') throw new Error('Haupt-Admin kann nicht gelöscht werden');
   _save(getUsers().filter(u => u.id !== id));
 }
+
+/**
+ * Change own password — requires current password to be correct.
+ * Returns true on success, throws on error.
+ */
+export function changeOwnPassword(userId, currentPassword, newPassword) {
+  const users = getUsers();
+  const idx = users.findIndex(u => u.id === userId);
+  if (idx === -1) throw new Error('Benutzer nicht gefunden');
+  if (users[idx].password !== currentPassword) throw new Error('Aktuelles Passwort ist falsch');
+  if (!newPassword || newPassword.length < 6) throw new Error('Neues Passwort muss mindestens 6 Zeichen haben');
+  users[idx] = { ...users[idx], password: newPassword };
+  _save(users);
+  return true;
+}
+
+/**
+ * Admin resets another user's password — no current password check.
+ */
+export function adminResetPassword(targetUserId, newPassword) {
+  if (!newPassword || newPassword.length < 6) throw new Error('Passwort muss mindestens 6 Zeichen haben');
+  const users = getUsers();
+  const idx = users.findIndex(u => u.id === targetUserId);
+  if (idx === -1) throw new Error('Benutzer nicht gefunden');
+  users[idx] = { ...users[idx], password: newPassword };
+  _save(users);
+  return true;
+}
