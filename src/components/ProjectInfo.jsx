@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Calendar, Building2, Award, Wrench, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import { toast } from '@/components/ui/use-toast';
 
 const ProjectInfo = ({ project, onButtonClick }) => {
@@ -130,12 +131,18 @@ const ProjectInfo = ({ project, onButtonClick }) => {
             </div>
           )}
 
-          <Button
-            onClick={onButtonClick}
-            className="brand-gradient hover:brand-gradient-hover text-white w-full"
-          >
-            {project.category === 'hotel' ? 'Hotel Details ansehen' : 'Projekt anfragen'}
-          </Button>
+          {project.category === 'hotel' ? (
+            <Button asChild className="brand-gradient hover:brand-gradient-hover text-white w-full">
+              <Link to="/ns-hotel">Hotel Details ansehen</Link>
+            </Button>
+          ) : (
+            <Button
+              onClick={onButtonClick}
+              className="brand-gradient hover:brand-gradient-hover text-white w-full"
+            >
+              Projekt anfragen
+            </Button>
+          )}
         </div>
       </div>
     </div>
