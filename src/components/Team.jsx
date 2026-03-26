@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { teamMembers } from '@/components/TeamData';
+import { getVisibleTeam } from '@/data/teamStore';
 import TeamMember from '@/components/TeamMember';
 import TeamStats from '@/components/TeamStats';
 import TeamInfo from '@/components/TeamInfo';
 
 const Team = () => {
+  const [teamMembers, setTeamMembers] = useState(() => getVisibleTeam());
+
+  useEffect(() => {
+    setTeamMembers(getVisibleTeam());
+  }, []);
+
   return (
     <section id="team" className="py-20 bg-gray-50">
       <div className="container mx-auto px-6">
@@ -21,7 +27,7 @@ const Team = () => {
             Unser <span className="font-bold gradient-text">Team</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Lernen Sie die talentierten Fachkräfte der Hans Amonn AG kennen, die mit Leidenschaft 
+            Lernen Sie die talentierten Fachkräfte der Hans Amonn AG kennen, die mit Leidenschaft
             und Fachwissen Ihre Bau- und Immobilienprojekte erfolgreich umsetzen.
           </p>
         </motion.div>

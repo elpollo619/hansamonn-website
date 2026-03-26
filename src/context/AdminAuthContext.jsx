@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
+import { validateCredentials } from '@/data/usersStore';
 
-const STORAGE_KEY = 'ha_admin_auth';
-const CREDENTIALS = {
-  email: 'admin@hansamonn.ch',
-  password: 'HansAmonn2024!',
-};
-
+const STORAGE_KEY = 'ha_admin_user';
 const AdminAuthContext = createContext(null);
 
 export function useAdminAuth() {
@@ -15,26 +11,38 @@ export function useAdminAuth() {
 }
 
 export default function AdminAuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem(STORAGE_KEY) === 'true';
+  const [user, setUser] = useState(() => {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
   });
 
   function login(email, password) {
-    if (email === CREDENTIALS.email && password === CREDENTIALS.password) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem(STORAGE_KEY, 'true');
+    const validated = validateCredentials(email, password);
+    if (validated) {
+      setUser(validated);
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(validated));
       return true;
     }
     return false;
   }
 
   function logout() {
-    setIsAuthenticated(false);
+    setUser(null);
     sessionStorage.removeItem(STORAGE_KEY);
   }
 
+  const isAuthenticated = Boolean(user);
+  const isAdmin = user?.role === 'admin';
+  const isStaff = user?.role === 'staff';
+  const canDelete = isAdmin;
+  const canManageUsers = isAdmin;
+
   return (
-    <AdminAuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AdminAuthContext.Provider value={{ isAuthenticated, user, isAdmin, isStaff, canDelete, canManageUsers, login, logout }}>
       {children}
     </AdminAuthContext.Provider>
   );

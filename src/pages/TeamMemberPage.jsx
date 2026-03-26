@@ -4,33 +4,22 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Mail, GraduationCap, Award, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { teamMembers } from '@/components/TeamData';
+import { getMemberBySlug, getVisibleTeam } from '@/data/teamStore';
 
-const PLACEHOLDER_IMAGES = {
-  2: 'https://images.unsplash.com/photo-1648469941040-b1c1fac2d4b2?w=800&q=80',
-  3: 'https://images.unsplash.com/photo-1581093196867-ca3dba3c721b?w=800&q=80',
-  4: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
-  5: 'https://images.unsplash.com/photo-1677272295529-e72d5f7dd97e?w=800&q=80',
-  8: 'https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?w=800&q=80',
-  9: 'https://images.unsplash.com/photo-1591630156291-91b867f54b8c?w=800&q=80',
-  10: 'https://images.unsplash.com/photo-1583737177686-bbee18dfbecd?w=800&q=80',
-};
+const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1591630156291-91b867f54b8c?w=800&q=80';
 
 const TeamMemberPage = () => {
   const { slug } = useParams();
-  const member = teamMembers.find((m) => m.slug === slug);
+  const teamMembers = getVisibleTeam();
+  const member = getMemberBySlug(slug);
 
   if (!member) {
     return <Navigate to="/team" replace />;
   }
 
-  const imageUrl =
-    member.hasPhoto && member.photoUrl
-      ? member.photoUrl
-      : PLACEHOLDER_IMAGES[member.id] ||
-        'https://images.unsplash.com/photo-1591630156291-91b867f54b8c?w=800&q=80';
+  const imageUrl = member.photoUrl || PLACEHOLDER_IMAGE;
 
-  const Icon = member.icon;
+  const Icon = member.icon ?? null;
 
   // Adjacent members for prev/next navigation
   const index = teamMembers.findIndex((m) => m.slug === slug);
@@ -73,9 +62,11 @@ const TeamMemberPage = () => {
                     alt={`${member.name} – ${member.position}`}
                     className="w-full h-full object-cover"
                   />
+                  {Icon && (
                   <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow">
                     <Icon size={20} className="text-blue-600" />
                   </div>
+                )}
                 </div>
 
                 <div className="p-6">

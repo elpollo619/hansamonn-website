@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { projectsData } from '@/components/ProjectData';
+import { getProjectById } from '@/data/projectsStore';
 import ProjectGallery from '@/components/ProjectGallery';
 import ProjectInfo from '@/components/ProjectInfo';
 import ProjectImages from '@/components/ProjectImages';
@@ -17,7 +17,7 @@ const ProjectDetailPage = () => {
   const [lightboxImage, setLightboxImage] = useState(null);
 
   useEffect(() => {
-    const foundProject = projectsData.find(p => p.id.toString() === id);
+    const foundProject = getProjectById(id);
     setProject(foundProject);
     window.scrollTo(0, 0);
   }, [id]);

@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { projectsData, categories } from '@/components/ProjectData';
+import { getVisibleProjects, categories } from '@/data/projectsStore';
 import { ArrowRight } from 'lucide-react';
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('alle');
+  const [projectsData, setProjectsData] = useState(() => getVisibleProjects());
 
-  const filteredProjects = activeCategory === 'alle' 
-    ? projectsData 
+  useEffect(() => {
+    setProjectsData(getVisibleProjects());
+  }, []);
+
+  const filteredProjects = activeCategory === 'alle'
+    ? projectsData
     : projectsData.filter(project => project.category === activeCategory);
 
   return (
