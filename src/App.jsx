@@ -40,6 +40,7 @@ import KerzersPage from '@/pages/KerzersPage';
 import MunchenbuchseePage from '@/pages/MunchenbuchseePage';
 import MuriPage from '@/pages/MuriPage';
 import MietanfragePage from '@/pages/MietanfragePage';
+import NotFoundPage from '@/pages/NotFoundPage';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -113,8 +114,8 @@ function AppRoutes() {
           <Route path="/impressum" element={<ImpressumPage />} />
           <Route path="/datenschutz" element={<PrivacyPolicyPage />} />
 
-          {/* CATCH-ALL — redirect unknown URLs to home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* CATCH-ALL — show 404 page for unknown URLs */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <Footer />
