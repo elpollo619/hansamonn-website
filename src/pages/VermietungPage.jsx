@@ -1,114 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { Link } from "react-router-dom";
-import { Building2, BedDouble, Hotel, ArrowRight, ClipboardList } from "lucide-react";
-
-export default function VermietungPage() {
-  return (
-    <div className="bg-white text-slate-900">
-      <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">
-        <div className="container mx-auto px-6 py-20">
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white px-4 py-2 text-sm text-sky-700 mb-6">
-              Vermietung
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Vermietung, Long Stay, Short Stay und Apartments
-            </h1>
-
-            <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-8">
-              Hier finden Sie alle Bereiche unserer Vermietung. Diese Seite eignet
-              sich ideal als allgemeine Zielseite für QR-Codes, da Besucher von hier
-              aus direkt zum passenden Angebot weitergeleitet werden können.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="container mx-auto px-6 py-16">
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-          <Link
-            to="/vermietung/long-stay"
-            className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5">
-              <BedDouble className="text-sky-600" size={22} />
-            </div>
-
-            <h2 className="text-2xl font-bold mb-3">Long Stay</h2>
-            <p className="text-slate-600 leading-7 mb-6">
-              Lösungen für längere Aufenthalte, Mitarbeitende und temporäres Wohnen.
-            </p>
-
-            <span className="inline-flex items-center gap-2 text-sky-600 font-semibold">
-              Bereich öffnen
-              <ArrowRight size={18} />
-            </span>
-          </Link>
-
-          <Link
-            to="/vermietung/short-stay"
-            className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5">
-              <Hotel className="text-sky-600" size={22} />
-            </div>
-
-            <h2 className="text-2xl font-bold mb-3">Short Stay</h2>
-            <p className="text-slate-600 leading-7 mb-6">
-              Kurzaufenthalte, Hotel und Ferienunterkünfte mit direkter oder externer Buchung.
-            </p>
-
-            <span className="inline-flex items-center gap-2 text-sky-600 font-semibold">
-              Bereich öffnen
-              <ArrowRight size={18} />
-            </span>
-          </Link>
-
-          <Link
-            to="/vermietung/apartments"
-            className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5">
-              <Building2 className="text-sky-600" size={22} />
-            </div>
-
-            <h2 className="text-2xl font-bold mb-3">Apartments</h2>
-            <p className="text-slate-600 leading-7 mb-6">
-              Übersicht aller aktuellen Apartments und weiteren Mietobjekte.
-            </p>
-
-            <span className="inline-flex items-center gap-2 text-sky-600 font-semibold">
-              Bereich öffnen
-              <ArrowRight size={18} />
-            </span>
-          </Link>
-
-          <Link
-            to="/vermieten"
-            className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm hover:shadow-md transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5">
-              <ClipboardList className="text-sky-600" size={22} />
-            </div>
-
-            <h2 className="text-2xl font-bold mb-3">Mietanfrage</h2>
-            <p className="text-slate-600 leading-7 mb-6">
-              Allgemeines Anfrageformular für Long Stay, Apartments und Short Stay.
-            </p>
-
-            <span className="inline-flex items-center gap-2 text-sky-600 font-semibold">
-              Formular öffnen
-              <ArrowRight size={18} />
-            </span>
-          </Link>
-        </div>
-      </section>
-    </div>
-  );
-}
-=======
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -120,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getVisibleListings } from '@/data/rentalData';
+import InteractiveMapSection from '@/components/InteractiveMapSection';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
@@ -194,7 +84,7 @@ const HotelCTA = ({ item, t }) => (
 
 const LongStayCTA = ({ item, t }) => (
   <a
-    href={`mailto:${item.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${item.title}`)}`}
+    href={`mailto:office@reto-amonn.ch?subject=${encodeURIComponent(`Long Stay Anfrage – ${item.title}`)}`}
     className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
   >
     <Mail size={14} />
@@ -205,7 +95,7 @@ const LongStayCTA = ({ item, t }) => (
 const ProjectCTA = ({ item, t }) => (
   <div className="space-y-2">
     <Link
-      to={`/vermietung/${item.slug}`}
+      to="/casa-reto"
       className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
     >
       {t('vermietung.card.viewProject')}
@@ -445,10 +335,10 @@ const VermietungPage = () => {
             className="text-center mb-10"
           >
             <span className="inline-block bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
-              {t('vermietung.hero.badge')}
+              AMONN IMMOBILIEN
             </span>
             <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
-              {t('vermietung.hero.title')}
+              Immobilien &amp; Wohnlösungen
             </h1>
             <p className="text-blue-200/80 text-base md:text-lg max-w-2xl mx-auto">
               {t('vermietung.hero.subtitle')}
@@ -567,13 +457,21 @@ const VermietungPage = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Bottom CTA */}
+        </div>
+      </section>
+
+      {/* ── Interactive Map ── */}
+      <InteractiveMapSection />
+
+      {/* ── Bottom CTA ── */}
+      <section className="py-10 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="mt-16 bg-white rounded-2xl border border-gray-100 p-8 md:p-10 text-center"
+            className="mt-0 bg-white rounded-2xl border border-gray-100 p-8 md:p-10 text-center"
           >
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {t('vermietung.cta.title')}
@@ -598,7 +496,6 @@ const VermietungPage = () => {
               </a>
             </div>
           </motion.div>
-
         </div>
       </section>
     </>
@@ -606,4 +503,3 @@ const VermietungPage = () => {
 };
 
 export default VermietungPage;
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)

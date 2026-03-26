@@ -22,7 +22,7 @@ const Footer = () => {
     { to: '/uber-uns',   label: t('nav.about') },
     { to: '/projekte',   label: t('nav.projects') },
     { to: '/leistungen', label: t('nav.services') },
-    { to: '/vermietung', label: t('nav.rentals') },
+    { to: '/immobilien', label: 'Immobilien' },
     { to: '/kontakt',    label: t('nav.contact') },
   ];
 

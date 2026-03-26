@@ -1,271 +1,156 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-=======
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, BedDouble, Hotel, Home, ClipboardList } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
 
-export default function Header() {
+const ImmobilienDropdown = ({ onClose }) => (
+  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-[520px]">
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.15 }}
+      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-6"
+    >
+      <div className="grid grid-cols-2 gap-6">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Wohnen</p>
+          <Link to="/immobilien/long-stay" onClick={onClose} className="flex items-center gap-2.5 py-2 text-gray-700 hover:text-blue-600 transition-colors text-sm">
+            <BedDouble size={15} className="text-gray-400" /> Long Stay
+          </Link>
+          <Link to="/long-stay/kerzers" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Kerzers</Link>
+          <Link to="/long-stay/munchenbuchsee" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Münchenbuchsee</Link>
+          <Link to="/long-stay/muri" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Muri bei Bern</Link>
+        </div>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Kurzaufenthalte</p>
+          <Link to="/immobilien/short-stay" onClick={onClose} className="flex items-center gap-2.5 py-2 text-gray-700 hover:text-blue-600 transition-colors text-sm">
+            <Hotel size={15} className="text-gray-400" /> Short Stay
+          </Link>
+          <Link to="/ns-hotel" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">N's Hotel</Link>
+          <Link to="/casa-reto" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Casa Reto</Link>
+          <div className="mt-3 pt-3 border-t border-gray-100">
+            <Link to="/immobilien/apartments" onClick={onClose} className="flex items-center gap-2.5 py-2 text-gray-700 hover:text-blue-600 transition-colors text-sm">
+              <Home size={15} className="text-gray-400" /> Apartments
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 pt-4 border-t border-gray-100">
+        <Link to="/immobilien/anfrage" onClick={onClose} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors group">
+          <div className="flex items-center gap-2.5">
+            <ClipboardList size={15} className="text-blue-500" />
+            <span className="text-sm font-medium text-gray-900">Mietanfrage stellen</span>
+          </div>
+          <span className="text-xs text-gray-400 group-hover:text-blue-500 transition-colors">Formular öffnen →</span>
+        </Link>
+      </div>
+    </motion.div>
+  </div>
+);
+
+const SECTION_LOGOS = [
+  { paths: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto'], logo: 'AMONN IMMOBILIEN' },
+  { paths: ['/leistungen', '/projekte'], logo: 'AMONN ARCHITEKTUR' },
+  { paths: ['/team'], logo: 'AMONN TEAM' },
+  { paths: ['/uber-uns'], logo: 'AMONN' },
+];
+
+function useSectionLogo(pathname) {
+  for (const cfg of SECTION_LOGOS) {
+    if (cfg.paths.some((p) => pathname === p || pathname.startsWith(p + '/'))) {
+      return cfg.logo;
+    }
+  }
+  return 'HANS AMONN AG';
+}
+
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openDesktopDropdown, setOpenDesktopDropdown] = useState(false);
-  const [openMobileDropdown, setOpenMobileDropdown] = useState(false);
-
+  const [showImmobilienDropdown, setShowImmobilienDropdown] = useState(false);
+  const [showMobileImmobilien, setShowMobileImmobilien] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
+  const sectionLogo = useSectionLogo(location.pathname);
 
   useEffect(() => {
-<<<<<<< HEAD
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const isActive = (path) => location.pathname === path;
-=======
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setShowImmobilienDropdown(false);
   }, [location.pathname]);
 
   const isActive = (path) =>
-    path === '/'
-      ? location.pathname === '/'
-      : location.pathname.startsWith(path);
+    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
   const navItems = [
-    { path: '/',          label: t('nav.home') },
-    { path: '/uber-uns',  label: t('nav.about') },
-    { path: '/team',      label: t('nav.team') },
-    { path: '/projekte',  label: t('nav.projects') },
-    { path: '/leistungen',label: t('nav.services') },
-    { path: '/vermietung',label: t('nav.rentals') },
+    { path: '/uber-uns',   label: t('nav.about') },
+    { path: '/team',       label: t('nav.team') },
+    { path: '/projekte',   label: t('nav.projects') },
+    { path: '/leistungen', label: t('nav.services') },
   ];
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
 
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-<<<<<<< HEAD
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-white/90 backdrop-blur-sm"
-=======
-          ? 'bg-white/95 backdrop-blur-md shadow-lg'
-          : 'bg-white/90 backdrop-blur-sm'
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
+        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' : 'bg-white/90 backdrop-blur-sm'
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 py-3">
         <div className="flex items-center justify-between gap-4">
-
           {/* Logo */}
           <Link to="/" className="flex-shrink-0">
-            <motion.div
-<<<<<<< HEAD
-              whileHover={{ scale: 1.02 }}
-              className="text-2xl font-bold text-slate-800 tracking-tight"
-=======
-              whileHover={{ scale: 1.03 }}
-              className="text-xl font-bold gradient-text leading-none"
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
-            >
-              AMONN ARCHITEKTUR
-            </motion.div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={sectionLogo}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.18 }}
+                whileHover={{ scale: 1.02 }}
+                className="text-sm font-black text-gray-900 tracking-widest uppercase leading-none"
+              >
+                {sectionLogo}
+              </motion.div>
+            </AnimatePresence>
           </Link>
 
-<<<<<<< HEAD
-          <div className="hidden md:flex items-center gap-8">
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDesktopDropdown(true)}
-              onMouseLeave={() => setOpenDesktopDropdown(false)}
-            >
-              <div className="flex items-center gap-1">
-                <Link
-                  to="/vermietung"
-                  className={`font-medium transition-colors ${
-                    isActive("/vermietung")
-                      ? "text-sky-500 font-semibold"
-                      : "text-slate-700 hover:text-sky-500"
-                  }`}
-                >
-                  Vermietung
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={() => setOpenDesktopDropdown((prev) => !prev)}
-                  className="text-slate-700 hover:text-sky-500"
-                >
-                  <ChevronDown size={16} />
-                </button>
-              </div>
-
-              {openDesktopDropdown && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
-                  <div className="bg-white shadow-xl border border-slate-200 rounded-2xl p-8 w-[min(92vw,1000px)]">
-                    <div className="grid grid-cols-4 gap-10">
-                      <div>
-                        <Link
-                          to="/vermietung/long-stay"
-                          className="block font-semibold text-slate-900 mb-4 hover:text-sky-600"
-                        >
-                          Long Stay
-                        </Link>
-
-                        <Link
-                          to="/long-stay/kerzers"
-                          className="block py-1.5 text-slate-600 hover:text-sky-600"
-                        >
-                          Kerzers
-                        </Link>
-
-                        <Link
-                          to="/long-stay/munchenbuchsee"
-                          className="block py-1.5 text-slate-600 hover:text-sky-600"
-                        >
-                          Münchenbuchsee
-                        </Link>
-
-                        <Link
-                          to="/long-stay/muri"
-                          className="block py-1.5 text-slate-600 hover:text-sky-600"
-                        >
-                          Muri bei Bern
-                        </Link>
-                      </div>
-
-                      <div>
-                        <Link
-                          to="/vermietung/short-stay"
-                          className="block font-semibold text-slate-900 mb-4 hover:text-sky-600"
-                        >
-                          Short Stay
-                        </Link>
-
-                        <Link
-                          to="/ns-hotel"
-                          className="block py-1.5 text-slate-600 hover:text-sky-600"
-                        >
-                          N&apos;s Hotel
-                        </Link>
-
-                        <Link
-                          to="/casa-reto"
-                          className="block py-1.5 text-slate-600 hover:text-sky-600"
-                        >
-                          Casa Reto
-                        </Link>
-                      </div>
-
-                      <div>
-                        <Link
-                          to="/vermietung/apartments"
-                          className="block font-semibold text-slate-900 mb-4 hover:text-sky-600"
-                        >
-                          Apartments
-                        </Link>
-
-                        <Link
-                          to="/vermietung/apartments"
-                          className="block py-1.5 text-slate-600 hover:text-sky-600"
-                        >
-                          Alle Apartments
-                        </Link>
-                      </div>
-
-                      <div>
-                        <Link
-                          to="/vermieten"
-                          className="block font-semibold text-slate-900 mb-4 hover:text-sky-600"
-                        >
-                          Mietanfrage
-                        </Link>
-
-                        <p className="text-sm leading-6 text-slate-500">
-                          Allgemeine Anfrage für Long Stay, Apartments und Short Stay.
-                        </p>
-
-                        <Link
-                          to="/vermieten"
-                          className="inline-block mt-4 text-sky-600 font-medium hover:text-sky-700"
-                        >
-                          Formular öffnen
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link
-              to="/uber-uns"
-              className={`transition-colors font-medium ${
-                isActive("/uber-uns")
-                  ? "text-sky-500 font-semibold"
-                  : "text-slate-700 hover:text-sky-500"
-              }`}
-            >
-              Über uns
-            </Link>
-
-            <Link
-              to="/team"
-              className={`transition-colors font-medium ${
-                isActive("/team")
-                  ? "text-sky-500 font-semibold"
-                  : "text-slate-700 hover:text-sky-500"
-              }`}
-            >
-              Team
-            </Link>
-
-            <Link
-              to="/projekte"
-              className={`transition-colors font-medium ${
-                isActive("/projekte")
-                  ? "text-sky-500 font-semibold"
-                  : "text-slate-700 hover:text-sky-500"
-              }`}
-            >
-              Projekte
-            </Link>
-
-            <Link
-              to="/leistungen"
-              className={`transition-colors font-medium ${
-                isActive("/leistungen")
-                  ? "text-sky-500 font-semibold"
-                  : "text-slate-700 hover:text-sky-500"
-              }`}
-            >
-              Leistungen
-            </Link>
-
-            <Link to="/kontakt">
-              <Button className="bg-sky-600 hover:bg-sky-700 text-white">
-                Kontakt
-=======
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-1">
+            {/* Immobilien with dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setShowImmobilienDropdown(true)}
+              onMouseLeave={() => setShowImmobilienDropdown(false)}
+            >
+              <Link
+                to="/immobilien"
+                className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive('/immobilien') || isActive('/long-stay') || isActive('/ns-hotel') || isActive('/casa-reto')
+                    ? 'text-blue-600 bg-blue-50 font-semibold'
+                    : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                }`}
+              >
+                Immobilien
+                <ChevronDown size={14} className={`transition-transform duration-200 ${showImmobilienDropdown ? 'rotate-180' : ''}`} />
+              </Link>
+              <AnimatePresence>
+                {showImmobilienDropdown && (
+                  <ImmobilienDropdown onClose={() => setShowImmobilienDropdown(false)} />
+                )}
+              </AnimatePresence>
+            </div>
+
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -285,182 +170,19 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher variant="light" />
             <Link to="/kontakt">
-              <Button className="brand-gradient hover:brand-gradient-hover text-white text-sm px-4 py-2">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2">
                 {t('nav.contact')}
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
               </Button>
             </Link>
           </div>
 
-<<<<<<< HEAD
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -15 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden mt-4 py-4 bg-white rounded-lg shadow-lg"
-          >
-            <div className="flex flex-col px-4">
-              <div className="flex items-center justify-between py-4">
-                <Link
-                  to="/vermietung"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-medium text-slate-800"
-                >
-                  Vermietung
-                </Link>
-
-                <button
-                  onClick={() => setOpenMobileDropdown((prev) => !prev)}
-                  className="text-slate-700"
-                >
-                  <ChevronDown size={16} />
-                </button>
-              </div>
-
-              {openMobileDropdown && (
-                <div className="pb-3 pl-3 flex flex-col gap-2">
-                  <Link
-                    to="/vermietung/long-stay"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-medium text-slate-800"
-                  >
-                    Long Stay
-                  </Link>
-
-                  <Link
-                    to="/long-stay/kerzers"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-slate-700"
-                  >
-                    Kerzers
-                  </Link>
-
-                  <Link
-                    to="/long-stay/munchenbuchsee"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-slate-700"
-                  >
-                    Münchenbuchsee
-                  </Link>
-
-                  <Link
-                    to="/long-stay/muri"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-slate-700"
-                  >
-                    Muri bei Bern
-                  </Link>
-
-                  <Link
-                    to="/vermietung/short-stay"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-medium text-slate-800 mt-2"
-                  >
-                    Short Stay
-                  </Link>
-
-                  <Link
-                    to="/ns-hotel"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-slate-700"
-                  >
-                    N&apos;s Hotel
-                  </Link>
-
-                  <Link
-                    to="/casa-reto"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-slate-700"
-                  >
-                    Casa Reto
-                  </Link>
-
-                  <Link
-                    to="/vermietung/apartments"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-medium text-slate-800 mt-2"
-                  >
-                    Apartments
-                  </Link>
-
-                  <Link
-                    to="/vermietung/apartments"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-slate-700"
-                  >
-                    Alle Apartments
-                  </Link>
-
-                  <Link
-                    to="/vermieten"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="font-medium text-slate-800 mt-2"
-                  >
-                    Mietanfrage
-                  </Link>
-                </div>
-              )}
-
-              <Link
-                to="/uber-uns"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-4 border-t text-slate-700"
-              >
-                Über uns
-              </Link>
-
-              <Link
-                to="/team"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-4 border-t text-slate-700"
-              >
-                Team
-              </Link>
-
-              <Link
-                to="/projekte"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-4 border-t text-slate-700"
-              >
-                Projekte
-              </Link>
-
-              <Link
-                to="/leistungen"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-4 border-t text-slate-700"
-              >
-                Leistungen
-              </Link>
-
-              <Link to="/kontakt" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="bg-sky-600 hover:bg-sky-700 text-white w-full mt-4">
-                  Kontakt
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </nav>
-    </motion.header>
-  );
-}
-=======
-          {/* Mobile: language switcher + hamburger */}
+          {/* Mobile: language + hamburger */}
           <div className="lg:hidden flex items-center gap-2">
             <LanguageSwitcher variant="light" />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Menü öffnen"
+              aria-label="Menü"
             >
               {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -478,21 +200,48 @@ export default function Header() {
               className="lg:hidden overflow-hidden"
             >
               <div className="mt-3 pb-3 border-t border-gray-100 pt-3 flex flex-col gap-1">
+                {/* Immobilien section in mobile */}
+                <div>
+                  <button
+                    onClick={() => setShowMobileImmobilien(!showMobileImmobilien)}
+                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                      isActive('/immobilien') ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    Immobilien
+                    <ChevronDown size={14} className={`transition-transform ${showMobileImmobilien ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {showMobileImmobilien && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden pl-4 mt-1 space-y-0.5"
+                      >
+                        <Link to="/immobilien" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Übersicht</Link>
+                        <Link to="/immobilien/long-stay" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Long Stay</Link>
+                        <Link to="/immobilien/short-stay" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Short Stay</Link>
+                        <Link to="/immobilien/apartments" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Apartments</Link>
+                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">Mietanfrage</Link>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
                 {navItems.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
                     className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(item.path)
-                        ? 'text-blue-600 bg-blue-50 font-semibold'
-                        : 'text-gray-700 hover:bg-gray-50'
+                      isActive(item.path) ? 'text-blue-600 bg-blue-50 font-semibold' : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
                     {item.label}
                   </Link>
                 ))}
                 <Link to="/kontakt" className="mt-2">
-                  <Button className="brand-gradient text-white w-full">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full">
                     {t('nav.contact')}
                   </Button>
                 </Link>
@@ -506,4 +255,3 @@ export default function Header() {
 };
 
 export default Header;
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)

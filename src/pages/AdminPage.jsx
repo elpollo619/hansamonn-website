@@ -1,18 +1,17 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import AdminAuthProvider, { useAdminAuth } from '@/context/AdminAuthContext';
+import AdminLoginScreen from '@/components/admin/AdminLoginScreen';
 import AdminPanel from '@/components/admin/AdminPanel';
 
-const AdminPage = () => {
-  return (
-    <>
-      <Helmet>
-        <title>Content Management - Amonn Architektur</title>
-        <meta name="description" content="Verwalten Sie die Inhalte Ihrer Architektur-Website einfach und intuitiv." />
-      </Helmet>
-      
-      <AdminPanel />
-    </>
-  );
-};
+function AdminContent() {
+  const { isAuthenticated } = useAdminAuth();
+  return isAuthenticated ? <AdminPanel /> : <AdminLoginScreen />;
+}
 
-export default AdminPage;
+export default function AdminPage() {
+  return (
+    <AdminAuthProvider>
+      <AdminContent />
+    </AdminAuthProvider>
+  );
+}

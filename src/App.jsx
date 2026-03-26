@@ -1,38 +1,20 @@
-<<<<<<< HEAD
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-import HomePage from "@/pages/HomePage";
-import AboutPage from "@/pages/AboutPage";
-import TeamPage from "@/pages/TeamPage";
-import ProjectsPage from "@/pages/ProjectsPage";
-import ProjectDetailPage from "@/pages/ProjectDetailPage";
-import ServicesPage from "@/pages/ServicesPage";
-import ContactPage from "@/pages/ContactPage";
-import AdminPage from "@/pages/AdminPage";
-import ImpressumPage from "@/pages/ImpressumPage";
-import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
-
-import VermietungPage from "@/pages/VermietungPage";
-import LongStayPage from "@/pages/LongStayPage";
-import ShortStayPage from "@/pages/ShortStayPage";
-import ApartmentsPage from "@/pages/ApartmentsPage";
-import CasaRetoPage from "@/pages/CasaRetoPage";
-import NsHotelPage from "@/pages/NsHotelPage";
-import KerzersPage from "@/pages/KerzersPage";
-import MunchenbuchseePage from "@/pages/MunchenbuchseePage";
-import MuriPage from "@/pages/MuriPage";
-import MietanfragePage from "@/pages/MietanfragePage";
-=======
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from 'react-router-dom';
+
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/i18n';
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import VirtualAgent from '@/components/VirtualAgent';
+
+// Pages
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
 import TeamPage from '@/pages/TeamPage';
@@ -41,14 +23,24 @@ import ProjectsPage from '@/pages/ProjectsPage';
 import ProjectDetailPage from '@/pages/ProjectDetailPage';
 import ServicesPage from '@/pages/ServicesPage';
 import ServiceDetailPage from '@/pages/ServiceDetailPage';
-import VermietungPage from '@/pages/VermietungPage';
-import ApartmentDetailPage from '@/pages/ApartmentDetailPage';
 import ContactPage from '@/pages/ContactPage';
+import AdminPage from '@/pages/AdminPage';
 import ImpressumPage from '@/pages/ImpressumPage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
 
-/** Scroll to top on every route change */
+// Immobilien / Rentals
+import VermietungPage from '@/pages/VermietungPage';
+import ApartmentDetailPage from '@/pages/ApartmentDetailPage';
+import LongStayPage from '@/pages/LongStayPage';
+import ShortStayPage from '@/pages/ShortStayPage';
+import ApartmentsPage from '@/pages/ApartmentsPage';
+import CasaRetoPage from '@/pages/CasaRetoPage';
+import NsHotelPage from '@/pages/NsHotelPage';
+import KerzersPage from '@/pages/KerzersPage';
+import MunchenbuchseePage from '@/pages/MunchenbuchseePage';
+import MuriPage from '@/pages/MuriPage';
+import MietanfragePage from '@/pages/MietanfragePage';
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -59,70 +51,76 @@ const ScrollToTop = () => {
 
 function AppRoutes() {
   return (
-<<<<<<< HEAD
-    <Router>
-      <div className="min-h-screen bg-white">
-        <Header />
-        <main className="pt-20">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/uber-uns" element={<AboutPage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/projekte" element={<ProjectsPage />} />
-            <Route path="/projekte/:id" element={<ProjectDetailPage />} />
-            <Route path="/leistungen" element={<ServicesPage />} />
-            <Route path="/kontakt" element={<ContactPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/impressum" element={<ImpressumPage />} />
-            <Route path="/datenschutz" element={<PrivacyPolicyPage />} />
-
-            <Route path="/vermietung" element={<VermietungPage />} />
-            <Route path="/vermietung/long-stay" element={<LongStayPage />} />
-            <Route path="/vermietung/short-stay" element={<ShortStayPage />} />
-            <Route path="/vermietung/apartments" element={<ApartmentsPage />} />
-
-            <Route path="/casa-reto" element={<CasaRetoPage />} />
-            <Route path="/ns-hotel" element={<NsHotelPage />} />
-
-            <Route path="/long-stay/kerzers" element={<KerzersPage />} />
-            <Route
-              path="/long-stay/munchenbuchsee"
-              element={<MunchenbuchseePage />}
-            />
-            <Route path="/long-stay/muri" element={<MuriPage />} />
-
-            <Route path="/vermieten" element={<MietanfragePage />} />
-          </Routes>
-        </main>
-        <Footer />
-        <Toaster />
-      </div>
-    </Router>
-=======
     <>
       <ScrollToTop />
       <Header />
       <main className="pt-20">
         <Routes>
-          <Route path="/"                      element={<HomePage />} />
-          <Route path="/uber-uns"              element={<AboutPage />} />
-          <Route path="/team"                  element={<TeamPage />} />
-          <Route path="/team/:slug"            element={<TeamMemberPage />} />
-          <Route path="/projekte"              element={<ProjectsPage />} />
-          <Route path="/projekte/:id"          element={<ProjectDetailPage />} />
-          <Route path="/leistungen"            element={<ServicesPage />} />
-          <Route path="/leistungen/:slug"      element={<ServiceDetailPage />} />
-          <Route path="/vermietung"            element={<VermietungPage />} />
-          <Route path="/vermietung/:slug"      element={<ApartmentDetailPage />} />
-          <Route path="/kontakt"              element={<ContactPage />} />
-          <Route path="/impressum"            element={<ImpressumPage />} />
-          <Route path="/datenschutz"          element={<PrivacyPolicyPage />} />
+          {/* HOME */}
+          <Route path="/" element={<HomePage />} />
+
+          {/* ABOUT */}
+          <Route path="/uber-uns" element={<AboutPage />} />
+
+          {/* TEAM */}
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/team/:slug" element={<TeamMemberPage />} />
+
+          {/* PROJECTS */}
+          <Route path="/projekte" element={<ProjectsPage />} />
+          <Route path="/projekte/:id" element={<ProjectDetailPage />} />
+
+          {/* SERVICES */}
+          <Route path="/leistungen" element={<ServicesPage />} />
+          <Route path="/leistungen/:slug" element={<ServiceDetailPage />} />
+
+          {/* IMMOBILIEN — main hub */}
+          <Route path="/immobilien" element={<VermietungPage />} />
+
+          {/* IMMOBILIEN — sub-sections */}
+          <Route path="/immobilien/long-stay" element={<LongStayPage />} />
+          <Route path="/immobilien/short-stay" element={<ShortStayPage />} />
+          <Route path="/immobilien/apartments" element={<ApartmentsPage />} />
+          <Route path="/immobilien/anfrage" element={<MietanfragePage />} />
+
+          {/* IMMOBILIEN — detail pages */}
+          <Route path="/immobilien/:slug" element={<ApartmentDetailPage />} />
+
+          {/* SPECIAL PAGES */}
+          <Route path="/casa-reto" element={<CasaRetoPage />} />
+          <Route path="/ns-hotel" element={<NsHotelPage />} />
+
+          {/* LONG STAY LOCATIONS */}
+          <Route path="/long-stay/kerzers" element={<KerzersPage />} />
+          <Route path="/long-stay/munchenbuchsee" element={<MunchenbuchseePage />} />
+          <Route path="/long-stay/muri" element={<MuriPage />} />
+
+          {/* LEGACY REDIRECTS — old /vermietung/* → new /immobilien/* */}
+          <Route path="/vermietung" element={<Navigate to="/immobilien" replace />} />
+          <Route path="/vermietung/long-stay" element={<Navigate to="/immobilien/long-stay" replace />} />
+          <Route path="/vermietung/short-stay" element={<Navigate to="/immobilien/short-stay" replace />} />
+          <Route path="/vermietung/apartments" element={<Navigate to="/immobilien/apartments" replace />} />
+          <Route path="/vermietung/:slug" element={<Navigate to="/immobilien" replace />} />
+          <Route path="/vermieten" element={<Navigate to="/immobilien/anfrage" replace />} />
+
+          {/* CONTACT */}
+          <Route path="/kontakt" element={<ContactPage />} />
+
+          {/* ADMIN */}
+          <Route path="/admin" element={<AdminPage />} />
+
+          {/* LEGAL */}
+          <Route path="/impressum" element={<ImpressumPage />} />
+          <Route path="/datenschutz" element={<PrivacyPolicyPage />} />
+
+          {/* CATCH-ALL — redirect unknown URLs to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <Footer />
       <Toaster />
+      <VirtualAgent />
     </>
->>>>>>> 707d88d0 (Refactor Vermietung system + i18n + Mietanfrage form)
   );
 }
 

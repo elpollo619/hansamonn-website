@@ -1,10 +1,17 @@
 import path from 'node:path';
-import react from '@vitejs/plugin-react';
+import { fileURLToPath } from 'node:url';
+import react from '@vitejs/plugin-react-swc';
 import { createLogger, defineConfig } from 'vite';
-import inlineEditPlugin from './plugins/visual-editor/vite-plugin-react-inline-editor.js';
-import editModeDevPlugin from './plugins/visual-editor/vite-plugin-edit-mode.js';
-import iframeRouteRestorationPlugin from './plugins/vite-plugin-iframe-route-restoration.js';
-import selectionModePlugin from './plugins/selection-mode/vite-plugin-selection-mode.js';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Platform-specific visual editor plugins (Hostinger Horizons) — disabled for local dev
+// import inlineEditPlugin from './plugins/visual-editor/vite-plugin-react-inline-editor.js';
+// import editModeDevPlugin from './plugins/visual-editor/vite-plugin-edit-mode.js';
+// import iframeRouteRestorationPlugin from './plugins/vite-plugin-iframe-route-restoration.js';
+// import selectionModePlugin from './plugins/selection-mode/vite-plugin-selection-mode.js';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -280,7 +287,6 @@ logger.error = (msg, options) => {
 export default defineConfig({
 	customLogger: logger,
 	plugins: [
-		...(isDev ? [inlineEditPlugin(), editModeDevPlugin(), iframeRouteRestorationPlugin(), selectionModePlugin()] : []),
 		react(),
 		addTransformIndexHtml
 	],
@@ -290,6 +296,11 @@ export default defineConfig({
 			'Cross-Origin-Embedder-Policy': 'credentialless',
 		},
 		allowedHosts: true,
+	},
+	css: {
+		postcss: {
+			plugins: [tailwindcss(), autoprefixer()],
+		},
 	},
 	resolve: {
 		extensions: ['.jsx', '.js', '.tsx', '.ts', '.json', ],

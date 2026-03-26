@@ -40,7 +40,7 @@ export const servicesData = [
       'Abnahme und Übergabe',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80',
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80',
   },
   {
     slug: 'sanierungen-umbauten',
@@ -80,7 +80,7 @@ export const servicesData = [
       'Schlussabrechnung und Gewährleistungsüberwachung',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
+      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80',
   },
 
   // ── Real Estate ─────────────────────────────────────────────────
