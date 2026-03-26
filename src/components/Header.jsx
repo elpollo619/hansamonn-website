@@ -1,53 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, BedDouble, Hotel, Home, ClipboardList } from 'lucide-react';
+import { Menu, X, ChevronDown, BedDouble, Building2 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
 
 const ImmobilienDropdown = ({ onClose }) => (
-  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-[520px]">
+  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-64">
     <motion.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.15 }}
-      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-6"
+      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-3"
     >
-      <div className="grid grid-cols-2 gap-6">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Wohnen</p>
-          <Link to="/immobilien/long-stay" onClick={onClose} className="flex items-center gap-2.5 py-2 text-gray-700 hover:text-blue-600 transition-colors text-sm">
-            <BedDouble size={15} className="text-gray-400" /> Long Stay
-          </Link>
-          <Link to="/long-stay/kerzers" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Kerzers</Link>
-          <Link to="/long-stay/munchenbuchsee" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Münchenbuchsee</Link>
-          <Link to="/long-stay/muri" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Muri bei Bern</Link>
+      <Link
+        to="/immobilien/vermietung"
+        onClick={onClose}
+        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group"
+      >
+        <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+          <BedDouble size={15} className="text-blue-600" />
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Kurzaufenthalte</p>
-          <Link to="/immobilien/short-stay" onClick={onClose} className="flex items-center gap-2.5 py-2 text-gray-700 hover:text-blue-600 transition-colors text-sm">
-            <Hotel size={15} className="text-gray-400" /> Short Stay
-          </Link>
-          <Link to="/ns-hotel" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">N's Hotel</Link>
-          <Link to="/casa-reto" onClick={onClose} className="flex items-center gap-2.5 py-1.5 text-gray-500 hover:text-blue-600 transition-colors text-sm pl-6">Casa Reto</Link>
-          <div className="mt-3 pt-3 border-t border-gray-100">
-            <Link to="/immobilien/apartments" onClick={onClose} className="flex items-center gap-2.5 py-2 text-gray-700 hover:text-blue-600 transition-colors text-sm">
-              <Home size={15} className="text-gray-400" /> Apartments
-            </Link>
-          </div>
+          <p className="text-sm font-semibold">Vermietung</p>
+          <p className="text-xs text-gray-400 group-hover:text-blue-500">Long Stay, Short Stay & Apartments</p>
         </div>
-      </div>
-      <div className="mt-4 pt-4 border-t border-gray-100">
-        <Link to="/immobilien/anfrage" onClick={onClose} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors group">
-          <div className="flex items-center gap-2.5">
-            <ClipboardList size={15} className="text-blue-500" />
-            <span className="text-sm font-medium text-gray-900">Mietanfrage stellen</span>
-          </div>
-          <span className="text-xs text-gray-400 group-hover:text-blue-500 transition-colors">Formular öffnen →</span>
-        </Link>
-      </div>
+      </Link>
+      <Link
+        to="/immobilien/verkauf"
+        onClick={onClose}
+        className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors group"
+      >
+        <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+          <Building2 size={15} className="text-emerald-600" />
+        </div>
+        <div>
+          <p className="text-sm font-semibold">Verkauf</p>
+          <p className="text-xs text-gray-400 group-hover:text-emerald-500">Eigentumswohnungen & Objekte</p>
+        </div>
+      </Link>
     </motion.div>
   </div>
 );
@@ -220,9 +213,8 @@ const Header = () => {
                         className="overflow-hidden pl-4 mt-1 space-y-0.5"
                       >
                         <Link to="/immobilien" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Übersicht</Link>
-                        <Link to="/immobilien/long-stay" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Long Stay</Link>
-                        <Link to="/immobilien/short-stay" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Short Stay</Link>
-                        <Link to="/immobilien/apartments" className="block px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50">Apartments</Link>
+                        <Link to="/immobilien/vermietung" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={14} className="text-gray-400" /> Vermietung</Link>
+                        <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={14} className="text-gray-400" /> Verkauf</Link>
                         <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">Mietanfrage</Link>
                       </motion.div>
                     )}

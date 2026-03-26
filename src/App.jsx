@@ -29,7 +29,9 @@ import ImpressumPage from '@/pages/ImpressumPage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 
 // Immobilien / Rentals
+import ImmobilienOverviewPage from '@/pages/ImmobilienOverviewPage';
 import VermietungPage from '@/pages/VermietungPage';
+import VerkaufPage from '@/pages/VerkaufPage';
 import ApartmentDetailPage from '@/pages/ApartmentDetailPage';
 import LongStayPage from '@/pages/LongStayPage';
 import ShortStayPage from '@/pages/ShortStayPage';
@@ -75,14 +77,18 @@ function AppRoutes() {
           <Route path="/leistungen" element={<ServicesPage />} />
           <Route path="/leistungen/:slug" element={<ServiceDetailPage />} />
 
-          {/* IMMOBILIEN — main hub */}
-          <Route path="/immobilien" element={<VermietungPage />} />
+          {/* IMMOBILIEN — overview */}
+          <Route path="/immobilien" element={<ImmobilienOverviewPage />} />
 
-          {/* IMMOBILIEN — sub-sections */}
+          {/* IMMOBILIEN — Vermietung */}
+          <Route path="/immobilien/vermietung" element={<VermietungPage />} />
           <Route path="/immobilien/long-stay" element={<LongStayPage />} />
           <Route path="/immobilien/short-stay" element={<ShortStayPage />} />
           <Route path="/immobilien/apartments" element={<ApartmentsPage />} />
           <Route path="/immobilien/anfrage" element={<MietanfragePage />} />
+
+          {/* IMMOBILIEN — Verkauf */}
+          <Route path="/immobilien/verkauf" element={<VerkaufPage />} />
 
           {/* IMMOBILIEN — detail pages */}
           <Route path="/immobilien/:slug" element={<ApartmentDetailPage />} />
@@ -97,7 +103,7 @@ function AppRoutes() {
           <Route path="/long-stay/muri" element={<MuriPage />} />
 
           {/* LEGACY REDIRECTS — old /vermietung/* → new /immobilien/* */}
-          <Route path="/vermietung" element={<Navigate to="/immobilien" replace />} />
+          <Route path="/vermietung" element={<Navigate to="/immobilien/vermietung" replace />} />
           <Route path="/vermietung/long-stay" element={<Navigate to="/immobilien/long-stay" replace />} />
           <Route path="/vermietung/short-stay" element={<Navigate to="/immobilien/short-stay" replace />} />
           <Route path="/vermietung/apartments" element={<Navigate to="/immobilien/apartments" replace />} />
