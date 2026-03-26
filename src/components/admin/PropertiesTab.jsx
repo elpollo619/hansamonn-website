@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Plus,
   Pencil,
@@ -8,17 +8,18 @@ import {
   Eye,
   EyeOff,
   Tag,
-  ExternalLink,
   AlertTriangle,
   ImagePlus,
   Upload,
   MapPin,
+  GripVertical,
 } from 'lucide-react';
 import {
   getProperties,
   createProperty,
   updateProperty,
   deleteProperty,
+  savePropertyOrder,
 } from '@/data/propertiesStore';
 import PropertyDocumentsManager from '@/components/admin/PropertyDocumentsManager';
 
@@ -775,6 +776,22 @@ function PropertyForm({ property, onSave, onClose }) {
   );
 }
 
+// ─── URL helper ──────────────────────────────────────────────────────────────
+
+const KNOWN_ROUTES = {
+  'casa-reto':         '/casa-reto',
+  'ns-hotel':          '/ns-hotel',
+  'kerzers-ls':        '/long-stay/kerzers',
+  'munchenbuchsee-ls': '/long-stay/munchenbuchsee',
+  'muri-ls':           '/long-stay/muri',
+};
+
+function getPropertyPublicUrl(property) {
+  if (KNOWN_ROUTES[property.id]) return KNOWN_ROUTES[property.id];
+  if (property.link) return property.link;
+  return `/immobilien/${property.slug || property.id}`;
+}
+
 // ─── Main PropertiesTab ───────────────────────────────────────────────────────
 
 export default function PropertiesTab() {
@@ -783,6 +800,7 @@ export default function PropertiesTab() {
   const [isNewForm, setIsNewForm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [filterType, setFilterType] = useState('all');
+  const dragIndexRef = useRef(null);
 
   const reload = useCallback(() => {
     setProperties(getProperties());
@@ -828,6 +846,34 @@ export default function PropertiesTab() {
   const closeDrawer = () => {
     setEditingProperty(null);
     setIsNewForm(false);
+  };
+
+  // Drag-and-drop handlers (HTML5 DnD, operates on full `properties` array by index)
+  const handleDragStart = (e, index) => {
+    dragIndexRef.current = index;
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e, dropIndex) => {
+    e.preventDefault();
+    const dragIndex = dragIndexRef.current;
+    if (dragIndex === null || dragIndex === dropIndex) return;
+    const reordered = [...properties];
+    const [moved] = reordered.splice(dragIndex, 1);
+    reordered.splice(dropIndex, 0, moved);
+    const orderedIds = reordered.map((p) => p.id);
+    savePropertyOrder(orderedIds);
+    setProperties(reordered);
+    dragIndexRef.current = null;
+  };
+
+  const handleDragEnd = () => {
+    dragIndexRef.current = null;
   };
 
   const filtered =
@@ -890,6 +936,7 @@ export default function PropertiesTab() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="w-8 px-2 py-3" />
                 <th className="text-left px-4 py-3 font-semibold text-gray-600 text-xs uppercase tracking-wide">
                   Name
                 </th>
@@ -911,76 +958,88 @@ export default function PropertiesTab() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {filtered.map((prop) => (
-                <tr key={prop.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-3">
-                    <div>
-                      <p className="font-medium text-gray-900">{prop.name}</p>
-                      {prop.location && (
-                        <p className="text-xs text-gray-500 mt-0.5">{prop.location}</p>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <TypeBadge type={prop.type} />
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-col gap-1">
-                      <StatusBadge status={prop.status} />
-                      {prop.occupancy && prop.occupancy !== 'frei' && (
-                        <StatusBadge status={prop.occupancy} />
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-gray-700">
-                    {prop.priceFrom
-                      ? `ab ${prop.priceFrom} ${prop.priceCurrency} / ${prop.pricePeriod}`
-                      : <span className="text-gray-400 text-xs">—</span>}
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <button
-                      onClick={() => handleToggleVisible(prop.id, prop.visible)}
-                      title={prop.visible ? 'Ausblenden' : 'Einblenden'}
-                      className={`inline-flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
-                        prop.visible
-                          ? 'text-green-600 bg-green-50 hover:bg-green-100'
-                          : 'text-gray-400 bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      {prop.visible ? <Eye size={14} /> : <EyeOff size={14} />}
-                    </button>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-2">
-                      {prop.link && (
-                        <a
-                          href={prop.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-gray-600 transition-colors"
-                          title="Seite öffnen"
+              {filtered.map((prop) => {
+                const propIndexInAll = properties.indexOf(prop);
+                return (
+                  <tr
+                    key={prop.id}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, propIndexInAll)}
+                    onDragOver={(e) => handleDragOver(e, propIndexInAll)}
+                    onDrop={(e) => handleDrop(e, propIndexInAll)}
+                    onDragEnd={handleDragEnd}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="px-2 py-3 w-8">
+                      <span className="cursor-grab text-gray-300 hover:text-gray-500 flex items-center justify-center">
+                        <GripVertical size={16} />
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div>
+                        <p className="font-medium text-gray-900">{prop.name}</p>
+                        {prop.location && (
+                          <p className="text-xs text-gray-500 mt-0.5">{prop.location}</p>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <TypeBadge type={prop.type} />
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex flex-col gap-1">
+                        <StatusBadge status={prop.status} />
+                        {prop.occupancy && prop.occupancy !== 'frei' && (
+                          <StatusBadge status={prop.occupancy} />
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-700">
+                      {prop.priceFrom
+                        ? `ab ${prop.priceFrom} ${prop.priceCurrency} / ${prop.pricePeriod}`
+                        : <span className="text-gray-400 text-xs">—</span>}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <button
+                        onClick={() => handleToggleVisible(prop.id, prop.visible)}
+                        title={prop.visible ? 'Ausblenden' : 'Einblenden'}
+                        className={`inline-flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
+                          prop.visible
+                            ? 'text-green-600 bg-green-50 hover:bg-green-100'
+                            : 'text-gray-400 bg-gray-100 hover:bg-gray-200'
+                        }`}
+                      >
+                        {prop.visible ? <Eye size={14} /> : <EyeOff size={14} />}
+                      </button>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => window.open(getPropertyPublicUrl(prop), '_blank')}
+                          className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          title="Öffentliche Seite öffnen"
                         >
-                          <ExternalLink size={14} />
-                        </a>
-                      )}
-                      <button
-                        onClick={() => openEdit(prop)}
-                        className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                        title="Bearbeiten"
-                      >
-                        <Pencil size={14} />
-                      </button>
-                      <button
-                        onClick={() => setDeleteTarget(prop)}
-                        className="p-1.5 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                        title="Löschen"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                          <Eye size={14} />
+                        </button>
+                        <button
+                          onClick={() => openEdit(prop)}
+                          className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          title="Bearbeiten"
+                        >
+                          <Pencil size={14} />
+                        </button>
+                        <button
+                          onClick={() => setDeleteTarget(prop)}
+                          className="p-1.5 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Löschen"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

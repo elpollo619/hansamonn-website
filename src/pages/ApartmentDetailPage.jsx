@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
+import SkeletonDetail from '@/components/SkeletonDetail';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import {
@@ -509,10 +511,17 @@ const ApartmentDetailPage = () => {
   const { t }       = useTranslation();
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
   const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading]   = useState(true);
 
   const fromRental = getListingBySlug(slug);
   const fromStore  = !fromRental ? getPropertyById(slug) : null;
   const apt = fromRental ?? (fromStore ? normalizeStoreProperty(fromStore) : null);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 400);
+    return () => clearTimeout(timer);
+  }, [slug]);
 
   useEffect(() => {
     if (apt) {
@@ -522,6 +531,7 @@ const ApartmentDetailPage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
+  if (loading) return <SkeletonDetail />;
   if (!apt) return <Navigate to="/immobilien/vermietung" replace />;
 
   const openLightbox  = (i) => setLightbox({ open: true, index: i });
@@ -715,6 +725,16 @@ const ApartmentDetailPage = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={apt.description?.slice(0, 160)} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${apt.title} – Hans Amonn AG`} />
+        <meta property="og:description" content={apt.description?.slice(0, 160)} />
+        <meta property="og:image" content={apt.images?.[0]?.url || apt.titleImage || ''} />
+        <meta property="og:url" content={`https://www.hansamonn.ch${window.location.pathname}`} />
+        <meta property="og:site_name" content="Hans Amonn AG" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${apt.title} – Hans Amonn AG`} />
+        <meta name="twitter:description" content={apt.description?.slice(0, 160)} />
+        <meta name="twitter:image" content={apt.images?.[0]?.url || apt.titleImage || ''} />
       </Helmet>
       <StructuredData data={structuredData} />
 
@@ -725,6 +745,33 @@ const ApartmentDetailPage = () => {
           onClose={closeLightbox}
         />
       )}
+
+      {/* ── Breadcrumbs ── */}
+      {(() => {
+        const breadcrumbCategory =
+          apt.type === 'project'
+            ? { label: 'Ferienhaus', href: '/immobilien' }
+            : apt.type === 'hotel'
+            ? { label: 'Hotel', href: '/immobilien' }
+            : apt.type === 'long-stay'
+            ? { label: 'Langzeitmiete', href: '/immobilien/long-stay' }
+            : { label: 'Vermietung', href: '/immobilien/vermietung' };
+
+        const items = [
+          { label: 'Home', href: '/' },
+          { label: 'Immobilien', href: '/immobilien' },
+          { label: breadcrumbCategory.label, href: breadcrumbCategory.href },
+          { label: apt.title },
+        ];
+
+        return (
+          <div className="border-b border-gray-100 bg-white print:hidden">
+            <div className="container mx-auto px-4 sm:px-6 max-w-6xl py-2.5">
+              <Breadcrumbs items={items} />
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── Back nav + Exposé button ── */}
       <div className="border-b border-gray-100 bg-white print:hidden">

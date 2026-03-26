@@ -132,6 +132,48 @@ export default function MietanfragenTab() {
     Object.keys(STATUS_CONFIG).map(k => [k, rows.filter(r => r.status === k).length])
   );
 
+  function csvEscape(val) {
+    const str = val == null ? '' : String(val);
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+      return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+  }
+
+  function exportCsv() {
+    const headers = ['Datum', 'Vorname', 'Nachname', 'Email', 'Telefon', 'Immobilie', 'Nachricht', 'Status'];
+    const dataRows = filtered.map(r => {
+      let nachricht = '';
+      try {
+        const parsed = JSON.parse(r.nachricht ?? '{}');
+        nachricht = Object.entries(parsed)
+          .filter(([k, v]) => v && k !== 'dokumente')
+          .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
+          .join(' | ');
+      } catch {
+        nachricht = r.nachricht ?? '';
+      }
+      return [
+        r.created_at ? new Date(r.created_at).toLocaleDateString('de-CH') : '',
+        r.vorname ?? '',
+        r.nachname ?? '',
+        r.email ?? '',
+        r.telefon ?? '',
+        r.objekt ?? '',
+        nachricht,
+        r.status ?? '',
+      ].map(csvEscape).join(',');
+    });
+    const csv = [headers.join(','), ...dataRows].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `anfragen-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="relative">
       {selected && <DetailDrawer row={selected} onClose={() => setSelected(null)} onStatusChange={handleStatusChange} />}
@@ -141,9 +183,14 @@ export default function MietanfragenTab() {
           <h2 className="text-lg font-bold text-gray-900">Mietanfragen</h2>
           <p className="text-sm text-gray-500">{rows.length} Anfragen gesamt</p>
         </div>
-        <button onClick={load} className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
-          Aktualisieren
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={exportCsv} className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+            CSV exportieren
+          </button>
+          <button onClick={load} className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
+            Aktualisieren
+          </button>
+        </div>
       </div>
 
       {/* Filter tabs */}

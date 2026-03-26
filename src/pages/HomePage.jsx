@@ -22,6 +22,13 @@ const HomePage = () => {
       <Helmet>
         <title>Hans Amonn AG - Ihr Partner für Bau und Immobilien seit 1968</title>
         <meta name="description" content="Hans Amonn AG - Qualität, Zuverlässigkeit und Innovation in der Bau- und Immobilienbranche. Massgeschneiderte Lösungen von der Planung bis zur Umsetzung in Muri bei Bern." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Hans Amonn AG – Immobilien & Vermietung" />
+        <meta property="og:description" content="Immobilien, Ferienwohnungen und Langzeitmiete in der Schweiz. Hans Amonn AG." />
+        <meta property="og:image" content="https://www.hansamonn.ch/og-image.jpg" />
+        <meta property="og:url" content="https://www.hansamonn.ch" />
+        <meta property="og:site_name" content="Hans Amonn AG" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       <StructuredData data={organizationSchema} />
 

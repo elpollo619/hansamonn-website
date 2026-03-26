@@ -17,6 +17,8 @@ import Footer from '@/components/Footer';
 import VirtualAgent from '@/components/VirtualAgent';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import BackToTop from '@/components/BackToTop';
 
 // Pages
 import HomePage from '@/pages/HomePage';
@@ -66,6 +68,7 @@ const ScrollToTop = () => {
 function AppRoutes() {
   return (
     <>
+      <GoogleAnalytics />
       <ScrollToTop />
       <Header />
       <main className="pt-20">
@@ -150,6 +153,7 @@ function AppRoutes() {
       <WhatsAppButton />
       <VirtualAgent />
       <CookieBanner />
+      <BackToTop />
     </>
   );
 }

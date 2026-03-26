@@ -132,14 +132,15 @@ const DEFAULT_PROPERTIES = [
   },
 ];
 
-// ── Migration: add lat/lng/address/occupancy to existing stored properties ──
+// ── Migration: add lat/lng/address/occupancy/sort_order to existing stored properties ──
 function migrate(props) {
-  return props.map((p) => ({
+  return props.map((p, index) => ({
     address: p.location || '',
     ...p,
     lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
     lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
     occupancy: p.occupancy || 'frei',
+    sort_order: p.sort_order ?? index,
   }));
 }
 
@@ -147,8 +148,9 @@ export function getProperties() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_PROPERTIES));
-      return DEFAULT_PROPERTIES;
+      const withOrder = DEFAULT_PROPERTIES.map((p, i) => ({ ...p, sort_order: i }));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(withOrder));
+      return withOrder;
     }
     const parsed = JSON.parse(raw);
     const migrated = migrate(parsed);
@@ -156,7 +158,7 @@ export function getProperties() {
     if (JSON.stringify(migrated) !== raw) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
     }
-    return migrated;
+    return [...migrated].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
   } catch {
     return DEFAULT_PROPERTIES;
   }
@@ -201,6 +203,16 @@ export function deleteProperty(id) {
 
 export function getPropertyById(id) {
   return getProperties().find((p) => p.id === id) ?? null;
+}
+
+export function savePropertyOrder(orderedIds) {
+  const props = getProperties();
+  const updated = props.map((p) => {
+    const idx = orderedIds.indexOf(p.id);
+    return { ...p, sort_order: idx === -1 ? props.length : idx };
+  });
+  updated.sort((a, b) => a.sort_order - b.sort_order);
+  saveProperties(updated);
 }
 
 // ── Normalizer: maps propertiesStore format → VermietungPage ListingCard format ──

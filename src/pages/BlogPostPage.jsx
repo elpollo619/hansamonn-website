@@ -60,7 +60,16 @@ export default function BlogPostPage() {
       <Helmet>
         <title>{displayTitle} – Hans Amonn AG</title>
         <meta name="description" content={displayExcerpt ?? ''} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${displayTitle} – Hans Amonn AG`} />
+        <meta property="og:description" content={displayExcerpt ?? ''} />
         {post.cover_image && <meta property="og:image" content={post.cover_image} />}
+        <meta property="og:url" content={`https://www.hansamonn.ch/neuigkeiten/${post.slug}`} />
+        <meta property="og:site_name" content="Hans Amonn AG" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${displayTitle} – Hans Amonn AG`} />
+        <meta name="twitter:description" content={displayExcerpt ?? ''} />
+        {post.cover_image && <meta name="twitter:image" content={post.cover_image} />}
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">

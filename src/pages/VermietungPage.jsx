@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import SkeletonGrid from '@/components/SkeletonGrid';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -322,6 +323,12 @@ const TYPE_LABELS = {
 const VermietungPage = () => {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 400);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Search & filter state
   const [searchQuery, setSearchQuery]   = useState('');
@@ -665,6 +672,9 @@ const VermietungPage = () => {
           </div>
 
           {/* Grid */}
+          {loading ? (
+            <SkeletonGrid count={6} />
+          ) : (
           <AnimatePresence mode="wait">
             <motion.div
               key={`${filter}-${searchQuery}-${typeFilter}-${locationFilter}-${priceFilter}`}
@@ -708,6 +718,7 @@ const VermietungPage = () => {
               )}
             </motion.div>
           </AnimatePresence>
+          )}
 
         </div>
       </section>
