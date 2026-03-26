@@ -20,8 +20,8 @@ serve(async (req) => {
     const { to, subject, html, replyTo } = await req.json();
 
     const apiKey  = Deno.env.get('RESEND_API_KEY');
-    const from    = Deno.env.get('FROM_EMAIL') ?? 'Hans Amonn AG <noreply@hansamonn.ch>';
-    const notifyTo = to ?? Deno.env.get('NOTIFICATION_EMAIL') ?? 'office@reto-amonn.ch';
+    const from    = Deno.env.get('FROM_EMAIL') ?? 'Hans Amonn AG <onboarding@resend.dev>';
+    const notifyTo = to ?? Deno.env.get('NOTIFICATION_EMAIL') ?? 'cristian-amaya@hotmail.com';
 
     if (!apiKey) {
       // No API key configured — log and return success silently
