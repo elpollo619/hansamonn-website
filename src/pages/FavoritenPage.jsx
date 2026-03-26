@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Heart, Home, MapPin, ArrowRight, ExternalLink,
+  Heart, Home, MapPin, ArrowRight,
   Coffee, Building2, Sun, Trash2,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';

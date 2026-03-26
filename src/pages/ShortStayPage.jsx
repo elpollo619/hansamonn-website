@@ -89,7 +89,7 @@ export default function ShortStayPage() {
                       <ExternalLink size={12} /> Booking.com
                     </a>
                     <a
-                      href="https://www.airbnb.com"
+                      href="https://www.airbnb.ch/rooms/1300557231274190252"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-rose-600 hover:border-rose-200 py-2.5 px-4 rounded-xl transition-colors text-sm font-medium"

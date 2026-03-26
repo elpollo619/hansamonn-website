@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, BedDouble, Building2, Map, Calculator, Search, Heart } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
 import { useFavorites } from '@/context/FavoritesContext';

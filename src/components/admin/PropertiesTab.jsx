@@ -755,10 +755,10 @@ function PropertyForm({ property, onSave, onClose }) {
           </div>
 
           {/* Documents */}
-          {editingId && (
+          {property?.id && (
             <div>
               <label className={labelCls}>Dokumente</label>
-              <PropertyDocumentsManager propertyId={editingId} />
+              <PropertyDocumentsManager propertyId={property.id} />
             </div>
           )}
 

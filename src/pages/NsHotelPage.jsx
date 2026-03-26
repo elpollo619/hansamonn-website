@@ -10,7 +10,15 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+function getBookingDates() {
+  const fmt = (d) => d.toISOString().split('T')[0];
+  const arrival = new Date(); arrival.setDate(arrival.getDate() + 1);
+  const departure = new Date(); departure.setDate(departure.getDate() + 2);
+  return { arrival: fmt(arrival), departure: fmt(departure) };
+}
+
 export default function NsHotelPage() {
+  const { arrival, departure } = getBookingDates();
   return (
     <div className="bg-white text-slate-900">
       <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">
@@ -55,7 +63,7 @@ export default function NsHotelPage() {
 
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://my.ns-hotel.ch/search/offers?ADULTS=1&CHILDREN=&ARRIVAL=2026-03-17&DEPARTURE=2026-03-18&PROPERTY_IDS=NSH"
+                href={`https://my.ns-hotel.ch/search/offers?ADULTS=1&CHILDREN=&ARRIVAL=${arrival}&DEPARTURE=${departure}&PROPERTY_IDS=NSH`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-white font-semibold hover:bg-sky-700 transition"
@@ -74,7 +82,7 @@ export default function NsHotelPage() {
               </a>
 
               <a
-                href="https://www.airbnb.ch/rooms/1300557231274190252?check_in=2026-03-17&check_out=2026-03-19&guests=1&adults=1&s=67&unique_share_id=d8964020-9925-4c12-b599-815f5449e7ef"
+                href={`https://www.airbnb.ch/rooms/1300557231274190252?check_in=${arrival}&check_out=${departure}&guests=1&adults=1`}
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50 transition"
@@ -83,7 +91,7 @@ export default function NsHotelPage() {
               </a>
 
               <Link
-                to="/vermieten?anfrageart=Short%20Stay&objekt=N%27s%20Hotel"
+                to="/immobilien/anfrage"
                 className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50 transition"
               >
                 Direkt anfragen

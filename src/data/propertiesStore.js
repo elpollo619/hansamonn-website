@@ -97,7 +97,7 @@ const DEFAULT_PROPERTIES = [
     images: ['/images/ns-hotel/titel.jpg'],
     link: '/ns-hotel',
     bookingUrl: 'https://my.ns-hotel.ch/search/offers?PROPERTY_IDS=NSH',
-    airbnbUrl: 'https://www.airbnb.com',
+    airbnbUrl: 'https://www.airbnb.ch/rooms/1300557231274190252',
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Self Check-in', 'Boutique', 'Geschäftsreisen'],
