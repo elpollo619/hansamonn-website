@@ -111,9 +111,21 @@ const Header = () => {
                 exit={{ opacity: 0, y: 4 }}
                 transition={{ duration: 0.18 }}
                 whileHover={{ scale: 1.02 }}
-                className="text-sm font-black text-gray-900 tracking-widest uppercase leading-none"
+                className="tracking-widest uppercase leading-none flex items-baseline gap-2"
               >
-                {sectionLogo}
+                {(() => {
+                  const parts = sectionLogo.split(' ');
+                  const first = parts[0];
+                  const rest = parts.slice(1).join(' ');
+                  return (
+                    <>
+                      <span className="text-sm font-black text-gray-900">{first}</span>
+                      {rest && (
+                        <span className="text-sm font-light text-gray-400 tracking-widest">{rest}</span>
+                      )}
+                    </>
+                  );
+                })()}
               </motion.div>
             </AnimatePresence>
           </Link>
