@@ -35,16 +35,14 @@ export default function MietanfragePage() {
 
       {/* Form */}
       <section className="py-10">
-        <div className="container mx-auto px-6">
-          <div className="max-w-lg mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <MietanfrageForm />
-            </motion.div>
-          </div>
+        <div className="container mx-auto px-6 max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <MietanfrageForm />
+          </motion.div>
         </div>
       </section>
     </div>

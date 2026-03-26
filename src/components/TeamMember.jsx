@@ -14,7 +14,7 @@ const PLACEHOLDER_IMAGES = {
 };
 
 const TeamMember = ({ member, index }) => {
-  const Icon = member.icon;
+  const Icon = member.icon ?? null;
 
   const imageUrl =
     member.hasPhoto && member.photoUrl
@@ -40,9 +40,11 @@ const TeamMember = ({ member, index }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Role icon badge */}
-        <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow">
-          <Icon size={18} className="text-blue-600" />
-        </div>
+        {Icon && (
+          <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow">
+            <Icon size={18} className="text-blue-600" />
+          </div>
+        )}
 
         {/* Hover overlay buttons */}
         <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-3">
