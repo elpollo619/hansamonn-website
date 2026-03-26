@@ -56,46 +56,61 @@ const RentalImage = ({ src, alt, className }) => {
   );
 };
 
+// ─── Detail URL mapping (propertiesStore id → rentalData-based detail page) ───
+
+const DETAIL_URL_MAP = {
+  'kerzers-ls':        '/immobilien/long-stay-kerzers',
+  'munchenbuchsee-ls': '/immobilien/long-stay-munchenbuchsee',
+  'muri-ls':           '/immobilien/long-stay-muri',
+  'ns-hotel':          '/immobilien/ns-hotel-kerzers',
+  'casa-reto':         '/immobilien/casa-reto',
+};
+
+const getDetailUrl = (item) =>
+  DETAIL_URL_MAP[item.id] || `/immobilien/${item.id || item.slug}`;
+
 // ─── Card CTAs per type ───────────────────────────────────────────────────────
 
 const HotelCTA = ({ item, t }) => (
   <div className="space-y-2">
-    <a
-      href={item.directBookingUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+    <Link
+      to={getDetailUrl(item)}
+      className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
     >
-      <ExternalLink size={14} />
-      {t('vermietung.hotel.bookDirectly')}
-    </a>
+      {t('vermietung.card.viewProject')}
+      <ArrowRight size={14} />
+    </Link>
     <div className="grid grid-cols-2 gap-2">
-      <a href={item.bookingUrls.booking} target="_blank" rel="noopener noreferrer"
-        className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-lg transition-colors text-xs font-medium">
-        <ExternalLink size={10} /> Booking.com
-      </a>
-      <a href={item.bookingUrls.airbnb} target="_blank" rel="noopener noreferrer"
-        className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-lg transition-colors text-xs font-medium">
-        <ExternalLink size={10} /> Airbnb
-      </a>
+      {item.bookingUrls?.booking && (
+        <a href={item.bookingUrls.booking} target="_blank" rel="noopener noreferrer"
+          className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-lg transition-colors text-xs font-medium">
+          <ExternalLink size={10} /> Booking.com
+        </a>
+      )}
+      {item.bookingUrls?.airbnb && (
+        <a href={item.bookingUrls.airbnb} target="_blank" rel="noopener noreferrer"
+          className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-lg transition-colors text-xs font-medium">
+          <ExternalLink size={10} /> Airbnb
+        </a>
+      )}
     </div>
   </div>
 );
 
 const LongStayCTA = ({ item, t }) => (
-  <a
-    href={`mailto:office@reto-amonn.ch?subject=${encodeURIComponent(`Long Stay Anfrage – ${item.title}`)}`}
+  <Link
+    to={getDetailUrl(item)}
     className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
   >
-    <Mail size={14} />
-    {t('vermietung.longStay.requestTitle')}
-  </a>
+    {t('vermietung.card.viewProject')}
+    <ArrowRight size={14} />
+  </Link>
 );
 
 const ProjectCTA = ({ item, t }) => (
   <div className="space-y-2">
     <Link
-      to={item.link || '/casa-reto'}
+      to={getDetailUrl(item)}
       className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
     >
       {t('vermietung.card.viewProject')}
@@ -105,13 +120,15 @@ const ProjectCTA = ({ item, t }) => (
 );
 
 const ApartmentCTA = ({ item }) => (
-  <Link
-    to={item.link || '/immobilien/anfrage'}
-    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
-  >
-    <Mail size={14} />
-    Anfrage senden
-  </Link>
+  <div className="space-y-2">
+    <Link
+      to={`/immobilien/${item.id || item.slug}`}
+      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+    >
+      <ArrowRight size={14} />
+      Mehr erfahren
+    </Link>
+  </div>
 );
 
 // ─── Listing Card ─────────────────────────────────────────────────────────────
@@ -134,7 +151,7 @@ const ListingCard = ({ item, index, t }) => {
       }`}
     >
       {/* Image */}
-      <div className={`relative overflow-hidden ${isProject ? 'h-56' : 'h-52'}`}>
+      <Link to={getDetailUrl(item)} className={`relative overflow-hidden block ${isProject ? 'h-56' : 'h-52'}`}>
         <RentalImage
           src={image.url}
           alt={image.alt}
@@ -164,11 +181,13 @@ const ListingCard = ({ item, index, t }) => {
             )}
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="text-base font-semibold text-gray-900 mb-0.5 leading-snug">{item.title}</h3>
+        <Link to={getDetailUrl(item)} className="hover:text-blue-700 transition-colors">
+          <h3 className="text-base font-semibold text-gray-900 mb-0.5 leading-snug">{item.title}</h3>
+        </Link>
         <p className="text-xs text-gray-500 mb-2.5 leading-snug">{item.subtitle}</p>
 
         <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
@@ -324,12 +343,12 @@ const VermietungPage = () => {
       key: 'apartment',
       icon: Home,
       label: 'Wohnungen',
-      tagline: 'Aktuell nicht verfügbar',
-      price: 'Warteliste offen',
-      color: 'from-gray-500/10 to-gray-500/5',
-      border: 'border-gray-500/20',
-      iconBg: 'bg-gray-400/20',
-      active: false,
+      tagline: counts.apartment > 0 ? `${counts.apartment} Objekt${counts.apartment > 1 ? 'e' : ''} verfügbar` : 'Aktuell nicht verfügbar',
+      price: counts.apartment > 0 ? 'Jetzt anfragen' : 'Warteliste offen',
+      color: counts.apartment > 0 ? 'from-blue-500/20 to-blue-600/10' : 'from-gray-500/10 to-gray-500/5',
+      border: counts.apartment > 0 ? 'border-blue-300/30' : 'border-gray-500/20',
+      iconBg: counts.apartment > 0 ? 'bg-blue-500/20' : 'bg-gray-400/20',
+      active: counts.apartment > 0,
     },
   ];
 
@@ -438,7 +457,7 @@ const VermietungPage = () => {
                 }`}
               >
                 {tab.label}
-                {tab.key !== 'apartment' && (
+                {tab.count > 0 && (
                   <span className={`text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[20px] text-center ${
                     filter === tab.key ? 'bg-white/25 text-white' : 'bg-gray-100 text-gray-500'
                   }`}>

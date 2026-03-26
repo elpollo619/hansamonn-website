@@ -9,7 +9,39 @@ import {
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
+import { getPropertyById } from '@/data/propertiesStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
+
+// Normalize a propertiesStore property to the format ApartmentDetailPage expects
+function normalizeStoreProperty(p) {
+  const images = (Array.isArray(p.images) ? p.images : [])
+    .filter(Boolean)
+    .map((img) => (typeof img === 'string' ? { url: img, alt: p.name } : img));
+  if (images.length === 0) images.push({ url: '', alt: p.name || 'Wohnung' });
+  const typeMap = { 'short-stay': 'hotel', ferienhaus: 'project' };
+  return {
+    id: p.id,
+    slug: p.id,
+    type: typeMap[p.type] || p.type || 'apartment',
+    status: p.status === 'verfügbar' ? 'available' : 'rented',
+    title: p.name || 'Wohnung',
+    subtitle: p.description || '',
+    location: p.address || p.location || '',
+    price: p.priceFrom || null,
+    currency: p.priceCurrency || 'CHF',
+    rooms: p.rooms || null,
+    size: p.size || null,
+    availableFrom: p.availableFrom || null,
+    images,
+    features: Array.isArray(p.features) ? p.features : [],
+    details: p.details || null,
+    contact: p.contact || { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
+    directBookingUrl: p.bookingUrl || '',
+    bookingUrls: { booking: p.bookingUrl || '', airbnb: p.airbnbUrl || '' },
+    longStayRooms: p.longStayRooms || null,
+    holidayHome: false,
+  };
+}
 
 // ─── Image with fallback ──────────────────────────────────────────────────────
 
@@ -448,7 +480,9 @@ const ApartmentDetailPage = () => {
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
   const [showForm, setShowForm] = useState(false);
 
-  const apt = getListingBySlug(slug);
+  const fromRental = getListingBySlug(slug);
+  const fromStore  = !fromRental ? getPropertyById(slug) : null;
+  const apt = fromRental ?? (fromStore ? normalizeStoreProperty(fromStore) : null);
   if (!apt) return <Navigate to="/immobilien/vermietung" replace />;
 
   const openLightbox  = (i) => setLightbox({ open: true, index: i });
