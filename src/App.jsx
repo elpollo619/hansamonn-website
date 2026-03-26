@@ -17,7 +17,6 @@ import Footer from '@/components/Footer';
 import VirtualAgent from '@/components/VirtualAgent';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
-import LiveChat from '@/components/LiveChat';
 
 // Pages
 import HomePage from '@/pages/HomePage';
@@ -151,7 +150,6 @@ function AppRoutes() {
       <WhatsAppButton />
       <VirtualAgent />
       <CookieBanner />
-      <LiveChat />
     </>
   );
 }
