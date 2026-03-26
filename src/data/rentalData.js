@@ -297,6 +297,7 @@ export const rentalData = [
     minimumStay: null,
     directBookingUrl: null,
     bookingUrls: null,
+    icalUrl: 'https://www.airbnb.ch/calendar/ical/625660996936132774.ics?t=82a02050ce864c73b599648976548358',
     description:
       'Traumhaftes Ferienhaus in Gordemo am Lago Maggiore im Tessin. Casa Reto verbindet tessiner Architektur mit modernem Komfort: mehrere Schlafzimmer, grosser Garten mit unverbautem Seeblick, ruhige Lage inmitten der Natur. Ideal für Familien und Gruppen.',
     images: [

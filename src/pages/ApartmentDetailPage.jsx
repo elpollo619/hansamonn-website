@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, Phone, Mail, MapPin, Home, Maximize2,
   CheckCircle2, Calendar, ChevronLeft, ChevronRight, X,
-  ExternalLink, Sun, Coffee, Building2, Car,
+  ExternalLink, Sun, Coffee, Building2, Car, Wifi,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
