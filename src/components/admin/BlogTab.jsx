@@ -11,6 +11,9 @@ const EMPTY = {
   category: 'Allgemein',
   excerpt: '',
   content: '',
+  title_it: '',
+  excerpt_it: '',
+  content_it: '',
   cover_image: '',
   published: false,
   author: 'Hans Amonn AG',
@@ -45,6 +48,7 @@ export default function BlogTab() {
   const [form, setForm] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [contentLang, setContentLang] = useState('de');
 
   const cls = 'w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900';
 
@@ -65,6 +69,7 @@ export default function BlogTab() {
   function openCreate() {
     setForm(EMPTY);
     setEditingId(null);
+    setContentLang('de');
     setDrawerOpen(true);
   }
 
@@ -75,6 +80,9 @@ export default function BlogTab() {
       category: p.category ?? 'Allgemein',
       excerpt: p.excerpt ?? '',
       content: p.content ?? '',
+      title_it: p.title_it ?? '',
+      excerpt_it: p.excerpt_it ?? '',
+      content_it: p.content_it ?? '',
       cover_image: p.cover_image ?? '',
       published: p.published ?? false,
       author: p.author ?? 'Hans Amonn AG',
@@ -306,28 +314,97 @@ export default function BlogTab() {
                 />
               </div>
 
-              {/* Kurzbeschreibung */}
+              {/* Language toggle */}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Kurzbeschreibung</label>
-                <textarea
-                  rows={3}
-                  value={form.excerpt}
-                  onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
-                  className={cls + ' resize-none'}
-                  placeholder="Kurze Zusammenfassung des Beitrags…"
-                />
-              </div>
+                <div className="flex items-center gap-1 mb-3">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider mr-2">Sprache</span>
+                  {['de', 'it'].map((lang) => (
+                    <button
+                      key={lang}
+                      type="button"
+                      onClick={() => setContentLang(lang)}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${
+                        contentLang === lang
+                          ? 'bg-gray-900 text-white border-gray-900'
+                          : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'
+                      }`}
+                    >
+                      {lang.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
 
-              {/* Inhalt */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Inhalt (HTML)</label>
-                <textarea
-                  rows={8}
-                  value={form.content}
-                  onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
-                  className={cls + ' resize-y font-mono text-xs'}
-                  placeholder="<p>Inhalt des Beitrags…</p>"
-                />
+                {contentLang === 'de' ? (
+                  <>
+                    {/* Kurzbeschreibung DE */}
+                    <div className="mb-4">
+                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                        Kurzbeschreibung (DE)
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={form.excerpt}
+                        onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))}
+                        className={cls + ' resize-none'}
+                        placeholder="Kurze Zusammenfassung…"
+                      />
+                    </div>
+                    {/* Inhalt DE */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                        Inhalt (HTML) (DE)
+                      </label>
+                      <textarea
+                        rows={8}
+                        value={form.content}
+                        onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
+                        className={cls + ' resize-y font-mono text-xs'}
+                        placeholder="<p>Inhalt des Beitrags…</p>"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Titel IT */}
+                    <div className="mb-4">
+                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                        Titolo (IT)
+                      </label>
+                      <input
+                        value={form.title_it}
+                        onChange={(e) => setForm((f) => ({ ...f, title_it: e.target.value }))}
+                        className={cls}
+                        placeholder="Titolo italiano…"
+                      />
+                    </div>
+                    {/* Kurzbeschreibung IT */}
+                    <div className="mb-4">
+                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                        Estratto (IT)
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={form.excerpt_it}
+                        onChange={(e) => setForm((f) => ({ ...f, excerpt_it: e.target.value }))}
+                        className={cls + ' resize-none'}
+                        placeholder="Breve descrizione…"
+                      />
+                    </div>
+                    {/* Inhalt IT */}
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">
+                        Contenuto (HTML) (IT)
+                      </label>
+                      <textarea
+                        rows={8}
+                        value={form.content_it}
+                        onChange={(e) => setForm((f) => ({ ...f, content_it: e.target.value }))}
+                        className={cls + ' resize-y font-mono text-xs'}
+                        placeholder="<p>Contenuto…</p>"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* Cover-Bild URL */}

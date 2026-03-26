@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { useTranslation } from '@/i18n';
+import { supabase } from '@/lib/supabase';
 
 const Contact = () => {
   const { t } = useTranslation();
+  const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef(null);
 
   const contactInfo = [
     {
@@ -33,13 +36,58 @@ const Contact = () => {
     }
   ];
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    toast({
-      title: t('contact.form.success'),
-      description: t('contact.form.successDetail'),
-    });
-    e.target.reset();
+    if (submitting) return;
+
+    const fd = new FormData(e.target);
+    const firstName = fd.get('firstName') || '';
+    const lastName  = fd.get('lastName')  || '';
+    const name      = `${firstName} ${lastName}`.trim();
+    const email     = fd.get('email')     || '';
+    const telefon   = fd.get('telefon')   || '';
+    const betreff   = fd.get('betreff')   || '';
+    const nachricht = fd.get('nachricht') || '';
+
+    setSubmitting(true);
+    try {
+      // 1. Save to Supabase
+      const { error } = await supabase.from('kontakt_anfragen').insert([{
+        name, email, telefon, betreff, nachricht,
+      }]);
+      if (error) throw error;
+
+      // 2. Fire-and-forget email notification
+      supabase.functions.invoke('send-email', {
+        body: {
+          subject: `Neue Kontaktanfrage: ${name}`,
+          replyTo: email,
+          html: `
+            <h2>Neue Kontaktanfrage</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>E-Mail:</strong> ${email}</p>
+            ${telefon ? `<p><strong>Telefon:</strong> ${telefon}</p>` : ''}
+            ${betreff ? `<p><strong>Betreff:</strong> ${betreff}</p>` : ''}
+            <p><strong>Nachricht:</strong></p>
+            <p>${nachricht.replace(/\n/g, '<br>')}</p>
+          `,
+        },
+      }).catch(() => { /* ignore email errors */ });
+
+      toast({
+        title: t('contact.form.success'),
+        description: t('contact.form.successDetail'),
+      });
+      e.target.reset();
+    } catch (err) {
+      toast({
+        title: 'Fehler beim Senden',
+        description: err.message || 'Bitte versuchen Sie es erneut.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -140,6 +188,7 @@ const Contact = () => {
                   </label>
                   <input
                     type="text"
+                    name="firstName"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
                     placeholder={t('contact.form.firstNamePlaceholder')}
@@ -151,6 +200,7 @@ const Contact = () => {
                   </label>
                   <input
                     type="text"
+                    name="lastName"
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
                     placeholder={t('contact.form.lastNamePlaceholder')}
@@ -164,6 +214,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
                   placeholder={t('contact.form.emailPlaceholder')}
@@ -176,6 +227,7 @@ const Contact = () => {
                 </label>
                 <input
                   type="tel"
+                  name="telefon"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
                   placeholder={t('contact.form.phonePlaceholder')}
                 />
@@ -185,7 +237,7 @@ const Contact = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('contact.form.projectType')}
                 </label>
-                <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
+                <select name="betreff" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
                   <option value="">{t('contact.form.projectPlaceholder')}</option>
                   <option value="architektur">{t('contact.form.optArchitektur')}</option>
                   <option value="neubau">{t('contact.form.optNeubau')}</option>
@@ -201,6 +253,7 @@ const Contact = () => {
                 </label>
                 <textarea
                   required
+                  name="nachricht"
                   rows={5}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
                   placeholder={t('contact.form.messagePlaceholder')}
@@ -210,9 +263,10 @@ const Contact = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full brand-gradient hover:brand-gradient-hover text-white py-3"
+                disabled={submitting}
+                className="w-full brand-gradient hover:brand-gradient-hover text-white py-3 disabled:opacity-60"
               >
-                {t('contact.form.submit')}
+                {submitting ? 'Wird gesendet…' : t('contact.form.submit')}
               </Button>
             </form>
           </motion.div>

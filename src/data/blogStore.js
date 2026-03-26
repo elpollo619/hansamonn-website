@@ -35,9 +35,16 @@ export async function getAllBlogPosts() {
 
 // ── Admin: create ────────────────────────────────────────────────────────────
 export async function createBlogPost(postData) {
+  const payload = {
+    ...postData,
+    title_it:   postData.title_it   ?? null,
+    excerpt_it: postData.excerpt_it ?? null,
+    content_it: postData.content_it ?? null,
+    updated_at: new Date().toISOString(),
+  };
   const { data, error } = await supabase
     .from('blog_posts')
-    .insert([{ ...postData, updated_at: new Date().toISOString() }])
+    .insert([payload])
     .select()
     .single();
   if (error) throw error;
@@ -46,9 +53,16 @@ export async function createBlogPost(postData) {
 
 // ── Admin: update ────────────────────────────────────────────────────────────
 export async function updateBlogPost(id, postData) {
+  const payload = {
+    ...postData,
+    title_it:   postData.title_it   ?? null,
+    excerpt_it: postData.excerpt_it ?? null,
+    content_it: postData.content_it ?? null,
+    updated_at: new Date().toISOString(),
+  };
   const { data, error } = await supabase
     .from('blog_posts')
-    .update({ ...postData, updated_at: new Date().toISOString() })
+    .update(payload)
     .eq('id', id)
     .select()
     .single();

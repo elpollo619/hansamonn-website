@@ -4,6 +4,7 @@ import { Link, useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft, Tag } from 'lucide-react';
 import { getBlogPostBySlug, getBlogPosts } from '@/data/blogStore';
+import { useTranslation } from '@/i18n';
 
 const CATEGORY_COLORS = {
   Immobilien: 'bg-blue-100 text-blue-700',
@@ -27,6 +28,7 @@ function formatDate(dateStr) {
 
 export default function BlogPostPage() {
   const { slug } = useParams();
+  const { lang } = useTranslation();
   const [post, setPost] = useState(undefined); // undefined = loading, null = not found
   const [recentPosts, setRecentPosts] = useState([]);
 
@@ -49,11 +51,15 @@ export default function BlogPostPage() {
     return <Navigate to="/neuigkeiten" replace />;
   }
 
+  const displayTitle   = (lang === 'it' && post.title_it)   || post.title;
+  const displayExcerpt = (lang === 'it' && post.excerpt_it) || post.excerpt;
+  const displayContent = (lang === 'it' && post.content_it) || post.content;
+
   return (
     <>
       <Helmet>
-        <title>{post.title} – Hans Amonn AG</title>
-        <meta name="description" content={post.excerpt ?? ''} />
+        <title>{displayTitle} – Hans Amonn AG</title>
+        <meta name="description" content={displayExcerpt ?? ''} />
         {post.cover_image && <meta property="og:image" content={post.cover_image} />}
       </Helmet>
 
@@ -87,7 +93,7 @@ export default function BlogPostPage() {
 
               {/* Title */}
               <h1 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight mb-5">
-                {post.title}
+                {displayTitle}
               </h1>
 
               {/* Meta */}
@@ -105,14 +111,14 @@ export default function BlogPostPage() {
               </div>
 
               {/* Excerpt */}
-              {post.excerpt && (
+              {displayExcerpt && (
                 <p className="text-lg text-gray-600 leading-relaxed mb-6 font-medium">
-                  {post.excerpt}
+                  {displayExcerpt}
                 </p>
               )}
 
               {/* Content (HTML) */}
-              {post.content ? (
+              {displayContent ? (
                 <div
                   className="prose prose-gray max-w-none text-gray-700 leading-relaxed
                     [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-gray-900 [&_h2]:mt-8 [&_h2]:mb-4
@@ -122,7 +128,7 @@ export default function BlogPostPage() {
                     [&_li]:mb-1 [&_a]:text-blue-600 [&_a]:underline
                     [&_strong]:font-bold [&_em]:italic
                     [&_blockquote]:border-l-4 [&_blockquote]:border-gray-200 [&_blockquote]:pl-4 [&_blockquote]:text-gray-500 [&_blockquote]:italic"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
+                  dangerouslySetInnerHTML={{ __html: displayContent }}
                 />
               ) : (
                 <p className="text-gray-400 italic">Kein Inhalt vorhanden.</p>
@@ -166,7 +172,7 @@ export default function BlogPostPage() {
                               </div>
                             )}
                             <p className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
-                              {p.title}
+                              {(lang === 'it' && p.title_it) || p.title}
                             </p>
                             <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
                               <Tag size={11} />

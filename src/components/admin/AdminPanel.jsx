@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home } from 'lucide-react';
+import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare } from 'lucide-react';
 import PropertiesTab from '@/components/admin/PropertiesTab';
 import TeamEditTab from '@/components/admin/TeamEditTab';
 import ProjectsEditTab from '@/components/admin/ProjectsEditTab';
@@ -9,22 +9,26 @@ import SettingsTab from '@/components/admin/SettingsTab';
 import TestimonialsTab from '@/components/admin/TestimonialsTab';
 import BlogTab from '@/components/admin/BlogTab';
 import MietanfragenTab from '@/components/admin/MietanfragenTab';
+import KontaktTab from '@/components/admin/KontaktTab';
+import StatsTab from '@/components/admin/StatsTab';
 import { useAdminAuth } from '@/context/AdminAuthContext';
 
 const TABS = [
-  { id: 'properties', label: 'Immobilien', icon: Building2 },
-  { id: 'team',       label: 'Team',       icon: Users },
-  { id: 'projects',   label: 'Projekte',   icon: FolderOpen },
-  { id: 'images',     label: 'Bilder',     icon: ImageIcon },
-  { id: 'mietanfragen',  label: 'Anfragen',      icon: Inbox },
-  { id: 'settings',      label: 'Einstellungen', icon: Settings },
-  { id: 'testimonials',  label: 'Bewertungen',   icon: Star },
-  { id: 'blog',          label: 'Neuigkeiten',   icon: FileText },
+  { id: 'stats',        label: 'Statistiken',   icon: BarChart2 },
+  { id: 'properties',   label: 'Immobilien',    icon: Building2 },
+  { id: 'team',         label: 'Team',          icon: Users },
+  { id: 'projects',     label: 'Projekte',      icon: FolderOpen },
+  { id: 'images',       label: 'Bilder',        icon: ImageIcon },
+  { id: 'mietanfragen', label: 'Anfragen',      icon: Inbox },
+  { id: 'kontakt',      label: 'Kontakt',       icon: MessageSquare },
+  { id: 'settings',     label: 'Einstellungen', icon: Settings },
+  { id: 'testimonials', label: 'Bewertungen',   icon: Star },
+  { id: 'blog',         label: 'Neuigkeiten',   icon: FileText },
 ];
 
 export default function AdminPanel() {
   const { logout, user, isAdmin } = useAdminAuth();
-  const [activeTab, setActiveTab] = useState('properties');
+  const [activeTab, setActiveTab] = useState('stats');
 
   const tabs = isAdmin ? [...TABS, { id: 'users', label: 'Benutzer', icon: Shield }] : TABS;
 
@@ -80,11 +84,13 @@ export default function AdminPanel() {
 
           {/* Tab content */}
           <div className="p-6">
+            {activeTab === 'stats'      && <StatsTab />}
             {activeTab === 'properties' && <PropertiesTab />}
             {activeTab === 'team'       && <TeamEditTab />}
             {activeTab === 'projects'   && <ProjectsEditTab />}
             {activeTab === 'images'     && <ImagesEditTab />}
             {activeTab === 'mietanfragen'  && <MietanfragenTab />}
+            {activeTab === 'kontakt'       && <KontaktTab />}
             {activeTab === 'settings'   && <SettingsTab />}
             {activeTab === 'users'         && isAdmin && <UsersTab />}
             {activeTab === 'testimonials'  && <TestimonialsTab />}

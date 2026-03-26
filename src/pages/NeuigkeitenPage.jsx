@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 import { getBlogPosts } from '@/data/blogStore';
+import { useTranslation } from '@/i18n';
 
 const CATEGORY_COLORS = {
   Immobilien: 'bg-blue-100 text-blue-700',
@@ -42,7 +43,9 @@ function SkeletonCard() {
 }
 
 // ── Single blog card ─────────────────────────────────────────────────────────
-function BlogCard({ post, index }) {
+function BlogCard({ post, index, lang }) {
+  const displayTitle   = (lang === 'it' && post.title_it)   || post.title;
+  const displayExcerpt = (lang === 'it' && post.excerpt_it) || post.excerpt;
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -80,14 +83,14 @@ function BlogCard({ post, index }) {
         {/* Title */}
         <Link to={`/neuigkeiten/${post.slug}`}>
           <h2 className="text-gray-900 font-bold text-lg leading-snug mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
-            {post.title}
+            {displayTitle}
           </h2>
         </Link>
 
         {/* Excerpt */}
-        {post.excerpt && (
+        {displayExcerpt && (
           <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-4">
-            {post.excerpt}
+            {displayExcerpt}
           </p>
         )}
 
@@ -105,6 +108,7 @@ function BlogCard({ post, index }) {
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function NeuigkeitenPage() {
+  const { lang } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -175,7 +179,7 @@ export default function NeuigkeitenPage() {
           {!loading && !error && posts.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.map((post, i) => (
-                <BlogCard key={post.id} post={post} index={i} />
+                <BlogCard key={post.id} post={post} index={i} lang={lang} />
               ))}
             </div>
           )}

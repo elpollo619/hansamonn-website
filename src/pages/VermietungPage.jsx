@@ -11,6 +11,7 @@ import { useTranslation } from '@/i18n';
 import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 import InteractiveMapSection from '@/components/InteractiveMapSection';
 import CompareButton from '@/components/CompareButton';
+import OccupancyBadge from '@/components/OccupancyBadge';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
@@ -186,9 +187,12 @@ const ListingCard = ({ item, index, t }) => {
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
-        <Link to={getDetailUrl(item)} className="hover:text-blue-700 transition-colors">
-          <h3 className="text-base font-semibold text-gray-900 mb-0.5 leading-snug">{item.title}</h3>
-        </Link>
+        <div className="flex items-start justify-between gap-2 mb-0.5">
+          <Link to={getDetailUrl(item)} className="hover:text-blue-700 transition-colors">
+            <h3 className="text-base font-semibold text-gray-900 leading-snug">{item.title}</h3>
+          </Link>
+          <OccupancyBadge status={item.occupancy || 'frei'} />
+        </div>
         <p className="text-xs text-gray-500 mb-2.5 leading-snug">{item.subtitle}</p>
 
         <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">

@@ -132,13 +132,14 @@ const DEFAULT_PROPERTIES = [
   },
 ];
 
-// ── Migration: add lat/lng/address to existing stored properties that lack them ──
+// ── Migration: add lat/lng/address/occupancy to existing stored properties ──
 function migrate(props) {
   return props.map((p) => ({
     address: p.location || '',
     ...p,
     lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
     lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
+    occupancy: p.occupancy || 'frei',
   }));
 }
 
@@ -228,7 +229,10 @@ export function getNormalizedVisibleProperties() {
         airbnb: p.airbnbUrl || '',
       },
       icalUrl: p.icalUrl || '',
+      videoUrl: p.videoUrl || '',
+      tourUrl: p.tourUrl || '',
       link: p.link || `/immobilien/${p.id}`,
+      occupancy: p.occupancy || 'frei',
     };
   });
 }

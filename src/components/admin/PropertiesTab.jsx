@@ -32,9 +32,19 @@ const TYPE_OPTIONS = [
 ];
 
 const STATUS_OPTIONS = [
-  { value: 'verfügbar', label: 'Verfügbar' },
-  { value: 'nicht-verfügbar', label: 'Nicht verfügbar' },
-  { value: 'coming-soon', label: 'Coming Soon' },
+  { value: 'frei',        label: '✓ Frei (Verfügbar)' },
+  { value: 'reserviert',  label: '◷ Reserviert' },
+  { value: 'vermietet',   label: '✗ Vermietet' },
+  // Legacy values kept for backward compat
+  { value: 'verfügbar',       label: 'Verfügbar (alt)' },
+  { value: 'nicht-verfügbar', label: 'Nicht verfügbar (alt)' },
+  { value: 'coming-soon',     label: 'Coming Soon (alt)' },
+];
+
+const OCCUPANCY_OPTIONS = [
+  { value: 'frei',       label: '✓ Frei',       cls: 'bg-green-100 text-green-700 border-green-200' },
+  { value: 'reserviert', label: '◷ Reserviert', cls: 'bg-amber-100 text-amber-700 border-amber-200' },
+  { value: 'vermietet',  label: '✗ Vermietet',  cls: 'bg-gray-100 text-gray-500 border-gray-200' },
 ];
 
 const PERIOD_OPTIONS = [
@@ -83,6 +93,7 @@ const EMPTY_FORM = {
   location: '',
   description: '',
   status: 'verfügbar',
+  occupancy: 'frei',
   priceFrom: '',
   priceCurrency: 'CHF',
   pricePeriod: 'Mt.',
@@ -91,6 +102,8 @@ const EMPTY_FORM = {
   bookingUrl: '',
   airbnbUrl: '',
   icalUrl: '',
+  videoUrl: '',
+  tourUrl: '',
   contactEmail: '',
   visible: true,
   features: [],
@@ -102,14 +115,20 @@ const EMPTY_FORM = {
 
 function StatusBadge({ status }) {
   const map = {
-    'verfügbar': 'bg-green-100 text-green-700 border-green-200',
-    'nicht-verfügbar': 'bg-red-100 text-red-700 border-red-200',
-    'coming-soon': 'bg-amber-100 text-amber-700 border-amber-200',
+    'verfügbar':        'bg-green-100 text-green-700 border-green-200',
+    'nicht-verfügbar':  'bg-red-100 text-red-700 border-red-200',
+    'coming-soon':      'bg-amber-100 text-amber-700 border-amber-200',
+    'frei':             'bg-green-100 text-green-700 border-green-200',
+    'reserviert':       'bg-amber-100 text-amber-700 border-amber-200',
+    'vermietet':        'bg-gray-100 text-gray-500 border-gray-200',
   };
   const labels = {
-    'verfügbar': 'Verfügbar',
-    'nicht-verfügbar': 'Nicht verfügbar',
-    'coming-soon': 'Coming Soon',
+    'verfügbar':        'Verfügbar',
+    'nicht-verfügbar':  'Nicht verfügbar',
+    'coming-soon':      'Coming Soon',
+    'frei':             'Frei',
+    'reserviert':       'Reserviert',
+    'vermietet':        'Vermietet',
   };
   const cls = map[status] || 'bg-gray-100 text-gray-600 border-gray-200';
   return (
@@ -301,6 +320,27 @@ function PropertyForm({ property, onSave, onClose }) {
                   <option key={o.value} value={o.value}>{o.label}</option>
                 ))}
               </select>
+            </div>
+          </div>
+
+          {/* Verfügbarkeit (Occupancy) */}
+          <div>
+            <label className={labelCls}>Verfügbarkeit</label>
+            <div className="flex gap-2 mt-1">
+              {OCCUPANCY_OPTIONS.map((o) => (
+                <button
+                  key={o.value}
+                  type="button"
+                  onClick={() => set('occupancy', o.value)}
+                  className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    (form.occupancy || 'frei') === o.value
+                      ? `${o.cls} shadow-sm`
+                      : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'
+                  }`}
+                >
+                  {o.label}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -643,6 +683,33 @@ function PropertyForm({ property, onSave, onClose }) {
             )}
           </div>
 
+          {/* Video URL */}
+          <div>
+            <label className={labelCls}>Video URL (YouTube / Vimeo)</label>
+            <input
+              className={inputCls}
+              type="url"
+              value={form.videoUrl}
+              onChange={(e) => set('videoUrl', e.target.value)}
+              placeholder="https://www.youtube.com/watch?v=..."
+            />
+          </div>
+
+          {/* Virtual Tour URL */}
+          <div>
+            <label className={labelCls}>Virtual Tour URL (Matterport, 360°)</label>
+            <input
+              className={inputCls}
+              type="url"
+              value={form.tourUrl}
+              onChange={(e) => set('tourUrl', e.target.value)}
+              placeholder="https://my.matterport.com/show/?m=..."
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              z.B. https://my.matterport.com/show/?m=...
+            </p>
+          </div>
+
           {/* Contact email */}
           <div>
             <label className={labelCls}>Kontakt E-Mail</label>
@@ -858,7 +925,12 @@ export default function PropertiesTab() {
                     <TypeBadge type={prop.type} />
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadge status={prop.status} />
+                    <div className="flex flex-col gap-1">
+                      <StatusBadge status={prop.status} />
+                      {prop.occupancy && prop.occupancy !== 'frei' && (
+                        <StatusBadge status={prop.occupancy} />
+                      )}
+                    </div>
                   </td>
                   <td className="px-4 py-3 text-gray-700">
                     {prop.priceFrom

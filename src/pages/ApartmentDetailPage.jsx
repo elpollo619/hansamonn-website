@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -10,11 +10,18 @@ import {
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
 import { getPropertyById } from '@/data/propertiesStore';
+import { trackPropertyView } from '@/data/statsStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import PropertyDocuments from '@/components/PropertyDocuments';
 import Lightbox from '@/components/Lightbox';
 import StructuredData from '@/components/StructuredData';
+import PropertyVideo from '@/components/PropertyVideo';
+import VirtualTour from '@/components/VirtualTour';
+import OccupancyBadge from '@/components/OccupancyBadge';
+import RecentlyViewedSection from '@/components/RecentlyViewedSection';
+import ShareButtons from '@/components/ShareButtons';
+import { addRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -45,6 +52,9 @@ function normalizeStoreProperty(p) {
     longStayRooms: p.longStayRooms || null,
     holidayHome: false,
     icalUrl: p.icalUrl || '',
+    videoUrl: p.videoUrl || '',
+    tourUrl: p.tourUrl || '',
+    occupancy: p.occupancy || 'frei',
   };
 }
 
@@ -98,7 +108,10 @@ const HotelSidebar = ({ apt, t }) => (
   >
     {/* Price header */}
     <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 px-6 py-5 text-white">
-      <TypeBadge type="hotel" t={t} />
+      <div className="flex items-center gap-2 flex-wrap">
+        <TypeBadge type="hotel" t={t} />
+        <OccupancyBadge status={apt.occupancy || 'frei'} />
+      </div>
       <p className="text-3xl font-bold mt-3">
         {apt.currency} {apt.price}
         <span className="text-base font-normal opacity-70"> {t('vermietung.card.nightPrice')}</span>
@@ -173,6 +186,11 @@ const HotelSidebar = ({ apt, t }) => (
         <Mail size={15} />
         {apt.contact?.email ?? 'office@reto-amonn.ch'}
       </a>
+
+      {/* Share */}
+      <div className="pt-1">
+        <ShareButtons title={apt.title} />
+      </div>
     </div>
   </motion.div>
 );
@@ -188,7 +206,10 @@ const LongStaySidebar = ({ apt, t }) => (
   >
     {/* Header */}
     <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-5 text-white">
-      <TypeBadge type="long-stay" t={t} />
+      <div className="flex items-center gap-2 flex-wrap">
+        <TypeBadge type="long-stay" t={t} />
+        <OccupancyBadge status={apt.occupancy || 'frei'} />
+      </div>
       <p className="text-3xl font-bold mt-3">
         {apt.currency} {apt.price}
         <span className="text-base font-normal opacity-75"> {t('vermietung.longStay.from')} / {t('common.perMonth').replace('/ ', '')}</span>
@@ -260,6 +281,9 @@ const LongStaySidebar = ({ apt, t }) => (
         {t('vermietung.longStay.requestTitle')}
       </a>
       <p className="text-xs text-gray-400 text-center mt-2">{t('vermietung.longStay.requestSubtitle')}</p>
+      <div className="mt-3">
+        <ShareButtons title={apt.title} />
+      </div>
     </div>
   </motion.div>
 );
@@ -277,7 +301,10 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-5 text-white">
-        <TypeBadge type="project" t={t} />
+        <div className="flex items-center gap-2 flex-wrap">
+          <TypeBadge type="project" t={t} />
+          <OccupancyBadge status={apt.occupancy || 'frei'} />
+        </div>
         <h3 className="text-xl font-semibold mt-3 mb-0.5">{apt.title}</h3>
         <p className="text-sm opacity-75">{apt.location}</p>
       </div>
@@ -315,6 +342,11 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
           <Phone size={15} />
           {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
         </a>
+
+        {/* Share */}
+        <div className="pt-1">
+          <ShareButtons title={apt.title} />
+        </div>
       </div>
     </div>
 
@@ -337,7 +369,10 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
       {/* Info card */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white">
-          <TypeBadge type="apartment" t={t} />
+          <div className="flex items-center gap-2 flex-wrap">
+            <TypeBadge type="apartment" t={t} />
+            <OccupancyBadge status={apt.occupancy || 'frei'} />
+          </div>
           <p className="text-3xl font-bold mt-3">
             {apt.currency} {apt.price?.toLocaleString('de-CH')}
             <span className="text-base font-normal opacity-75"> {t('common.perMonth')}</span>
@@ -389,6 +424,11 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
               </a>
             </>
           )}
+
+          {/* Share */}
+          <div className="pt-1">
+            <ShareButtons title={apt.title} />
+          </div>
         </div>
       </div>
 
@@ -473,6 +513,15 @@ const ApartmentDetailPage = () => {
   const fromRental = getListingBySlug(slug);
   const fromStore  = !fromRental ? getPropertyById(slug) : null;
   const apt = fromRental ?? (fromStore ? normalizeStoreProperty(fromStore) : null);
+
+  useEffect(() => {
+    if (apt) {
+      trackPropertyView(apt.id ?? apt.slug, apt.title);
+      addRecentlyViewed(String(apt.id ?? apt.slug));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
+
   if (!apt) return <Navigate to="/immobilien/vermietung" replace />;
 
   const openLightbox  = (i) => setLightbox({ open: true, index: i });
@@ -802,6 +851,12 @@ const ApartmentDetailPage = () => {
               <p className="text-gray-600 leading-relaxed">{apt.description}</p>
             </div>
 
+            {/* Video */}
+            <PropertyVideo videoUrl={apt.videoUrl} />
+
+            {/* Virtual Tour */}
+            <VirtualTour tourUrl={apt.tourUrl} />
+
             {/* Long Stay: pricing table (mobile – shown in sidebar on desktop) */}
             {apt.type === 'long-stay' && apt.longStayRooms && (
               <div className="lg:hidden">
@@ -911,6 +966,9 @@ const ApartmentDetailPage = () => {
                 </div>
               </div>
             )}
+
+            {/* Recently viewed */}
+            <RecentlyViewedSection currentId={apt.id ?? apt.slug} />
           </div>
 
           {/* ── Sidebar ── */}
