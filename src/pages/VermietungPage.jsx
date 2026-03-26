@@ -60,18 +60,10 @@ const RentalImage = ({ src, alt, className }) => {
   );
 };
 
-// ─── Detail URL mapping (propertiesStore id → rentalData-based detail page) ───
-
-const DETAIL_URL_MAP = {
-  'kerzers-ls':        '/immobilien/long-stay-kerzers',
-  'munchenbuchsee-ls': '/immobilien/long-stay-munchenbuchsee',
-  'muri-ls':           '/immobilien/long-stay-muri',
-  'ns-hotel':          '/immobilien/ns-hotel-kerzers',
-  'casa-reto':         '/immobilien/casa-reto',
-};
+// ─── Detail URL: use the link stored in propertiesStore (or fallback) ─────────
 
 const getDetailUrl = (item) =>
-  DETAIL_URL_MAP[item.id] || `/immobilien/${item.id || item.slug}`;
+  item.link || `/immobilien/${item.id || item.slug}`;
 
 // ─── Card CTAs per type ───────────────────────────────────────────────────────
 
@@ -126,7 +118,7 @@ const ProjectCTA = ({ item, t }) => (
 const ApartmentCTA = ({ item }) => (
   <div className="space-y-2">
     <Link
-      to={`/immobilien/${item.id || item.slug}`}
+      to={item.link || `/immobilien/${item.id || item.slug}`}
       className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
     >
       <ArrowRight size={14} />

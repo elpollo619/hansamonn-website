@@ -59,16 +59,8 @@ const RentalImage = ({ src, alt, className }) => {
 
 // ─── Detail URL mapping ───────────────────────────────────────────────────────
 
-const DETAIL_URL_MAP = {
-  'kerzers-ls':        '/immobilien/long-stay-kerzers',
-  'munchenbuchsee-ls': '/immobilien/long-stay-munchenbuchsee',
-  'muri-ls':           '/immobilien/long-stay-muri',
-  'ns-hotel':          '/immobilien/ns-hotel-kerzers',
-  'casa-reto':         '/immobilien/casa-reto',
-};
-
 const getDetailUrl = (item) =>
-  DETAIL_URL_MAP[item.id] || `/immobilien/${item.id || item.slug}`;
+  item.link || `/immobilien/${item.id || item.slug}`;
 
 // ─── Favorite Card ────────────────────────────────────────────────────────────
 
