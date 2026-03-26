@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
-
-const WHATSAPP_NUMBER = '41775350668'; // +41 77 535 06 68 (no leading +)
-const WHATSAPP_MESSAGE = 'Hallo, ich interessiere mich für Ihre Angebote.';
+import { getSetting } from '@/data/settingsStore';
 
 const WhatsAppButton = () => {
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+  const number  = getSetting('whatsappNumber').replace(/\D/g, '');
+  const message = getSetting('whatsappMessage');
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 
   return (
     <div className="fixed bottom-6 left-6 z-40 flex flex-col items-start gap-2">

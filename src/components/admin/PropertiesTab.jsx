@@ -42,6 +42,39 @@ const PERIOD_OPTIONS = [
   { value: 'Woche', label: 'Woche' },
 ];
 
+// ─── Amenity presets ─────────────────────────────────────────────────────────
+
+const AMENITY_PRESETS = [
+  { emoji: '📶', label: 'WLAN' },
+  { emoji: '🧺', label: 'Waschmaschine' },
+  { emoji: '🚗', label: 'Parkplatz' },
+  { emoji: '🛁', label: 'Badezimmer' },
+  { emoji: '🍳', label: 'Küche' },
+  { emoji: '🌡️', label: 'Heizung' },
+  { emoji: '❄️', label: 'Klimaanlage' },
+  { emoji: '📺', label: 'TV' },
+  { emoji: '🛏️', label: 'Möbliert' },
+  { emoji: '🧹', label: 'Reinigung inkl.' },
+  { emoji: '⚡', label: 'Strom inkl.' },
+  { emoji: '💧', label: 'Wasser inkl.' },
+  { emoji: '🔑', label: 'Self Check-in' },
+  { emoji: '🐾', label: 'Haustiere erlaubt' },
+  { emoji: '🚭', label: 'Nichtraucher' },
+  { emoji: '♿', label: 'Barrierefrei' },
+  { emoji: '🌿', label: 'Garten/Balkon' },
+  { emoji: '☕', label: 'Kaffeemaschine' },
+  { emoji: '🧊', label: 'Kühlschrank' },
+  { emoji: '🔒', label: 'Schliessfach' },
+  { emoji: '🚲', label: 'Fahrradstellplatz' },
+  { emoji: '🏊', label: 'Pool' },
+  { emoji: '🧖', label: 'Sauna' },
+  { emoji: '🛗', label: 'Lift' },
+  { emoji: '📦', label: 'Keller/Lager' },
+  { emoji: '🚿', label: 'Dusche' },
+  { emoji: '🪟', label: 'Balkon/Terrasse' },
+  { emoji: '🛺', label: 'ÖV-nah' },
+];
+
 const EMPTY_FORM = {
   name: '',
   type: 'long-stay',
@@ -371,10 +404,40 @@ function PropertyForm({ property, onSave, onClose }) {
             </div>
           </div>
 
-          {/* Features */}
+          {/* Ausstattung & Besonderheiten */}
           <div>
-            <label className={labelCls}>Merkmale / Features</label>
-            <div className="flex gap-2 mb-2">
+            <label className={labelCls}>Ausstattung &amp; Besonderheiten</label>
+
+            {/* Emoji preset chips */}
+            <div className="flex flex-wrap gap-2 mb-3">
+              {AMENITY_PRESETS.map(({ emoji, label }) => {
+                const value = `${emoji} ${label}`;
+                const active = form.features.includes(value);
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() =>
+                      set('features', active
+                        ? form.features.filter((f) => f !== value)
+                        : [...form.features, value]
+                      )
+                    }
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                      active
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                        : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:text-blue-600'
+                    }`}
+                  >
+                    <span className="text-base leading-none">{emoji}</span>
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Custom feature input */}
+            <div className="flex gap-2">
               <input
                 className={inputCls}
                 value={featureInput}
@@ -382,7 +445,7 @@ function PropertyForm({ property, onSave, onClose }) {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') { e.preventDefault(); addFeature(); }
                 }}
-                placeholder="Merkmal eingeben + Enter"
+                placeholder="Eigenes Merkmal eingeben + Enter (z.B. 🏔️ Bergblick)"
               />
               <button
                 type="button"
@@ -392,23 +455,30 @@ function PropertyForm({ property, onSave, onClose }) {
                 <Tag size={14} />
               </button>
             </div>
+
+            {/* Active features summary */}
             {form.features.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {form.features.map((f, i) => (
-                  <span
-                    key={i}
-                    className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
-                  >
-                    {f}
-                    <button
-                      type="button"
-                      onClick={() => removeFeature(i)}
-                      className="hover:text-blue-900 transition-colors"
+              <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                <p className="text-xs font-semibold text-gray-500 mb-2">
+                  Ausgewählt ({form.features.length}):
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {form.features.map((f, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-white text-gray-700 text-xs rounded-full border border-gray-200"
                     >
-                      <X size={10} />
-                    </button>
-                  </span>
-                ))}
+                      {f}
+                      <button
+                        type="button"
+                        onClick={() => removeFeature(i)}
+                        className="text-gray-400 hover:text-red-500 transition-colors ml-0.5"
+                      >
+                        <X size={10} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
           </div>

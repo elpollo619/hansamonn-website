@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield } from 'lucide-react';
+import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings } from 'lucide-react';
 import PropertiesTab from '@/components/admin/PropertiesTab';
 import TeamEditTab from '@/components/admin/TeamEditTab';
 import ProjectsEditTab from '@/components/admin/ProjectsEditTab';
 import ImagesEditTab from '@/components/admin/ImagesEditTab';
 import UsersTab from '@/components/admin/UsersTab';
+import SettingsTab from '@/components/admin/SettingsTab';
 import { useAdminAuth } from '@/context/AdminAuthContext';
 
 const TABS = [
@@ -12,6 +13,7 @@ const TABS = [
   { id: 'team',       label: 'Team',       icon: Users },
   { id: 'projects',   label: 'Projekte',   icon: FolderOpen },
   { id: 'images',     label: 'Bilder',     icon: ImageIcon },
+  { id: 'settings',   label: 'Einstellungen', icon: Settings },
 ];
 
 export default function AdminPanel() {
@@ -76,6 +78,7 @@ export default function AdminPanel() {
             {activeTab === 'team'       && <TeamEditTab />}
             {activeTab === 'projects'   && <ProjectsEditTab />}
             {activeTab === 'images'     && <ImagesEditTab />}
+            {activeTab === 'settings'   && <SettingsTab />}
             {activeTab === 'users'      && isAdmin && <UsersTab />}
           </div>
         </div>

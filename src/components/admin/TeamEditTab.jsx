@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Plus, Pencil, Trash2, Eye, EyeOff, X, Check, AlertTriangle, User } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Plus, Pencil, Trash2, Eye, EyeOff, X, Check, AlertTriangle, User, Upload, Loader2 } from 'lucide-react';
 import { getTeam, createMember, updateMember, deleteMember } from '@/data/teamStore';
 import { useAdminAuth } from '@/context/AdminAuthContext';
 import { toast } from '@/components/ui/use-toast';
+import { supabase } from '@/lib/supabase';
 
 const EMPTY = { name: '', position: '', email: '', education: '', experience: '', specialization: '', description: '', photoUrl: '', visible: true };
 
@@ -34,6 +35,35 @@ export default function TeamEditTab() {
     deleteMember(deleteConfirm);
     toast({ title: '✓ Gelöscht', description: `${m?.name ?? ''} entfernt.` });
     setDeleteConfirm(null); reload();
+  }
+
+  const [uploading, setUploading] = useState(false);
+  const photoInputRef = useRef(null);
+
+  async function handlePhotoUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      toast({ title: 'Datei zu groß', description: 'Maximale Dateigrösse: 5 MB.', variant: 'destructive' });
+      return;
+    }
+    setUploading(true);
+    try {
+      const ext  = file.name.split('.').pop();
+      const path = `team/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from('bewerber-dokumente')
+        .upload(path, file, { upsert: true, contentType: file.type });
+      if (upErr) throw upErr;
+      const { data } = supabase.storage.from('bewerber-dokumente').getPublicUrl(path);
+      setForm(f => ({ ...f, photoUrl: data.publicUrl }));
+      toast({ title: '✓ Foto hochgeladen' });
+    } catch (err) {
+      toast({ title: 'Upload fehlgeschlagen', description: err.message, variant: 'destructive' });
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
   }
 
   const cls = 'w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900';
@@ -108,9 +138,22 @@ export default function TeamEditTab() {
               <Field label="Spezialisierung" k="specialization" />
               <Field label="Beschreibung" k="description" rows={4} />
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Foto-URL</label>
-                <input type="url" value={form.photoUrl} onChange={e => setForm(f => ({ ...f, photoUrl: e.target.value }))} placeholder="https://..." className={cls} />
-                {form.photoUrl && <div className="mt-2 w-14 h-14 rounded-full overflow-hidden bg-gray-100"><img src={form.photoUrl} alt="" className="w-full h-full object-cover" /></div>}
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Foto</label>
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 rounded-full bg-gray-100 overflow-hidden flex-shrink-0 flex items-center justify-center border-2 border-gray-200">
+                    {form.photoUrl
+                      ? <img src={form.photoUrl} alt="" className="w-full h-full object-cover" />
+                      : <User size={28} className="text-gray-300" />}
+                  </div>
+                  <div className="flex flex-col gap-2 flex-1">
+                    <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                    <button type="button" onClick={() => photoInputRef.current?.click()} disabled={uploading}
+                      className="inline-flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">
+                      {uploading ? <><Loader2 size={14} className="animate-spin" /> Hochladen…</> : <><Upload size={14} /> Foto hochladen</>}
+                    </button>
+                    <input type="url" value={form.photoUrl} onChange={e => setForm(f => ({ ...f, photoUrl: e.target.value }))} placeholder="oder URL einfügen…" className={cls + ' text-xs'} />
+                  </div>
+                </div>
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.visible} onChange={e => setForm(f => ({ ...f, visible: e.target.checked }))} className="w-4 h-4 rounded border-gray-300" />
