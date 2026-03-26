@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings } from 'lucide-react';
+import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home } from 'lucide-react';
 import PropertiesTab from '@/components/admin/PropertiesTab';
 import TeamEditTab from '@/components/admin/TeamEditTab';
 import ProjectsEditTab from '@/components/admin/ProjectsEditTab';
 import ImagesEditTab from '@/components/admin/ImagesEditTab';
 import UsersTab from '@/components/admin/UsersTab';
 import SettingsTab from '@/components/admin/SettingsTab';
+import TestimonialsTab from '@/components/admin/TestimonialsTab';
+import BlogTab from '@/components/admin/BlogTab';
+import MietanfragenTab from '@/components/admin/MietanfragenTab';
 import { useAdminAuth } from '@/context/AdminAuthContext';
 
 const TABS = [
@@ -13,7 +16,10 @@ const TABS = [
   { id: 'team',       label: 'Team',       icon: Users },
   { id: 'projects',   label: 'Projekte',   icon: FolderOpen },
   { id: 'images',     label: 'Bilder',     icon: ImageIcon },
-  { id: 'settings',   label: 'Einstellungen', icon: Settings },
+  { id: 'mietanfragen',  label: 'Anfragen',      icon: Inbox },
+  { id: 'settings',      label: 'Einstellungen', icon: Settings },
+  { id: 'testimonials',  label: 'Bewertungen',   icon: Star },
+  { id: 'blog',          label: 'Neuigkeiten',   icon: FileText },
 ];
 
 export default function AdminPanel() {
@@ -78,8 +84,11 @@ export default function AdminPanel() {
             {activeTab === 'team'       && <TeamEditTab />}
             {activeTab === 'projects'   && <ProjectsEditTab />}
             {activeTab === 'images'     && <ImagesEditTab />}
+            {activeTab === 'mietanfragen'  && <MietanfragenTab />}
             {activeTab === 'settings'   && <SettingsTab />}
-            {activeTab === 'users'      && isAdmin && <UsersTab />}
+            {activeTab === 'users'         && isAdmin && <UsersTab />}
+            {activeTab === 'testimonials'  && <TestimonialsTab />}
+            {activeTab === 'blog'          && <BlogTab />}
           </div>
         </div>
       </div>

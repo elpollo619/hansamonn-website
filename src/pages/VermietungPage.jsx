@@ -10,6 +10,7 @@ import {
 import { useTranslation } from '@/i18n';
 import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 import InteractiveMapSection from '@/components/InteractiveMapSection';
+import CompareButton from '@/components/CompareButton';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
@@ -234,11 +235,16 @@ const ListingCard = ({ item, index, t }) => {
         )}
 
         {/* CTA */}
-        <div className="mt-auto">
+        <div className="mt-auto space-y-2">
           {isHotel     && <HotelCTA item={item} t={t} />}
           {isProject   && <ProjectCTA item={item} t={t} />}
           {isLongStay  && <LongStayCTA item={item} t={t} />}
           {isApartment && <ApartmentCTA item={item} />}
+
+          {/* Compare button */}
+          <div className="pt-1">
+            <CompareButton propertyId={item.id} propertyName={item.title} />
+          </div>
         </div>
       </div>
     </motion.div>

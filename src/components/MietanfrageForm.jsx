@@ -458,6 +458,24 @@ export default function MietanfrageForm() {
         dokument_url: uploadedUrls[0] || null,
       }]);
 
+      // Email notification to admin (fire-and-forget — don't block on failure)
+      supabase.functions.invoke('send-email', {
+        body: {
+          subject: `Neue Mietanfrage: ${form.vorname} ${form.nachname}`,
+          html: `<h2>Neue Mietanfrage eingegangen</h2>
+<table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
+<tr><td style="padding:4px 12px 4px 0;color:#666">Name</td><td><strong>${form.vorname} ${form.nachname}</strong></td></tr>
+<tr><td style="padding:4px 12px 4px 0;color:#666">E-Mail</td><td>${form.email}</td></tr>
+<tr><td style="padding:4px 12px 4px 0;color:#666">Telefon</td><td>${form.handynummer}</td></tr>
+<tr><td style="padding:4px 12px 4px 0;color:#666">Objekt</td><td>${form.mietort.join(', ')}</td></tr>
+<tr><td style="padding:4px 12px 4px 0;color:#666">Mietbeginn</td><td>${form.mietbeginn}</td></tr>
+<tr><td style="padding:4px 12px 4px 0;color:#666">Beruf</td><td>${form.beruf}</td></tr>
+</table>
+<p style="margin-top:16px;color:#666;font-size:12px">Vollständige Anfrage im Admin-Panel einsehen.</p>`,
+          replyTo: form.email,
+        },
+      }).catch(() => {});
+
       // Generate and download PDF for the applicant
       const pdf = generatePDF(form, allFiles);
       const pdfName = `Mietanfrage_${form.vorname}_${form.nachname}_${new Date().toLocaleDateString("de-CH").replace(/\./g, "-")}.pdf`;

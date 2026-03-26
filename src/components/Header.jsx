@@ -88,11 +88,12 @@ const Header = () => {
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
   const navItems = [
-    { path: '/uber-uns',   label: t('nav.about') },
-    { path: '/team',       label: t('nav.team') },
-    { path: '/projekte',   label: t('nav.projects') },
-    { path: '/leistungen', label: t('nav.services') },
-    { path: '/kontakt',    label: t('nav.contact') },
+    { path: '/uber-uns',    label: t('nav.about') },
+    { path: '/team',        label: t('nav.team') },
+    { path: '/projekte',    label: t('nav.projects') },
+    { path: '/leistungen',  label: t('nav.services') },
+    { path: '/neuigkeiten', label: 'Neuigkeiten' },
+    { path: '/kontakt',     label: t('nav.contact') },
   ];
 
   return (

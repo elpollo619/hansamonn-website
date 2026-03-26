@@ -12,6 +12,7 @@ import { getListingBySlug } from '@/data/rentalData';
 import { getPropertyById } from '@/data/propertiesStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
+import PropertyDocuments from '@/components/PropertyDocuments';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -721,6 +722,9 @@ const ApartmentDetailPage = () => {
                 )}
               </div>
             )}
+
+            {/* Downloadable documents */}
+            <PropertyDocuments propertyId={apt.id ?? apt.slug} />
 
             {/* Casa Reto: holiday home highlights */}
             {apt.holidayHome && (

@@ -9,6 +9,8 @@ import {
 
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/i18n';
+import { ComparisonProvider } from '@/context/ComparisonContext';
+import CompareBar from '@/components/CompareBar';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -44,6 +46,12 @@ import MunchenbuchseePage from '@/pages/MunchenbuchseePage';
 import MuriPage from '@/pages/MuriPage';
 import MietanfragePage from '@/pages/MietanfragePage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import NeuigkeitenPage from '@/pages/NeuigkeitenPage';
+import BlogPostPage from '@/pages/BlogPostPage';
+
+// New feature pages
+import PreisrechnerPage from '@/pages/PreisrechnerPage';
+import VergleichPage from '@/pages/VergleichPage';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -111,6 +119,14 @@ function AppRoutes() {
           <Route path="/vermietung/:slug" element={<Navigate to="/immobilien" replace />} />
           <Route path="/vermieten" element={<Navigate to="/immobilien/anfrage" replace />} />
 
+          {/* NEUIGKEITEN / BLOG */}
+          <Route path="/neuigkeiten" element={<NeuigkeitenPage />} />
+          <Route path="/neuigkeiten/:slug" element={<BlogPostPage />} />
+
+          {/* TOOLS */}
+          <Route path="/preisrechner" element={<PreisrechnerPage />} />
+          <Route path="/vergleich" element={<VergleichPage />} />
+
           {/* CONTACT */}
           <Route path="/kontakt" element={<ContactPage />} />
 
@@ -126,6 +142,7 @@ function AppRoutes() {
         </Routes>
       </main>
       <Footer />
+      <CompareBar />
       <Toaster />
       <WhatsAppButton />
       <VirtualAgent />
@@ -136,11 +153,13 @@ function AppRoutes() {
 function App() {
   return (
     <LanguageProvider>
-      <Router>
-        <div className="min-h-screen bg-white">
-          <AppRoutes />
-        </div>
-      </Router>
+      <ComparisonProvider>
+        <Router>
+          <div className="min-h-screen bg-white">
+            <AppRoutes />
+          </div>
+        </Router>
+      </ComparisonProvider>
     </LanguageProvider>
   );
 }

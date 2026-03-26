@@ -20,6 +20,7 @@ import {
   updateProperty,
   deleteProperty,
 } from '@/data/propertiesStore';
+import PropertyDocumentsManager from '@/components/admin/PropertyDocumentsManager';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -653,6 +654,14 @@ function PropertyForm({ property, onSave, onClose }) {
               placeholder="office@reto-amonn.ch"
             />
           </div>
+
+          {/* Documents */}
+          {editingId && (
+            <div>
+              <label className={labelCls}>Dokumente</label>
+              <PropertyDocumentsManager propertyId={editingId} />
+            </div>
+          )}
 
           {/* Visible toggle */}
           <div className="flex items-center gap-3">
