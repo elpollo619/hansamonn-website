@@ -89,6 +89,7 @@ const EMPTY_FORM = {
   link: '',
   bookingUrl: '',
   airbnbUrl: '',
+  icalUrl: '',
   contactEmail: '',
   visible: true,
   features: [],
@@ -582,6 +583,63 @@ function PropertyForm({ property, onSave, onClose }) {
                 placeholder="https://airbnb.com/..."
               />
             </div>
+          </div>
+
+          {/* iCal availability calendar */}
+          <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-4 space-y-3">
+            <div className="flex items-start gap-2">
+              <span className="text-lg leading-none mt-0.5">📅</span>
+              <div>
+                <p className="text-sm font-semibold text-emerald-800">Verfügbarkeitskalender (optional)</p>
+                <p className="text-xs text-emerald-700 mt-0.5">
+                  Wenn die Immobilie auf Airbnb oder Booking.com ist, zeigen wir automatisch
+                  einen Kalender mit freien und gebuchten Tagen — synchronisiert über alle Plattformen.
+                </p>
+              </div>
+            </div>
+            <div>
+              <label className={labelCls}>iCal-Export-URL (.ics)</label>
+              <input
+                className={inputCls}
+                type="url"
+                value={form.icalUrl}
+                onChange={(e) => set('icalUrl', e.target.value)}
+                placeholder="https://www.airbnb.com/calendar/ical/XXXXXX.ics?t=..."
+              />
+            </div>
+            <details className="group">
+              <summary className="text-xs font-semibold text-emerald-700 cursor-pointer select-none list-none flex items-center gap-1">
+                <span className="group-open:rotate-90 transition-transform inline-block">▶</span>
+                Wie bekomme ich den Link?
+              </summary>
+              <div className="mt-2 space-y-3 text-xs text-emerald-800">
+                <div className="bg-white rounded-lg p-3 border border-emerald-100">
+                  <p className="font-semibold mb-1">🏠 Airbnb</p>
+                  <ol className="list-decimal list-inside space-y-1 text-emerald-700">
+                    <li>Gehe zu <strong>airbnb.com</strong> → als Host einloggen</li>
+                    <li>Klicke auf dein Inserat → <strong>Kalender</strong></li>
+                    <li>Oben rechts: <strong>Verfügbarkeit</strong> → <strong>Kalender exportieren</strong></li>
+                    <li>Den Link kopieren (endet auf <code className="bg-emerald-50 px-1 rounded">.ics</code>)</li>
+                  </ol>
+                </div>
+                <div className="bg-white rounded-lg p-3 border border-emerald-100">
+                  <p className="font-semibold mb-1">🌐 Booking.com</p>
+                  <ol className="list-decimal list-inside space-y-1 text-emerald-700">
+                    <li>Gehe zu <strong>booking.com/hotel/extranet</strong></li>
+                    <li><strong>Kalender</strong> → <strong>Kalender synchronisieren</strong></li>
+                    <li><strong>Exportieren</strong> → Link kopieren</li>
+                  </ol>
+                </div>
+                <p className="text-emerald-600 bg-white rounded-lg p-2 border border-emerald-100">
+                  💡 <strong>Tipp:</strong> Da Airbnb und Booking.com synchronisiert sind, genügt der Link von einer Plattform — beide Reservierungen werden angezeigt.
+                </p>
+              </div>
+            </details>
+            {form.icalUrl && (
+              <p className="text-xs text-emerald-700 flex items-center gap-1.5">
+                <span>✓</span> Kalender wird auf der Detailseite angezeigt.
+              </p>
+            )}
           </div>
 
           {/* Contact email */}

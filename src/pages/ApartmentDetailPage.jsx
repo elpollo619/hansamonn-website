@@ -10,7 +10,6 @@ import {
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
 import { getPropertyById } from '@/data/propertiesStore';
-import { getSetting } from '@/data/settingsStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 
@@ -42,6 +41,7 @@ function normalizeStoreProperty(p) {
     bookingUrls: { booking: p.bookingUrl || '', airbnb: p.airbnbUrl || '' },
     longStayRooms: p.longStayRooms || null,
     holidayHome: false,
+    icalUrl: p.icalUrl || '',
   };
 }
 
@@ -745,12 +745,16 @@ const ApartmentDetailPage = () => {
           </div>
 
           {/* ── Sidebar ── */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-4">
             {apt.type === 'hotel'      && <HotelSidebar apt={apt} t={t} />}
             {apt.type === 'long-stay'  && <LongStaySidebar apt={apt} t={t} />}
-            {apt.type === 'project'    && <ProjectSidebar apt={apt} t={t} icalUrl={getSetting('casaRetoIcalUrl')} />}
+            {apt.type === 'project'    && <ProjectSidebar apt={apt} t={t} icalUrl={apt.icalUrl} />}
             {apt.type === 'apartment'  && (
               <ApartmentSidebar apt={apt} t={t} showForm={showForm} setShowForm={setShowForm} />
+            )}
+            {/* Availability calendar for hotel / long-stay when iCal URL is set */}
+            {(apt.type === 'hotel' || apt.type === 'long-stay') && apt.icalUrl && (
+              <AvailabilityCalendar icalUrl={apt.icalUrl} />
             )}
           </div>
 

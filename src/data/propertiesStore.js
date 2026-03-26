@@ -121,6 +121,7 @@ const DEFAULT_PROPERTIES = [
     link: '/casa-reto',
     bookingUrl: '',
     airbnbUrl: 'https://www.airbnb.com',
+    icalUrl: 'https://www.airbnb.ch/calendar/ical/625660996936132774.ics?t=82a02050ce864c73b599648976548358',
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Lago Maggiore', 'Privater Garten', 'Naturlage'],
@@ -226,6 +227,7 @@ export function getNormalizedVisibleProperties() {
         booking: p.bookingUrl || '',
         airbnb: p.airbnbUrl || '',
       },
+      icalUrl: p.icalUrl || '',
       link: p.link || `/immobilien/${p.id}`,
     };
   });
