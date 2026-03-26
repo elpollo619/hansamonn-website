@@ -9,6 +9,7 @@ import {
   CalendarDays,
   ArrowRight,
 } from "lucide-react";
+import { Helmet } from 'react-helmet';
 
 function getBookingDates() {
   const fmt = (d) => d.toISOString().split('T')[0];
@@ -21,6 +22,10 @@ export default function NsHotelPage() {
   const { arrival, departure } = getBookingDates();
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>N's Hotel Kerzers – Boutique Hotel | Hans Amonn AG</title>
+        <meta name="description" content="Modernes Boutique-Hotel in Kerzers mit Self Check-in. Ideal für Geschäftsreisen und Kurzaufenthalte." />
+      </Helmet>
       <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-4xl">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare, HelpCircle, Calendar, Activity, KeyRound, X, Eye, EyeOff, Check } from 'lucide-react';
+import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare, HelpCircle, Calendar, Activity, KeyRound, X, Eye, EyeOff, Check, ExternalLink } from 'lucide-react';
 import { changeOwnPassword } from '@/data/usersStore';
 import { toast } from '@/components/ui/use-toast';
 import PropertiesTab from '@/components/admin/PropertiesTab';
@@ -161,6 +161,15 @@ export default function AdminPanel() {
               <span className="font-medium">{user?.name}</span>
               <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${isAdmin ? 'bg-gray-900 text-white' : 'bg-blue-100 text-blue-700'}`}>{isAdmin ? 'Admin' : 'Staff'}</span>
             </div>
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+              title="Website ansehen"
+            >
+              <ExternalLink size={15} /> <span className="hidden sm:inline">Website</span>
+            </a>
             <button
               onClick={() => setShowChangePw(true)}
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"

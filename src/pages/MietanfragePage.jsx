@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ClipboardList, ChevronRight, Phone, Mail } from 'lucide-react';
 import MietanfrageForm from '@/components/MietanfrageForm';
+import { Helmet } from 'react-helmet';
 
 export default function MietanfragePage() {
   return (
     <div className="bg-gray-50 min-h-screen">
+      <Helmet>
+        <title>Mietanfrage – Hans Amonn AG</title>
+        <meta name="description" content="Senden Sie uns Ihre Mietanfrage. Wir melden uns innerhalb von 24 Stunden mit einer Antwort." />
+      </Helmet>
       {/* Header */}
       <section className="bg-white border-b border-gray-100">
         <div className="container mx-auto px-6 py-10">

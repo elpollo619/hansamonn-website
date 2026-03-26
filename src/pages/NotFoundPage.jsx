@@ -1,9 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 export default function NotFoundPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-6">
+      <Helmet>
+        <title>Seite nicht gefunden – Hans Amonn AG</title>
+        <meta name="description" content="Die gesuchte Seite existiert nicht. Zurück zur Startseite von Hans Amonn AG." />
+      </Helmet>
       <div className="text-center max-w-md">
         <p className="text-xs font-black tracking-widest text-gray-400 uppercase mb-6">
           HANS AMONN AG

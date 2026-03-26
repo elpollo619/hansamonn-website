@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Building2 } from "lucide-react";
+import { Helmet } from 'react-helmet';
 
 export default function MunchenbuchseePage() {
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>Long Stay Münchenbuchsee – Möblierte Zimmer | Hans Amonn AG</title>
+        <meta name="description" content="Möblierte Zimmer in Münchenbuchsee, gute Anbindung an Bern. Ab 1 Monat buchbar. Hans Amonn AG." />
+      </Helmet>
       <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-4xl">

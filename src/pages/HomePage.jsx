@@ -5,6 +5,7 @@ import StatsSection from '@/components/StatsSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import StructuredData from '@/components/StructuredData';
+import RecentlyViewedSection from '@/components/RecentlyViewedSection';
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -36,6 +37,7 @@ const HomePage = () => {
       <Hero />
       <StatsSection />
       <TestimonialsSection />
+      <RecentlyViewedSection />
       <NewsletterSection />
     </>
   );

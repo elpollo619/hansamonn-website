@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Building2, ArrowRight, MapPin, Users, Briefcase, Clock, ChevronRight, CheckCircle2, Mail } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 const RentalImage = ({ src, alt, className }) => {
   const [err, setErr] = React.useState(false);
@@ -65,6 +66,10 @@ const idealFor = [
 export default function LongStayPage() {
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>Long Stay – Möblierte Zimmer | Hans Amonn AG</title>
+        <meta name="description" content="Möblierte Langzeitaufenthalte in Kerzers, Münchenbuchsee und Muri. Ab 1 Monat, Nebenkosten inklusive." />
+      </Helmet>
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)', backgroundSize: '48px 48px' }} />

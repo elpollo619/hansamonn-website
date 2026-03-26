@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Home, Phone, Mail, MessageCircle, MapPin, ArrowRight, Sun, Snowflake, Flower2, Calendar } from "lucide-react";
 import CasaRetoAnfrageForm from "@/components/CasaRetoAnfrageForm";
+import { Helmet } from 'react-helmet';
 
 const PREISE = [
   { saison: 'Sommer', icon: Sun,       color: 'amber',   zeitraum: 'Juni – September', nacht: 180, woche: 1100, min: 3 },
@@ -18,6 +19,10 @@ const COLOR = {
 export default function CasaRetoPage() {
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>Casa Reto – Ferienhaus am Lago Maggiore | Hans Amonn AG</title>
+        <meta name="description" content="Privates Ferienhaus in Gordemo, Tessin. Direkt am Lago Maggiore, mit Garten. Buchbar über Airbnb." />
+      </Helmet>
 
       {/* ── Hero ── */}
       <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">

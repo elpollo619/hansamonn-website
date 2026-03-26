@@ -62,6 +62,31 @@ import VergleichPage from '@/pages/VergleichPage';
 import KartePage from '@/pages/KartePage';
 import HyporechnerPage from '@/pages/HyporechnerPage';
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error, info) { console.error('App error:', error, info); }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-white px-4">
+          <div className="text-center max-w-md">
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">Etwas ist schiefgelaufen</h1>
+            <p className="text-gray-500 mb-6">Es ist ein unerwarteter Fehler aufgetreten. Bitte laden Sie die Seite neu.</p>
+            <button onClick={() => window.location.reload()} className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-colors">
+              Seite neu laden
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -175,17 +200,19 @@ function AppRoutes() {
 
 function App() {
   return (
-    <LanguageProvider>
-      <FavoritesProvider>
-        <ComparisonProvider>
-          <Router>
-            <div className="min-h-screen bg-white">
-              <AppRoutes />
-            </div>
-          </Router>
-        </ComparisonProvider>
-      </FavoritesProvider>
-    </LanguageProvider>
+    <ErrorBoundary>
+      <LanguageProvider>
+        <FavoritesProvider>
+          <ComparisonProvider>
+            <Router>
+              <div className="min-h-screen bg-white">
+                <AppRoutes />
+              </div>
+            </Router>
+          </ComparisonProvider>
+        </FavoritesProvider>
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }
 

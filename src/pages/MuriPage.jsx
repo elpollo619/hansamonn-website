@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Building2, MapPin } from "lucide-react";
+import { Helmet } from 'react-helmet';
 
 export default function MuriPage() {
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>Long Stay Muri bei Bern – Möblierte Zimmer | Hans Amonn AG</title>
+        <meta name="description" content="Komfortables Wohnen in Muri bei Bern. Vollmöblierte Zimmer, zentrale Lage, ab 1 Monat. Hans Amonn AG." />
+      </Helmet>
 
       {/* HERO */}
       <section className="relative h-[520px] overflow-hidden">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Hotel, ArrowRight, ExternalLink, Star, MapPin, ChevronRight, Mail, Sun } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 const RentalImage = ({ src, alt, className }) => {
   const [err, setErr] = React.useState(false);
@@ -17,6 +18,10 @@ const RentalImage = ({ src, alt, className }) => {
 export default function ShortStayPage() {
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>Short Stay & Ferienhaus | Hans Amonn AG</title>
+        <meta name="description" content="N's Hotel Kerzers und Casa Reto am Lago Maggiore. Kurzaufenthalte und Ferienhaus-Vermietung." />
+      </Helmet>
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-800 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)', backgroundSize: '48px 48px' }} />

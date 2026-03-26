@@ -2,10 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Bell, ArrowRight, Clock, ChevronRight } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 export default function ApartmentsPage() {
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>Mietwohnungen – Hans Amonn AG</title>
+        <meta name="description" content="Moderne Mietwohnungen in Kerzers und Umgebung. Kontaktieren Sie uns für aktuelle Verfügbarkeit." />
+      </Helmet>
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)', backgroundSize: '48px 48px' }} />
