@@ -116,26 +116,30 @@ const HotelSidebar = ({ apt, t }) => (
       </div>
 
       {/* 2. Booking.com */}
-      <a
-        href={apt.bookingUrls.booking}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-full flex items-center justify-center gap-2.5 bg-[#003580] hover:bg-[#002e6e] text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
-      >
-        <ExternalLink size={15} />
-        {t('vermietung.hotel.bookOnBooking')}
-      </a>
+      {apt.bookingUrls?.booking && (
+        <a
+          href={apt.bookingUrls.booking}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2.5 bg-[#003580] hover:bg-[#002e6e] text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+        >
+          <ExternalLink size={15} />
+          {t('vermietung.hotel.bookOnBooking')}
+        </a>
+      )}
 
       {/* 3. Airbnb */}
-      <a
-        href={apt.bookingUrls.airbnb}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-full flex items-center justify-center gap-2.5 bg-[#FF5A5F] hover:bg-[#e5484d] text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
-      >
-        <ExternalLink size={15} />
-        {t('vermietung.hotel.bookOnAirbnb')}
-      </a>
+      {apt.bookingUrls?.airbnb && (
+        <a
+          href={apt.bookingUrls.airbnb}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2.5 bg-[#FF5A5F] hover:bg-[#e5484d] text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+        >
+          <ExternalLink size={15} />
+          {t('vermietung.hotel.bookOnAirbnb')}
+        </a>
+      )}
 
       {/* Divider */}
       <div className="flex items-center gap-3">
@@ -145,13 +149,13 @@ const HotelSidebar = ({ apt, t }) => (
       </div>
 
       {/* Phone + email */}
-      <a href={`tel:+41319518554`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 rounded-xl transition-colors text-sm">
+      <a href="tel:+41319518554" className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 rounded-xl transition-colors text-sm">
         <Phone size={15} />
-        {apt.contact.phone}
+        {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
       </a>
-      <a href={`mailto:${apt.contact.email}?subject=Anfrage N's Hotel`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 rounded-xl transition-colors text-sm">
+      <a href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage N's Hotel`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 rounded-xl transition-colors text-sm">
         <Mail size={15} />
-        {apt.contact.email}
+        {apt.contact?.email ?? 'office@reto-amonn.ch'}
       </a>
     </div>
   </motion.div>
@@ -233,7 +237,7 @@ const LongStaySidebar = ({ apt, t }) => (
     {/* CTA */}
     <div className="p-5">
       <a
-        href={`mailto:${apt.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
+        href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
         className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
       >
         <Mail size={18} />
@@ -278,7 +282,7 @@ const ProjectSidebar = ({ apt, t }) => (
 
       {/* Primary CTA */}
       <a
-        href={`mailto:${apt.contact.email}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
+        href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
         className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
       >
         <Mail size={18} />
@@ -291,7 +295,7 @@ const ProjectSidebar = ({ apt, t }) => (
         className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 rounded-xl transition-colors text-sm"
       >
         <Phone size={15} />
-        {apt.contact.phone}
+        {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
       </a>
     </div>
   </motion.div>
@@ -445,12 +449,13 @@ const ApartmentDetailPage = () => {
   const [showForm, setShowForm] = useState(false);
 
   const apt = getListingBySlug(slug);
-  if (!apt) return <Navigate to="/vermietung" replace />;
+  if (!apt) return <Navigate to="/immobilien/vermietung" replace />;
 
   const openLightbox  = (i) => setLightbox({ open: true, index: i });
   const closeLightbox = ()  => setLightbox({ open: false, index: 0 });
-  const prevImg = () => setLightbox((l) => ({ ...l, index: (l.index - 1 + apt.images.length) % apt.images.length }));
-  const nextImg = () => setLightbox((l) => ({ ...l, index: (l.index + 1) % apt.images.length }));
+  const imgCount = apt.images?.length ?? 1;
+  const prevImg = () => setLightbox((l) => ({ ...l, index: (l.index - 1 + imgCount) % imgCount }));
+  const nextImg = () => setLightbox((l) => ({ ...l, index: (l.index + 1) % imgCount }));
 
   const pageTitle = `${apt.title} – ${apt.location} | Hans Amonn AG`;
 
@@ -475,7 +480,7 @@ const ApartmentDetailPage = () => {
       <div className="border-b border-gray-100 bg-white">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl py-3">
           <Link
-            to="/vermietung"
+            to="/immobilien/vermietung"
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition-colors"
           >
             <ArrowLeft size={16} />
