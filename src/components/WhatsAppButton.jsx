@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
-const WHATSAPP_NUMBER = '41319518554'; // +41 31 951 85 54 (no leading +)
+const WHATSAPP_NUMBER = '41775350668'; // +41 77 535 06 68 (no leading +)
 const WHATSAPP_MESSAGE = 'Hallo, ich interessiere mich für Ihre Angebote.';
 
 const WhatsAppButton = () => {
