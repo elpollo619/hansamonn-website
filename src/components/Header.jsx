@@ -89,6 +89,7 @@ const Header = () => {
     { path: '/team',       label: t('nav.team') },
     { path: '/projekte',   label: t('nav.projects') },
     { path: '/leistungen', label: t('nav.services') },
+    { path: '/kontakt',    label: t('nav.contact') },
   ];
 
   return (
@@ -111,7 +112,8 @@ const Header = () => {
                 exit={{ opacity: 0, y: 4 }}
                 transition={{ duration: 0.18 }}
                 whileHover={{ scale: 1.02 }}
-                className="tracking-widest uppercase leading-none flex items-baseline gap-2"
+                className="leading-none uppercase"
+                style={{ letterSpacing: '0.18em' }}
               >
                 {(() => {
                   const parts = sectionLogo.split(' ');
@@ -119,9 +121,9 @@ const Header = () => {
                   const rest = parts.slice(1).join(' ');
                   return (
                     <>
-                      <span className="text-sm font-black text-gray-900">{first}</span>
+                      <span className="text-[13px] font-black text-gray-900">{first}</span>
                       {rest && (
-                        <span className="text-sm font-light text-gray-400 tracking-widest">{rest}</span>
+                        <span className="text-[13px] font-extralight text-gray-500"> {rest}</span>
                       )}
                     </>
                   );
@@ -174,11 +176,6 @@ const Header = () => {
           {/* Right controls */}
           <div className="hidden lg:flex items-center gap-3">
             <LanguageSwitcher variant="light" />
-            <Link to="/kontakt">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2">
-                {t('nav.contact')}
-              </Button>
-            </Link>
           </div>
 
           {/* Mobile: language + hamburger */}
@@ -244,11 +241,6 @@ const Header = () => {
                     {item.label}
                   </Link>
                 ))}
-                <Link to="/kontakt" className="mt-2">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full">
-                    {t('nav.contact')}
-                  </Button>
-                </Link>
               </div>
             </motion.div>
           )}

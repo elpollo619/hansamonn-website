@@ -632,12 +632,12 @@ const KB = {
 };
 
 const LANG_LABELS = {
-  de: { flag: '🇩🇪', label: 'DE' },
-  fr: { flag: '🇫🇷', label: 'FR' },
-  it: { flag: '🇮🇹', label: 'IT' },
-  en: { flag: '🇬🇧', label: 'EN' },
-  es: { flag: '🇪🇸', label: 'ES' },
-  pt: { flag: '🇵🇹', label: 'PT' },
+  de: { label: 'DE' },
+  fr: { label: 'FR' },
+  it: { label: 'IT' },
+  en: { label: 'EN' },
+  es: { label: 'ES' },
+  pt: { label: 'PT' },
 };
 
 // ─── Match intent ─────────────────────────────────────────────────────────────
@@ -796,7 +796,7 @@ export default function VirtualAgent() {
                   className="flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-xs py-1 px-2 rounded-lg hover:bg-white/10"
                 >
                   <Globe size={12} />
-                  {LANG_LABELS[chatLang]?.flag} {LANG_LABELS[chatLang]?.label}
+                  {LANG_LABELS[chatLang]?.label}
                   <ChevronDown size={10} className={`transition-transform ${showLangPicker ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
@@ -812,11 +812,10 @@ export default function VirtualAgent() {
                         <button
                           key={code}
                           onClick={() => { setChatLang(code); setShowLangPicker(false); }}
-                          className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${chatLang === code ? 'text-blue-600 font-semibold' : 'text-gray-700'}`}
+                          className={`w-full flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${chatLang === code ? 'text-blue-600 font-semibold' : 'text-gray-700'}`}
                         >
-                          <span>{info.flag}</span>
                           <span>{info.label}</span>
-                          {chatLang === code && <span className="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full" />}
+                          {chatLang === code && <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />}
                         </button>
                       ))}
                     </motion.div>
