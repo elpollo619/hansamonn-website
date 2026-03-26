@@ -57,6 +57,9 @@ export const LanguageProvider = ({ children }) => {
         for (const k of keys) value = value?.[k];
       }
 
+      // Return arrays/objects as-is (e.g. t('footer.servicesList'), t('immobilien.vermietung.highlights'))
+      if (Array.isArray(value) || (value !== null && typeof value === 'object')) return value;
+
       if (typeof value !== 'string') return key;
 
       // Variable interpolation: t('hello', { name: 'Reto' }) with "Hello {{name}}"
