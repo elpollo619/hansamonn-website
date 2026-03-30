@@ -34,23 +34,24 @@ const Hero = () => {
   return (
     <section className="min-h-screen flex flex-col bg-white">
 
-      {/* ── Editorial header ── */}
+      {/* ── Minimal header strip ── */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="container mx-auto px-6 pt-10 pb-8"
+        className="container mx-auto px-6 pt-8 pb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-2"
       >
-        <p className="text-[10px] font-semibold tracking-[0.28em] text-gray-400 uppercase mb-3">
-          Seit 1968
-        </p>
-        <h1 className="text-4xl md:text-6xl font-light text-gray-900 leading-none">
-          Hans Amonn AG
-          <br />
-          <span className="font-black">Bau & Immobilien.</span>
-        </h1>
-        <p className="text-gray-400 text-sm leading-relaxed mt-3 max-w-sm">
-          Ihr Partner für Architektur und Immobilien in der Region Bern.
+        <div className="flex items-center gap-4">
+          <span className="text-[10px] font-semibold tracking-[0.28em] text-gray-300 uppercase">
+            Seit 1968
+          </span>
+          <span className="h-px w-8 bg-gray-200" />
+          <span className="text-[10px] font-semibold tracking-[0.28em] text-gray-300 uppercase">
+            Muri bei Bern
+          </span>
+        </div>
+        <p className="text-gray-400 text-sm max-w-xs md:text-right">
+          Architektur & Immobilien in der Region Bern.
         </p>
       </motion.div>
 

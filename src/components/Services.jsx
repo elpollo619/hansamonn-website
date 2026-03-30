@@ -1,208 +1,106 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
 import { AmonnLogoBlock } from '@/components/AmonnLogo';
 
-/* ─── Data: each service gets a building slot in the SVG ────────────────── */
-// 8 services → 8 buildings, each linked
-const ALL_SERVICES = servicesData; // 4 architektur + 4 immobilien
-
-/* ─── Interactive Cityscape ─────────────────────────────────────────────── */
-// 8 buildings, one per service. Hovering/active fills the building.
-const BUILDINGS = [
-  { x: 60,  w: 70,  h: 70,  roof: 'flat' },
-  { x: 140, w: 45,  h: 100, roof: 'flat' },
-  { x: 195, w: 38,  h: 55,  roof: 'gable', rh: 18 },
-  { x: 243, w: 28,  h: 130, roof: 'flat' },   // tall
-  { x: 281, w: 55,  h: 60,  roof: 'flat' },
-  { x: 346, w: 40,  h: 85,  roof: 'gable', rh: 16 },
-  { x: 396, w: 28,  h: 110, roof: 'flat' },   // tall
-  { x: 434, w: 62,  h: 68,  roof: 'flat' },
-];
-
-const G = 150; // ground y
-const SVG_W = 560;
-
-const buildingPath = (b) => {
-  const { x, w, h, roof, rh = 14 } = b;
-  const top = G - h;
-  if (roof === 'gable')
-    return `M${x},${G} L${x},${top} L${x + w / 2},${top - rh} L${x + w},${top} L${x + w},${G}`;
-  return `M${x},${G} L${x},${top} L${x + w},${top} L${x + w},${G}`;
-};
-
-const InteractiveCityscape = ({ activeIdx, onHover, onLeave, onSelect }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-40px' });
+/* ─── Service row (hover → brand navy) ──────────────────────────────────── */
+const ServiceRow = ({ service, index }) => {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <div ref={ref} className="w-full flex justify-center" style={{ height: 170 }}>
-      <svg
-        viewBox={`0 0 ${SVG_W} 170`}
-        preserveAspectRatio="xMidYMax meet"
-        className="h-full"
-        style={{ width: '100%', maxWidth: 600 }}
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.06 }}
+    >
+      <Link
+        to={`/leistungen/${service.slug}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="flex items-center gap-5 px-7 py-5 border-b border-gray-100 transition-colors duration-200 group"
+        style={{ backgroundColor: hovered ? '#1D3D78' : 'transparent' }}
       >
-        {/* Ground */}
-        <motion.line
-          x1={20} y1={G} x2={SVG_W - 20} y2={G}
-          stroke="#d1d5db" strokeWidth="1"
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-          style={{ transformOrigin: '20px 0' }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-        />
-
-        {/* Buildings */}
-        {BUILDINGS.map((b, i) => {
-          const isActive = activeIdx === i;
-          return (
-            <motion.path
-              key={i}
-              d={buildingPath(b)}
-              fill={isActive ? '#e2e8f0' : 'transparent'}
-              stroke={isActive ? '#334155' : '#cbd5e1'}
-              strokeWidth={isActive ? 1.2 : 0.8}
-              strokeLinejoin="miter"
-              style={{ cursor: 'pointer' }}
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              transition={{ duration: 0.5, delay: 0.2 + i * 0.07, ease: 'easeOut' }}
-              whileHover={{ fill: '#f1f5f9' }}
-              onHoverStart={() => onHover(i)}
-              onHoverEnd={onLeave}
-              onClick={() => onSelect(i)}
-            />
-          );
-        })}
-
-        {/* Active building label */}
-        {activeIdx !== null && (
-          <motion.text
-            key={activeIdx}
-            x={BUILDINGS[activeIdx].x + BUILDINGS[activeIdx].w / 2}
-            y={G - BUILDINGS[activeIdx].h - 10}
-            textAnchor="middle"
-            fontSize="7"
-            fill="#64748b"
-            fontFamily="sans-serif"
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            {ALL_SERVICES[activeIdx]?.title}
-          </motion.text>
-        )}
-      </svg>
-    </div>
-  );
-};
-
-/* ─── Service pills ──────────────────────────────────────────────────────── */
-const ServicePills = ({ activeIdx, onHover, onLeave, onSelect }) => {
-  const arch = ALL_SERVICES.filter((s) => s.category === 'architektur');
-  const immo = ALL_SERVICES.filter((s) => s.category === 'immobilien');
-
-  const PillGroup = ({ label, services, offset }) => (
-    <div className="flex flex-wrap justify-center gap-2">
-      {services.map((s, i) => {
-        const globalIdx = offset + i;
-        const active = activeIdx === globalIdx;
-        return (
-          <motion.div
-            key={s.slug}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.4 + globalIdx * 0.05 }}
-          >
-            <Link
-              to={`/leistungen/${s.slug}`}
-              onMouseEnter={() => onHover(globalIdx)}
-              onMouseLeave={onLeave}
-              className={`inline-flex items-center px-4 py-1.5 rounded-full text-sm border transition-all duration-200 ${
-                active
-                  ? 'bg-slate-800 text-white border-slate-800'
-                  : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:text-gray-900'
-              }`}
-            >
-              {s.title}
-            </Link>
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-
-  return (
-    <div className="flex flex-col gap-3 items-center">
-      <PillGroup label="Architektur" services={arch} offset={0} />
-      <div className="flex items-center gap-3 w-full max-w-lg">
-        <div className="flex-1 h-px bg-gray-100" />
-        <span className="text-[9px] tracking-widest text-gray-300 uppercase">Immobilien</span>
-        <div className="flex-1 h-px bg-gray-100" />
-      </div>
-      <PillGroup label="Immobilien" services={immo} offset={4} />
-    </div>
-  );
-};
-
-/* ─── Hero section ───────────────────────────────────────────────────────── */
-const Hero = () => {
-  const [activeIdx, setActiveIdx] = useState(null);
-  const navigate = useNavigate();
-
-  return (
-    <section className="pt-12 pb-10 bg-white">
-      <div className="container mx-auto px-6">
-        {/* Text */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-10"
+        <span
+          className="text-[10px] font-mono flex-shrink-0 transition-colors duration-200"
+          style={{ color: hovered ? 'rgba(255,255,255,0.4)' : '#d1d5db' }}
         >
-          <div className="mb-5">
-            <AmonnLogoBlock variant="architektur" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 leading-tight">
-            Architektur mit Verantwortung
-            <br />
-            <span className="font-black">für Raum, Bestand und Kosten.</span>
-          </h1>
-        </motion.div>
-
-        {/* Interactive cityscape */}
-        <InteractiveCityscape
-          activeIdx={activeIdx}
-          onHover={setActiveIdx}
-          onLeave={() => setActiveIdx(null)}
-          onSelect={(i) => navigate(`/leistungen/${ALL_SERVICES[i].slug}`)}
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <div className="flex-1 min-w-0">
+          <p
+            className="text-sm font-medium transition-colors duration-200 leading-snug"
+            style={{ color: hovered ? '#fff' : '#111827' }}
+          >
+            {service.title}
+          </p>
+          <p
+            className="text-xs mt-0.5 transition-colors duration-200 line-clamp-1"
+            style={{ color: hovered ? 'rgba(255,255,255,0.55)' : '#9ca3af' }}
+          >
+            {service.features.slice(0, 3).join(' · ')}
+          </p>
+        </div>
+        <ArrowUpRight
+          size={14}
+          className="flex-shrink-0 transition-all duration-200"
+          style={{
+            color: hovered ? 'rgba(255,255,255,0.7)' : '#e5e7eb',
+            transform: hovered ? 'translate(1px, -1px)' : 'none',
+          }}
         />
+      </Link>
+    </motion.div>
+  );
+};
 
-        {/* Pills */}
-        <div className="mt-6">
-          <ServicePills
-            activeIdx={activeIdx}
-            onHover={setActiveIdx}
-            onLeave={() => setActiveIdx(null)}
-            onSelect={(i) => navigate(`/leistungen/${ALL_SERVICES[i].slug}`)}
-          />
+/* ─── Services grid (two columns) ───────────────────────────────────────── */
+const ServicesGrid = () => {
+  const arch = servicesData.filter((s) => s.category === 'architektur');
+  const immo = servicesData.filter((s) => s.category === 'immobilien');
+
+  return (
+    <div className="border-t border-gray-100">
+      <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+        {/* Architektur column */}
+        <div>
+          <div className="px-7 py-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+            <span className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase">
+              Architektur
+            </span>
+            <Link
+              to="/architektur"
+              className="text-[10px] font-semibold tracking-[0.15em] text-[#1D3D78] uppercase hover:underline"
+            >
+              Übersicht →
+            </Link>
+          </div>
+          {arch.map((s, i) => (
+            <ServiceRow key={s.slug} service={s} index={i} />
+          ))}
         </div>
 
-        {/* Hint */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.5 }}
-          className="text-center text-[11px] text-gray-300 mt-4 tracking-wide"
-        >
-          Klicken Sie auf ein Gebäude oder einen Bereich, um mehr zu erfahren
-        </motion.p>
+        {/* Immobilien column */}
+        <div>
+          <div className="px-7 py-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+            <span className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase">
+              Immobilien
+            </span>
+            <Link
+              to="/immobilien"
+              className="text-[10px] font-semibold tracking-[0.15em] text-[#1D3D78] uppercase hover:underline"
+            >
+              Übersicht →
+            </Link>
+          </div>
+          {immo.map((s, i) => (
+            <ServiceRow key={s.slug} service={s} index={i + 4} />
+          ))}
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -263,9 +161,11 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
                 <button
                   key={i}
                   onClick={() => itemRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
-                  className={`h-0.5 rounded-full transition-all duration-300 ${
-                    i === activeIndex ? 'w-6 bg-white' : 'w-2 bg-white/40'
-                  }`}
+                  className="h-0.5 transition-all duration-300"
+                  style={{
+                    width: i === activeIndex ? 24 : 8,
+                    backgroundColor: i === activeIndex ? '#fff' : 'rgba(255,255,255,0.3)',
+                  }}
                 />
               ))}
             </div>
@@ -290,7 +190,7 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 uppercase mb-3">
+              <p className="text-[10px] font-semibold tracking-[0.22em] text-gray-300 uppercase mb-3">
                 {String(i + 1).padStart(2, '0')}
               </p>
               <h3 className="text-2xl md:text-3xl font-light text-gray-900 mb-4 leading-snug">
@@ -301,15 +201,15 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
               </p>
               <ul className="space-y-2 mb-8">
                 {service.features.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-gray-600">
-                    <span className="w-4 h-px bg-slate-300 flex-shrink-0" />
+                  <li key={f} className="flex items-center gap-3 text-sm text-gray-500">
+                    <span className="w-4 h-px bg-gray-200 flex-shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
               <Link
                 to={`/leistungen/${service.slug}`}
-                className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 border-b border-gray-300 pb-px hover:border-gray-900 transition-colors w-fit group"
+                className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 border-b border-gray-300 pb-px hover:border-gray-900 transition-colors group"
               >
                 Mehr erfahren
                 <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
@@ -325,58 +225,116 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
 /* ─── Main ───────────────────────────────────────────────────────────────── */
 const Services = () => {
   const archServices = servicesData.filter((s) => s.category === 'architektur');
-  const immServices = servicesData.filter((s) => s.category === 'immobilien');
+  const immServices  = servicesData.filter((s) => s.category === 'immobilien');
 
   return (
     <div className="bg-white">
-      <Hero />
 
-      {/* Architektur */}
-      <div className="container mx-auto px-6 pt-8 pb-6">
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <p className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 uppercase mb-2">Leistungen</p>
-          <h2 className="text-3xl md:text-4xl font-light text-gray-900">
-            Architektur — <span className="font-semibold">Von der Vision zur Realität</span>
-          </h2>
-        </motion.div>
-      </div>
-      <StickyScrollServices services={archServices} sectionLabel="Architektur" />
+      {/* ── Page header ── */}
+      <section className="pt-12 pb-10 bg-white border-b border-gray-100">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+          >
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">
+                Leistungen
+              </p>
+              <h1 className="text-4xl md:text-5xl font-light text-gray-900 leading-tight">
+                Was wir
+                <br />
+                <span className="font-black">anbieten.</span>
+              </h1>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed max-w-xs md:text-right">
+              Architektur und Immobilien aus einer Hand —
+              seit über 55 Jahren in der Region Bern.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-      {/* Divider */}
-      <div className="container mx-auto px-6 py-10">
+      {/* ── Interactive service grid ── */}
+      <section className="py-0">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <ServicesGrid />
+        </div>
+      </section>
+
+      {/* ── Architektur sticky scroll ── */}
+      <section className="border-t border-gray-100 mt-16">
+        <div className="container mx-auto px-6 max-w-5xl py-10">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="mb-4">
+              <AmonnLogoBlock variant="architektur" />
+            </div>
+            <h2 className="text-3xl font-light text-gray-900">
+              Von der Vision <span className="font-black">zur Realität.</span>
+            </h2>
+          </motion.div>
+        </div>
+        <StickyScrollServices services={archServices} sectionLabel="Architektur" />
+      </section>
+
+      {/* ── Divider ── */}
+      <div className="container mx-auto px-6 max-w-5xl py-10">
         <div className="flex items-center gap-6">
-          <div className="flex-1 h-px bg-gray-200" />
-          <p className="text-[10px] font-semibold tracking-[0.22em] text-gray-400 uppercase whitespace-nowrap">AMONN IMMOBILIEN</p>
-          <div className="flex-1 h-px bg-gray-200" />
+          <div className="flex-1 h-px bg-gray-100" />
+          <p className="text-[10px] font-semibold tracking-[0.22em] text-gray-300 uppercase whitespace-nowrap">
+            Amonn Immobilien
+          </p>
+          <div className="flex-1 h-px bg-gray-100" />
         </div>
       </div>
 
-      {/* Immobilien */}
-      <div className="container mx-auto px-6 pb-6">
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <h2 className="text-3xl md:text-4xl font-light text-gray-900">
-            Immobilien — <span className="font-semibold">Ihr Zuhause, Ihr Investment</span>
-          </h2>
-        </motion.div>
-      </div>
-      <StickyScrollServices services={immServices} sectionLabel="Immobilien" />
+      {/* ── Immobilien sticky scroll ── */}
+      <section className="border-t border-gray-100">
+        <div className="container mx-auto px-6 max-w-5xl py-10">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="mb-4">
+              <AmonnLogoBlock variant="immobilien" />
+            </div>
+            <h2 className="text-3xl font-light text-gray-900">
+              Ihr Zuhause, <span className="font-black">Ihr Investment.</span>
+            </h2>
+          </motion.div>
+        </div>
+        <StickyScrollServices services={immServices} sectionLabel="Immobilien" />
+      </section>
 
-      {/* CTA */}
-      <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-        className="bg-gray-900 py-20 px-6"
-      >
+      {/* ── CTA ── */}
+      <section className="py-20 px-6" style={{ backgroundColor: '#1D3D78' }}>
         <div className="container mx-auto max-w-3xl text-center">
-          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-500 uppercase mb-5">Kontakt</p>
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">Haben Sie ein Projekt im Kopf?</h2>
-          <p className="text-gray-400 mb-10 max-w-xl mx-auto">
-            Egal ob Neubau, Sanierung oder Immobiliensuche — sprechen Sie uns an. Die erste Beratung ist kostenlos.
+          <p className="text-[10px] font-semibold tracking-[0.25em] text-white/40 uppercase mb-5">Kontakt</p>
+          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
+            Haben Sie ein <span className="font-black">Projekt?</span>
+          </h2>
+          <p className="text-white/60 mb-10 max-w-xl mx-auto">
+            Egal ob Neubau, Sanierung oder Immobiliensuche — sprechen Sie uns an.
+            Die erste Beratung ist kostenlos.
           </p>
-          <Link to="/kontakt" className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-3.5 text-sm font-semibold tracking-wide hover:bg-gray-100 transition-colors">
+          <Link
+            to="/kontakt"
+            className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-3.5 text-sm font-semibold hover:bg-gray-100 transition-colors"
+          >
             Kostenlose Beratung <ArrowRight size={15} />
           </Link>
         </div>
-      </motion.section>
+      </section>
+
     </div>
   );
 };

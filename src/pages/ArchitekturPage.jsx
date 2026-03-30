@@ -29,7 +29,7 @@ const ArchitekturPage = () => {
             <div className="mb-6">
               <AmonnLogoBlock variant="architektur" />
             </div>
-            <h1 className="text-5xl md:text-7xl font-light text-gray-900 leading-none mb-6">
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 leading-none mb-6">
               Architektur mit
               <br />
               <span className="font-black">Verantwortung.</span>
