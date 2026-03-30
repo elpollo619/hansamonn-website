@@ -62,8 +62,64 @@ function normalizeStoreProperty(p) {
     occupancy: p.occupancy || 'frei',
     beforeImage: p.beforeImage || '',
     afterImage: p.afterImage || '',
+    lat: p.lat ?? null,
+    lng: p.lng ?? null,
   };
 }
+
+// ─── Property Map ──────────────────────────────────────────────────────────────
+const PropertyMap = ({ lat, lng, title, address }) => {
+  const mapRef = React.useRef(null);
+  const instanceRef = React.useRef(null);
+
+  useEffect(() => {
+    if (!mapRef.current || instanceRef.current) return;
+    import('leaflet').then((L) => {
+      import('leaflet/dist/leaflet.css').catch(() => {});
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      });
+      const map = L.map(mapRef.current, {
+        center: [lat, lng],
+        zoom: 14,
+        zoomControl: true,
+        scrollWheelZoom: false,
+      });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(map);
+      L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup(`<strong>${title}</strong><br/>${address}`)
+        .openPopup();
+      instanceRef.current = map;
+    });
+    return () => {
+      if (instanceRef.current) {
+        instanceRef.current.remove();
+        instanceRef.current = null;
+      }
+    };
+  }, [lat, lng, title, address]);
+
+  return (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 mb-1">Lage & Standort</h2>
+      <p className="text-sm text-gray-500 mb-3 flex items-center gap-1.5">
+        <MapPin size={13} />
+        {address}
+      </p>
+      <div
+        ref={mapRef}
+        className="w-full h-72 rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
+        style={{ zIndex: 0 }}
+      />
+    </div>
+  );
+};
 
 // ─── Image with fallback ──────────────────────────────────────────────────────
 
@@ -959,6 +1015,11 @@ const ApartmentDetailPage = () => {
                   ))}
                 </div>
               </div>
+            )}
+
+            {/* Map */}
+            {apt.lat && apt.lng && (
+              <PropertyMap lat={apt.lat} lng={apt.lng} title={apt.title} address={apt.location} />
             )}
 
             {/* Apartment: inline multi-step form */}

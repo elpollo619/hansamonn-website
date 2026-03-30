@@ -45,9 +45,6 @@ import ShortStayPage from '@/pages/ShortStayPage';
 import ApartmentsPage from '@/pages/ApartmentsPage';
 import CasaRetoPage from '@/pages/CasaRetoPage';
 import NsHotelPage from '@/pages/NsHotelPage';
-import KerzersPage from '@/pages/KerzersPage';
-import MunchenbuchseePage from '@/pages/MunchenbuchseePage';
-import MuriPage from '@/pages/MuriPage';
 import MietanfragePage from '@/pages/MietanfragePage';
 import TerminbuchungPage from '@/pages/TerminbuchungPage';
 import NotFoundPage from '@/pages/NotFoundPage';
@@ -141,10 +138,10 @@ function AppRoutes() {
           <Route path="/casa-reto" element={<CasaRetoPage />} />
           <Route path="/ns-hotel" element={<NsHotelPage />} />
 
-          {/* LONG STAY LOCATIONS */}
-          <Route path="/long-stay/kerzers" element={<KerzersPage />} />
-          <Route path="/long-stay/munchenbuchsee" element={<MunchenbuchseePage />} />
-          <Route path="/long-stay/muri" element={<MuriPage />} />
+          {/* LONG STAY LOCATIONS — redirect to unified detail pages */}
+          <Route path="/long-stay/kerzers" element={<Navigate to="/immobilien/kerzers-ls" replace />} />
+          <Route path="/long-stay/munchenbuchsee" element={<Navigate to="/immobilien/munchenbuchsee-ls" replace />} />
+          <Route path="/long-stay/muri" element={<Navigate to="/immobilien/muri-ls" replace />} />
 
           {/* LEGACY REDIRECTS — old /vermietung/* → new /immobilien/* */}
           <Route path="/vermietung" element={<Navigate to="/immobilien/vermietung" replace />} />
