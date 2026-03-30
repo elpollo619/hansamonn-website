@@ -67,60 +67,6 @@ function normalizeStoreProperty(p) {
   };
 }
 
-// ─── Property Map ──────────────────────────────────────────────────────────────
-const PropertyMap = ({ lat, lng, title, address }) => {
-  const mapRef = React.useRef(null);
-  const instanceRef = React.useRef(null);
-
-  useEffect(() => {
-    if (!mapRef.current || instanceRef.current) return;
-    import('leaflet').then((L) => {
-      import('leaflet/dist/leaflet.css').catch(() => {});
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
-      const map = L.map(mapRef.current, {
-        center: [lat, lng],
-        zoom: 14,
-        zoomControl: true,
-        scrollWheelZoom: false,
-      });
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-      }).addTo(map);
-      L.marker([lat, lng])
-        .addTo(map)
-        .bindPopup(`<strong>${title}</strong><br/>${address}`)
-        .openPopup();
-      instanceRef.current = map;
-    });
-    return () => {
-      if (instanceRef.current) {
-        instanceRef.current.remove();
-        instanceRef.current = null;
-      }
-    };
-  }, [lat, lng, title, address]);
-
-  return (
-    <div>
-      <h2 className="text-lg font-semibold text-gray-900 mb-1">Lage & Standort</h2>
-      <p className="text-sm text-gray-500 mb-3 flex items-center gap-1.5">
-        <MapPin size={13} />
-        {address}
-      </p>
-      <div
-        ref={mapRef}
-        className="w-full h-72 rounded-2xl overflow-hidden border border-gray-100 shadow-sm"
-        style={{ zIndex: 0 }}
-      />
-    </div>
-  );
-};
-
 // ─── Image with fallback ──────────────────────────────────────────────────────
 
 const RentalImage = ({ src, alt, className }) => {
@@ -141,7 +87,7 @@ const RentalImage = ({ src, alt, className }) => {
 const TypeBadge = ({ type, t }) => {
   const cfg = {
     apartment:   { icon: Home,      cls: 'bg-blue-100 text-blue-700 border border-blue-200' },
-    'long-stay': { icon: Coffee,    cls: 'bg-amber-100 text-amber-700 border border-amber-200' },
+    'long-stay': { icon: Coffee,    cls: 'bg-blue-100 text-blue-700 border border-blue-200' },
     hotel:       { icon: Building2, cls: 'bg-indigo-100 text-indigo-700 border border-indigo-200' },
     project:     { icon: Sun,       cls: 'bg-emerald-100 text-emerald-700 border border-emerald-200' },
   }[type] || { icon: Home, cls: 'bg-blue-100 text-blue-700' };
@@ -269,7 +215,7 @@ const LongStaySidebar = ({ apt, t }) => (
     className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24"
   >
     {/* Header */}
-    <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-5 text-white">
+    <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white">
       <div className="flex items-center gap-2 flex-wrap">
         <TypeBadge type="long-stay" t={t} />
         <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -292,14 +238,14 @@ const LongStaySidebar = ({ apt, t }) => (
             <div
               key={i}
               className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm ${
-                room.isAddon ? 'bg-gray-50 text-gray-600' : 'bg-amber-50'
+                room.isAddon ? 'bg-gray-50 text-gray-600' : 'bg-blue-50'
               }`}
             >
               <span className={`font-medium ${room.isAddon ? 'text-gray-600' : 'text-gray-800'}`}>
                 {room.label}
                 {room.size && <span className="text-gray-400 font-normal ml-1.5">{room.size} m²</span>}
               </span>
-              <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-amber-700'}`}>
+              <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-blue-700'}`}>
                 {room.isFrom && <span className="font-normal text-xs mr-1">{t('vermietung.longStay.from')}</span>}
                 CHF {room.price}
                 <span className="text-xs font-normal">/Mt.</span>
@@ -339,7 +285,7 @@ const LongStaySidebar = ({ apt, t }) => (
     <div className="p-5">
       <a
         href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
-        className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
+        className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
       >
         <Mail size={18} />
         {t('vermietung.longStay.requestTitle')}
@@ -980,7 +926,7 @@ const ApartmentDetailPage = () => {
                         {room.label}
                         {room.size && <span className="text-gray-400 font-normal ml-1">{room.size} m²</span>}
                       </span>
-                      <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-amber-700'}`}>
+                      <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-blue-700'}`}>
                         {room.isFrom && <span className="font-normal text-xs mr-1">ab</span>}
                         CHF {room.price}<span className="text-xs font-normal">/Mt.</span>
                       </span>
@@ -1018,9 +964,6 @@ const ApartmentDetailPage = () => {
             )}
 
             {/* Map */}
-            {apt.lat && apt.lng && (
-              <PropertyMap lat={apt.lat} lng={apt.lng} title={apt.title} address={apt.location} />
-            )}
 
             {/* Apartment: inline multi-step form */}
             {apt.type === 'apartment' && apt.status === 'available' && (
@@ -1158,7 +1101,7 @@ const ApartmentDetailPage = () => {
         ) : apt.type === 'long-stay' ? (
           <a
             href={`mailto:${apt.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
-            className="w-full flex items-center justify-center gap-2 bg-amber-500 text-white font-semibold py-3 rounded-xl text-sm"
+            className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm"
           >
             <Mail size={16} />
             {t('vermietung.longStay.requestTitle')}

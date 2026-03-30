@@ -171,25 +171,39 @@ const DEFAULT_PROPERTIES = [
   },
 ];
 
-// ── Migration: add lat/lng/address/occupancy/sort_order/beforeImage/afterImage to existing stored properties ──
+// ── Migration helpers ─────────────────────────────────────────────────────────
 const LINK_MIGRATIONS = {
   '/long-stay/kerzers': '/immobilien/kerzers-ls',
   '/long-stay/munchenbuchsee': '/immobilien/munchenbuchsee-ls',
   '/long-stay/muri': '/immobilien/muri-ls',
 };
 
+// For default properties: migrate images and icalUrl if stored data is outdated
+const DEFAULT_BY_ID = Object.fromEntries(DEFAULT_PROPERTIES.map((p) => [p.id, p]));
+
 function migrate(props) {
-  return props.map((p, index) => ({
-    address: p.location || '',
-    ...p,
-    lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
-    lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
-    occupancy: p.occupancy || 'frei',
-    sort_order: p.sort_order ?? index,
-    beforeImage: p.beforeImage ?? '',
-    afterImage: p.afterImage ?? '',
-    link: LINK_MIGRATIONS[p.link] ?? p.link ?? '',
-  }));
+  return props.map((p, index) => {
+    const def = DEFAULT_BY_ID[p.id];
+    // Upgrade images if stored count is less than defaults (user hasn't customized them)
+    const storedImages = Array.isArray(p.images) ? p.images : [];
+    const defaultImages = def?.images ?? [];
+    const images = storedImages.length < defaultImages.length ? defaultImages : storedImages;
+    // Restore icalUrl from defaults if missing
+    const icalUrl = p.icalUrl || def?.icalUrl || '';
+    return {
+      address: p.location || '',
+      ...p,
+      images,
+      icalUrl,
+      lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
+      lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
+      occupancy: p.occupancy || 'frei',
+      sort_order: p.sort_order ?? index,
+      beforeImage: p.beforeImage ?? '',
+      afterImage: p.afterImage ?? '',
+      link: LINK_MIGRATIONS[p.link] ?? p.link ?? '',
+    };
+  });
 }
 
 export function getProperties() {

@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Home, Phone, Mail, MessageCircle, MapPin, ArrowRight, Sun, Snowflake, Flower2, Calendar } from "lucide-react";
 import CasaRetoAnfrageForm from "@/components/CasaRetoAnfrageForm";
+import AvailabilityCalendar from "@/components/AvailabilityCalendar";
 import { Helmet } from 'react-helmet';
+
+const CASA_RETO_ICAL = 'https://www.airbnb.ch/calendar/ical/625660996936132774.ics?t=82a02050ce864c73b599648976548358';
 
 const PREISE = [
   { saison: 'Sommer', icon: Sun,       color: 'amber',   zeitraum: 'Juni – September', nacht: 180, woche: 1100, min: 3 },
@@ -118,6 +121,17 @@ export default function CasaRetoPage() {
         </div>
       </section>
 
+      {/* ── Availability calendar ── */}
+      <section className="border-t">
+        <div className="container mx-auto px-6 py-16">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-2 text-center">Verfügbarkeit</h2>
+            <p className="text-slate-500 text-center mb-8">Kalender wird automatisch mit Airbnb synchronisiert.</p>
+            <AvailabilityCalendar icalUrl={CASA_RETO_ICAL} />
+          </div>
+        </div>
+      </section>
+
       {/* ── Direct contact form ── */}
       <section className="border-t">
         <div className="container mx-auto px-6 py-16">
@@ -147,15 +161,6 @@ export default function CasaRetoPage() {
                       <div className="text-sky-500 font-semibold">office@reto-amonn.ch</div>
                     </div>
                   </a>
-                  <div className="flex items-start gap-4 rounded-2xl bg-emerald-50 p-5 border border-emerald-100">
-                    <Calendar className="text-emerald-500 shrink-0 mt-0.5" size={22} />
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      <strong>Tipp:</strong> Prüfen Sie die Verfügbarkeit auf der{' '}
-                      <Link to="/immobilien/casa-reto" className="text-emerald-600 hover:underline">
-                        Detailseite
-                      </Link>{' '}— dort ist der Kalender immer aktuell synchronisiert.
-                    </p>
-                  </div>
                 </div>
               </div>
               {/* Right: form */}
