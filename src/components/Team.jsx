@@ -13,22 +13,22 @@ const Team = () => {
   }, []);
 
   return (
-    <section id="team" className="py-20 bg-gray-50">
+    <section id="team" className="py-20 bg-white border-t border-gray-100">
       <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900">
-            Unser <span className="font-bold gradient-text">Team</span>
+          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">Hans Amonn AG</p>
+          <h2 className="text-4xl font-light text-gray-900">
+            Unser <span className="font-black">Team</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Lernen Sie die talentierten Fachkräfte der Hans Amonn AG kennen, die mit Leidenschaft
-            und Fachwissen Ihre Bau- und Immobilienprojekte erfolgreich umsetzen.
+          <p className="text-gray-400 text-sm leading-relaxed mt-3 max-w-xl">
+            Lernen Sie die Fachkräfte der Hans Amonn AG kennen — mit Erfahrung und Engagement für Ihre Projekte.
           </p>
         </motion.div>
 

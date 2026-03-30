@@ -11,7 +11,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gray-50">
+    <section id="about" className="py-20 bg-white border-t border-gray-100">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Text Content */}
@@ -21,8 +21,9 @@ const About = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900">
-              Über <span className="font-bold">uns</span>
+            <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">Hans Amonn AG</p>
+            <h2 className="text-4xl font-light mb-6 text-gray-900">
+              Über <span className="font-black">uns</span>
             </h2>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
               Seit unserer Gründung 1968 stehen wir bei der Hans Amonn AG für Qualität, 
@@ -49,7 +50,10 @@ const About = () => {
                 href="https://www.linkedin.com/in/hans-amonn-689b7938b"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+                className="inline-flex items-center px-6 py-3 text-sm font-semibold text-white transition-colors"
+                style={{ backgroundColor: '#1D3D78' }}
+                onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
+                onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
               >
                 <Linkedin className="mr-3 h-5 w-5" />
                 Unser Unternehmensprofil auf LinkedIn
@@ -67,7 +71,7 @@ const About = () => {
                   viewport={{ once: true }}
                   className="text-center"
                 >
-                  <stat.icon className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+                  <stat.icon className="w-8 h-8 mx-auto mb-2" style={{ color: '#1D3D78' }} />
                   <div className="text-2xl font-bold text-gray-900 mb-1">
                     {stat.number}
                   </div>
@@ -87,7 +91,7 @@ const About = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative overflow-hidden rounded-lg shadow-2xl">
+            <div className="relative overflow-hidden">
               <img   
                 alt="Wohnkomplex Allmendstrasse in Kerzers, ein Projekt der Hans Amonn AG"
                 className="w-full h-96 object-cover" src="https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg" />
@@ -99,7 +103,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-xl"
+              className="absolute -bottom-6 -left-6 bg-white p-6 border border-gray-100"
             >
               <div className="text-3xl font-bold text-gray-900 mb-1">55+</div>
               <div className="text-sm text-gray-600">Jahre Erfahrung</div>
@@ -116,7 +120,7 @@ const About = () => {
           viewport={{ once: true }}
           className="mt-20"
         >
-          <div className="bg-white rounded-lg p-8 shadow-lg">
+          <div className="bg-white p-8 border border-gray-100">
             <h3 className="text-3xl font-semibold text-gray-900 mb-6">
               Unsere Geschichte – Tradition und Vision seit 1968
             </h3>

@@ -91,22 +91,20 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-20 bg-white border-t border-gray-100">
       <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-14"
         >
-          <h2 className="text-4xl md:text-5xl font-light mb-6 text-gray-900">
+          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">Kontakt</p>
+          <h2 className="text-4xl font-light text-gray-900">
             {t('contact.title')}
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            {t('contact.meta.description')}
-          </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">
@@ -117,7 +115,7 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8">
+            <h3 className="text-2xl font-light text-gray-900 mb-8">
               {t('contact.infoTitle')}
             </h3>
             
@@ -131,8 +129,8 @@ const Contact = () => {
                   viewport={{ once: true }}
                   className="flex items-start space-x-4"
                 >
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <info.icon className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center flex-shrink-0">
+                    <info.icon className="w-6 h-6" style={{ color: '#1D3D78' }} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
@@ -141,7 +139,7 @@ const Contact = () => {
                     {info.details.map((detail, detailIndex) => (
                       <p key={detailIndex} className="text-gray-600">
                         {info.href ? (
-                          <a href={info.href} className="hover:text-blue-600 transition-colors">{detail}</a>
+                          <a href={info.href} className="hover:text-[#1D3D78] transition-colors">{detail}</a>
                         ) : (
                           detail
                         )}
@@ -158,7 +156,7 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="mt-8 bg-gray-50 p-6 rounded-lg"
+              className="mt-8 bg-gray-50 p-6 border border-gray-100"
             >
               <h4 className="font-semibold text-gray-900 mb-4">{t('contact.whyUs')}</h4>
               <ul className="space-y-2 text-gray-600">
@@ -176,7 +174,7 @@ const Contact = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8">
+            <h3 className="text-2xl font-light text-gray-900 mb-8">
               {t('contact.sendMessage')}
             </h3>
 
@@ -190,7 +188,7 @@ const Contact = () => {
                     type="text"
                     name="firstName"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
                     placeholder={t('contact.form.firstNamePlaceholder')}
                   />
                 </div>
@@ -202,7 +200,7 @@ const Contact = () => {
                     type="text"
                     name="lastName"
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
                     placeholder={t('contact.form.lastNamePlaceholder')}
                   />
                 </div>
@@ -216,7 +214,7 @@ const Contact = () => {
                   type="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
                   placeholder={t('contact.form.emailPlaceholder')}
                 />
               </div>
@@ -228,7 +226,7 @@ const Contact = () => {
                 <input
                   type="tel"
                   name="telefon"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
                   placeholder={t('contact.form.phonePlaceholder')}
                 />
               </div>
@@ -237,7 +235,7 @@ const Contact = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('contact.form.projectType')}
                 </label>
-                <select name="betreff" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
+                <select name="betreff" className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all">
                   <option value="">{t('contact.form.projectPlaceholder')}</option>
                   <option value="architektur">{t('contact.form.optArchitektur')}</option>
                   <option value="neubau">{t('contact.form.optNeubau')}</option>
@@ -255,19 +253,21 @@ const Contact = () => {
                   required
                   name="nachricht"
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all resize-none"
                   placeholder={t('contact.form.messagePlaceholder')}
                 ></textarea>
               </div>
 
-              <Button
+              <button
                 type="submit"
-                size="lg"
                 disabled={submitting}
-                className="w-full brand-gradient hover:brand-gradient-hover text-white py-3 disabled:opacity-60"
+                className="w-full text-white py-3.5 text-sm font-semibold transition-colors disabled:opacity-60"
+                style={{ backgroundColor: '#1D3D78' }}
+                onMouseOver={e => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor='#162E5A')}
+                onMouseOut={e => (e.currentTarget.style.backgroundColor='#1D3D78')}
               >
                 {submitting ? 'Wird gesendet…' : t('contact.form.submit')}
-              </Button>
+              </button>
             </form>
           </motion.div>
         </div>
@@ -281,8 +281,8 @@ const Contact = () => {
           className="mt-20"
         >
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-semibold text-gray-900 mb-4">
-              Unser <span className="gradient-text">Standort</span>
+            <h3 className="text-3xl font-light text-gray-900 mb-4">
+              Unser <span className="font-black">Standort</span>
             </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Besuchen Sie uns in unserem Büro in Muri bei Bern. Wir freuen uns auf ein persönliches Gespräch 
@@ -290,7 +290,7 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-white border border-gray-100 overflow-hidden">
             {/* Map Container */}
             <div className="relative h-96 md:h-[500px]">
               <iframe
@@ -306,9 +306,9 @@ const Contact = () => {
               ></iframe>
               
               {/* Map Overlay with Company Info */}
-              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg max-w-xs">
+              <div className="absolute top-4 left-4 bg-white/95 p-4 border border-gray-100 max-w-xs">
                 <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1D3D78' }}>
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
@@ -317,7 +317,7 @@ const Contact = () => {
                       Blümlisalpstrasse 4<br />
                       3074 Muri bei Bern
                     </p>
-                    <a href="tel:+41319518554" className="text-xs text-blue-600 mt-2 font-medium hover:underline">
+                    <a href="tel:+41319518554" className="text-xs mt-2 font-medium hover:underline" style={{ color: '#1D3D78' }}>
                       +41 (0)31 951 85 54
                     </a>
                   </div>
