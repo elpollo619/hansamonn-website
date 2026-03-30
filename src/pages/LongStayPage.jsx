@@ -27,7 +27,6 @@ const locations = [
       { label: 'Doppelzimmer', detail: '', price: 'ab CHF 1150 / Mt.' },
     ],
     features: ['Strom inkl.', 'Internet inkl.', 'Wasser inkl.', 'Reinigung inkl.'],
-    color: 'from-blue-600 to-blue-800',
   },
   {
     title: 'Münchenbuchsee',
@@ -40,7 +39,6 @@ const locations = [
       { label: 'Doppelzimmer', detail: '', price: 'ab CHF 1250 / Mt.' },
     ],
     features: ['Möbliert', 'Gemeinschaftsküche', 'Parking möglich', 'Flexibel buchbar'],
-    color: 'from-amber-600 to-amber-800',
   },
   {
     title: 'Muri bei Bern',
@@ -53,7 +51,6 @@ const locations = [
       { label: 'Doppelzimmer', detail: '', price: 'ab CHF 1250 / Mt.' },
     ],
     features: ['Möbliert', 'Zentral gelegen', 'ÖV-nah', 'Kurz- und Langzeit'],
-    color: 'from-emerald-600 to-emerald-800',
   },
 ];
 
