@@ -10,7 +10,7 @@ function StarRating({ rating }) {
         <Star
           key={n}
           size={15}
-          className={n <= rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200 fill-gray-200'}
+          className={n <= rating ? 'fill-[#1D3D78] text-[#1D3D78]' : 'text-gray-200 fill-gray-200'}
         />
       ))}
     </div>
@@ -45,16 +45,19 @@ export default function TestimonialsSection() {
   if (!loaded || testimonials.length === 0) return null;
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-5xl mx-auto px-6">
         <div className="mb-10">
-          <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
-            Was unsere Kunden sagen
+          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-2">
+            Amonn Referenzen
+          </p>
+          <h2 className="text-3xl font-light text-gray-900">
+            Was unsere Kunden <span className="font-black">sagen</span>
           </h2>
         </div>
 
         {/* Mobile: horizontal scroll; Desktop: 3-column grid */}
-        <div className="flex gap-5 overflow-x-auto pb-4 md:overflow-visible md:grid md:grid-cols-3 md:pb-0 snap-x snap-mandatory md:snap-none">
+        <div className="flex gap-px overflow-x-auto pb-4 md:overflow-visible md:grid md:grid-cols-3 md:pb-0 snap-x snap-mandatory md:snap-none bg-gray-100 border border-gray-100">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.id}
@@ -63,23 +66,19 @@ export default function TestimonialsSection() {
               whileInView="visible"
               viewport={{ once: true, margin: '-40px' }}
               variants={cardVariants}
-              className="flex-shrink-0 w-[80vw] sm:w-[60vw] md:w-auto snap-start bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-4"
+              className="flex-shrink-0 w-[80vw] sm:w-[60vw] md:w-auto snap-start bg-white p-7 flex flex-col gap-4"
             >
               <StarRating rating={t.rating ?? 5} />
 
-              <p className="text-gray-600 italic text-sm leading-relaxed flex-1">
+              <p className="text-gray-500 text-sm leading-relaxed flex-1">
                 &ldquo;{t.text}&rdquo;
               </p>
 
-              <div className="flex flex-col gap-1 pt-2 border-t border-gray-50">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-gray-900 text-sm">{t.name}</span>
-                  {t.role && (
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">
-                      {t.role}
-                    </span>
-                  )}
-                </div>
+              <div className="flex flex-col gap-0.5 pt-3 border-t border-gray-100">
+                <span className="font-semibold text-gray-900 text-sm">{t.name}</span>
+                {t.role && (
+                  <span className="text-xs text-gray-400">{t.role}</span>
+                )}
                 {t.property && (
                   <span className="text-xs text-gray-400">{t.property}</span>
                 )}

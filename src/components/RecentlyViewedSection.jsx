@@ -15,10 +15,10 @@ const DETAIL_URL_MAP = {
 };
 
 const TYPE_CFG = {
-  apartment:   { badge: 'bg-blue-100 text-blue-700',   icon: Home,      label: 'Wohnung' },
-  'long-stay': { badge: 'bg-amber-100 text-amber-700', icon: Coffee,    label: 'Long Stay' },
-  hotel:       { badge: 'bg-indigo-100 text-indigo-700', icon: Building2, label: 'Hotel' },
-  project:     { badge: 'bg-emerald-100 text-emerald-700', icon: Sun,   label: 'Ferienhaus' },
+  apartment:   { badge: 'bg-gray-100 text-gray-600',   icon: Home,      label: 'Wohnung' },
+  'long-stay': { badge: 'bg-gray-100 text-gray-600',   icon: Coffee,    label: 'Long Stay' },
+  hotel:       { badge: 'bg-gray-100 text-gray-600',   icon: Building2, label: 'Hotel' },
+  project:     { badge: 'bg-gray-100 text-gray-600',   icon: Sun,       label: 'Ferienhaus' },
 };
 
 function getDetailUrl(id, slug) {
@@ -111,7 +111,7 @@ const RecentlyViewedSection = ({ currentId }) => {
             <Link
               key={item.id}
               to={item.detailUrl}
-              className="group flex-shrink-0 w-52 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+              className="group flex-shrink-0 w-52 bg-white border border-gray-100 hover:border-gray-300 transition-colors overflow-hidden"
             >
               {/* Image */}
               <div className="h-32 overflow-hidden bg-gray-50">
@@ -127,7 +127,7 @@ const RecentlyViewedSection = ({ currentId }) => {
                 </span>
 
                 {/* Title */}
-                <p className="text-sm font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-blue-700 transition-colors">
+                <p className="text-sm font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#1D3D78] transition-colors">
                   {item.title}
                 </p>
 

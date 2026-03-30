@@ -35,7 +35,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="bg-gray-900 text-white py-20 px-4">
+    <section className="text-white py-20 px-4" style={{ backgroundColor: '#1D3D78' }}>
       <div className="container mx-auto max-w-2xl text-center">
         <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
           Neue Immobilien als Erster erfahren
@@ -46,7 +46,7 @@ export default function NewsletterSection() {
         </p>
 
         {status === 'success' ? (
-          <div className="inline-flex items-center gap-2 bg-green-800/40 border border-green-600 text-green-300 px-6 py-4 rounded text-sm font-medium">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white px-6 py-4 text-sm font-medium">
             ✓ Vielen Dank! Sie erhalten bald eine Bestätigung.
           </div>
         ) : (
@@ -77,7 +77,7 @@ export default function NewsletterSection() {
         )}
 
         {status === 'duplicate' && (
-          <p className="mt-3 text-sm text-amber-400">
+          <p className="mt-3 text-sm text-white/70">
             Diese E-Mail-Adresse ist bereits registriert.
           </p>
         )}
