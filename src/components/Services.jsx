@@ -1,182 +1,207 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
 
-/* ─── Hero: "Wir bauen" with cycling word on its own line ───────────────── */
-const INTERVAL = 2600;
+/* ─── Data: each service gets a building slot in the SVG ────────────────── */
+// 8 services → 8 buildings, each linked
+const ALL_SERVICES = servicesData; // 4 architektur + 4 immobilien
 
-const BAUEN_ITEMS = [
-  { word: 'Wohnhäuser.',        sub: 'Einfamilienhäuser, Mehrfamilienhäuser' },
-  { word: 'Ihr Zuhause.',       sub: 'Individuell, nachhaltig, auf Mass' },
-  { word: 'Sanierungen.',       sub: 'Umbau, Renovation, Energieeffizienz' },
-  { word: 'Neubauten.',         sub: 'Von der Planung bis zur Schlüsselübergabe' },
-  { word: 'für Generationen.',  sub: 'Qualität, die bleibt' },
-  { word: 'Träume.',            sub: 'Ihr Projekt — unsere Leidenschaft' },
+/* ─── Interactive Cityscape ─────────────────────────────────────────────── */
+// 8 buildings, one per service. Hovering/active fills the building.
+const BUILDINGS = [
+  { x: 60,  w: 70,  h: 70,  roof: 'flat' },
+  { x: 140, w: 45,  h: 100, roof: 'flat' },
+  { x: 195, w: 38,  h: 55,  roof: 'gable', rh: 18 },
+  { x: 243, w: 28,  h: 130, roof: 'flat' },   // tall
+  { x: 281, w: 55,  h: 60,  roof: 'flat' },
+  { x: 346, w: 40,  h: 85,  roof: 'gable', rh: 16 },
+  { x: 396, w: 28,  h: 110, roof: 'flat' },   // tall
+  { x: 434, w: 62,  h: 68,  roof: 'flat' },
 ];
 
-const WirBauen = () => {
-  const [idx, setIdx] = useState(0);
-  const [progress, setProgress] = useState(0);
+const G = 150; // ground y
+const SVG_W = 560;
 
-  useEffect(() => {
-    setProgress(0);
-    const start = performance.now();
-    let raf;
-    const tick = (now) => {
-      const p = Math.min((now - start) / INTERVAL, 1);
-      setProgress(p);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [idx]);
+const buildingPath = (b) => {
+  const { x, w, h, roof, rh = 14 } = b;
+  const top = G - h;
+  if (roof === 'gable')
+    return `M${x},${G} L${x},${top} L${x + w / 2},${top - rh} L${x + w},${top} L${x + w},${G}`;
+  return `M${x},${G} L${x},${top} L${x + w},${top} L${x + w},${G}`;
+};
 
-  useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % BAUEN_ITEMS.length), INTERVAL);
-    return () => clearInterval(t);
-  }, []);
-
-  const item = BAUEN_ITEMS[idx];
+const InteractiveCityscape = ({ activeIdx, onHover, onLeave, onSelect }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
 
   return (
-    <div>
-      {/* Static first line */}
-      <p className="text-4xl md:text-6xl font-light text-gray-900 leading-tight">
-        Wir bauen
-      </p>
+    <div ref={ref} className="w-full flex justify-center" style={{ height: 170 }}>
+      <svg
+        viewBox={`0 0 ${SVG_W} 170`}
+        preserveAspectRatio="xMidYMax meet"
+        className="h-full"
+        style={{ width: '100%', maxWidth: 600 }}
+      >
+        {/* Ground */}
+        <motion.line
+          x1={20} y1={G} x2={SVG_W - 20} y2={G}
+          stroke="#d1d5db" strokeWidth="1"
+          initial={{ scaleX: 0 }}
+          animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+          style={{ transformOrigin: '20px 0' }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+        />
 
-      {/* Animated second line */}
-      <div className="overflow-hidden" style={{ height: '1.25em' }}>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={idx}
-            initial={{ y: '100%' }}
-            animate={{ y: '0%' }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl md:text-6xl font-black text-gray-900 leading-tight"
-          >
-            {item.word}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-
-      {/* Subtitle */}
-      <div className="overflow-hidden mt-3" style={{ height: '1.4em' }}>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={idx + '-sub'}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-            className="text-sm text-gray-400 tracking-wide"
-          >
-            {item.sub}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-
-      {/* Progress bar + dots */}
-      <div className="mt-6 flex items-center gap-3">
-        <div className="relative h-px w-32 bg-gray-200 overflow-hidden">
-          <motion.div
-            className="absolute left-0 top-0 h-full bg-gray-900"
-            style={{ width: `${progress * 100}%` }}
-          />
-        </div>
-        <div className="flex gap-1.5">
-          {BAUEN_ITEMS.map((_, i) => (
-            <button
+        {/* Buildings */}
+        {BUILDINGS.map((b, i) => {
+          const isActive = activeIdx === i;
+          return (
+            <motion.path
               key={i}
-              onClick={() => setIdx(i)}
-              className={`rounded-full transition-all duration-300 ${
-                i === idx ? 'w-4 h-1.5 bg-gray-900' : 'w-1.5 h-1.5 bg-gray-300'
-              }`}
+              d={buildingPath(b)}
+              fill={isActive ? '#e2e8f0' : 'transparent'}
+              stroke={isActive ? '#334155' : '#cbd5e1'}
+              strokeWidth={isActive ? 1.2 : 0.8}
+              strokeLinejoin="miter"
+              style={{ cursor: 'pointer' }}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.07, ease: 'easeOut' }}
+              whileHover={{ fill: '#f1f5f9' }}
+              onHoverStart={() => onHover(i)}
+              onHoverEnd={onLeave}
+              onClick={() => onSelect(i)}
             />
-          ))}
-        </div>
-      </div>
+          );
+        })}
+
+        {/* Active building label */}
+        {activeIdx !== null && (
+          <motion.text
+            key={activeIdx}
+            x={BUILDINGS[activeIdx].x + BUILDINGS[activeIdx].w / 2}
+            y={G - BUILDINGS[activeIdx].h - 10}
+            textAnchor="middle"
+            fontSize="7"
+            fill="#64748b"
+            fontFamily="sans-serif"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {ALL_SERVICES[activeIdx]?.title}
+          </motion.text>
+        )}
+      </svg>
     </div>
   );
 };
 
-/* ─── Minimal SVG Cityscape (jungheim style — silhouettes only) ─────────── */
-const Cityscape = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+/* ─── Service pills ──────────────────────────────────────────────────────── */
+const ServicePills = ({ activeIdx, onHover, onLeave, onSelect }) => {
+  const arch = ALL_SERVICES.filter((s) => s.category === 'architektur');
+  const immo = ALL_SERVICES.filter((s) => s.category === 'immobilien');
 
-  // Each building as a polyline path (simplified silhouette)
-  // Format: SVG path d string, drawn bottom-up from ground line y=100
-  const buildings = [
-    // x, groundY=100, shape as array of [dx,dy] relative points from bottom-left
-    { x: 30,  w: 55,  h: 55,  roof: 'flat' },
-    { x: 92,  w: 38,  h: 75,  roof: 'flat' },
-    { x: 136, w: 28,  h: 40,  roof: 'gable', rh: 14 },
-    { x: 170, w: 22,  h: 58,  roof: 'flat' },
-    { x: 198, w: 50,  h: 35,  roof: 'gable', rh: 12 },
-    { x: 254, w: 32,  h: 68,  roof: 'flat' },
-    { x: 292, w: 18,  h: 90,  roof: 'flat' },  // tall tower
-    { x: 316, w: 42,  h: 45,  roof: 'flat' },
-    { x: 364, w: 28,  h: 30,  roof: 'gable', rh: 10 },
-    { x: 398, w: 55,  h: 50,  roof: 'flat' },
-    { x: 459, w: 25,  h: 72,  roof: 'flat' },
-    { x: 490, w: 48,  h: 38,  roof: 'gable', rh: 15 },
-    { x: 544, w: 20,  h: 82,  roof: 'flat' },
-    { x: 570, w: 38,  h: 45,  roof: 'flat' },
-    { x: 614, w: 30,  h: 60,  roof: 'gable', rh: 12 },
-    { x: 650, w: 52,  h: 42,  roof: 'flat' },
-    { x: 708, w: 22,  h: 95,  roof: 'flat' },  // tall tower
-    { x: 736, w: 44,  h: 35,  roof: 'flat' },
-    { x: 786, w: 28,  h: 55,  roof: 'gable', rh: 14 },
-    { x: 820, w: 50,  h: 48,  roof: 'flat' },
-    { x: 876, w: 36,  h: 70,  roof: 'flat' },
-    { x: 918, w: 26,  h: 40,  roof: 'gable', rh: 11 },
-    { x: 950, w: 48,  h: 55,  roof: 'flat' },
-  ];
-
-  const G = 110; // ground y
-  const W = 1020;
-
-  const buildingPath = (b) => {
-    const bx = b.x, by = G - b.h, bw = b.w;
-    if (b.roof === 'gable') {
-      const rh = b.rh || 12;
-      return `M${bx},${G} L${bx},${by} L${bx + bw / 2},${by - rh} L${bx + bw},${by} L${bx + bw},${G}`;
-    }
-    return `M${bx},${G} L${bx},${by} L${bx + bw},${by} L${bx + bw},${G}`;
-  };
+  const PillGroup = ({ label, services, offset }) => (
+    <div className="flex flex-wrap justify-center gap-2">
+      {services.map((s, i) => {
+        const globalIdx = offset + i;
+        const active = activeIdx === globalIdx;
+        return (
+          <motion.div
+            key={s.slug}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.4 + globalIdx * 0.05 }}
+          >
+            <Link
+              to={`/leistungen/${s.slug}`}
+              onMouseEnter={() => onHover(globalIdx)}
+              onMouseLeave={onLeave}
+              className={`inline-flex items-center px-4 py-1.5 rounded-full text-sm border transition-all duration-200 ${
+                active
+                  ? 'bg-slate-800 text-white border-slate-800'
+                  : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:text-gray-900'
+              }`}
+            >
+              {s.title}
+            </Link>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
 
   return (
-    <div ref={ref} className="w-full" style={{ height: 130 }}>
-      <svg viewBox={`0 0 ${W} 130`} preserveAspectRatio="xMidYMax meet" className="w-full h-full">
-        {/* Ground line */}
-        <motion.line
-          x1={0} y1={G} x2={W} y2={G}
-          stroke="#d1d5db" strokeWidth="1"
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-          style={{ transformOrigin: '0 0' }}
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
-        />
-        {/* Buildings */}
-        {buildings.map((b, i) => (
-          <motion.path
-            key={i}
-            d={buildingPath(b)}
-            fill="none"
-            stroke="#9ca3af"
-            strokeWidth="0.8"
-            strokeLinejoin="miter"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.5, delay: 0.3 + i * 0.04, ease: 'easeOut' }}
-          />
-        ))}
-      </svg>
+    <div className="flex flex-col gap-3 items-center">
+      <PillGroup label="Architektur" services={arch} offset={0} />
+      <div className="flex items-center gap-3 w-full max-w-lg">
+        <div className="flex-1 h-px bg-gray-100" />
+        <span className="text-[9px] tracking-widest text-gray-300 uppercase">Immobilien</span>
+        <div className="flex-1 h-px bg-gray-100" />
+      </div>
+      <PillGroup label="Immobilien" services={immo} offset={4} />
     </div>
+  );
+};
+
+/* ─── Hero section ───────────────────────────────────────────────────────── */
+const Hero = () => {
+  const [activeIdx, setActiveIdx] = useState(null);
+  const navigate = useNavigate();
+
+  return (
+    <section className="pt-12 pb-10 bg-white">
+      <div className="container mx-auto px-6">
+        {/* Text */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mb-10"
+        >
+          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-4">
+            Tätigkeit
+          </p>
+          <h1 className="text-4xl md:text-5xl font-light text-gray-900 leading-tight">
+            Architektur mit Verantwortung
+            <br />
+            <span className="font-black">für Raum, Bestand und Kosten.</span>
+          </h1>
+        </motion.div>
+
+        {/* Interactive cityscape */}
+        <InteractiveCityscape
+          activeIdx={activeIdx}
+          onHover={setActiveIdx}
+          onLeave={() => setActiveIdx(null)}
+          onSelect={(i) => navigate(`/leistungen/${ALL_SERVICES[i].slug}`)}
+        />
+
+        {/* Pills */}
+        <div className="mt-6">
+          <ServicePills
+            activeIdx={activeIdx}
+            onHover={setActiveIdx}
+            onLeave={() => setActiveIdx(null)}
+            onSelect={(i) => navigate(`/leistungen/${ALL_SERVICES[i].slug}`)}
+          />
+        </div>
+
+        {/* Hint */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+          className="text-center text-[11px] text-gray-300 mt-4 tracking-wide"
+        >
+          Klicken Sie auf ein Gebäude oder einen Bereich, um mehr zu erfahren
+        </motion.p>
+      </div>
+    </section>
   );
 };
 
@@ -203,8 +228,7 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
 
   return (
     <div className="relative flex flex-col md:flex-row">
-
-      {/* ── Sticky image panel (left) ── */}
+      {/* Sticky image panel */}
       <div className="hidden md:block md:w-1/2 relative">
         <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden">
           <AnimatePresence mode="wait">
@@ -218,8 +242,6 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
               style={{ backgroundImage: `url(${active.coverImage})` }}
             />
           </AnimatePresence>
-
-          {/* Overlay with active service name */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-10">
             <AnimatePresence mode="wait">
               <motion.div
@@ -235,8 +257,6 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
                 <h3 className="text-2xl font-light text-white">{active.title}</h3>
               </motion.div>
             </AnimatePresence>
-
-            {/* Progress dots */}
             <div className="flex gap-1.5 mt-5">
               {services.map((_, i) => (
                 <button
@@ -252,7 +272,7 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
         </div>
       </div>
 
-      {/* ── Scrollable service list (right) ── */}
+      {/* Scrollable list */}
       <div className="md:w-1/2">
         {services.map((service, i) => (
           <div
@@ -260,15 +280,9 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
             ref={(el) => (itemRefs.current[i] = el)}
             className="min-h-[60vh] md:min-h-screen flex flex-col justify-center px-8 md:px-16 py-16 border-b border-gray-100 last:border-0"
           >
-            {/* Mobile: show image inline */}
             <div className="md:hidden mb-6 overflow-hidden h-52">
-              <img
-                src={service.coverImage}
-                alt={service.title}
-                className="w-full h-full object-cover"
-              />
+              <img src={service.coverImage} alt={service.title} className="w-full h-full object-cover" />
             </div>
-
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -307,116 +321,61 @@ const StickyScrollServices = ({ services, sectionLabel }) => {
   );
 };
 
-/* ─── Main Services component ───────────────────────────────────────────── */
+/* ─── Main ───────────────────────────────────────────────────────────────── */
 const Services = () => {
   const archServices = servicesData.filter((s) => s.category === 'architektur');
   const immServices = servicesData.filter((s) => s.category === 'immobilien');
 
   return (
     <div className="bg-white">
+      <Hero />
 
-      {/* ── Hero with cycling text + cityscape ──────────────────── */}
-      <section className="pt-12 pb-0 bg-white overflow-hidden">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-6">
-              Tätigkeit
-            </p>
-            <WirBauen />
-            <p className="mt-6 text-gray-400 text-sm leading-relaxed max-w-xl">
-              Architektur mit Verantwortung für Raum, Bestand und Kosten —<br />
-              seit über 55 Jahren in der Region Bern.
-            </p>
-          </motion.div>
-        </div>
-        <div className="mt-10">
-          <Cityscape />
-        </div>
-      </section>
-
-      {/* ── Section label ─────────────────────────────────────── */}
-      <div className="container mx-auto px-6 pt-16 pb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 uppercase mb-2">
-            Leistungen
-          </p>
+      {/* Architektur */}
+      <div className="container mx-auto px-6 pt-8 pb-6">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+          <p className="text-[10px] font-semibold tracking-[0.22em] text-slate-400 uppercase mb-2">Leistungen</p>
           <h2 className="text-3xl md:text-4xl font-light text-gray-900">
-            Architektur —{' '}
-            <span className="font-semibold">Von der Vision zur Realität</span>
+            Architektur — <span className="font-semibold">Von der Vision zur Realität</span>
           </h2>
         </motion.div>
       </div>
-
-      {/* ── Architektur sticky scroll ─────────────────────────── */}
       <StickyScrollServices services={archServices} sectionLabel="Architektur" />
 
-      {/* ── Divider ───────────────────────────────────────────── */}
-      <div className="container mx-auto px-6 py-12">
+      {/* Divider */}
+      <div className="container mx-auto px-6 py-10">
         <div className="flex items-center gap-6">
           <div className="flex-1 h-px bg-gray-200" />
-          <p className="text-[10px] font-semibold tracking-[0.22em] text-gray-400 uppercase whitespace-nowrap">
-            AMONN IMMOBILIEN
-          </p>
+          <p className="text-[10px] font-semibold tracking-[0.22em] text-gray-400 uppercase whitespace-nowrap">AMONN IMMOBILIEN</p>
           <div className="flex-1 h-px bg-gray-200" />
         </div>
       </div>
 
-      {/* ── Section label ─────────────────────────────────────── */}
-      <div className="container mx-auto px-6 pb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+      {/* Immobilien */}
+      <div className="container mx-auto px-6 pb-6">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <h2 className="text-3xl md:text-4xl font-light text-gray-900">
-            Immobilien —{' '}
-            <span className="font-semibold">Ihr Zuhause, Ihr Investment</span>
+            Immobilien — <span className="font-semibold">Ihr Zuhause, Ihr Investment</span>
           </h2>
         </motion.div>
       </div>
-
-      {/* ── Immobilien sticky scroll ──────────────────────────── */}
       <StickyScrollServices services={immServices} sectionLabel="Immobilien" />
 
-      {/* ── CTA strip ─────────────────────────────────────────── */}
+      {/* CTA */}
       <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
         className="bg-gray-900 py-20 px-6"
       >
         <div className="container mx-auto max-w-3xl text-center">
-          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-500 uppercase mb-5">
-            Kontakt
-          </p>
-          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">
-            Haben Sie ein Projekt im Kopf?
-          </h2>
+          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-500 uppercase mb-5">Kontakt</p>
+          <h2 className="text-3xl md:text-4xl font-light text-white mb-4">Haben Sie ein Projekt im Kopf?</h2>
           <p className="text-gray-400 mb-10 max-w-xl mx-auto">
-            Egal ob Neubau, Sanierung oder Immobiliensuche — sprechen Sie uns an.
-            Die erste Beratung ist kostenlos.
+            Egal ob Neubau, Sanierung oder Immobiliensuche — sprechen Sie uns an. Die erste Beratung ist kostenlos.
           </p>
-          <Link
-            to="/kontakt"
-            className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-3.5 text-sm font-semibold tracking-wide hover:bg-gray-100 transition-colors"
-          >
-            Kostenlose Beratung
-            <ArrowRight size={15} />
+          <Link to="/kontakt" className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-3.5 text-sm font-semibold tracking-wide hover:bg-gray-100 transition-colors">
+            Kostenlose Beratung <ArrowRight size={15} />
           </Link>
         </div>
       </motion.section>
-
     </div>
   );
 };
