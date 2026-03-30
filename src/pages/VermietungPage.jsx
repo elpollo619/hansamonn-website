@@ -18,10 +18,10 @@ import FavoriteButton from '@/components/FavoriteButton';
 // ─── Type config ──────────────────────────────────────────────────────────────
 
 const TYPE_CFG = {
-  apartment:   { color: 'blue',    badge: 'bg-blue-100 text-blue-700 border-blue-200',     icon: Home },
-  'long-stay': { color: 'amber',   badge: 'bg-amber-100 text-amber-700 border-amber-200',  icon: Coffee },
-  hotel:       { color: 'indigo',  badge: 'bg-indigo-100 text-indigo-700 border-indigo-200',icon: Building2 },
-  project:     { color: 'emerald', badge: 'bg-emerald-100 text-emerald-700 border-emerald-200', icon: Sun },
+  apartment:   { color: 'gray', badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Home },
+  'long-stay': { color: 'gray', badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Coffee },
+  hotel:       { color: 'gray', badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Building2 },
+  project:     { color: 'gray', badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Sun },
 };
 
 const TypeBadge = ({ type, t }) => {
@@ -71,7 +71,8 @@ const HotelCTA = ({ item, t }) => (
   <div className="space-y-2">
     <Link
       to={getDetailUrl(item)}
-      className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+      className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm"
+      style={{ backgroundColor: '#1D3D78' }}
     >
       {t('vermietung.card.viewProject')}
       <ArrowRight size={14} />

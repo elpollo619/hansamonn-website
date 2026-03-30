@@ -71,20 +71,20 @@ export default function LongStayPage() {
         <meta name="description" content="Möblierte Langzeitaufenthalte in Kerzers, Münchenbuchsee und Muri. Ab 1 Monat, Nebenkosten inklusive." />
       </Helmet>
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)', backgroundSize: '48px 48px' }} />
+      <section className="relative text-white overflow-hidden" style={{ backgroundColor: '#1D3D78' }}>
+        <div />
         <div className="relative container mx-auto px-6 py-16 md:py-24">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Link to="/immobilien" className="inline-flex items-center gap-2 text-blue-300/70 hover:text-white text-sm mb-6 transition-colors">
+            <Link to="/immobilien" className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm mb-6 transition-colors">
               <ChevronRight size={14} className="rotate-180" /> Immobilien
             </Link>
-            <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 mb-5">
               <Building2 size={12} /> Long Stay
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-5">
               Long Stay
             </h1>
-            <p className="text-blue-200/80 text-lg max-w-2xl leading-relaxed">
+            <p className="text-white/70 text-lg max-w-2xl leading-relaxed">
               Möblierte Zimmer für Aufenthalte ab einem Monat — voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten.
             </p>
             <div className="flex flex-wrap gap-4 mt-8">
@@ -92,10 +92,10 @@ export default function LongStayPage() {
                 const Icon = item.icon;
                 return (
                   <div key={item.title} className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 max-w-xs">
-                    <Icon size={18} className="text-amber-400 mt-0.5 flex-shrink-0" />
+                    <Icon size={18} className="text-white/60 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-semibold text-white">{item.title}</p>
-                      <p className="text-xs text-blue-200/60 leading-relaxed mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white/50 leading-relaxed mt-0.5">{item.desc}</p>
                     </div>
                   </div>
                 );
@@ -120,7 +120,7 @@ export default function LongStayPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col"
+                className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors flex flex-col"
               >
                 <div className="relative h-52 overflow-hidden">
                   <RentalImage src={loc.image} alt={loc.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
@@ -144,7 +144,7 @@ export default function LongStayPage() {
                   </div>
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {loc.features.map((f) => (
-                      <span key={f} className="flex items-center gap-1 text-xs text-green-700 bg-green-50 px-2 py-0.5 rounded-full">
+                      <span key={f} className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 border border-gray-100">
                         <CheckCircle2 size={9} /> {f}
                       </span>
                     ))}
@@ -152,7 +152,10 @@ export default function LongStayPage() {
                   <div className="mt-auto">
                     <Link
                       to={loc.link}
-                      className="w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+                      className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm"
+                      style={{ backgroundColor: '#1D3D78' }}
+                      onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
+                      onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
                     >
                       Details ansehen <ArrowRight size={14} />
                     </Link>
@@ -172,25 +175,26 @@ export default function LongStayPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto bg-gradient-to-br from-slate-900 to-blue-900 rounded-3xl p-8 md:p-12 text-center text-white"
+            className="max-w-3xl mx-auto p-8 md:p-12 text-center text-white"
+            style={{ backgroundColor: '#1D3D78' }}
           >
-            <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <div className="w-14 h-14 bg-white/10 flex items-center justify-center mx-auto mb-5">
               <Mail size={24} className="text-white" />
             </div>
             <h2 className="text-2xl md:text-3xl font-light mb-3">Allgemeine Mietanfrage für Long Stay</h2>
-            <p className="text-blue-200/70 mb-8 leading-relaxed">
+            <p className="text-white/60 mb-8 leading-relaxed">
               Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation — wir finden gemeinsam die beste Lösung.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 to="/immobilien/anfrage"
-                className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold px-7 py-3.5 rounded-xl hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors"
               >
                 Zur Mietanfrage <ArrowRight size={15} />
               </Link>
               <a
                 href="tel:+41319518554"
-                className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-medium px-7 py-3.5 rounded-xl hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-medium px-7 py-3.5 hover:bg-white/10 transition-colors"
               >
                 +41 (0)31 951 85 54
               </a>

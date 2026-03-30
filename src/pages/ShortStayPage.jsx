@@ -23,20 +23,20 @@ export default function ShortStayPage() {
         <meta name="description" content="N's Hotel Kerzers und Casa Reto am Lago Maggiore. Kurzaufenthalte und Ferienhaus-Vermietung." />
       </Helmet>
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-800 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)', backgroundSize: '48px 48px' }} />
+      <section className="relative text-white overflow-hidden" style={{ backgroundColor: '#1D3D78' }}>
+        <div />
         <div className="relative container mx-auto px-6 py-16 md:py-24">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Link to="/immobilien" className="inline-flex items-center gap-2 text-indigo-300/70 hover:text-white text-sm mb-6 transition-colors">
+            <Link to="/immobilien" className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm mb-6 transition-colors">
               <ChevronRight size={14} className="rotate-180" /> Immobilien
             </Link>
-            <div className="inline-flex items-center gap-2 bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 mb-5">
               <Hotel size={12} /> Short Stay
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-5">
               Short Stay
             </h1>
-            <p className="text-indigo-200/80 text-lg max-w-2xl leading-relaxed">
+            <p className="text-white/70 text-lg max-w-2xl leading-relaxed">
               Kurzaufenthalte, Business Trips und Ferienunterkünfte. Direkt buchbar oder über Booking.com und Airbnb.
             </p>
           </motion.div>
@@ -51,14 +51,14 @@ export default function ShortStayPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100"
+            className="bg-white overflow-hidden border border-gray-100"
           >
             <div className="grid lg:grid-cols-2">
               <div className="relative h-72 lg:h-auto min-h-[320px] overflow-hidden">
                 <RentalImage src="/images/ns-hotel/titel.jpg" alt="N's Hotel Kerzers" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
                 <div className="absolute top-4 left-4">
-                  <span className="inline-flex items-center gap-1.5 bg-indigo-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                  <span className="inline-flex items-center gap-1.5 bg-white/90 text-gray-700 text-xs font-semibold px-3 py-1.5">
                     <Hotel size={11} /> Hotel
                   </span>
                 </div>
@@ -66,7 +66,7 @@ export default function ShortStayPage() {
               <div className="p-8 md:p-10 flex flex-col justify-center">
                 <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
                   <MapPin size={12} /> Kerzers, 3210
-                  <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-amber-400 text-amber-400" />)}</span>
+                  <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-[#1D3D78] text-[#1D3D78]" />)}</span>
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-3">N's Hotel</h2>
                 <p className="text-gray-600 leading-relaxed mb-3">
@@ -80,7 +80,10 @@ export default function ShortStayPage() {
                     href="https://my.ns-hotel.ch/search/offers?PROPERTY_IDS=NSH"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3.5 px-5 rounded-xl transition-colors"
+                    className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 px-5 transition-colors"
+                    style={{ backgroundColor: '#1D3D78' }}
+                    onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
+                    onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
                   >
                     <ExternalLink size={15} /> Direkt buchen
                   </a>
@@ -123,14 +126,14 @@ export default function ShortStayPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl overflow-hidden shadow-sm border border-emerald-100"
+            className="bg-white overflow-hidden border border-gray-100"
           >
             <div className="grid lg:grid-cols-2">
               <div className="p-8 md:p-10 flex flex-col justify-center lg:order-1">
                 <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
                   <MapPin size={12} /> Gordemo / Lago Maggiore, Tessin
                 </div>
-                <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-4 w-fit">
+                <div className="inline-flex items-center gap-2 bg-gray-100 border border-gray-200 text-gray-600 text-xs font-semibold px-3 py-1.5 mb-4 w-fit">
                   <Sun size={11} /> Ferienhaus
                 </div>
                 <h2 className="text-3xl font-bold text-gray-900 mb-3">Casa Reto</h2>
@@ -139,13 +142,16 @@ export default function ShortStayPage() {
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {['Lago Maggiore', 'Privater Garten', 'Naturlage', 'Ruhige Umgebung', 'Tessin'].map(tag => (
-                    <span key={tag} className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full border border-emerald-100">{tag}</span>
+                    <span key={tag} className="text-xs bg-gray-50 text-gray-500 px-2.5 py-1 border border-gray-100">{tag}</span>
                   ))}
                 </div>
                 <div className="space-y-2.5">
                   <Link
                     to="/casa-reto"
-                    className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-5 rounded-xl transition-colors"
+                    className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 px-5 transition-colors"
+                    style={{ backgroundColor: '#1D3D78' }}
+                    onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
+                    onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
                   >
                     Alle Details ansehen <ArrowRight size={15} />
                   </Link>
@@ -206,7 +212,10 @@ export default function ShortStayPage() {
             <p className="text-gray-500 mb-6">Nicht sicher, was Sie brauchen? Wir helfen Ihnen gerne dabei, die richtige Option zu finden.</p>
             <Link
               to="/immobilien/anfrage"
-              className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold px-7 py-3.5 rounded-xl transition-colors"
+              className="inline-flex items-center gap-2 text-white font-semibold px-7 py-3.5 transition-colors"
+              style={{ backgroundColor: '#1D3D78' }}
+              onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
+              onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
             >
               Zur Anfrage <ArrowRight size={15} />
             </Link>

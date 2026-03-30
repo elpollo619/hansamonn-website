@@ -58,12 +58,11 @@ const LanguageSwitcher = ({ variant = 'light' }) => {
               onClick={() => { switchLang(l.code); setOpen(false); }}
               className={`w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors
                 ${l.code === lang
-                  ? 'bg-blue-50 text-blue-700 font-semibold'
+                  ? 'bg-[#EFF4FB] text-[#1D3D78] font-semibold'
                   : 'text-gray-700 hover:bg-gray-50'
                 }`}
             >
-              <span className="text-base" aria-hidden="true">{l.flag}</span>
-              <span className="font-mono text-xs text-gray-400 w-6">{l.label}</span>
+              <span className="font-mono text-[11px] text-gray-400 w-6 flex-shrink-0">{l.label}</span>
               <span>{l.name}</span>
             </button>
           ))}
