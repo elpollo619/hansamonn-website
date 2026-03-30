@@ -11,6 +11,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
 import { useFavorites } from '@/context/FavoritesContext';
 import GlobalSearch from '@/components/GlobalSearch';
+import AmonnLogo from '@/components/AmonnLogo';
 
 /* ─── Dropdown: Immobilien ─────────────────────────────────────────────── */
 const ImmobilienDropdown = ({ onClose }) => (
@@ -172,20 +173,20 @@ const UberUnsDropdown = ({ onClose }) => (
 );
 
 /* ─── Section logo logic ───────────────────────────────────────────────── */
-const SECTION_LOGOS = [
-  { paths: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto'], logo: 'AMONN IMMOBILIEN' },
-  { paths: ['/architektur', '/leistungen', '/projekte', '/neuigkeiten'], logo: 'AMONN ARCHITEKTUR' },
-  { paths: ['/team'], logo: 'AMONN TEAM' },
-  { paths: ['/uber-uns'], logo: 'AMONN' },
+const SECTION_VARIANTS = [
+  { paths: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto'], variant: 'immobilien' },
+  { paths: ['/architektur', '/leistungen', '/projekte', '/neuigkeiten'], variant: 'architektur' },
+  { paths: ['/team'], variant: 'team' },
+  { paths: ['/uber-uns'], variant: 'default' },
 ];
 
-function useSectionLogo(pathname) {
-  for (const cfg of SECTION_LOGOS) {
+function useSectionVariant(pathname) {
+  for (const cfg of SECTION_VARIANTS) {
     if (cfg.paths.some((p) => pathname === p || pathname.startsWith(p + '/'))) {
-      return cfg.logo;
+      return cfg.variant;
     }
   }
-  return 'HANS AMONN AG';
+  return 'main';
 }
 
 /* ─── NavDropdown wrapper (desktop) ───────────────────────────────────── */
@@ -223,7 +224,7 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
-  const sectionLogo = useSectionLogo(location.pathname);
+  const sectionVariant = useSectionVariant(location.pathname);
   const { favorites } = useFavorites();
 
   useEffect(() => {
@@ -258,28 +259,14 @@ const Header = () => {
           <Link to="/" className="flex-shrink-0">
             <AnimatePresence mode="wait">
               <motion.div
-                key={sectionLogo}
+                key={sectionVariant}
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 4 }}
                 transition={{ duration: 0.18 }}
-                whileHover={{ scale: 1.02 }}
-                className="leading-none uppercase"
-                style={{ letterSpacing: '0.18em' }}
+                whileHover={{ scale: 1.01 }}
               >
-                {(() => {
-                  const parts = sectionLogo.split(' ');
-                  const first = parts[0];
-                  const rest = parts.slice(1).join(' ');
-                  return (
-                    <>
-                      <span className="text-[13px] font-black text-gray-900">{first}</span>
-                      {rest && (
-                        <span className="text-[13px] font-extralight text-gray-500"> {rest}</span>
-                      )}
-                    </>
-                  );
-                })()}
+                <AmonnLogo variant={sectionVariant} size="sm" />
               </motion.div>
             </AnimatePresence>
           </Link>

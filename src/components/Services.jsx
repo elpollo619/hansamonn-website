@@ -3,6 +3,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
+import { AmonnLogoBlock } from '@/components/AmonnLogo';
 
 /* ─── Data: each service gets a building slot in the SVG ────────────────── */
 // 8 services → 8 buildings, each linked
@@ -163,9 +164,9 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="mb-10"
         >
-          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-4">
-            Tätigkeit
-          </p>
+          <div className="mb-5">
+            <AmonnLogoBlock variant="architektur" />
+          </div>
           <h1 className="text-4xl md:text-5xl font-light text-gray-900 leading-tight">
             Architektur mit Verantwortung
             <br />

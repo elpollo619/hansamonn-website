@@ -2,31 +2,32 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import AmonnLogo from '@/components/AmonnLogo';
 
 const SECTIONS = [
   {
     to: '/immobilien',
-    label: 'AMONN IMMOBILIEN',
+    logoVariant: 'immobilien',
     title: 'Wohnen & Mieten',
-    sub: 'Long Stay, Short Stay, Apartments, Verkauf',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=900&q=80',
-    span: 'md:col-span-1',
+    sub: 'Long Stay · Short Stay · Apartments · Verkauf',
+    // Real AMONN property — N's Hotel Kerzers exterior
+    image: '/images/kerzers/titel.jpg',
   },
   {
     to: '/architektur',
-    label: 'AMONN ARCHITEKTUR',
+    logoVariant: 'architektur',
     title: 'Bauen & Gestalten',
-    sub: 'Planung, Neubauten, Sanierungen, Projektbegleitung',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80',
-    span: 'md:col-span-1',
+    sub: 'Planung · Neubauten · Sanierungen · Projektbegleitung',
+    // Real AMONN project — Wohnkomplex Allmendstrasse (from Google Storage)
+    image: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg',
   },
   {
     to: '/uber-uns',
-    label: 'HANS AMONN AG',
+    logoVariant: 'main',
     title: 'Über uns',
-    sub: 'Team, Geschichte, Kontakt — seit 1968 in Muri bei Bern',
+    sub: 'Team · Geschichte · Kontakt — seit 1968 in Muri bei Bern',
+    // Real AMONN renovation — Höheweg Muri (historic building)
     image: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/40ccd8d190aeb0a543c3ff4ab8cdf19d.jpg',
-    span: 'md:col-span-1',
   },
 ];
 
@@ -58,13 +59,13 @@ const SectionCard = ({ section, index }) => {
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-end p-8">
-        <motion.p
-          className="text-[10px] font-semibold tracking-[0.22em] text-white/50 uppercase mb-2"
-          animate={{ opacity: hovered ? 1 : 0.7 }}
+        <motion.div
+          animate={{ opacity: hovered ? 1 : 0.75 }}
           transition={{ duration: 0.3 }}
+          className="mb-3"
         >
-          {section.label}
-        </motion.p>
+          <AmonnLogo variant={section.logoVariant} size="sm" color="white" lightColor="rgba(255,255,255,0.7)" />
+        </motion.div>
         <h2 className="text-2xl md:text-3xl font-light text-white leading-tight mb-2">
           {section.title}
         </h2>

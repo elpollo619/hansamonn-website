@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
 import { projectsData } from '@/data/projectsData';
+import { AmonnLogoBlock } from '@/components/AmonnLogo';
 
 const archServices = servicesData.filter((s) => s.category === 'architektur');
 const featuredProjects = projectsData.slice(0, 3);
@@ -25,9 +26,9 @@ const ArchitekturPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-[10px] font-semibold tracking-[0.28em] text-gray-400 uppercase mb-5">
-              AMONN ARCHITEKTUR
-            </p>
+            <div className="mb-6">
+              <AmonnLogoBlock variant="architektur" />
+            </div>
             <h1 className="text-5xl md:text-7xl font-light text-gray-900 leading-none mb-6">
               Architektur mit
               <br />
