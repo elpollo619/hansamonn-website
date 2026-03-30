@@ -135,7 +135,7 @@ function AppRoutes() {
           <Route path="/immobilien/:slug" element={<ApartmentDetailPage />} />
 
           {/* SPECIAL PAGES */}
-          <Route path="/casa-reto" element={<CasaRetoPage />} />
+          <Route path="/casa-reto" element={<Navigate to="/immobilien/casa-reto" replace />} />
           <Route path="/ns-hotel" element={<NsHotelPage />} />
 
           {/* LONG STAY LOCATIONS — redirect to unified detail pages */}

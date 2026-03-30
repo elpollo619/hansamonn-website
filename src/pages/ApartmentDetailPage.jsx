@@ -41,7 +41,8 @@ function normalizeStoreProperty(p) {
     type: typeMap[p.type] || p.type || 'apartment',
     status: p.status === 'verfügbar' ? 'available' : 'rented',
     title: p.name || 'Wohnung',
-    subtitle: p.description || '',
+    subtitle: p.description ? p.description.slice(0, 120) : '',
+    description: p.description || '',
     location: p.address || p.location || '',
     price: p.priceFrom || null,
     currency: p.priceCurrency || 'CHF',
@@ -902,12 +903,14 @@ const ApartmentDetailPage = () => {
             )}
 
             {/* Description */}
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">
-                {t('vermietung.detail.description')}
-              </h2>
-              <p className="text-gray-600 leading-relaxed">{apt.description}</p>
-            </div>
+            {apt.description && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-3">
+                  {t('vermietung.detail.description')}
+                </h2>
+                <p className="text-gray-600 leading-relaxed whitespace-pre-line">{apt.description}</p>
+              </div>
+            )}
 
             {/* Video */}
             <PropertyVideo videoUrl={apt.videoUrl} />
@@ -963,7 +966,43 @@ const ApartmentDetailPage = () => {
               </div>
             )}
 
-            {/* Map */}
+            {/* Availability calendar (main content — shown for all types when icalUrl set) */}
+            {apt.icalUrl && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-3">Verfügbarkeit</h2>
+                <AvailabilityCalendar icalUrl={apt.icalUrl} />
+              </div>
+            )}
+
+            {/* Location map */}
+            {apt.lat && apt.lng && (
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-1">Lage & Standort</h2>
+                <p className="flex items-center gap-1.5 text-sm text-gray-500 mb-3">
+                  <MapPin size={13} />
+                  {apt.location}
+                </p>
+                <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm" style={{ height: 300 }}>
+                  <iframe
+                    title={`Standort ${apt.title}`}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${apt.lng - 0.02},${apt.lat - 0.015},${apt.lng + 0.02},${apt.lat + 0.015}&layer=mapnik&marker=${apt.lat},${apt.lng}`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                  />
+                </div>
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=${apt.lat}&mlon=${apt.lng}#map=15/${apt.lat}/${apt.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-blue-500 hover:underline mt-2"
+                >
+                  <MapPin size={11} />
+                  Größere Karte anzeigen
+                </a>
+              </div>
+            )}
 
             {/* Apartment: inline multi-step form */}
             {apt.type === 'apartment' && apt.status === 'available' && (

@@ -145,7 +145,7 @@ const DEFAULT_PROPERTIES = [
     type: 'ferienhaus',
     address: 'Gordemo / Lago Maggiore, Tessin',
     location: 'Gordemo / Lago Maggiore, Tessin',
-    description: 'Privates Ferienhaus am Lago Maggiore.',
+    description: 'Privates Ferienhaus am Lago Maggiore in Gordemo, Tessin. Das Casa Reto ist ein vollmöbliertes Ferienhaus in idyllischer Lage direkt am Ufer des Lago Maggiore. Ideal für Familien und Gruppen, die Natur, Ruhe und Sonne suchen. Mit eigenem Garten, Terrasse und direktem Seezugang. Buchungen sind direkt, über Airbnb oder Booking.com möglich.',
     status: 'verfügbar',
     priceFrom: null,
     priceCurrency: 'CHF',
@@ -157,7 +157,7 @@ const DEFAULT_PROPERTIES = [
       '/images/casa-reto/03.jpg',
       '/images/casa-reto/04.jpg',
     ],
-    link: '/casa-reto',
+    link: '/immobilien/casa-reto',
     bookingUrl: '',
     airbnbUrl: 'https://www.airbnb.com',
     icalUrl: 'https://www.airbnb.ch/calendar/ical/625660996936132774.ics?t=82a02050ce864c73b599648976548358',
@@ -176,6 +176,7 @@ const LINK_MIGRATIONS = {
   '/long-stay/kerzers': '/immobilien/kerzers-ls',
   '/long-stay/munchenbuchsee': '/immobilien/munchenbuchsee-ls',
   '/long-stay/muri': '/immobilien/muri-ls',
+  '/casa-reto': '/immobilien/casa-reto',
 };
 
 // For default properties: migrate images and icalUrl if stored data is outdated

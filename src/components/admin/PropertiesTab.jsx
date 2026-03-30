@@ -810,11 +810,7 @@ function PropertyForm({ property, onSave, onClose }) {
 // ─── URL helper ──────────────────────────────────────────────────────────────
 
 const KNOWN_ROUTES = {
-  'casa-reto':         '/casa-reto',
-  'ns-hotel':          '/ns-hotel',
-  'kerzers-ls':        '/long-stay/kerzers',
-  'munchenbuchsee-ls': '/long-stay/munchenbuchsee',
-  'muri-ls':           '/long-stay/muri',
+  'ns-hotel': '/ns-hotel',
 };
 
 function getPropertyPublicUrl(property) {
