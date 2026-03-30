@@ -216,7 +216,7 @@ const LongStaySidebar = ({ apt, t }) => (
     className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24"
   >
     {/* Header */}
-    <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white">
+    <div className="bg-gradient-to-r from-slate-700 to-slate-800 px-6 py-5 text-white">
       <div className="flex items-center gap-2 flex-wrap">
         <TypeBadge type="long-stay" t={t} />
         <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -239,14 +239,14 @@ const LongStaySidebar = ({ apt, t }) => (
             <div
               key={i}
               className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm ${
-                room.isAddon ? 'bg-gray-50 text-gray-600' : 'bg-blue-50'
+                room.isAddon ? 'bg-gray-50 text-gray-600' : 'bg-slate-50'
               }`}
             >
               <span className={`font-medium ${room.isAddon ? 'text-gray-600' : 'text-gray-800'}`}>
                 {room.label}
                 {room.size && <span className="text-gray-400 font-normal ml-1.5">{room.size} m²</span>}
               </span>
-              <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-blue-700'}`}>
+              <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-slate-700'}`}>
                 {room.isFrom && <span className="font-normal text-xs mr-1">{t('vermietung.longStay.from')}</span>}
                 CHF {room.price}
                 <span className="text-xs font-normal">/Mt.</span>
@@ -286,7 +286,7 @@ const LongStaySidebar = ({ apt, t }) => (
     <div className="p-5">
       <a
         href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
-        className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
+        className="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-800 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
       >
         <Mail size={18} />
         {t('vermietung.longStay.requestTitle')}
@@ -363,8 +363,6 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
       </div>
     </div>
 
-    {/* Availability calendar */}
-    {icalUrl && <AvailabilityCalendar icalUrl={icalUrl} />}
   </motion.div>
 );
 
@@ -805,23 +803,20 @@ const ApartmentDetailPage = () => {
         </div>
       </div>
 
-      {/* ── Casa Reto: premium holiday home hero ── */}
-      {apt.holidayHome && (
-        <div className="relative h-72 md:h-[420px] overflow-hidden">
+      {/* ── Hero image (all property types) ── */}
+      {apt.images[0]?.url && (
+        <div className="relative h-64 md:h-[380px] overflow-hidden">
           <img
             src={apt.images[0].url}
             alt={apt.images[0].alt}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
             <div className="container mx-auto max-w-6xl">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/80 backdrop-blur-sm text-white border border-white/20 mb-3">
-                <Sun size={11} />
-                Ferienhaus · Tessin
-              </div>
-              <h1 className="text-3xl md:text-4xl font-light mb-2">{apt.title}</h1>
-              <p className="text-white/80 flex items-center gap-2">
+              <TypeBadge type={apt.type} t={t} />
+              <h1 className="text-3xl md:text-4xl font-semibold mt-3 mb-2">{apt.title}</h1>
+              <p className="text-white/80 flex items-center gap-2 text-sm">
                 <MapPin size={14} />
                 {apt.location}
               </p>
@@ -836,45 +831,34 @@ const ApartmentDetailPage = () => {
           {/* ── Main content ── */}
           <div className="lg:col-span-2 space-y-8">
 
-            {/* Gallery (not shown for holiday home hero since we have the big image above) */}
-            {!apt.holidayHome && (
-              <Gallery images={apt.images} onOpen={openLightbox} />
-            )}
-
-            {/* Holiday home remaining gallery */}
-            {apt.holidayHome && apt.images.length > 1 && (
-              <div className="grid grid-cols-3 gap-2">
-                {apt.images.slice(1).map((img, i) => (
-                  <div key={i} className="rounded-xl overflow-hidden h-40 cursor-pointer group" onClick={() => openLightbox(i + 1)}>
-                    <img src={img.url} alt={img.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            {/* Thumbnail strip — remaining images (visible after hero) */}
+            {apt.images.length > 1 && (
+              <div className="grid grid-cols-4 gap-2">
+                {apt.images.slice(1, 5).map((img, i) => (
+                  <div key={i} className="rounded-xl overflow-hidden h-28 cursor-pointer group relative" onClick={() => openLightbox(i + 1)}>
+                    <RentalImage src={img.url} alt={img.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    {i === 3 && apt.images.length > 5 && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
+                        <span className="text-white font-semibold text-sm">+{apt.images.length - 5} Fotos</span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Title block (not for holiday home – shown in hero) */}
-            {!apt.holidayHome && (
-              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-                <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <TypeBadge type={apt.type} t={t} />
-                  {apt.type === 'apartment' && (
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
-                      apt.status === 'available'
-                        ? 'bg-green-100 text-green-700 border border-green-200'
-                        : 'bg-gray-100 text-gray-500 border border-gray-200'
-                    }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${apt.status === 'available' ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
-                      {apt.status === 'available' ? t('vermietung.card.available') : t('vermietung.card.rented')}
-                    </span>
-                  )}
-                </div>
-                <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-1">{apt.title}</h1>
-                <p className="text-gray-500 mb-3">{apt.subtitle}</p>
-                <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                  <MapPin size={14} />
-                  {apt.location}
-                </div>
-              </motion.div>
+            {/* Status badge — apartment only */}
+            {apt.type === 'apartment' && (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                  apt.status === 'available'
+                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    : 'bg-gray-100 text-gray-500 border border-gray-200'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${apt.status === 'available' ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
+                  {apt.status === 'available' ? t('vermietung.card.available') : t('vermietung.card.rented')}
+                </span>
+              </div>
             )}
 
             {/* Quick stats (apartment / long-stay only) */}
@@ -929,7 +913,7 @@ const ApartmentDetailPage = () => {
                         {room.label}
                         {room.size && <span className="text-gray-400 font-normal ml-1">{room.size} m²</span>}
                       </span>
-                      <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-blue-700'}`}>
+                      <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-slate-700'}`}>
                         {room.isFrom && <span className="font-normal text-xs mr-1">ab</span>}
                         CHF {room.price}<span className="text-xs font-normal">/Mt.</span>
                       </span>
@@ -985,7 +969,7 @@ const ApartmentDetailPage = () => {
                 <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm" style={{ height: 300 }}>
                   <iframe
                     title={`Standort ${apt.title}`}
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${apt.lng - 0.02},${apt.lat - 0.015},${apt.lng + 0.02},${apt.lat + 0.015}&layer=mapnik&marker=${apt.lat},${apt.lng}`}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${apt.lng - 0.008},${apt.lat - 0.006},${apt.lng + 0.008},${apt.lat + 0.006}&layer=mapnik&marker=${apt.lat},${apt.lng}`}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -993,13 +977,13 @@ const ApartmentDetailPage = () => {
                   />
                 </div>
                 <a
-                  href={`https://www.openstreetmap.org/?mlat=${apt.lat}&mlon=${apt.lng}#map=15/${apt.lat}/${apt.lng}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(apt.location)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs text-blue-500 hover:underline mt-2"
                 >
                   <MapPin size={11} />
-                  Größere Karte anzeigen
+                  Auf Google Maps öffnen
                 </a>
               </div>
             )}
@@ -1100,10 +1084,6 @@ const ApartmentDetailPage = () => {
             {apt.type === 'apartment'  && (
               <ApartmentSidebar apt={apt} t={t} showForm={showForm} setShowForm={setShowForm} />
             )}
-            {/* Availability calendar for hotel / long-stay when iCal URL is set */}
-            {(apt.type === 'hotel' || apt.type === 'long-stay') && apt.icalUrl && (
-              <AvailabilityCalendar icalUrl={apt.icalUrl} />
-            )}
           </div>
 
         </div>
@@ -1140,7 +1120,7 @@ const ApartmentDetailPage = () => {
         ) : apt.type === 'long-stay' ? (
           <a
             href={`mailto:${apt.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
-            className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm"
+            className="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-800 text-white font-semibold py-3 rounded-xl text-sm"
           >
             <Mail size={16} />
             {t('vermietung.longStay.requestTitle')}
