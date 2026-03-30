@@ -30,7 +30,7 @@ const ImmobilienDropdown = ({ onClose }) => (
       <Link to="/immobilien/long-stay" onClick={onClose}
         className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group">
         <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-          <BedDouble size={14} className="text-blue-600" />
+          <BedDouble size={14} className="text-[#1D3D78]" />
         </div>
         <span className="text-sm font-medium">Long Stay</span>
       </Link>
@@ -84,7 +84,7 @@ const ImmobilienDropdown = ({ onClose }) => (
       <div className="my-2 border-t border-gray-100" />
 
       <Link to="/immobilien/anfrage" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 transition-colors">
+        className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#1D3D78] hover:bg-[#162E5A] transition-colors">
         <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
           <ClipboardList size={14} className="text-white" />
         </div>
@@ -201,8 +201,8 @@ const NavDropdown = ({ label, to, isActive, children }) => {
         to={to}
         className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
           isActive
-            ? 'text-blue-600 bg-blue-50 font-semibold'
-            : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+            ? 'text-[#1D3D78] bg-[#EFF4FB] font-semibold'
+            : 'text-gray-700 hover:text-[#1D3D78] hover:bg-gray-50'
         }`}
       >
         {label}
@@ -315,7 +315,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center gap-2">
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+              className="p-2 rounded-lg text-gray-500 hover:text-[#1D3D78] hover:bg-gray-50 transition-colors"
               aria-label="Suche öffnen"
             >
               <Search size={18} />
@@ -387,7 +387,7 @@ const Header = () => {
                     onClick={() => toggleMobile('immobilien')}
                     className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/hyporechner'])
-                        ? 'text-blue-600 bg-blue-50'
+                        ? 'text-[#1D3D78] bg-blue-50'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -403,15 +403,15 @@ const Header = () => {
                         className="overflow-hidden pl-4 mt-1 space-y-0.5"
                       >
                         <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold tracking-widest text-gray-400 uppercase">Wohnen &amp; Übernachten</p>
-                        <Link to="/immobilien/long-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Long Stay</Link>
-                        <Link to="/immobilien/short-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Short Stay</Link>
-                        <Link to="/immobilien/apartments" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-blue-600 rounded-lg hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Apartments</Link>
+                        <Link to="/immobilien/long-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Long Stay</Link>
+                        <Link to="/immobilien/short-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Short Stay</Link>
+                        <Link to="/immobilien/apartments" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Apartments</Link>
                         <div className="mx-3 my-1 border-t border-gray-100" />
                         <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Verkauf</Link>
                         <Link to="/karte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-slate-700 rounded-lg hover:bg-gray-50"><Map size={13} className="text-gray-400" /> Karte</Link>
                         <Link to="/hyporechner" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-amber-700 rounded-lg hover:bg-gray-50"><Calculator size={13} className="text-gray-400" /> Hypothekenrechner</Link>
                         <div className="mx-3 my-1 border-t border-gray-100" />
-                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-blue-600 font-medium rounded-lg hover:bg-blue-50">Mietanfrage stellen</Link>
+                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-[#1D3D78] font-medium rounded-lg hover:bg-blue-50">Mietanfrage stellen</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -423,7 +423,7 @@ const Header = () => {
                     onClick={() => toggleMobile('architektur')}
                     className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(['/projekte', '/leistungen', '/neuigkeiten'])
-                        ? 'text-blue-600 bg-blue-50'
+                        ? 'text-[#1D3D78] bg-blue-50'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
@@ -452,7 +452,7 @@ const Header = () => {
                     onClick={() => toggleMobile('uberUns')}
                     className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(['/uber-uns', '/team', '/kontakt'])
-                        ? 'text-blue-600 bg-blue-50'
+                        ? 'text-[#1D3D78] bg-blue-50'
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >

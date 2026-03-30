@@ -2,32 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* AMONN Brand font — Jost matches the geometric sans-serif of the logo */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  --foreground: 220 30% 10%;
   --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card-foreground: 220 30% 10%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 214 100% 35%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 214 32% 91%;
-  --secondary-foreground: 214 100% 35%;
-  --muted: 214 32% 91%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 214 32% 91%;
-  --accent-foreground: 214 100% 35%;
+  --popover-foreground: 220 30% 10%;
+  /* AMONN Navy — matches logo color #1D3D78 */
+  --primary: 218 61% 29%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 218 30% 94%;
+  --secondary-foreground: 218 61% 29%;
+  --muted: 218 20% 95%;
+  --muted-foreground: 218 15% 50%;
+  --accent: 218 30% 94%;
+  --accent-foreground: 218 61% 29%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 214 100% 35%;
-  --radius: 0.5rem;
-  --brand-blue: 214 100% 35%;
-  --brand-blue-light: 214 100% 45%;
-  --brand-blue-dark: 214 100% 25%;
+  --border: 220 20% 90%;
+  --input: 220 20% 90%;
+  --ring: 218 61% 29%;
+  --radius: 0.25rem;
+  --brand-blue: 218 61% 29%;
+  --brand-blue-light: 218 61% 40%;
+  --brand-blue-dark: 218 61% 20%;
 }
 
 * {
@@ -37,8 +39,43 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: 'Inter', sans-serif;
+  font-family: 'Jost', 'Inter', sans-serif;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sharper border radius for geometric/architectural feel */
+.rounded-2xl { border-radius: 0.5rem !important; }
+.rounded-xl  { border-radius: 0.375rem !important; }
+.rounded-lg  { border-radius: 0.25rem !important; }
+
+.text-shadow {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(29, 61, 120, 0.12);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #1D3D78 0%, #3070B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-gradient {
+  background: linear-gradient(135deg, #1D3D78 0%, #2A5BA8 100%);
+}
+
+.brand-gradient-hover {
+  background: linear-gradient(135deg, #162E5A 0%, #1D3D78 100%);
 }
 
 .glass-effect {
@@ -47,65 +84,29 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.text-shadow {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, hsl(var(--brand-blue)) 0%, hsl(var(--brand-blue-light)) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.brand-gradient {
-  background: linear-gradient(135deg, hsl(var(--brand-blue)) 0%, hsl(var(--brand-blue-light)) 100%);
-}
-
-.brand-gradient-hover {
-  background: linear-gradient(135deg, hsl(var(--brand-blue-dark)) 0%, hsl(var(--brand-blue)) 100%);
-}
-
-/* High contrast button styles for perfect visibility */
 .button-outline-white {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
   color: white;
   font-weight: 600;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .button-outline-white:hover {
   background: rgba(255, 255, 255, 0.95);
-  color: hsl(var(--brand-blue));
+  color: #1D3D78;
   border-color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Improved button contrast for better readability */
 .button-high-contrast {
-  background: hsl(var(--brand-blue-dark));
+  background: #1D3D78;
   color: white;
   font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .button-high-contrast:hover {
-  background: hsl(var(--brand-blue));
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: #162E5A;
 }
 
 .section-divider {

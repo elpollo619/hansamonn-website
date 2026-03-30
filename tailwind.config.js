@@ -16,7 +16,20 @@ module.exports = {
 			},
 		},
 		extend: {
+			// Override the entire blue scale with AMONN brand navy
 			colors: {
+				blue: {
+					50:  '#EFF4FB',
+					100: '#D9E6F5',
+					200: '#B3CEEB',
+					300: '#8DB5E1',
+					400: '#5B92D0',
+					500: '#3070B8',
+					600: '#1D3D78', // ← AMONN logo navy (primary action color)
+					700: '#162E5A',
+					800: '#0F1E3C',
+					900: '#0A1427',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -50,6 +63,9 @@ module.exports = {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))',
 				},
+			},
+			fontFamily: {
+				sans: ['Jost', 'Inter', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
