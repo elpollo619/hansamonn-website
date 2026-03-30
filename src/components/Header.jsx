@@ -174,7 +174,7 @@ const UberUnsDropdown = ({ onClose }) => (
 /* ─── Section logo logic ───────────────────────────────────────────────── */
 const SECTION_LOGOS = [
   { paths: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto'], logo: 'AMONN IMMOBILIEN' },
-  { paths: ['/leistungen', '/projekte', '/neuigkeiten'], logo: 'AMONN ARCHITEKTUR' },
+  { paths: ['/architektur', '/leistungen', '/projekte', '/neuigkeiten'], logo: 'AMONN ARCHITEKTUR' },
   { paths: ['/team'], logo: 'AMONN TEAM' },
   { paths: ['/uber-uns'], logo: 'AMONN' },
 ];
@@ -189,7 +189,7 @@ function useSectionLogo(pathname) {
 }
 
 /* ─── NavDropdown wrapper (desktop) ───────────────────────────────────── */
-const NavDropdown = ({ label, isActive, children }) => {
+const NavDropdown = ({ label, to, isActive, children }) => {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -197,7 +197,8 @@ const NavDropdown = ({ label, isActive, children }) => {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <button
+      <Link
+        to={to}
         className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
           isActive
             ? 'text-blue-600 bg-blue-50 font-semibold'
@@ -206,7 +207,7 @@ const NavDropdown = ({ label, isActive, children }) => {
       >
         {label}
         <ChevronDown size={14} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
-      </button>
+      </Link>
       <AnimatePresence>
         {open && React.cloneElement(children, { onClose: () => setOpen(false) })}
       </AnimatePresence>
@@ -287,6 +288,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center gap-1">
             <NavDropdown
               label={t('nav.immobilien')}
+              to="/immobilien"
               isActive={isActive(['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/hyporechner'])}
             >
               <ImmobilienDropdown />
@@ -294,13 +296,15 @@ const Header = () => {
 
             <NavDropdown
               label="Architektur"
-              isActive={isActive(['/projekte', '/leistungen', '/neuigkeiten'])}
+              to="/architektur"
+              isActive={isActive(['/architektur', '/projekte', '/leistungen', '/neuigkeiten'])}
             >
               <ArchitekturDropdown />
             </NavDropdown>
 
             <NavDropdown
               label="Über uns"
+              to="/uber-uns"
               isActive={isActive(['/uber-uns', '/team', '/kontakt'])}
             >
               <UberUnsDropdown />

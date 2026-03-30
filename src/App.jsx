@@ -30,6 +30,7 @@ import ProjectsPage from '@/pages/ProjectsPage';
 import ProjectDetailPage from '@/pages/ProjectDetailPage';
 import ServicesPage from '@/pages/ServicesPage';
 import ServiceDetailPage from '@/pages/ServiceDetailPage';
+import ArchitekturPage from '@/pages/ArchitekturPage';
 import ContactPage from '@/pages/ContactPage';
 import AdminPage from '@/pages/AdminPage';
 import ImpressumPage from '@/pages/ImpressumPage';
@@ -112,6 +113,9 @@ function AppRoutes() {
           {/* PROJECTS */}
           <Route path="/projekte" element={<ProjectsPage />} />
           <Route path="/projekte/:id" element={<ProjectDetailPage />} />
+
+          {/* ARCHITEKTUR overview */}
+          <Route path="/architektur" element={<ArchitekturPage />} />
 
           {/* SERVICES */}
           <Route path="/leistungen" element={<ServicesPage />} />
