@@ -4,84 +4,119 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
 
-/* ─── Animated SVG Cityscape ────────────────────────────────────────────── */
-const Cityscape = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+/* ─── Cycling "Wir bauen ..." text ──────────────────────────────────────── */
+const BAUEN_WORDS = [
+  'Wohnhäuser.',
+  'Mehrfamilienhäuser.',
+  'Ihr Zuhause.',
+  'für Generationen.',
+  'mit Verantwortung.',
+  'Neubauten.',
+  'Sanierungen.',
+  'Träume.',
+];
 
-  const buildings = [
-    { x: 0,   w: 48,  h: 180, floors: 5, cols: 2 },
-    { x: 54,  w: 36,  h: 240, floors: 7, cols: 2 },
-    { x: 96,  w: 60,  h: 140, floors: 3, cols: 3 },
-    { x: 162, w: 42,  h: 320, floors: 9, cols: 2, spire: true },
-    { x: 210, w: 30,  h: 200, floors: 6, cols: 2 },
-    { x: 246, w: 72,  h: 160, floors: 4, cols: 4 },
-    { x: 324, w: 36,  h: 280, floors: 8, cols: 2 },
-    { x: 366, w: 48,  h: 120, floors: 3, cols: 3 },
-    { x: 420, w: 54,  h: 260, floors: 7, cols: 3 },
-    { x: 480, w: 42,  h: 180, floors: 5, cols: 2 },
-    { x: 528, w: 66,  h: 140, floors: 3, cols: 4 },
-    { x: 600, w: 36,  h: 300, floors: 9, cols: 2, spire: true },
-    { x: 642, w: 54,  h: 200, floors: 6, cols: 3 },
-    { x: 702, w: 42,  h: 160, floors: 4, cols: 2 },
-    { x: 750, w: 30,  h: 220, floors: 7, cols: 2 },
-    { x: 786, w: 60,  h: 140, floors: 3, cols: 3 },
-    { x: 852, w: 48,  h: 260, floors: 8, cols: 2 },
-    { x: 906, w: 36,  h: 180, floors: 5, cols: 2 },
-    { x: 948, w: 54,  h: 120, floors: 3, cols: 3 },
-  ];
+const WirBauen = () => {
+  const [idx, setIdx] = useState(0);
 
-  const SVG_H = 340;
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % BAUEN_WORDS.length), 2200);
+    return () => clearInterval(t);
+  }, []);
 
   return (
-    <div ref={ref} className="w-full overflow-hidden" style={{ height: SVG_H }}>
-      <svg viewBox={`0 0 1002 ${SVG_H}`} preserveAspectRatio="xMidYMax meet" className="w-full h-full">
-        {buildings.map((b, i) => {
-          const y = SVG_H - b.h;
-          const delay = i * 0.05;
-          const wGap = 6;
-          const wH = Math.min(10, (b.h / b.floors) * 0.45);
-          const wW = (b.w - (b.cols + 1) * wGap) / b.cols;
-          const windows = [];
-          for (let row = 0; row < b.floors; row++) {
-            const rowY = y + 8 + row * (b.h / b.floors);
-            for (let col = 0; col < b.cols; col++) {
-              const wx = b.x + wGap + col * (wW + wGap);
-              windows.push(
-                <motion.rect key={`w-${i}-${row}-${col}`} x={wx} y={rowY} width={wW} height={wH}
-                  fill="none" stroke="#94a3b8" strokeWidth="0.6"
-                  initial={{ opacity: 0 }}
-                  animate={inView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{ duration: 0.3, delay: delay + 0.3 + row * 0.04 }}
-                />
-              );
-            }
-          }
-          return (
-            <g key={i}>
-              <motion.rect x={b.x} width={b.w} y={SVG_H} height={0}
-                fill="none" stroke="#334155" strokeWidth="1"
-                animate={inView ? { y, height: b.h } : { y: SVG_H, height: 0 }}
-                transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-              />
-              {b.spire && (
-                <motion.line x1={b.x + b.w / 2} x2={b.x + b.w / 2} y1={SVG_H} y2={SVG_H}
-                  stroke="#334155" strokeWidth="1"
-                  animate={inView ? { y1: y - 30, y2: y } : { y1: SVG_H, y2: SVG_H }}
-                  transition={{ duration: 0.4, delay: delay + 0.5, ease: 'easeOut' }}
-                />
-              )}
-              {windows}
-            </g>
-          );
-        })}
-        <motion.line x1={0} y1={SVG_H} x2={1002} y2={SVG_H}
-          stroke="#334155" strokeWidth="1.5"
+    <div className="flex items-baseline gap-3 flex-wrap">
+      <span className="text-4xl md:text-6xl font-light text-gray-900">Wir bauen</span>
+      <span className="relative inline-block min-w-[14rem] md:min-w-[22rem] h-[1.2em] overflow-hidden align-baseline">
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={idx}
+            initial={{ y: '100%', opacity: 0 }}
+            animate={{ y: '0%', opacity: 1 }}
+            exit={{ y: '-100%', opacity: 0 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 top-0 text-4xl md:text-6xl font-black text-gray-900 whitespace-nowrap"
+          >
+            {BAUEN_WORDS[idx]}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </div>
+  );
+};
+
+/* ─── Minimal SVG Cityscape (jungheim style — silhouettes only) ─────────── */
+const Cityscape = () => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  // Each building as a polyline path (simplified silhouette)
+  // Format: SVG path d string, drawn bottom-up from ground line y=100
+  const buildings = [
+    // x, groundY=100, shape as array of [dx,dy] relative points from bottom-left
+    { x: 30,  w: 55,  h: 55,  roof: 'flat' },
+    { x: 92,  w: 38,  h: 75,  roof: 'flat' },
+    { x: 136, w: 28,  h: 40,  roof: 'gable', rh: 14 },
+    { x: 170, w: 22,  h: 58,  roof: 'flat' },
+    { x: 198, w: 50,  h: 35,  roof: 'gable', rh: 12 },
+    { x: 254, w: 32,  h: 68,  roof: 'flat' },
+    { x: 292, w: 18,  h: 90,  roof: 'flat' },  // tall tower
+    { x: 316, w: 42,  h: 45,  roof: 'flat' },
+    { x: 364, w: 28,  h: 30,  roof: 'gable', rh: 10 },
+    { x: 398, w: 55,  h: 50,  roof: 'flat' },
+    { x: 459, w: 25,  h: 72,  roof: 'flat' },
+    { x: 490, w: 48,  h: 38,  roof: 'gable', rh: 15 },
+    { x: 544, w: 20,  h: 82,  roof: 'flat' },
+    { x: 570, w: 38,  h: 45,  roof: 'flat' },
+    { x: 614, w: 30,  h: 60,  roof: 'gable', rh: 12 },
+    { x: 650, w: 52,  h: 42,  roof: 'flat' },
+    { x: 708, w: 22,  h: 95,  roof: 'flat' },  // tall tower
+    { x: 736, w: 44,  h: 35,  roof: 'flat' },
+    { x: 786, w: 28,  h: 55,  roof: 'gable', rh: 14 },
+    { x: 820, w: 50,  h: 48,  roof: 'flat' },
+    { x: 876, w: 36,  h: 70,  roof: 'flat' },
+    { x: 918, w: 26,  h: 40,  roof: 'gable', rh: 11 },
+    { x: 950, w: 48,  h: 55,  roof: 'flat' },
+  ];
+
+  const G = 110; // ground y
+  const W = 1020;
+
+  const buildingPath = (b) => {
+    const bx = b.x, by = G - b.h, bw = b.w;
+    if (b.roof === 'gable') {
+      const rh = b.rh || 12;
+      return `M${bx},${G} L${bx},${by} L${bx + bw / 2},${by - rh} L${bx + bw},${by} L${bx + bw},${G}`;
+    }
+    return `M${bx},${G} L${bx},${by} L${bx + bw},${by} L${bx + bw},${G}`;
+  };
+
+  return (
+    <div ref={ref} className="w-full" style={{ height: 130 }}>
+      <svg viewBox={`0 0 ${W} 130`} preserveAspectRatio="xMidYMax meet" className="w-full h-full">
+        {/* Ground line */}
+        <motion.line
+          x1={0} y1={G} x2={W} y2={G}
+          stroke="#d1d5db" strokeWidth="1"
           initial={{ scaleX: 0 }}
           animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
           style={{ transformOrigin: '0 0' }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
         />
+        {/* Buildings */}
+        {buildings.map((b, i) => (
+          <motion.path
+            key={i}
+            d={buildingPath(b)}
+            fill="none"
+            stroke="#9ca3af"
+            strokeWidth="0.8"
+            strokeLinejoin="miter"
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: 0.3 + i * 0.04, ease: 'easeOut' }}
+          />
+        ))}
       </svg>
     </div>
   );
@@ -222,31 +257,25 @@ const Services = () => {
   return (
     <div className="bg-white">
 
-      {/* ── Hero with cityscape ─────────────────────────────────── */}
-      <section className="pt-10 pb-0 bg-slate-50 overflow-hidden">
+      {/* ── Hero with cycling text + cityscape ──────────────────── */}
+      <section className="pt-12 pb-0 bg-white overflow-hidden">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl mb-6"
+            transition={{ duration: 0.7 }}
           >
-            <p className="text-[10px] font-semibold tracking-[0.25em] text-slate-400 uppercase mb-4">
-              AMONN ARCHITEKTUR
+            <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-6">
+              Tätigkeit
             </p>
-            <h1 className="text-4xl md:text-6xl font-light text-gray-900 leading-tight">
-              Wir bauen
-              <br />
-              <span className="font-black">mehr als Häuser.</span>
-            </h1>
-            <p className="mt-5 text-gray-500 text-base leading-relaxed max-w-lg">
-              Planung, Bauleitung, Neubauten, Sanierungen — und die professionelle
-              Begleitung rund um Ihre Immobilie. Alles aus einer Hand, seit über 55 Jahren
-              in der Region Bern.
+            <WirBauen />
+            <p className="mt-6 text-gray-400 text-base leading-relaxed max-w-xl">
+              Architektur mit Verantwortung für Raum, Bestand und Kosten — seit über
+              55 Jahren in der Region Bern.
             </p>
           </motion.div>
         </div>
-        <div className="mt-8">
+        <div className="mt-10">
           <Cityscape />
         </div>
       </section>
