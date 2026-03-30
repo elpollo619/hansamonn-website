@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Calendar, X, Loader2, AlertCircle, CheckCircle2, Clock } from 'lucide-react';
+import { Calendar, X, Loader2, AlertCircle, CheckCircle2, Clock, Download } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/use-toast';
 
 const STATUS_CONFIG = {
-  neu:        { label: 'Neu',        cls: 'bg-blue-100 text-blue-700' },
-  bestätigt:  { label: 'Bestätigt', cls: 'bg-green-100 text-green-700' },
-  abgesagt:   { label: 'Abgesagt',  cls: 'bg-red-100 text-red-600' },
+  neu:        { label: 'Neu',        cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
+  bestätigt:  { label: 'Bestätigt', cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
+  abgesagt:   { label: 'Abgesagt',  cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
 };
 
 function StatusBadge({ status }) {
@@ -47,7 +47,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="flex-1 bg-black/40" onClick={onClose} />
-      <div className="w-full max-w-lg bg-white shadow-2xl flex flex-col">
+      <div className="w-full max-w-lg bg-white flex flex-col" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h3 className="font-bold text-gray-900">Termin: {row.name}</h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100">
@@ -96,7 +96,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
           {row.nachricht && (
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Nachricht</p>
-              <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-700 leading-relaxed">
+              <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-700 leading-relaxed">
                 {row.nachricht}
               </div>
             </div>
@@ -107,7 +107,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
             <div className="pt-2 border-t border-gray-100">
               <a
                 href={`mailto:${row.email}?subject=Ihr Terminwunsch bei Hans Amonn AG`}
-                className="inline-flex items-center gap-2 text-sm text-blue-600 hover:underline"
+                className="inline-flex items-center gap-2 text-sm hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}
               >
                 E-Mail senden
               </a>
@@ -154,6 +154,49 @@ export default function TermineTab() {
     return new Date(d).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
+  function csvEscape(val) {
+    const str = val == null ? '' : String(val);
+    if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+      return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+  }
+
+  async function exportCsv() {
+    const { data: allRows, error: fetchErr } = await supabase
+      .from('termine')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (fetchErr || !allRows || allRows.length === 0) {
+      toast({ title: 'Keine Daten zum Exportieren vorhanden', variant: 'destructive' });
+      return;
+    }
+
+    const headers = ['Datum', 'Name', 'Email', 'Telefon', 'Art', 'Wunschdatum', 'Uhrzeit', 'Objekt', 'Nachricht', 'Status'];
+    const dataRows = allRows.map((r) => [
+      r.created_at ? new Date(r.created_at).toLocaleDateString('de-CH') : '',
+      r.name ?? '',
+      r.email ?? '',
+      r.telefon ?? '',
+      r.art ?? '',
+      r.wunschtermin ? new Date(r.wunschtermin).toLocaleDateString('de-CH') : '',
+      r.uhrzeit ?? '',
+      r.property_name ?? '',
+      r.nachricht ?? '',
+      r.status ?? '',
+    ].map(csvEscape).join(','));
+
+    const csv = [headers.join(','), ...dataRows].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `termine-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="relative">
       {selected && (
@@ -174,12 +217,20 @@ export default function TermineTab() {
             {rows.length} {rows.length === 1 ? 'Termin' : 'Termine'} total
           </p>
         </div>
-        <button
-          onClick={load}
-          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 px-3 py-2 rounded-lg transition-colors"
-        >
-          Aktualisieren
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={exportCsv}
+            className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors"
+          >
+            <Download size={14} /> CSV exportieren
+          </button>
+          <button
+            onClick={load}
+            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 px-3 py-2 rounded-lg transition-colors"
+          >
+            Aktualisieren
+          </button>
+        </div>
       </div>
 
       {/* Filter tabs */}
@@ -212,7 +263,7 @@ export default function TermineTab() {
       )}
 
       {error && (
-        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
           <AlertCircle size={16} />
           {error}
         </div>
@@ -231,7 +282,7 @@ export default function TermineTab() {
             <button
               key={row.id}
               onClick={() => setSelected(row)}
-              className="w-full text-left bg-white border border-gray-200 hover:border-gray-300 rounded-xl px-5 py-4 transition-colors hover:shadow-sm"
+              className="w-full text-left bg-white border border-gray-200 hover:border-gray-300 rounded-lg px-5 py-4 transition-colors"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                 {/* Date + time */}

@@ -39,7 +39,7 @@ const SAMPLE_FAQS = [
 
 function FAQItem({ faq, isOpen, onToggle }) {
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+    <div className="border border-gray-200 overflow-hidden bg-white">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gray-50 transition-colors"
@@ -118,7 +118,7 @@ export default function FAQPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className="text-4xl md:text-5xl font-light text-gray-900 mb-4"
           >
             Häufig gestellte Fragen
           </motion.h1>
@@ -144,10 +144,11 @@ export default function FAQPage() {
                 <button
                   key={cat}
                   onClick={() => { setActiveCategory(cat); setOpenId(null); }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  style={activeCategory === cat ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+                  className={`px-4 py-2 text-sm font-medium transition-colors border ${
                     activeCategory === cat
-                      ? 'bg-gray-900 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'text-white border-transparent'
+                      : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
                   }`}
                 >
                   {cat}
@@ -160,7 +161,7 @@ export default function FAQPage() {
           {loading && (
             <div className="space-y-3">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-16 bg-gray-100 rounded-xl animate-pulse" />
+                <div key={i} className="h-16 bg-gray-100 animate-pulse" />
               ))}
             </div>
           )}
@@ -191,7 +192,7 @@ export default function FAQPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-14 bg-gray-900 text-white rounded-2xl p-8 text-center"
+              className="mt-14 text-white p-8 text-center" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
             >
               <h2 className="text-xl font-bold mb-2">Noch Fragen?</h2>
               <p className="text-gray-400 text-sm mb-6">
@@ -199,7 +200,7 @@ export default function FAQPage() {
               </p>
               <a
                 href="/kontakt"
-                className="inline-block bg-white text-gray-900 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-gray-100 transition-colors"
+                className="inline-block bg-white text-gray-900 px-6 py-3 font-semibold text-sm hover:bg-gray-100 transition-colors"
               >
                 Jetzt kontaktieren
               </a>

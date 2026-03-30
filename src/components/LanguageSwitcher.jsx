@@ -35,7 +35,7 @@ const LanguageSwitcher = ({ variant = 'light' }) => {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors select-none
           ${isDark
             ? 'text-white/80 hover:text-white hover:bg-white/10 border border-white/20'
-            : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-gray-200'
+            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-200'
           }`}
       >
         <span>{current.label}</span>
@@ -48,7 +48,7 @@ const LanguageSwitcher = ({ variant = 'light' }) => {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 mt-1.5 w-44 bg-white rounded-xl shadow-xl border border-gray-100 py-1.5 z-50 overflow-hidden"
+          className="absolute right-0 mt-1.5 w-44 bg-white border border-gray-200 py-1.5 z-50 overflow-hidden"
         >
           {languages.map((l) => (
             <button

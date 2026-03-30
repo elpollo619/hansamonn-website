@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare, HelpCircle, Calendar, Activity, KeyRound, X, Eye, EyeOff, Check, ExternalLink } from 'lucide-react';
+import { LogOut, Building2, Users, FolderOpen, ImageIcon, Shield, Settings, Star, FileText, Inbox, Home, BarChart2, MessageSquare, HelpCircle, Calendar, Activity, KeyRound, X, Eye, EyeOff, Check, ExternalLink, AlertTriangle } from 'lucide-react';
+import { getUsers } from '@/data/usersStore';
 import { changeOwnPassword } from '@/data/usersStore';
 import { toast } from '@/components/ui/use-toast';
 import PropertiesTab from '@/components/admin/PropertiesTab';
@@ -40,14 +41,14 @@ function ChangePasswordModal({ userId, onClose }) {
   const [show, setShow] = useState({ current: false, next: false, confirm: false });
   const [loading, setLoading] = useState(false);
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
     if (form.next !== form.confirm) {
       toast({ title: 'Passwörter stimmen nicht überein', variant: 'destructive' }); return;
     }
     setLoading(true);
     try {
-      changeOwnPassword(userId, form.current, form.next);
+      await changeOwnPassword(userId, form.current, form.next);
       toast({ title: '✓ Passwort geändert', description: 'Ihr Passwort wurde erfolgreich aktualisiert.' });
       onClose();
     } catch (err) {
@@ -57,7 +58,7 @@ function ChangePasswordModal({ userId, onClose }) {
     }
   }
 
-  const inp = 'w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 pr-10';
+  const inp = 'w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#1D3D78] transition pr-10';
   const PasswordField = ({ field, label }) => (
     <div>
       <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
@@ -79,13 +80,13 @@ function ChangePasswordModal({ userId, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+      <div className="bg-white w-full max-w-md border border-gray-200">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div className="flex items-center gap-2">
             <KeyRound size={18} className="text-gray-700" />
             <h3 className="font-bold text-gray-900">Passwort ändern</h3>
           </div>
-          <button onClick={onClose} className="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"><X size={18} /></button>
+          <button onClick={onClose} className="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors"><X size={18} /></button>
         </div>
         <form onSubmit={submit} className="p-6 space-y-4">
           <PasswordField field="current" label="Aktuelles Passwort *" />
@@ -93,11 +94,15 @@ function ChangePasswordModal({ userId, onClose }) {
           <PasswordField field="confirm" label="Neues Passwort bestätigen *" />
           <div className="flex gap-3 pt-2">
             <button type="submit" disabled={loading}
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50">
+              className="flex-1 inline-flex items-center justify-center gap-2 text-white py-2.5 text-sm font-semibold transition-colors disabled:opacity-50"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+            >
               <Check size={15} /> Speichern
             </button>
             <button type="button" onClick={onClose}
-              className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+              className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
               Abbrechen
             </button>
           </div>
@@ -109,9 +114,20 @@ function ChangePasswordModal({ userId, onClose }) {
 
 export default function AdminPanel() {
   const { logout, user, isAdmin } = useAdminAuth();
-  const [activeTab, setActiveTab] = useState('stats');
-  const [quickStats, setQuickStats] = useState({ mietanfragen: 0, termine: 0, kontakt: 0 });
+  const [activeTab, setActiveTab]     = useState('stats');
+  const [quickStats, setQuickStats]   = useState({ mietanfragen: 0, termine: 0, kontakt: 0 });
   const [showChangePw, setShowChangePw] = useState(false);
+  const [usingDefaultPw, setUsingDefaultPw] = useState(false);
+
+  // Check if the logged-in user still has the default admin password
+  useEffect(() => {
+    if (!user) return;
+    try {
+      const users = getUsers();
+      const found = users.find(u => u.id === user.id);
+      if (found && found.password === 'HansAmonn2024!') setUsingDefaultPw(true);
+    } catch { /* ignore */ }
+  }, [user]);
 
   useEffect(() => {
     async function loadQuickStats() {
@@ -157,9 +173,9 @@ export default function AdminPanel() {
           </div>
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600">
-              <span className={`w-2 h-2 rounded-full ${isAdmin ? 'bg-gray-900' : 'bg-blue-500'}`} />
+              <span className="w-2 h-2 rounded-full bg-gray-400" />
               <span className="font-medium">{user?.name}</span>
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${isAdmin ? 'bg-gray-900 text-white' : 'bg-blue-100 text-blue-700'}`}>{isAdmin ? 'Admin' : 'Staff'}</span>
+              <span className="text-xs px-2 py-0.5 font-medium bg-gray-900 text-white">{isAdmin ? 'Admin' : 'Staff'}</span>
             </div>
             <a
               href="/"
@@ -185,6 +201,22 @@ export default function AdminPanel() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-8">
+        {/* Default password warning */}
+        {usingDefaultPw && (
+          <div className="mb-6 flex items-start gap-3 border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
+            <AlertTriangle size={16} className="flex-shrink-0 mt-0.5 text-yellow-600" />
+            <span>
+              <strong>Sicherheitshinweis:</strong> Sie verwenden noch das Standard-Passwort. Bitte ändern Sie es sofort über{' '}
+              <button
+                onClick={() => setShowChangePw(true)}
+                className="underline font-semibold hover:text-yellow-900"
+              >
+                Passwort ändern
+              </button>.
+            </span>
+          </div>
+        )}
+
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Inhaltsverwaltung</h1>
           <p className="text-sm text-gray-500 mt-1">Verwalten Sie alle Inhalte Ihrer Website</p>
@@ -192,59 +224,31 @@ export default function AdminPanel() {
 
         {/* Quick stats bar */}
         <div className="flex items-center gap-3 mb-6 flex-wrap">
-          <button
-            onClick={() => setActiveTab('mietanfragen')}
-            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm hover:border-gray-300 hover:shadow-sm transition-all"
-          >
-            <Inbox size={14} className="text-gray-400" />
-            <span className="text-gray-600">Mietanfragen</span>
-            {quickStats.mietanfragen > 0 ? (
-              <span className="px-1.5 py-0.5 bg-red-500 text-white text-xs font-bold rounded-full leading-none">
-                {quickStats.mietanfragen}
+          {[
+            { tab: 'mietanfragen', icon: Inbox,        label: 'Mietanfragen',     count: quickStats.mietanfragen },
+            { tab: 'termine',      icon: Calendar,     label: 'Termine',           count: quickStats.termine },
+            { tab: 'kontakt',      icon: MessageSquare, label: 'Kontaktanfragen',  count: quickStats.kontakt },
+          ].map(({ tab, icon: Icon, label, count }) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 text-sm hover:border-gray-300 transition-all"
+            >
+              <Icon size={14} className="text-gray-400" />
+              <span className="text-gray-600">{label}</span>
+              <span
+                className={`px-1.5 py-0.5 text-xs font-bold leading-none ${
+                  count > 0 ? 'text-white' : 'bg-gray-100 text-gray-400'
+                }`}
+                style={count > 0 ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+              >
+                {count}
               </span>
-            ) : (
-              <span className="px-1.5 py-0.5 bg-gray-100 text-gray-400 text-xs font-medium rounded-full leading-none">
-                {quickStats.mietanfragen}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('termine')}
-            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm hover:border-gray-300 hover:shadow-sm transition-all"
-          >
-            <Calendar size={14} className="text-gray-400" />
-            <span className="text-gray-600">Termine</span>
-            {quickStats.termine > 0 ? (
-              <span className="px-1.5 py-0.5 bg-amber-500 text-white text-xs font-bold rounded-full leading-none">
-                {quickStats.termine}
-              </span>
-            ) : (
-              <span className="px-1.5 py-0.5 bg-gray-100 text-gray-400 text-xs font-medium rounded-full leading-none">
-                {quickStats.termine}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('kontakt')}
-            className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm hover:border-gray-300 hover:shadow-sm transition-all"
-          >
-            <MessageSquare size={14} className="text-gray-400" />
-            <span className="text-gray-600">Kontaktanfragen</span>
-            {quickStats.kontakt > 0 ? (
-              <span className="px-1.5 py-0.5 bg-blue-500 text-white text-xs font-bold rounded-full leading-none">
-                {quickStats.kontakt}
-              </span>
-            ) : (
-              <span className="px-1.5 py-0.5 bg-gray-100 text-gray-400 text-xs font-medium rounded-full leading-none">
-                {quickStats.kontakt}
-              </span>
-            )}
-          </button>
+            </button>
+          ))}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white border border-gray-200 overflow-hidden">
           {/* Tab nav */}
           <div className="border-b border-gray-200 px-6 overflow-x-auto">
             <div className="flex gap-1 -mb-px">

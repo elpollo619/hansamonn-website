@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,6 +12,7 @@ import { LanguageProvider } from '@/i18n';
 import { ComparisonProvider } from '@/context/ComparisonContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
 import CompareBar from '@/components/CompareBar';
+import { getBrandColor, darkenHex } from '@/data/settingsStore';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -21,43 +22,52 @@ import CookieBanner from '@/components/CookieBanner';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import BackToTop from '@/components/BackToTop';
 
-// Pages
-import HomePage from '@/pages/HomePage';
-import AboutPage from '@/pages/AboutPage';
-import TeamPage from '@/pages/TeamPage';
-import TeamMemberPage from '@/pages/TeamMemberPage';
-import ProjectsPage from '@/pages/ProjectsPage';
-import ProjectDetailPage from '@/pages/ProjectDetailPage';
-import ServicesPage from '@/pages/ServicesPage';
-import ServiceDetailPage from '@/pages/ServiceDetailPage';
-import ArchitekturPage from '@/pages/ArchitekturPage';
-import ContactPage from '@/pages/ContactPage';
-import AdminPage from '@/pages/AdminPage';
-import ImpressumPage from '@/pages/ImpressumPage';
-import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+// Pages — lazy loaded for route-based code splitting
+const HomePage              = lazy(() => import('@/pages/HomePage'));
+const AboutPage             = lazy(() => import('@/pages/AboutPage'));
+const TeamPage              = lazy(() => import('@/pages/TeamPage'));
+const TeamMemberPage        = lazy(() => import('@/pages/TeamMemberPage'));
+const ProjectsPage          = lazy(() => import('@/pages/ProjectsPage'));
+const ProjectDetailPage     = lazy(() => import('@/pages/ProjectDetailPage'));
+const ServicesPage          = lazy(() => import('@/pages/ServicesPage'));
+const ServiceDetailPage     = lazy(() => import('@/pages/ServiceDetailPage'));
+const ArchitekturPage       = lazy(() => import('@/pages/ArchitekturPage'));
+const ContactPage           = lazy(() => import('@/pages/ContactPage'));
+const AdminPage             = lazy(() => import('@/pages/AdminPage'));
+const ImpressumPage         = lazy(() => import('@/pages/ImpressumPage'));
+const PrivacyPolicyPage     = lazy(() => import('@/pages/PrivacyPolicyPage'));
 
 // Immobilien / Rentals
-import ImmobilienOverviewPage from '@/pages/ImmobilienOverviewPage';
-import VermietungPage from '@/pages/VermietungPage';
-import VerkaufPage from '@/pages/VerkaufPage';
-import ApartmentDetailPage from '@/pages/ApartmentDetailPage';
-import LongStayPage from '@/pages/LongStayPage';
-import ShortStayPage from '@/pages/ShortStayPage';
-import ApartmentsPage from '@/pages/ApartmentsPage';
-import NsHotelPage from '@/pages/NsHotelPage';
-import MietanfragePage from '@/pages/MietanfragePage';
-import TerminbuchungPage from '@/pages/TerminbuchungPage';
-import NotFoundPage from '@/pages/NotFoundPage';
-import NeuigkeitenPage from '@/pages/NeuigkeitenPage';
-import BlogPostPage from '@/pages/BlogPostPage';
-import FAQPage from '@/pages/FAQPage';
+const ImmobilienOverviewPage = lazy(() => import('@/pages/ImmobilienOverviewPage'));
+const VermietungPage         = lazy(() => import('@/pages/VermietungPage'));
+const VerkaufPage            = lazy(() => import('@/pages/VerkaufPage'));
+const ApartmentDetailPage    = lazy(() => import('@/pages/ApartmentDetailPage'));
+const LongStayPage           = lazy(() => import('@/pages/LongStayPage'));
+const ShortStayPage          = lazy(() => import('@/pages/ShortStayPage'));
+const ApartmentsPage         = lazy(() => import('@/pages/ApartmentsPage'));
+const NsHotelPage            = lazy(() => import('@/pages/NsHotelPage'));
+const MietanfragePage        = lazy(() => import('@/pages/MietanfragePage'));
+const TerminbuchungPage      = lazy(() => import('@/pages/TerminbuchungPage'));
+const NotFoundPage           = lazy(() => import('@/pages/NotFoundPage'));
+const NeuigkeitenPage        = lazy(() => import('@/pages/NeuigkeitenPage'));
+const BlogPostPage           = lazy(() => import('@/pages/BlogPostPage'));
+const FAQPage                = lazy(() => import('@/pages/FAQPage'));
 
-// New feature pages
-import FavoritenPage from '@/pages/FavoritenPage';
-import PreisrechnerPage from '@/pages/PreisrechnerPage';
-import VergleichPage from '@/pages/VergleichPage';
-import KartePage from '@/pages/KartePage';
-import HyporechnerPage from '@/pages/HyporechnerPage';
+// Feature pages
+const FavoritenPage          = lazy(() => import('@/pages/FavoritenPage'));
+const PreisrechnerPage       = lazy(() => import('@/pages/PreisrechnerPage'));
+const VergleichPage          = lazy(() => import('@/pages/VergleichPage'));
+const KartePage              = lazy(() => import('@/pages/KartePage'));
+const HyporechnerPage        = lazy(() => import('@/pages/HyporechnerPage'));
+
+// Minimal page-transition loader shown while a lazy chunk is loading
+function PageLoader() {
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="w-6 h-6 border-2 border-gray-200 border-t-gray-500 rounded-full animate-spin" />
+    </div>
+  );
+}
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -99,6 +109,7 @@ function AppRoutes() {
       <ScrollToTop />
       <Header />
       <main className="pt-20">
+        <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* HOME */}
           <Route path="/" element={<HomePage />} />
@@ -186,6 +197,7 @@ function AppRoutes() {
           {/* CATCH-ALL — show 404 page for unknown URLs */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
       <CompareBar />
@@ -199,6 +211,13 @@ function AppRoutes() {
 }
 
 function App() {
+  // Inject brand colour CSS variables on every mount so dynamic colour from settings works
+  useEffect(() => {
+    const color = getBrandColor();
+    document.documentElement.style.setProperty('--brand-color', color);
+    document.documentElement.style.setProperty('--brand-color-dark', darkenHex(color));
+  }, []);
+
   return (
     <ErrorBoundary>
       <LanguageProvider>

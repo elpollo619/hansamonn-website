@@ -55,7 +55,7 @@ export default function StatsSection() {
   }, []);
 
   return (
-    <section ref={ref} style={{ backgroundColor: '#1D3D78' }}>
+    <section ref={ref} style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 divide-white/10">
           {STATS.map((s, i) => (

@@ -53,7 +53,7 @@ function MonthGrid({ year, month, isBlocked, todayStr }) {
                 'aspect-square flex items-center justify-center rounded-md text-xs font-medium select-none',
                 isPast  ? 'text-gray-200'                              : '',
                 blocked ? 'bg-red-100 text-red-400 line-through'       : '',
-                free    ? 'bg-emerald-50 text-emerald-700 font-semibold' : '',
+                free    ? 'bg-gray-100 text-gray-700 font-semibold' : '',
                 isToday ? 'ring-2 ring-gray-800 ring-offset-1'         : '',
               ].join(' ')}
             >
@@ -83,11 +83,11 @@ export default function AvailabilityCalendar({ icalUrl }) {
   });
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+    <div className="bg-white border border-gray-100 p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h4 className="text-sm font-bold text-gray-800 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-lg bg-emerald-100 flex items-center justify-center text-sm">📅</span>
+          <span className="w-6 h-6 rounded-lg bg-gray-100 flex items-center justify-center text-sm">📅</span>
           Verfügbarkeit
         </h4>
         <div className="flex items-center gap-1">
@@ -117,7 +117,7 @@ export default function AvailabilityCalendar({ icalUrl }) {
           <span className="text-sm">Lade Verfügbarkeit…</span>
         </div>
       ) : error ? (
-        <div className="flex items-start gap-2 text-sm text-amber-700 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">
+        <div className="flex items-start gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 px-4 py-3">
           <AlertCircle size={15} className="flex-shrink-0 mt-0.5" />
           <span>Verfügbarkeit konnte nicht geladen werden. Bitte versuchen Sie es später erneut.</span>
         </div>
@@ -139,7 +139,7 @@ export default function AvailabilityCalendar({ icalUrl }) {
       {!loading && !error && (
         <div className="flex items-center gap-5 mt-5 pt-4 border-t border-gray-100">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded bg-emerald-100 border border-emerald-200" />
+            <div className="w-3 h-3 rounded bg-gray-200 border border-gray-300" />
             <span className="text-xs text-gray-500">Verfügbar</span>
           </div>
           <div className="flex items-center gap-1.5">

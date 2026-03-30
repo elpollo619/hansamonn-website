@@ -44,8 +44,8 @@ const STATUS_OPTIONS = [
 ];
 
 const OCCUPANCY_OPTIONS = [
-  { value: 'frei',       label: '✓ Frei',       cls: 'bg-green-100 text-green-700 border-green-200' },
-  { value: 'reserviert', label: '◷ Reserviert', cls: 'bg-amber-100 text-amber-700 border-amber-200' },
+  { value: 'frei',       label: '✓ Frei',       cls: 'bg-gray-100 text-gray-700 border-gray-200' },
+  { value: 'reserviert', label: '◷ Reserviert', cls: 'bg-gray-100 text-gray-700 border-gray-200' },
   { value: 'vermietet',  label: '✗ Vermietet',  cls: 'bg-gray-100 text-gray-500 border-gray-200' },
 ];
 
@@ -119,11 +119,11 @@ const EMPTY_FORM = {
 
 function StatusBadge({ status }) {
   const map = {
-    'verfügbar':        'bg-green-100 text-green-700 border-green-200',
-    'nicht-verfügbar':  'bg-red-100 text-red-700 border-red-200',
-    'coming-soon':      'bg-amber-100 text-amber-700 border-amber-200',
-    'frei':             'bg-green-100 text-green-700 border-green-200',
-    'reserviert':       'bg-amber-100 text-amber-700 border-amber-200',
+    'verfügbar':        'bg-gray-100 text-gray-700 border-gray-200',
+    'nicht-verfügbar':  'bg-gray-100 text-gray-700 border-gray-200',
+    'coming-soon':      'bg-gray-100 text-gray-700 border-gray-200',
+    'frei':             'bg-gray-100 text-gray-700 border-gray-200',
+    'reserviert':       'bg-gray-100 text-gray-700 border-gray-200',
     'vermietet':        'bg-gray-100 text-gray-500 border-gray-200',
   };
   const labels = {
@@ -144,10 +144,10 @@ function StatusBadge({ status }) {
 
 function TypeBadge({ type }) {
   const map = {
-    'long-stay': 'bg-blue-50 text-blue-700',
-    'short-stay': 'bg-purple-50 text-purple-700',
-    'apartment': 'bg-teal-50 text-teal-700',
-    'ferienhaus': 'bg-orange-50 text-orange-700',
+    'long-stay': 'bg-gray-100 text-gray-700',
+    'short-stay': 'bg-gray-100 text-gray-700',
+    'apartment': 'bg-gray-100 text-gray-700',
+    'ferienhaus': 'bg-gray-100 text-gray-700',
   };
   return (
     <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${map[type] || 'bg-gray-50 text-gray-600'}`}>
@@ -161,7 +161,7 @@ function TypeBadge({ type }) {
 function DeleteDialog({ property, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4">
+      <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
         <div className="flex items-center gap-3 mb-4">
           <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
             <AlertTriangle size={20} className="text-red-600" />
@@ -263,7 +263,7 @@ function PropertyForm({ property, onSave, onClose }) {
   };
 
   const inputCls =
-    'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition';
+    'w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition';
   const labelCls = 'block text-xs font-semibold text-gray-600 mb-1';
 
   return (
@@ -271,7 +271,7 @@ function PropertyForm({ property, onSave, onClose }) {
       {/* Backdrop click to close */}
       <div className="flex-1" onClick={onClose} />
 
-      <div className="w-full max-w-2xl bg-white shadow-2xl flex flex-col h-full overflow-hidden">
+      <div className="w-full max-w-2xl bg-white flex flex-col h-full overflow-hidden" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50">
           <h2 className="font-semibold text-gray-900 text-base">
@@ -338,7 +338,7 @@ function PropertyForm({ property, onSave, onClose }) {
                   onClick={() => set('occupancy', o.value)}
                   className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
                     (form.occupancy || 'frei') === o.value
-                      ? `${o.cls} shadow-sm`
+                      ? o.cls
                       : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'
                   }`}
                 >
@@ -398,7 +398,7 @@ function PropertyForm({ property, onSave, onClose }) {
               </div>
             </div>
             <p className="text-xs text-gray-400 mt-1.5">
-              Koordinaten finden: <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Google Maps</a> → rechtsklick auf Adresse → Koordinaten kopieren
+              Koordinaten finden: <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}>Google Maps</a> → rechtsklick auf Adresse → Koordinaten kopieren
             </p>
           </div>
 
@@ -471,8 +471,8 @@ function PropertyForm({ property, onSave, onClose }) {
                     }
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                       active
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                        : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:text-blue-600'
+                        ? 'bg-gray-900 text-white border-gray-900'
+                        : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
                     }`}
                   >
                     <span className="text-base leading-none">{emoji}</span>
@@ -496,7 +496,10 @@ function PropertyForm({ property, onSave, onClose }) {
               <button
                 type="button"
                 onClick={addFeature}
-                className="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors flex-shrink-0"
+                className="px-3 py-2 text-white text-sm rounded-lg transition-colors flex-shrink-0"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
                 <Tag size={14} />
               </button>
@@ -533,7 +536,7 @@ function PropertyForm({ property, onSave, onClose }) {
           <div>
             <label className={labelCls}>Bilder</label>
             {/* Upload from computer */}
-            <div className="mb-2 p-3 border border-dashed border-blue-200 rounded-lg bg-blue-50/50">
+            <div className="mb-2 p-3 border border-dashed border-gray-200 rounded-lg bg-gray-50">
               <p className="text-xs text-gray-500 mb-2">Vom Computer hochladen (max. 3 MB pro Bild):</p>
               <input
                 ref={fileInputRef}
@@ -546,7 +549,10 @@ function PropertyForm({ property, onSave, onClose }) {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-white text-xs font-medium rounded-lg transition-colors"
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
                 <Upload size={13} /> Fotos vom Computer wählen
               </button>
@@ -578,6 +584,8 @@ function PropertyForm({ property, onSave, onClose }) {
                       src={img}
                       alt=""
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                       onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <button
@@ -631,12 +639,12 @@ function PropertyForm({ property, onSave, onClose }) {
           </div>
 
           {/* iCal availability calendar */}
-          <div className="rounded-xl border border-emerald-100 bg-emerald-50 p-4 space-y-3">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-3">
             <div className="flex items-start gap-2">
               <span className="text-lg leading-none mt-0.5">📅</span>
               <div>
-                <p className="text-sm font-semibold text-emerald-800">Verfügbarkeitskalender (optional)</p>
-                <p className="text-xs text-emerald-700 mt-0.5">
+                <p className="text-sm font-semibold text-gray-800">Verfügbarkeitskalender (optional)</p>
+                <p className="text-xs text-gray-600 mt-0.5">
                   Wenn die Immobilie auf Airbnb oder Booking.com ist, zeigen wir automatisch
                   einen Kalender mit freien und gebuchten Tagen — synchronisiert über alle Plattformen.
                 </p>
@@ -653,35 +661,35 @@ function PropertyForm({ property, onSave, onClose }) {
               />
             </div>
             <details className="group">
-              <summary className="text-xs font-semibold text-emerald-700 cursor-pointer select-none list-none flex items-center gap-1">
+              <summary className="text-xs font-semibold text-gray-600 cursor-pointer select-none list-none flex items-center gap-1">
                 <span className="group-open:rotate-90 transition-transform inline-block">▶</span>
                 Wie bekomme ich den Link?
               </summary>
-              <div className="mt-2 space-y-3 text-xs text-emerald-800">
-                <div className="bg-white rounded-lg p-3 border border-emerald-100">
+              <div className="mt-2 space-y-3 text-xs text-gray-700">
+                <div className="bg-white rounded-lg p-3 border border-gray-200">
                   <p className="font-semibold mb-1">🏠 Airbnb</p>
-                  <ol className="list-decimal list-inside space-y-1 text-emerald-700">
+                  <ol className="list-decimal list-inside space-y-1 text-gray-600">
                     <li>Gehe zu <strong>airbnb.com</strong> → als Host einloggen</li>
                     <li>Klicke auf dein Inserat → <strong>Kalender</strong></li>
                     <li>Oben rechts: <strong>Verfügbarkeit</strong> → <strong>Kalender exportieren</strong></li>
-                    <li>Den Link kopieren (endet auf <code className="bg-emerald-50 px-1 rounded">.ics</code>)</li>
+                    <li>Den Link kopieren (endet auf <code className="bg-gray-100 px-1 rounded">.ics</code>)</li>
                   </ol>
                 </div>
-                <div className="bg-white rounded-lg p-3 border border-emerald-100">
+                <div className="bg-white rounded-lg p-3 border border-gray-200">
                   <p className="font-semibold mb-1">🌐 Booking.com</p>
-                  <ol className="list-decimal list-inside space-y-1 text-emerald-700">
+                  <ol className="list-decimal list-inside space-y-1 text-gray-600">
                     <li>Gehe zu <strong>booking.com/hotel/extranet</strong></li>
                     <li><strong>Kalender</strong> → <strong>Kalender synchronisieren</strong></li>
                     <li><strong>Exportieren</strong> → Link kopieren</li>
                   </ol>
                 </div>
-                <p className="text-emerald-600 bg-white rounded-lg p-2 border border-emerald-100">
+                <p className="text-gray-600 bg-white rounded-lg p-2 border border-gray-200">
                   💡 <strong>Tipp:</strong> Da Airbnb und Booking.com synchronisiert sind, genügt der Link von einer Plattform — beide Reservierungen werden angezeigt.
                 </p>
               </div>
             </details>
             {form.icalUrl && (
-              <p className="text-xs text-emerald-700 flex items-center gap-1.5">
+              <p className="text-xs text-gray-600 flex items-center gap-1.5">
                 <span>✓</span> Kalender wird auf der Detailseite angezeigt.
               </p>
             )}
@@ -715,9 +723,9 @@ function PropertyForm({ property, onSave, onClose }) {
           </div>
 
           {/* Vorher / Nachher Bilder */}
-          <div className="rounded-xl border border-purple-100 bg-purple-50 p-4 space-y-3">
-            <p className="text-sm font-semibold text-purple-800">Vorher / Nachher Bilder (optional)</p>
-            <p className="text-xs text-purple-600">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-3">
+            <p className="text-sm font-semibold text-gray-800">Vorher / Nachher Bilder (optional)</p>
+            <p className="text-xs text-gray-600">
               Wenn beide URLs angegeben sind, erscheint auf der Detailseite ein interaktiver Vorher/Nachher-Slider.
             </p>
             <div>
@@ -767,8 +775,9 @@ function PropertyForm({ property, onSave, onClose }) {
             <button
               type="button"
               onClick={() => set('visible', !form.visible)}
+              style={form.visible ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-                form.visible ? 'bg-blue-600' : 'bg-gray-300'
+                form.visible ? '' : 'bg-gray-300'
               }`}
             >
               <span
@@ -796,7 +805,10 @@ function PropertyForm({ property, onSave, onClose }) {
             form="property-form"
             type="submit"
             onClick={handleSubmit}
-            className="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2"
+            className="px-5 py-2 text-sm font-medium text-white rounded-lg transition-colors flex items-center gap-2"
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
           >
             <Save size={14} />
             Speichern
@@ -987,7 +999,10 @@ export default function PropertiesTab() {
         </div>
         <button
           onClick={openNew}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           <Plus size={16} />
           Neue Immobilie
@@ -1005,7 +1020,7 @@ export default function PropertiesTab() {
             onClick={() => setFilterType(t.value)}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               filterType === t.value
-                ? 'bg-white text-gray-900 shadow-sm'
+                ? 'bg-white text-gray-900'
                 : 'text-gray-500 hover:text-gray-700'
             }`}
           >
@@ -1016,7 +1031,7 @@ export default function PropertiesTab() {
 
       {/* Bulk action bar */}
       {selectedIds.size > 0 && (
-        <div className="mb-4 flex items-center gap-3 bg-gray-900 text-white px-4 py-2.5 rounded-xl">
+        <div className="mb-4 flex items-center gap-3 bg-gray-900 text-white px-4 py-2.5">
           <span className="text-sm font-semibold">{selectedIds.size} ausgewählt</span>
           <div className="flex-1" />
           <button
@@ -1053,13 +1068,13 @@ export default function PropertiesTab() {
           <p className="text-sm">Keine Immobilien gefunden.</p>
           <button
             onClick={openNew}
-            className="mt-3 text-blue-600 hover:text-blue-700 text-sm font-medium"
+            className="mt-3 text-sm font-medium hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}
           >
             Erste Immobilie erstellen
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-gray-200">
+        <div className="overflow-x-auto border border-gray-200">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
@@ -1104,7 +1119,7 @@ export default function PropertiesTab() {
                     onDragOver={(e) => handleDragOver(e, propIndexInAll)}
                     onDrop={(e) => handleDrop(e, propIndexInAll)}
                     onDragEnd={handleDragEnd}
-                    className={`hover:bg-gray-50 transition-colors ${selectedIds.has(prop.id) ? 'bg-blue-50' : ''}`}
+                    className={`hover:bg-gray-50 transition-colors ${selectedIds.has(prop.id) ? 'bg-gray-100' : ''}`}
                   >
                     <td className="px-3 py-3 w-8">
                       <input
@@ -1127,6 +1142,8 @@ export default function PropertiesTab() {
                               src={prop.images[0]}
                               alt=""
                               className="w-full h-full object-cover"
+                              loading="lazy"
+                              decoding="async"
                               onError={(e) => { e.target.style.display = 'none'; }}
                             />
                           </div>
@@ -1138,7 +1155,7 @@ export default function PropertiesTab() {
                               <p className="text-xs text-gray-500">{prop.location}</p>
                             )}
                             {prop.icalUrl && (
-                              <span className="inline-flex items-center gap-1 text-xs text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-100">
+                              <span className="inline-flex items-center gap-1 text-xs text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded-full border border-gray-200">
                                 📅 Kalender
                               </span>
                             )}
@@ -1181,7 +1198,7 @@ export default function PropertiesTab() {
                         title={prop.visible ? 'Ausblenden' : 'Einblenden'}
                         className={`inline-flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
                           prop.visible
-                            ? 'text-green-600 bg-green-50 hover:bg-green-100'
+                            ? 'text-gray-700 bg-gray-100 hover:bg-gray-200'
                             : 'text-gray-400 bg-gray-100 hover:bg-gray-200'
                         }`}
                       >
@@ -1192,14 +1209,14 @@ export default function PropertiesTab() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => window.open(getPropertyPublicUrl(prop), '_blank')}
-                          className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                           title="Öffentliche Seite öffnen"
                         >
                           <Eye size={14} />
                         </button>
                         <button
                           onClick={() => openEdit(prop)}
-                          className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                           title="Bearbeiten"
                         >
                           <Pencil size={14} />

@@ -21,7 +21,7 @@ const ImmobilienDropdown = ({ onClose }) => (
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.15 }}
-      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-3"
+      className="bg-white shadow-lg border border-gray-100 p-3"
     >
       {/* Section label */}
       <p className="px-4 pt-1 pb-1 text-[10px] font-semibold tracking-widest text-gray-400 uppercase">
@@ -29,25 +29,25 @@ const ImmobilienDropdown = ({ onClose }) => (
       </p>
 
       <Link to="/immobilien/long-stay" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group">
-        <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
           <BedDouble size={14} className="text-[#1D3D78]" />
         </div>
         <span className="text-sm font-medium">Long Stay</span>
       </Link>
 
       <Link to="/immobilien/short-stay" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group">
-        <div className="w-7 h-7 rounded-lg bg-sky-100 flex items-center justify-center flex-shrink-0">
-          <BedDouble size={14} className="text-sky-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <BedDouble size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Short Stay</span>
       </Link>
 
       <Link to="/immobilien/apartments" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors group">
-        <div className="w-7 h-7 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
-          <Building2 size={14} className="text-indigo-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Building2 size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Apartments</span>
       </Link>
@@ -59,25 +59,25 @@ const ImmobilienDropdown = ({ onClose }) => (
       </p>
 
       <Link to="/immobilien/verkauf" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors group">
-        <div className="w-7 h-7 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
-          <Building2 size={14} className="text-emerald-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Building2 size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Verkauf</span>
       </Link>
 
       <Link to="/karte" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-slate-50 hover:text-slate-700 transition-colors group">
-        <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
-          <Map size={14} className="text-slate-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Map size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Karte</span>
       </Link>
 
       <Link to="/hyporechner" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition-colors group">
-        <div className="w-7 h-7 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
-          <Calculator size={14} className="text-amber-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Calculator size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Hypothekenrechner</span>
       </Link>
@@ -106,28 +106,28 @@ const ArchitekturDropdown = ({ onClose }) => (
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.15 }}
-      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-3"
+      className="bg-white shadow-lg border border-gray-100 p-3"
     >
       <Link to="/projekte" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-stone-50 hover:text-stone-800 transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-stone-100 flex items-center justify-center flex-shrink-0">
-          <Layers size={14} className="text-stone-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Layers size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Projekte</span>
       </Link>
 
       <Link to="/leistungen" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-stone-50 hover:text-stone-800 transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-stone-100 flex items-center justify-center flex-shrink-0">
-          <Briefcase size={14} className="text-stone-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Briefcase size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Leistungen</span>
       </Link>
 
       <Link to="/neuigkeiten" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-stone-50 hover:text-stone-800 transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-stone-100 flex items-center justify-center flex-shrink-0">
-          <Newspaper size={14} className="text-stone-600" />
+        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors">
+        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Newspaper size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
         <span className="text-sm font-medium">Neuigkeiten</span>
       </Link>
@@ -143,7 +143,7 @@ const UberUnsDropdown = ({ onClose }) => (
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.15 }}
-      className="bg-white shadow-xl border border-gray-100 rounded-2xl p-3"
+      className="bg-white shadow-lg border border-gray-100 p-3"
     >
       <Link to="/uber-uns" onClick={onClose}
         className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
@@ -394,11 +394,11 @@ const Header = () => {
                         <Link to="/immobilien/short-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Short Stay</Link>
                         <Link to="/immobilien/apartments" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Apartments</Link>
                         <div className="mx-3 my-1 border-t border-gray-100" />
-                        <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-emerald-600 rounded-lg hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Verkauf</Link>
-                        <Link to="/karte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-slate-700 rounded-lg hover:bg-gray-50"><Map size={13} className="text-gray-400" /> Karte</Link>
-                        <Link to="/hyporechner" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-amber-700 rounded-lg hover:bg-gray-50"><Calculator size={13} className="text-gray-400" /> Hypothekenrechner</Link>
+                        <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Verkauf</Link>
+                        <Link to="/karte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Map size={13} className="text-gray-400" /> Karte</Link>
+                        <Link to="/hyporechner" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Calculator size={13} className="text-gray-400" /> Hypothekenrechner</Link>
                         <div className="mx-3 my-1 border-t border-gray-100" />
-                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-[#1D3D78] font-medium rounded-lg hover:bg-blue-50">Mietanfrage stellen</Link>
+                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-[#1D3D78] font-medium hover:bg-gray-50">Mietanfrage stellen</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -425,9 +425,9 @@ const Header = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden pl-4 mt-1 space-y-0.5"
                       >
-                        <Link to="/projekte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-stone-800 rounded-lg hover:bg-gray-50"><Layers size={13} className="text-gray-400" /> Projekte</Link>
-                        <Link to="/leistungen" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-stone-800 rounded-lg hover:bg-gray-50"><Briefcase size={13} className="text-gray-400" /> Leistungen</Link>
-                        <Link to="/neuigkeiten" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-stone-800 rounded-lg hover:bg-gray-50"><Newspaper size={13} className="text-gray-400" /> Neuigkeiten</Link>
+                        <Link to="/projekte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Layers size={13} className="text-gray-400" /> Projekte</Link>
+                        <Link to="/leistungen" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Briefcase size={13} className="text-gray-400" /> Leistungen</Link>
+                        <Link to="/neuigkeiten" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Newspaper size={13} className="text-gray-400" /> Neuigkeiten</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>

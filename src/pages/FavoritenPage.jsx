@@ -15,10 +15,10 @@ import OccupancyBadge from '@/components/OccupancyBadge';
 // ─── Type config ──────────────────────────────────────────────────────────────
 
 const TYPE_CFG = {
-  apartment:   { badge: 'bg-blue-100 text-blue-700 border-blue-200',     icon: Home },
-  'long-stay': { badge: 'bg-amber-100 text-amber-700 border-amber-200',  icon: Coffee },
-  hotel:       { badge: 'bg-indigo-100 text-indigo-700 border-indigo-200', icon: Building2 },
-  project:     { badge: 'bg-emerald-100 text-emerald-700 border-emerald-200', icon: Sun },
+  apartment:   { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Home },
+  'long-stay': { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Coffee },
+  hotel:       { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Building2 },
+  project:     { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Sun },
 };
 
 const TypeBadge = ({ type, t }) => {
@@ -31,7 +31,7 @@ const TypeBadge = ({ type, t }) => {
     project:     t('vermietung.types.project'),
   };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${cfg.badge}`}>
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border ${cfg.badge}`}>
       <Icon size={11} />
       {labels[type] || type}
     </span>
@@ -52,6 +52,7 @@ const RentalImage = ({ src, alt, className }) => {
       alt={alt}
       className={className}
       loading="lazy"
+      decoding="async"
       onError={() => setErrored(true)}
     />
   );
@@ -76,9 +77,7 @@ const FavoriteCard = ({ item, index, t }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.35, delay: index * 0.06 }}
-      className={`bg-white rounded-2xl overflow-hidden shadow-sm border flex flex-col transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 ${
-        isProject ? 'border-emerald-100 ring-1 ring-emerald-100' : 'border-gray-100'
-      }`}
+      className="bg-white overflow-hidden border border-gray-100 flex flex-col transition-colors duration-300 hover:border-gray-300"
     >
       {/* Image */}
       <Link to={getDetailUrl(item)} className={`relative overflow-hidden block ${isProject ? 'h-56' : 'h-52'}`}>
@@ -101,7 +100,7 @@ const FavoriteCard = ({ item, index, t }) => {
 
         {/* Price chip */}
         <div className="absolute bottom-3 right-3">
-          <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm">
+          <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5">
             {item.price ? (
               <span className="font-bold text-sm text-gray-900">
                 CHF {item.price.toLocaleString('de-CH')}
@@ -110,7 +109,7 @@ const FavoriteCard = ({ item, index, t }) => {
                 </span>
               </span>
             ) : (
-              <span className="text-emerald-700 font-semibold text-xs">
+              <span className="text-gray-600 font-semibold text-xs">
                 {t('vermietung.project.onRequest')}
               </span>
             )}
@@ -121,7 +120,7 @@ const FavoriteCard = ({ item, index, t }) => {
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-0.5">
-          <Link to={getDetailUrl(item)} className="hover:text-blue-700 transition-colors">
+          <Link to={getDetailUrl(item)} className="hover:text-[#1D3D78] transition-colors">
             <h3 className="text-base font-semibold text-gray-900 leading-snug">{item.title}</h3>
           </Link>
           <OccupancyBadge status={item.occupancy || 'frei'} />
@@ -137,12 +136,10 @@ const FavoriteCard = ({ item, index, t }) => {
         <div className="mt-auto">
           <Link
             to={getDetailUrl(item)}
-            className={`w-full flex items-center justify-center gap-2 font-semibold py-3 px-4 rounded-xl transition-colors text-sm text-white ${
-              isHotel    ? 'bg-indigo-600 hover:bg-indigo-700' :
-              isProject  ? 'bg-emerald-600 hover:bg-emerald-700' :
-              isLongStay ? 'bg-amber-500 hover:bg-amber-600' :
-                           'bg-blue-600 hover:bg-blue-700'
-            }`}
+            className="w-full flex items-center justify-center gap-2 font-semibold py-3 px-4 transition-colors text-sm text-white"
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
           >
             Details ansehen
             <ArrowRight size={14} />
@@ -161,8 +158,8 @@ const EmptyState = () => (
     animate={{ opacity: 1, y: 0 }}
     className="text-center py-24 px-4"
   >
-    <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-      <Heart size={36} className="text-red-300" />
+    <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6">
+      <Heart size={36} className="text-gray-300" />
     </div>
     <h2 className="text-xl font-semibold text-gray-900 mb-3">
       Noch keine Favoriten gespeichert
@@ -172,7 +169,10 @@ const EmptyState = () => (
     </p>
     <Link
       to="/immobilien"
-      className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+      className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
+      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
     >
       Alle Immobilien ansehen
       <ArrowRight size={15} />
@@ -203,8 +203,8 @@ const FavoritenPage = () => {
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-3 mb-1">
-                  <div className="w-9 h-9 bg-red-50 rounded-xl flex items-center justify-center">
-                    <Heart size={18} className="text-red-500 fill-red-500" />
+                  <div className="w-9 h-9 bg-gray-100 flex items-center justify-center">
+                    <Heart size={18} className="text-gray-500" />
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                     Meine Favoriten
@@ -220,7 +220,7 @@ const FavoritenPage = () => {
               {favoritedItems.length > 0 && (
                 <button
                   onClick={clearFavorites}
-                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-600 border border-gray-200 hover:border-red-200 px-4 py-2 rounded-lg transition-colors"
+                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-400 px-4 py-2 transition-colors"
                 >
                   <Trash2 size={14} />
                   Alle entfernen

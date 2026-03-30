@@ -77,7 +77,7 @@ const RentalImage = ({ src, alt, className }) => {
       <Home size={32} className="text-gray-300" />
     </div>
   ) : (
-    <img src={src} alt={alt} className={className} loading="lazy" onError={() => setErr(true)} />
+    <img src={src} alt={alt} className={className} loading="lazy" decoding="async" onError={() => setErr(true)} />
   );
 };
 
@@ -87,11 +87,11 @@ const RentalImage = ({ src, alt, className }) => {
 
 const TypeBadge = ({ type, t }) => {
   const cfg = {
-    apartment:   { icon: Home,      cls: 'bg-blue-100 text-blue-700 border border-blue-200' },
-    'long-stay': { icon: Coffee,    cls: 'bg-blue-100 text-blue-700 border border-blue-200' },
-    hotel:       { icon: Building2, cls: 'bg-indigo-100 text-indigo-700 border border-indigo-200' },
-    project:     { icon: Sun,       cls: 'bg-emerald-100 text-emerald-700 border border-emerald-200' },
-  }[type] || { icon: Home, cls: 'bg-blue-100 text-blue-700' };
+    apartment:   { icon: Home,      cls: 'bg-gray-100 text-gray-600 border border-gray-200' },
+    'long-stay': { icon: Coffee,    cls: 'bg-gray-100 text-gray-600 border border-gray-200' },
+    hotel:       { icon: Building2, cls: 'bg-gray-100 text-gray-600 border border-gray-200' },
+    project:     { icon: Sun,       cls: 'bg-gray-100 text-gray-600 border border-gray-200' },
+  }[type] || { icon: Home, cls: 'bg-gray-100 text-gray-600' };
   const Icon = cfg.icon;
   const labels = {
     apartment:   t('vermietung.types.apartment'),
@@ -100,7 +100,7 @@ const TypeBadge = ({ type, t }) => {
     project:     t('vermietung.types.project'),
   };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${cfg.cls}`}>
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold ${cfg.cls}`}>
       <Icon size={12} />
       {labels[type] || type}
     </span>
@@ -114,10 +114,10 @@ const HotelSidebar = ({ apt, t }) => (
     initial={{ opacity: 0, x: 10 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.4, delay: 0.2 }}
-    className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24"
+    className="bg-white border border-gray-100 overflow-hidden sticky top-24"
   >
     {/* Price header */}
-    <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 px-6 py-5 text-white">
+    <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
       <div className="flex items-center gap-2 flex-wrap">
         <TypeBadge type="hotel" t={t} />
         <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -139,7 +139,10 @@ const HotelSidebar = ({ apt, t }) => (
           href={apt.directBookingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-xl transition-colors text-base"
+          className="w-full flex items-center justify-center gap-2.5 text-white font-bold py-4 px-4 transition-colors text-base"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           <ExternalLink size={18} />
           {t('vermietung.hotel.bookDirectly')}
@@ -160,7 +163,7 @@ const HotelSidebar = ({ apt, t }) => (
           href={apt.bookingUrls.booking}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2.5 bg-[#003580] hover:bg-[#002e6e] text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+          className="w-full flex items-center justify-center gap-2.5 bg-[#003580] hover:bg-[#002e6e] text-white font-semibold py-3 px-4 transition-colors text-sm"
         >
           <ExternalLink size={15} />
           {t('vermietung.hotel.bookOnBooking')}
@@ -173,7 +176,7 @@ const HotelSidebar = ({ apt, t }) => (
           href={apt.bookingUrls.airbnb}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2.5 bg-[#FF5A5F] hover:bg-[#e5484d] text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+          className="w-full flex items-center justify-center gap-2.5 bg-[#FF5A5F] hover:bg-[#e5484d] text-white font-semibold py-3 px-4 transition-colors text-sm"
         >
           <ExternalLink size={15} />
           {t('vermietung.hotel.bookOnAirbnb')}
@@ -188,11 +191,11 @@ const HotelSidebar = ({ apt, t }) => (
       </div>
 
       {/* Phone + email */}
-      <a href="tel:+41319518554" className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 rounded-xl transition-colors text-sm">
+      <a href="tel:+41319518554" className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 transition-colors text-sm">
         <Phone size={15} />
         {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
       </a>
-      <a href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage N's Hotel`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 rounded-xl transition-colors text-sm">
+      <a href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage N's Hotel`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 transition-colors text-sm">
         <Mail size={15} />
         {apt.contact?.email ?? 'office@reto-amonn.ch'}
       </a>
@@ -213,10 +216,10 @@ const LongStaySidebar = ({ apt, t }) => (
     initial={{ opacity: 0, x: 10 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.4, delay: 0.2 }}
-    className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-24"
+    className="bg-white border border-gray-100 overflow-hidden sticky top-24"
   >
     {/* Header */}
-    <div className="bg-gradient-to-r from-slate-700 to-slate-800 px-6 py-5 text-white">
+    <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
       <div className="flex items-center gap-2 flex-wrap">
         <TypeBadge type="long-stay" t={t} />
         <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -238,15 +241,15 @@ const LongStaySidebar = ({ apt, t }) => (
           {apt.longStayRooms.map((room, i) => (
             <div
               key={i}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm ${
-                room.isAddon ? 'bg-gray-50 text-gray-600' : 'bg-slate-50'
+              className={`flex items-center justify-between px-4 py-3 text-sm ${
+                room.isAddon ? 'bg-gray-50 text-gray-600' : 'bg-gray-50'
               }`}
             >
               <span className={`font-medium ${room.isAddon ? 'text-gray-600' : 'text-gray-800'}`}>
                 {room.label}
                 {room.size && <span className="text-gray-400 font-normal ml-1.5">{room.size} m²</span>}
               </span>
-              <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-slate-700'}`}>
+              <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-gray-700'}`}>
                 {room.isFrom && <span className="font-normal text-xs mr-1">{t('vermietung.longStay.from')}</span>}
                 CHF {room.price}
                 <span className="text-xs font-normal">/Mt.</span>
@@ -265,7 +268,7 @@ const LongStaySidebar = ({ apt, t }) => (
         </p>
         <div className="flex flex-wrap gap-1.5">
           {apt.includes.map((inc) => (
-            <span key={inc} className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-100">
+            <span key={inc} className="flex items-center gap-1 bg-gray-50 text-gray-600 text-xs px-2.5 py-1 border border-gray-200">
               <CheckCircle2 size={10} />
               {inc}
             </span>
@@ -276,7 +279,7 @@ const LongStaySidebar = ({ apt, t }) => (
 
     {/* Deposit */}
     {apt.deposit && (
-      <div className="mx-5 mt-4 bg-gray-50 rounded-xl px-4 py-3">
+      <div className="mx-5 mt-4 bg-gray-50 px-4 py-3">
         <span className="text-xs text-gray-500">{t('vermietung.longStay.deposit')}: </span>
         <span className="text-sm font-semibold text-gray-800">CHF {apt.deposit}</span>
       </div>
@@ -286,7 +289,10 @@ const LongStaySidebar = ({ apt, t }) => (
     <div className="p-5">
       <a
         href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
-        className="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-800 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
+        className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
+        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+        onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
       >
         <Mail size={18} />
         {t('vermietung.longStay.requestTitle')}
@@ -310,9 +316,9 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
     className="space-y-4 sticky top-24"
   >
     {/* Main card */}
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-white border border-gray-100 overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-5 text-white">
+      <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div className="flex items-center gap-2 flex-wrap">
           <TypeBadge type="project" t={t} />
           <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -325,22 +331,25 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
         {/* Features */}
         <div className="flex flex-wrap gap-1.5">
           {apt.features.map((f) => (
-            <span key={f} className="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded-full border border-emerald-100">
+            <span key={f} className="bg-gray-50 text-gray-600 text-xs px-2.5 py-1 border border-gray-200">
               {f}
             </span>
           ))}
         </div>
 
         {/* Price info */}
-        <div className="bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3 text-center">
-          <p className="text-sm font-semibold text-emerald-800">{t('vermietung.project.onRequest')}</p>
-          <p className="text-xs text-emerald-600 mt-0.5">Wir senden Ihnen gerne alle Details</p>
+        <div className="bg-gray-50 border border-gray-100 px-4 py-3 text-center">
+          <p className="text-sm font-semibold text-gray-800">{t('vermietung.project.onRequest')}</p>
+          <p className="text-xs text-gray-500 mt-0.5">Wir senden Ihnen gerne alle Details</p>
         </div>
 
         {/* Primary CTA */}
         <a
           href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
-          className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
+          className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           <Mail size={18} />
           Aufenthalt anfragen
@@ -349,7 +358,7 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
         {/* Phone */}
         <a
           href="tel:+41319518554"
-          className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 rounded-xl transition-colors text-sm"
+          className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm"
         >
           <Phone size={15} />
           {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
@@ -378,8 +387,8 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
       className="sticky top-24 space-y-4"
     >
       {/* Info card */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white">
+      <div className="bg-white border border-gray-100 overflow-hidden">
+        <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
           <div className="flex items-center gap-2 flex-wrap">
             <TypeBadge type="apartment" t={t} />
             <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -399,21 +408,24 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
           {isAvailable ? (
             <>
               {apt.availableFrom && (
-                <div className="flex items-center gap-2 text-sm text-gray-600 bg-green-50 border border-green-100 px-4 py-2.5 rounded-xl">
-                  <Calendar size={15} className="text-green-600 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 border border-gray-100 px-4 py-2.5">
+                  <Calendar size={15} className="text-gray-500 flex-shrink-0" />
                   <span>Verfügbar ab {new Date(apt.availableFrom).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 </div>
               )}
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors text-base"
+                className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
                 <Mail size={18} />
                 {t('vermietung.card.requestInquiry')}
               </button>
               <a
                 href={`tel:+41319518554`}
-                className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 rounded-xl transition-colors text-sm"
+                className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm"
               >
                 <Phone size={15} />
                 +41 (0)31 951 85 54
@@ -421,14 +433,14 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
             </>
           ) : (
             <>
-              <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl">
+              <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 border border-gray-200 px-4 py-3">
                 <span className="w-2 h-2 rounded-full bg-gray-400 flex-shrink-0" />
                 {t('vermietung.detail.rented.title')}
               </div>
               <p className="text-xs text-gray-500">{t('vermietung.detail.rented.subtitle')}</p>
               <a
                 href="mailto:office@reto-amonn.ch?subject=Warteliste Wohnung"
-                className="w-full flex items-center justify-center gap-2 border border-blue-200 text-blue-700 hover:bg-blue-50 py-3 px-4 rounded-xl transition-colors text-sm font-medium"
+                className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm font-medium"
               >
                 <Mail size={15} />
                 Auf Warteliste setzen
@@ -446,7 +458,7 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
 
       {/* Details card */}
       {apt.details && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+        <div className="bg-white border border-gray-100 p-5">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Objektdetails</p>
           <div className="space-y-2 text-sm">
             {apt.details.heating && (
@@ -487,7 +499,7 @@ const Gallery = ({ images, onOpen }) => {
   const rest = images.slice(1, 5);
 
   return (
-    <div className="grid grid-cols-4 grid-rows-2 gap-2 rounded-2xl overflow-hidden h-72 md:h-96">
+    <div className="grid grid-cols-4 grid-rows-2 gap-2 overflow-hidden h-72 md:h-96">
       {/* Main image */}
       <div
         className={`col-span-2 row-span-2 cursor-pointer overflow-hidden group ${rest.length === 0 ? 'col-span-4' : ''}`}
@@ -766,7 +778,7 @@ const ApartmentDetailPage = () => {
         <meta property="og:title" content={`${apt.title} – Hans Amonn AG`} />
         <meta property="og:description" content={apt.description?.slice(0, 160)} />
         <meta property="og:image" content={apt.images?.[0]?.url || apt.titleImage || ''} />
-        <meta property="og:url" content={`https://www.hansamonn.ch${window.location.pathname}`} />
+        <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="Hans Amonn AG" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${apt.title} – Hans Amonn AG`} />
@@ -815,14 +827,14 @@ const ApartmentDetailPage = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl py-3 flex items-center justify-between">
           <Link
             to="/immobilien/vermietung"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1D3D78] transition-colors"
           >
             <ArrowLeft size={16} />
             {t('vermietung.detail.back')}
           </Link>
           <button
             onClick={handleExposeDownload}
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-blue-700 border border-gray-200 hover:border-blue-300 bg-white hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-[#1D3D78] border border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50 px-3 py-1.5 transition-colors"
           >
             <Download size={14} />
             Exposé herunterladen
@@ -837,6 +849,8 @@ const ApartmentDetailPage = () => {
             src={apt.images[0].url}
             alt={apt.images[0].alt}
             className="w-full h-full object-cover"
+            loading="eager"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
@@ -862,10 +876,10 @@ const ApartmentDetailPage = () => {
             {apt.images.length > 1 && (
               <div className="grid grid-cols-4 gap-2">
                 {apt.images.slice(1, 5).map((img, i) => (
-                  <div key={i} className="rounded-xl overflow-hidden h-28 cursor-pointer group relative" onClick={() => openLightbox(i + 1)}>
+                  <div key={i} className="overflow-hidden h-28 cursor-pointer group relative" onClick={() => openLightbox(i + 1)}>
                     <RentalImage src={img.url} alt={img.alt} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     {i === 3 && apt.images.length > 5 && (
-                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                         <span className="text-white font-semibold text-sm">+{apt.images.length - 5} Fotos</span>
                       </div>
                     )}
@@ -877,9 +891,9 @@ const ApartmentDetailPage = () => {
             {/* Status badge — apartment only */}
             {apt.type === 'apartment' && (
               <div className="flex flex-wrap items-center gap-2">
-                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold ${
                   apt.status === 'available'
-                    ? 'bg-green-100 text-green-700 border border-green-200'
+                    ? 'bg-gray-100 text-gray-700 border border-gray-200'
                     : 'bg-gray-100 text-gray-500 border border-gray-200'
                 }`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${apt.status === 'available' ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
@@ -891,18 +905,18 @@ const ApartmentDetailPage = () => {
             {/* Quick stats (apartment / long-stay only) */}
             {(apt.type === 'apartment') && apt.rooms && (
               <div className="grid grid-cols-3 gap-3">
-                <div className="bg-gray-50 rounded-xl p-4 text-center">
-                  <Home size={20} className="mx-auto text-blue-600 mb-2" />
+                <div className="bg-gray-50 p-4 text-center">
+                  <Home size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <p className="text-lg font-bold text-gray-900">{apt.rooms}</p>
                   <p className="text-xs text-gray-500">{t('vermietung.card.rooms')}</p>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4 text-center">
-                  <Maximize2 size={20} className="mx-auto text-blue-600 mb-2" />
+                <div className="bg-gray-50 p-4 text-center">
+                  <Maximize2 size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <p className="text-lg font-bold text-gray-900">{apt.size}</p>
                   <p className="text-xs text-gray-500">m²</p>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4 text-center">
-                  <Calendar size={20} className="mx-auto text-blue-600 mb-2" />
+                <div className="bg-gray-50 p-4 text-center">
+                  <Calendar size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <p className="text-sm font-bold text-gray-900 leading-tight">
                     {apt.availableFrom
                       ? new Date(apt.availableFrom).toLocaleDateString('de-CH', { month: 'short', year: 'numeric' })
@@ -935,12 +949,12 @@ const ApartmentDetailPage = () => {
                 <h2 className="text-lg font-semibold text-gray-900 mb-3">{t('vermietung.longStay.pricingTitle')}</h2>
                 <div className="space-y-2">
                   {apt.longStayRooms.map((room, i) => (
-                    <div key={i} className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm ${room.isAddon ? 'bg-gray-50' : 'bg-amber-50'}`}>
+                    <div key={i} className={`flex items-center justify-between px-4 py-3 text-sm bg-gray-50`}>
                       <span className="font-medium text-gray-800">
                         {room.label}
                         {room.size && <span className="text-gray-400 font-normal ml-1">{room.size} m²</span>}
                       </span>
-                      <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-slate-700'}`}>
+                      <span className={`font-bold ${room.isAddon ? 'text-gray-500' : 'text-gray-700'}`}>
                         {room.isFrom && <span className="font-normal text-xs mr-1">ab</span>}
                         CHF {room.price}<span className="text-xs font-normal">/Mt.</span>
                       </span>
@@ -950,7 +964,7 @@ const ApartmentDetailPage = () => {
                 {apt.includes && (
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {apt.includes.map((inc) => (
-                      <span key={inc} className="flex items-center gap-1 bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-full border border-green-100">
+                      <span key={inc} className="flex items-center gap-1 bg-gray-50 text-gray-600 text-xs px-2.5 py-1 border border-gray-200">
                         <CheckCircle2 size={10} />
                         {inc}
                       </span>
@@ -968,8 +982,8 @@ const ApartmentDetailPage = () => {
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {apt.features.map((f) => (
-                    <div key={f} className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-3 py-2.5 rounded-xl">
-                      <CheckCircle2 size={14} className="text-blue-500 flex-shrink-0" />
+                    <div key={f} className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-3 py-2.5">
+                      <CheckCircle2 size={14} className="flex-shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                       {f}
                     </div>
                   ))}
@@ -993,7 +1007,7 @@ const ApartmentDetailPage = () => {
                   <MapPin size={13} />
                   {apt.location}
                 </p>
-                <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm" style={{ height: 300 }}>
+                <div className="overflow-hidden border border-gray-100" style={{ height: 300 }}>
                   <iframe
                     title={`Standort ${apt.title}`}
                     src={`https://www.openstreetmap.org/export/embed.html?bbox=${apt.lng - 0.008},${apt.lat - 0.006},${apt.lng + 0.008},${apt.lat + 0.006}&layer=mapnik&marker=${apt.lat},${apt.lng}`}
@@ -1007,7 +1021,8 @@ const ApartmentDetailPage = () => {
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(apt.location)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs text-blue-500 hover:underline mt-2"
+                  className="inline-flex items-center gap-1 text-xs hover:underline mt-2"
+                  style={{ color: 'var(--brand-color, #1D3D78)' }}
                 >
                   <MapPin size={11} />
                   Auf Google Maps öffnen
@@ -1024,7 +1039,8 @@ const ApartmentDetailPage = () => {
                   </h2>
                   <button
                     onClick={() => setShowForm(!showForm)}
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm hover:underline"
+                    style={{ color: 'var(--brand-color, #1D3D78)' }}
                   >
                     {showForm ? 'Formular ausblenden' : 'Formular öffnen'}
                   </button>
@@ -1044,7 +1060,10 @@ const ApartmentDetailPage = () => {
                 {!showForm && (
                   <button
                     onClick={() => setShowForm(true)}
-                    className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-4 rounded-xl transition-colors"
+                    className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors"
+                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                   >
                     <Mail size={18} />
                     {t('vermietung.card.requestInquiry')}
@@ -1059,18 +1078,18 @@ const ApartmentDetailPage = () => {
             {/* Casa Reto: holiday home highlights */}
             {apt.holidayHome && (
               <div className="grid sm:grid-cols-3 gap-4">
-                <div className="bg-emerald-50 rounded-2xl p-5 text-center border border-emerald-100">
-                  <Sun size={24} className="mx-auto text-emerald-600 mb-2" />
+                <div className="bg-gray-50 p-5 text-center border border-gray-100">
+                  <Sun size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <p className="font-semibold text-gray-800 text-sm">Lago Maggiore</p>
                   <p className="text-xs text-gray-500 mt-1">Gordemo, Tessin</p>
                 </div>
-                <div className="bg-emerald-50 rounded-2xl p-5 text-center border border-emerald-100">
-                  <Wifi size={24} className="mx-auto text-emerald-600 mb-2" />
+                <div className="bg-gray-50 p-5 text-center border border-gray-100">
+                  <Wifi size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <p className="font-semibold text-gray-800 text-sm">Vollmöbliert</p>
                   <p className="text-xs text-gray-500 mt-1">Alles vorhanden</p>
                 </div>
-                <div className="bg-emerald-50 rounded-2xl p-5 text-center border border-emerald-100">
-                  <MapPin size={24} className="mx-auto text-emerald-600 mb-2" />
+                <div className="bg-gray-50 p-5 text-center border border-gray-100">
+                  <MapPin size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <p className="font-semibold text-gray-800 text-sm">Familien</p>
                   <p className="text-xs text-gray-500 mt-1">Ideal für Gruppen</p>
                 </div>
@@ -1091,7 +1110,7 @@ const ApartmentDetailPage = () => {
             {/* Terminbuchung */}
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Termin vereinbaren</h2>
-              <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+              <div className="bg-white border border-gray-200 p-5">
                 <TerminbuchungForm
                   propertyId={apt.id ?? apt.slug}
                   propertyName={apt.title}
@@ -1124,14 +1143,15 @@ const ApartmentDetailPage = () => {
               href={apt.directBookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white font-semibold py-3 rounded-xl text-sm"
+              className="flex-1 flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
             >
               <ExternalLink size={15} />
               {t('vermietung.hotel.bookDirectly')}
             </a>
             <a
               href={`tel:+41319518554`}
-              className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 px-4 rounded-xl text-sm"
+              className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 px-4 text-sm"
             >
               <Phone size={16} />
             </a>
@@ -1139,7 +1159,8 @@ const ApartmentDetailPage = () => {
         ) : apt.type === 'project' ? (
           <a
             href={`mailto:${apt.contact.email}?subject=Anfrage Casa Reto`}
-            className="w-full flex items-center justify-center gap-2 bg-emerald-600 text-white font-semibold py-3 rounded-xl text-sm"
+            className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
           >
             <Mail size={16} />
             Aufenthalt anfragen
@@ -1147,7 +1168,8 @@ const ApartmentDetailPage = () => {
         ) : apt.type === 'long-stay' ? (
           <a
             href={`mailto:${apt.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
-            className="w-full flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-800 text-white font-semibold py-3 rounded-xl text-sm"
+            className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
           >
             <Mail size={16} />
             {t('vermietung.longStay.requestTitle')}
@@ -1156,14 +1178,15 @@ const ApartmentDetailPage = () => {
           <div className="flex gap-2">
             <button
               onClick={() => { setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white font-semibold py-3 rounded-xl text-sm"
+              className="flex-1 flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
             >
               <Mail size={15} />
               {t('vermietung.card.requestInquiry')}
             </button>
             <a
               href="tel:+41319518554"
-              className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 px-4 rounded-xl text-sm"
+              className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 px-4 text-sm"
             >
               <Phone size={16} />
             </a>

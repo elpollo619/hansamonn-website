@@ -46,10 +46,10 @@ const MortgageCalculator = () => {
   const tragbarkeitOk = tragbarkeit !== null ? tragbarkeit <= 33 : null;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-white border border-gray-100 overflow-hidden">
       {/* Header */}
       <div className="bg-gradient-to-r from-gray-900 to-gray-700 px-6 py-5 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
+        <div className="w-9 h-9 bg-white/10 flex items-center justify-center flex-shrink-0">
           <Calculator size={18} className="text-white" />
         </div>
         <div>
@@ -120,7 +120,7 @@ const MortgageCalculator = () => {
               step={0.1}
               value={zinssatz}
               onChange={e => setZinssatz(Math.max(0.1, Math.min(10, Number(e.target.value))))}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+              className="w-full border border-gray-200 rounded px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/20"
             />
           </div>
 
@@ -132,7 +132,7 @@ const MortgageCalculator = () => {
                 <button
                   key={y}
                   onClick={() => setLaufzeit(y)}
-                  className={`py-2 rounded-xl text-sm font-semibold border transition-colors ${
+                  className={`py-2 rounded text-sm font-semibold border transition-colors ${
                     laufzeit === y
                       ? 'bg-gray-900 text-white border-gray-900'
                       : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
@@ -157,7 +157,7 @@ const MortgageCalculator = () => {
               step={500}
               value={monatseinkommen}
               onChange={e => setMonatseinkommen(Math.max(0, Number(e.target.value)))}
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+              className="w-full border border-gray-200 rounded px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/20"
             />
           </div>
         </div>
@@ -167,44 +167,44 @@ const MortgageCalculator = () => {
           <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Ergebnis</h3>
 
           {/* Hypothek */}
-          <div className="bg-gray-50 rounded-2xl p-4">
+          <div className="bg-gray-50 p-4">
             <p className="text-xs text-gray-500 mb-0.5">Hypothek (Finanzierungsbedarf)</p>
             <p className="text-2xl font-black text-gray-900">{chf(hypothek)}</p>
           </div>
 
           {/* Monatsrate */}
-          <div className="bg-gray-900 rounded-2xl p-4 text-white">
+          <div className="bg-gray-900 p-4 text-white">
             <p className="text-xs text-gray-400 mb-0.5">Monatliche Rate</p>
             <p className="text-3xl font-black">{chf(monatsrate)}</p>
             <p className="text-xs text-gray-400 mt-1">Annuität · {laufzeit} Jahre · {zinssatz.toFixed(1)}% p.a.</p>
           </div>
 
           {/* Jährliche Zinsen Jahr 1 */}
-          <div className="bg-gray-50 rounded-2xl p-4">
+          <div className="bg-gray-50 p-4">
             <p className="text-xs text-gray-500 mb-0.5">Jährliche Zinsen (1. Jahr)</p>
             <p className="text-xl font-bold text-gray-900">{chf(jahresZinsen)}</p>
           </div>
 
           {/* Tragbarkeit */}
-          <div className={`rounded-2xl p-4 ${
+          <div className={`p-4 ${
             tragbarkeitOk === null
               ? 'bg-gray-50'
               : tragbarkeitOk
-              ? 'bg-green-50 border border-green-100'
+              ? 'bg-gray-50 border border-gray-200'
               : 'bg-red-50 border border-red-100'
           }`}>
             <div className="flex items-start justify-between gap-2">
               <div>
                 <p className="text-xs text-gray-500 mb-0.5">Tragbarkeit (Rate / Einkommen)</p>
                 <p className={`text-xl font-bold ${
-                  tragbarkeitOk === null ? 'text-gray-900' : tragbarkeitOk ? 'text-green-700' : 'text-red-700'
+                  tragbarkeitOk === null ? 'text-gray-900' : tragbarkeitOk ? 'text-gray-900' : 'text-red-700'
                 }`}>
                   {tragbarkeit !== null ? `${tragbarkeit.toFixed(1)}%` : '–'}
                 </p>
               </div>
               {tragbarkeitOk !== null && (
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full mt-1 ${
-                  tragbarkeitOk ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded mt-1 ${
+                  tragbarkeitOk ? 'bg-gray-200 text-gray-700' : 'bg-red-100 text-red-700'
                 }`}>
                   {tragbarkeitOk ? 'Erfüllt' : 'Nicht erfüllt'}
                 </span>
@@ -214,8 +214,8 @@ const MortgageCalculator = () => {
           </div>
 
           {/* LTV indicator */}
-          <div className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm ${
-            ltvOk ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+          <div className={`flex items-center gap-3 px-4 py-3 text-sm ${
+            ltvOk ? 'bg-gray-50 text-gray-700' : 'bg-red-50 text-red-700'
           }`}>
             <TrendingUp size={15} className="flex-shrink-0" />
             <span>
@@ -237,7 +237,10 @@ const MortgageCalculator = () => {
         </div>
         <Link
           to="/kontakt"
-          className="flex-shrink-0 inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
+          className="flex-shrink-0 inline-flex items-center justify-center gap-2 text-white text-sm font-semibold px-5 py-2.5 transition-colors"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           Beratung anfragen
         </Link>

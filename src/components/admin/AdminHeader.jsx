@@ -17,7 +17,7 @@ const AdminHeader = ({ isEditing, setIsEditing }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-lg shadow-lg p-6 mb-8"
+      className="bg-white rounded-lg border border-gray-200 p-6 mb-8"
     >
       <div className="flex items-center justify-between">
         <div>
@@ -41,7 +41,10 @@ const AdminHeader = ({ isEditing, setIsEditing }) => {
             <>
               <Button
                 onClick={handleSave}
-                className="bg-green-600 hover:bg-green-700 text-white"
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              className="text-white"
               >
                 <Save size={16} className="mr-2" />
                 Speichern

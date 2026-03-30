@@ -11,7 +11,7 @@ const TeamInfo = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
         viewport={{ once: true }}
-        className="mt-12 bg-white rounded-lg p-8 shadow-lg"
+        className="mt-12 bg-white rounded-lg p-8 border border-gray-100"
       >
         <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
           Familienunternehmen mit Herz
@@ -31,7 +31,7 @@ const TeamInfo = () => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.45 }}
         viewport={{ once: true }}
-        className="mt-8 bg-blue-50 rounded-lg p-8"
+        className="mt-8 bg-gray-50 rounded-lg p-8"
       >
         <div className="grid md:grid-cols-3 gap-8 items-center">
           <div>
@@ -82,7 +82,10 @@ const TeamInfo = () => {
         </p>
         <a
           href="mailto:office@reto-amonn.ch"
-          className="brand-gradient hover:brand-gradient-hover text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-lg inline-block"
+          className="text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 inline-block"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           Termin vereinbaren
         </a>

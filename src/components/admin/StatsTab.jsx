@@ -17,8 +17,8 @@ const Skeleton = ({ className }) => (
 // ── KPI Card ─────────────────────────────────────────────────────────────────
 
 const KpiCard = ({ label, value, icon: Icon, loading }) => (
-  <div className="bg-white border border-gray-200 rounded-2xl p-5 flex items-center gap-4">
-    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center">
+  <div className="bg-white border border-gray-200 rounded-lg p-5 flex items-center gap-4">
+    <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center">
       <Icon size={20} className="text-gray-600" />
     </div>
     <div className="min-w-0">
@@ -79,7 +79,7 @@ export default function StatsTab() {
         <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
           Beliebteste Immobilien
         </h2>
-        <div className="border border-gray-200 rounded-2xl overflow-hidden">
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
           {loading ? (
             <div className="p-6 space-y-3">
               {[...Array(4)].map((_, i) => (

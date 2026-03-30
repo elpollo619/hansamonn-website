@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Eye, X, Loader2, AlertCircle, MessageSquare } from 'lucide-react';
+import { Eye, X, Loader2, AlertCircle, MessageSquare, Download } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/use-toast';
 
 const STATUS_CONFIG = {
-  neu:        { label: 'Neu',        cls: 'bg-blue-100 text-blue-700' },
-  bearbeitet: { label: 'Bearbeitet', cls: 'bg-yellow-100 text-yellow-700' },
-  abgelehnt:  { label: 'Abgelehnt',  cls: 'bg-red-100 text-red-600' },
-  erledigt:   { label: 'Erledigt',   cls: 'bg-green-100 text-green-700' },
+  neu:        { label: 'Neu',        cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
+  bearbeitet: { label: 'Bearbeitet', cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
+  abgelehnt:  { label: 'Abgelehnt',  cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
+  erledigt:   { label: 'Erledigt',   cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
 };
 
 function StatusBadge({ status }) {
@@ -43,7 +43,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="flex-1 bg-black/40" onClick={onClose} />
-      <div className="w-full max-w-lg bg-white shadow-2xl flex flex-col">
+      <div className="w-full max-w-lg bg-white flex flex-col" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h3 className="font-bold text-gray-900">Kontaktanfrage: {row.name}</h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100">
@@ -95,7 +95,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                 Nachricht
               </p>
-              <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
+              <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
                 {row.nachricht}
               </div>
             </div>
@@ -145,9 +145,19 @@ export default function KontaktTab() {
     return str;
   }
 
-  function exportCsv() {
+  async function exportCsv() {
+    const { data: allRows, error: fetchErr } = await supabase
+      .from('kontakt_anfragen')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (fetchErr || !allRows || allRows.length === 0) {
+      toast({ title: 'Keine Daten zum Exportieren vorhanden', variant: 'destructive' });
+      return;
+    }
+
     const headers = ['Datum', 'Name', 'Email', 'Telefon', 'Betreff', 'Nachricht', 'Status'];
-    const dataRows = filtered.map((r) => [
+    const dataRows = allRows.map((r) => [
       r.created_at ? new Date(r.created_at).toLocaleDateString('de-CH') : '',
       r.name ?? '',
       r.email ?? '',
@@ -156,6 +166,7 @@ export default function KontaktTab() {
       r.nachricht ?? '',
       r.status ?? '',
     ].map(csvEscape).join(','));
+
     const csv = [headers.join(','), ...dataRows].join('\n');
     const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -186,7 +197,7 @@ export default function KontaktTab() {
             onClick={exportCsv}
             className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors"
           >
-            CSV exportieren
+            <Download size={14} /> CSV exportieren
           </button>
           <button
             onClick={load}
@@ -222,11 +233,11 @@ export default function KontaktTab() {
           <Loader2 size={20} className="animate-spin" /> Lade Anfragen…
         </div>
       ) : error ? (
-        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
           <AlertCircle size={15} /> {error}
         </div>
       ) : (
-        <div className="border border-gray-200 rounded-xl overflow-hidden">
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>

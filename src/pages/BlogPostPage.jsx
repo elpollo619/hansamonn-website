@@ -7,9 +7,9 @@ import { getBlogPostBySlug, getBlogPosts } from '@/data/blogStore';
 import { useTranslation } from '@/i18n';
 
 const CATEGORY_COLORS = {
-  Immobilien: 'bg-blue-100 text-blue-700',
-  Architektur: 'bg-emerald-100 text-emerald-700',
-  Unternehmen: 'bg-amber-100 text-amber-700',
+  Immobilien: 'bg-gray-100 text-gray-600',
+  Architektur: 'bg-gray-100 text-gray-600',
+  Unternehmen: 'bg-gray-100 text-gray-600',
   Allgemein:   'bg-gray-100 text-gray-600',
 };
 
@@ -80,6 +80,8 @@ export default function BlogPostPage() {
               src={post.cover_image}
               alt={post.title}
               className="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
             />
           </div>
         )}
@@ -95,7 +97,7 @@ export default function BlogPostPage() {
             >
               {/* Category badge */}
               <div className="flex items-center gap-3 mb-4">
-                <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full ${categoryColor(post.category)}`}>
+                <span className={`inline-block text-xs font-semibold px-2.5 py-1 ${categoryColor(post.category)}`}>
                   {post.category}
                 </span>
               </div>
@@ -134,7 +136,7 @@ export default function BlogPostPage() {
                     [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-gray-900 [&_h3]:mt-6 [&_h3]:mb-3
                     [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4
                     [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4
-                    [&_li]:mb-1 [&_a]:text-blue-600 [&_a]:underline
+                    [&_li]:mb-1 [&_a]:text-[#1D3D78] [&_a]:underline
                     [&_strong]:font-bold [&_em]:italic
                     [&_blockquote]:border-l-4 [&_blockquote]:border-gray-200 [&_blockquote]:pl-4 [&_blockquote]:text-gray-500 [&_blockquote]:italic"
                   dangerouslySetInnerHTML={{ __html: displayContent }}
@@ -157,7 +159,7 @@ export default function BlogPostPage() {
 
               {/* Recent posts */}
               {recentPosts.length > 1 && (
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                <div className="bg-white border border-gray-100 p-5">
                   <h3 className="text-xs font-black tracking-widest text-gray-400 uppercase mb-4">
                     Weitere Beiträge
                   </h3>
@@ -172,15 +174,17 @@ export default function BlogPostPage() {
                             className="block group"
                           >
                             {p.cover_image && (
-                              <div className="w-full h-24 rounded-xl overflow-hidden bg-gray-100 mb-2">
+                              <div className="w-full h-24 overflow-hidden bg-gray-100 mb-2">
                                 <img
                                   src={p.cover_image}
                                   alt={p.title}
                                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  loading="lazy"
+                                  decoding="async"
                                 />
                               </div>
                             )}
-                            <p className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
+                            <p className="text-sm font-semibold text-gray-800 group-hover:text-[#1D3D78] transition-colors line-clamp-2 leading-snug">
                               {(lang === 'it' && p.title_it) || p.title}
                             </p>
                             <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">

@@ -130,7 +130,7 @@ const Contact = () => {
                   className="flex items-start space-x-4"
                 >
                   <div className="w-12 h-12 bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <info.icon className="w-6 h-6" style={{ color: '#1D3D78' }} />
+                    <info.icon className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-1">
@@ -262,9 +262,9 @@ const Contact = () => {
                 type="submit"
                 disabled={submitting}
                 className="w-full text-white py-3.5 text-sm font-semibold transition-colors disabled:opacity-60"
-                style={{ backgroundColor: '#1D3D78' }}
-                onMouseOver={e => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor='#162E5A')}
-                onMouseOut={e => (e.currentTarget.style.backgroundColor='#1D3D78')}
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                onMouseOver={e => !e.currentTarget.disabled && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
                 {submitting ? 'Wird gesendet…' : t('contact.form.submit')}
               </button>
@@ -308,7 +308,7 @@ const Contact = () => {
               {/* Map Overlay with Company Info */}
               <div className="absolute top-4 left-4 bg-white/95 p-4 border border-gray-100 max-w-xs">
                 <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#1D3D78' }}>
+                  <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
@@ -317,7 +317,7 @@ const Contact = () => {
                       Blümlisalpstrasse 4<br />
                       3074 Muri bei Bern
                     </p>
-                    <a href="tel:+41319518554" className="text-xs mt-2 font-medium hover:underline" style={{ color: '#1D3D78' }}>
+                    <a href="tel:+41319518554" className="text-xs mt-2 font-medium hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}>
                       +41 (0)31 951 85 54
                     </a>
                   </div>
@@ -329,8 +329,8 @@ const Contact = () => {
             <div className="p-6 bg-gray-50">
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                    <MapPin className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                    <MapPin className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   </div>
                   <h4 className="font-semibold text-gray-900 mb-2">Adresse</h4>
                   <p className="text-sm text-gray-600">
@@ -340,8 +340,8 @@ const Contact = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
@@ -353,8 +353,8 @@ const Contact = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -373,7 +373,10 @@ const Contact = () => {
                   href="https://www.google.com/maps/dir//Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern,+Switzerland"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300"
+                  className="inline-flex items-center px-6 py-3 text-white font-medium transition-colors duration-300"
+                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                 >
                   <MapPin className="w-5 h-5 mr-2" />
                   Route planen
@@ -389,7 +392,7 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           viewport={{ once: true }}
-          className="mt-16 bg-blue-50 rounded-lg p-8 text-center"
+          className="mt-16 bg-gray-50 border border-gray-100 p-8 text-center"
         >
           <h3 className="text-2xl font-semibold text-gray-900 mb-4">
             Bereit für Ihr nächstes Projekt?
@@ -401,14 +404,17 @@ const Contact = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="tel:+41319518554"
-              className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300"
+              className="inline-flex items-center px-6 py-3 text-white font-medium transition-colors duration-300"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
             >
               <Phone className="w-5 h-5 mr-2" />
               Jetzt anrufen
             </a>
             <a
               href="mailto:office@reto-amonn.ch"
-              className="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium rounded-lg transition-colors duration-300"
+              className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition-colors duration-300"
             >
               <Mail className="w-5 h-5 mr-2" />
               E-Mail senden

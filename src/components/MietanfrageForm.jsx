@@ -278,12 +278,12 @@ function generatePDF(data, docFiles) {
 
 function Section({ icon: Icon, title, children, className = "" }) {
   return (
-    <div className={`bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm ${className}`}>
-      <div className="flex items-center gap-3 px-6 py-4 bg-slate-50 border-b border-slate-200">
-        <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-          <Icon size={16} className="text-blue-600" />
+    <div className={`bg-white border border-gray-200 overflow-hidden ${className}`}>
+      <div className="flex items-center gap-3 px-6 py-4 bg-gray-50 border-b border-gray-200">
+        <div className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <Icon size={16} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
-        <h3 className="text-base font-semibold text-slate-800">{title}</h3>
+        <h3 className="text-base font-semibold text-gray-800">{title}</h3>
       </div>
       <div className="p-6 space-y-5">{children}</div>
     </div>
@@ -292,9 +292,9 @@ function Section({ icon: Icon, title, children, className = "" }) {
 
 // ─── Field helpers ────────────────────────────────────────────────────────────
 
-const inp = "w-full border border-slate-300 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 transition bg-white";
+const inp = "w-full border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#1D3D78] transition bg-white";
 const sel = inp + " cursor-pointer";
-const lbl = "block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wide";
+const lbl = "block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide";
 
 function Field({ label, required, children, className = "" }) {
   return (
@@ -328,9 +328,9 @@ function RadioGroup({ name, value, onChange, options }) {
             value={opt}
             checked={value === opt}
             onChange={onChange}
-            className="accent-blue-600"
+            className="accent-[#1D3D78]"
           />
-          <span className="text-sm text-slate-700">{opt}</span>
+          <span className="text-sm text-gray-700">{opt}</span>
         </label>
       ))}
     </div>
@@ -348,7 +348,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
       </label>
       <div
         onClick={() => ref.current?.click()}
-        className="relative border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-xl p-5 cursor-pointer transition group bg-slate-50 hover:bg-blue-50"
+        className="relative border-2 border-dashed border-gray-200 hover:border-[#1D3D78] p-5 cursor-pointer transition group bg-gray-50 hover:bg-gray-100"
       >
         <input
           ref={ref}
@@ -361,7 +361,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
             e.target.value = "";
           }}
         />
-        <div className="flex flex-col items-center gap-2 text-slate-400 group-hover:text-blue-500 transition">
+        <div className="flex flex-col items-center gap-2 text-gray-400 group-hover:text-[#1D3D78] transition">
           <Upload size={24} />
           <span className="text-sm font-medium">{uploadText || 'Dateien hier ablegen oder klicken'}</span>
           {hint && <span className="text-xs">{hint}</span>}
@@ -370,14 +370,14 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
       {files.length > 0 && (
         <div className="mt-3 space-y-2">
           {files.map((f, i) => (
-            <div key={i} className="flex items-center justify-between bg-white border border-slate-200 rounded-lg px-3 py-2">
+            <div key={i} className="flex items-center justify-between bg-white border border-gray-200 px-3 py-2">
               <div className="flex items-center gap-2 min-w-0">
-                <FileText size={14} className="text-blue-500 flex-shrink-0" />
-                <span className="text-xs text-slate-700 truncate">{f.name}</span>
-                <span className="text-xs text-slate-400 flex-shrink-0">({(f.size / 1024).toFixed(0)} KB)</span>
+                <FileText size={14} className="flex-shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                <span className="text-xs text-gray-700 truncate">{f.name}</span>
+                <span className="text-xs text-gray-400 flex-shrink-0">({(f.size / 1024).toFixed(0)} KB)</span>
               </div>
               <button type="button" onClick={() => onRemove(i)} className="p-1 hover:bg-red-50 rounded">
-                <X size={12} className="text-slate-400 hover:text-red-500" />
+                <X size={12} className="text-gray-400 hover:text-gray-700" />
               </button>
             </div>
           ))}
@@ -525,14 +525,14 @@ export default function MietanfrageForm() {
       .replace('{{name}}', `${form.vorname} ${form.nachname}`);
     return (
       <div className="max-w-2xl mx-auto py-16 text-center">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 size={40} className="text-green-600" />
+        <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6">
+          <CheckCircle2 size={40} style={{ color: 'var(--brand-color, #1D3D78)' }} />
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-3">{t('mietanfrage.successTitle')}</h2>
-        <p className="text-slate-600 mb-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: successText.replace('\n', '<br />') }} />
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 text-left mb-6">
-          <p className="text-sm font-semibold text-blue-800 mb-2">{t('mietanfrage.successNext') || 'Was passiert als nächstes?'}</p>
-          <ul className="text-sm text-blue-700 space-y-1.5 list-disc list-inside">
+        <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('mietanfrage.successTitle')}</h2>
+        <p className="text-gray-600 mb-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: successText.replace('\n', '<br />') }} />
+        <div className="bg-gray-50 border border-gray-200 p-5 text-left mb-6">
+          <p className="text-sm font-semibold text-gray-800 mb-2">{t('mietanfrage.successNext') || 'Was passiert als nächstes?'}</p>
+          <ul className="text-sm text-gray-700 space-y-1.5 list-disc list-inside">
             <li>{t('mietanfrage.successPdf')}</li>
             <li>{t('mietanfrage.successReply')}</li>
             <li>{t('mietanfrage.successContact')} <a href="mailto:office@reto-amonn.ch" className="underline">office@reto-amonn.ch</a> {t('common.or') || 'oder'} +41 31 951 85 54</li>
@@ -540,7 +540,10 @@ export default function MietanfrageForm() {
         </div>
         <button
           onClick={() => { setDone(false); setForm(INITIAL); setIdFiles([]); setExtraFiles([]); }}
-          className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition text-sm"
+          className="px-6 py-3 text-white font-semibold transition text-sm"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           {t('mietanfrage.newRequest')}
         </button>
@@ -561,8 +564,8 @@ export default function MietanfrageForm() {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">{t('mietanfrage.title')}</h1>
-        <p className="text-slate-500 text-base leading-relaxed max-w-2xl">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{t('mietanfrage.title')}</h1>
+        <p className="text-gray-500 text-base leading-relaxed max-w-2xl">
           {t('mietanfrage.subtitle')}
         </p>
       </div>
@@ -588,10 +591,10 @@ export default function MietanfrageForm() {
                   key={ort}
                   type="button"
                   onClick={() => toggleMietort(ort)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border-2 transition ${
+                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 transition ${
                     form.mietort.includes(ort)
-                      ? "border-blue-500 bg-blue-50 text-blue-700"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-blue-300"
+                      ? "border-[#1D3D78] bg-gray-50 text-[#1D3D78]"
+                      : "border-gray-200 bg-white text-gray-600 hover:border-[#1D3D78]"
                   }`}
                 >
                   <MapPin size={13} />
@@ -702,7 +705,7 @@ export default function MietanfrageForm() {
 
         {/* ── 3. Angaben Firma ── */}
         <Section icon={Building2} title={t('mietanfrage.sectionFirma')}>
-          <p className="text-xs text-slate-400 -mt-1">{t('mietanfrage.sectionFirmaHint')}</p>
+          <p className="text-xs text-gray-400 -mt-1">{t('mietanfrage.sectionFirmaHint')}</p>
           <Field label={t('mietanfrage.firma')}>
             <input name="firma" value={form.firma} onChange={handleChange} placeholder={t('mietanfrage.firma')} className={inp} />
           </Field>
@@ -793,17 +796,17 @@ export default function MietanfrageForm() {
             { key: "akzept3", text: t('mietanfrage.consent3') },
           ].map(({ key, text }) => (
             <label key={key} className="flex items-start gap-3 cursor-pointer group">
-              <div className={`mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition ${form[key] ? "border-blue-600 bg-blue-600" : "border-slate-300 group-hover:border-blue-400"}`}>
+              <div className={`mt-0.5 w-5 h-5 border-2 flex items-center justify-center flex-shrink-0 transition ${form[key] ? "border-[#1D3D78] bg-[#1D3D78]" : "border-gray-300 group-hover:border-[#1D3D78]"}`}>
                 {form[key] && <CheckCircle2 size={12} className="text-white" />}
               </div>
               <input type="checkbox" name={key} checked={form[key]} onChange={handleChange} className="sr-only" />
-              <span className="text-sm text-slate-700 leading-relaxed">{text}</span>
+              <span className="text-sm text-gray-700 leading-relaxed">{text}</span>
             </label>
           ))}
           {errMsg("akzept")}
 
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-2">
-            <p className="text-xs text-amber-700 flex items-start gap-2">
+          <div className="bg-gray-50 border border-gray-200 p-4 mt-2">
+            <p className="text-xs text-gray-600 flex items-start gap-2">
               <AlertCircle size={14} className="flex-shrink-0 mt-0.5" />
               {t('mietanfrage.pdfNote')}
             </p>
@@ -814,7 +817,10 @@ export default function MietanfrageForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-bold py-4 px-8 rounded-2xl text-base transition shadow-lg shadow-blue-200"
+          className="w-full flex items-center justify-center gap-3 disabled:opacity-60 text-white font-bold py-4 px-8 text-base transition"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           {loading ? (
             <>

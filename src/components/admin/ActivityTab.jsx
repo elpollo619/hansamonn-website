@@ -25,19 +25,8 @@ function entryMeta(entry) {
   const action = (entry.action ?? '').toLowerCase();
   const entity = (entry.entity_type ?? '').toLowerCase();
 
-  // Color by action verb
-  let colorCls = 'bg-blue-100 text-blue-600';
-  if (action.includes('erstellt') || action.includes('gespeichert') && !action.includes('status')) {
-    colorCls = 'bg-green-100 text-green-600';
-  } else if (action.includes('gelöscht') || action.includes('entfernt')) {
-    colorCls = 'bg-red-100 text-red-600';
-  } else if (action.includes('ausgeblendet')) {
-    colorCls = 'bg-gray-100 text-gray-500';
-  } else if (action.includes('eingeblendet') || action.includes('akzeptiert')) {
-    colorCls = 'bg-green-100 text-green-600';
-  } else if (action.includes('abgelehnt')) {
-    colorCls = 'bg-red-100 text-red-600';
-  }
+  // Color by action verb — all use gray per design system
+  let colorCls = 'bg-gray-100 text-gray-600';
 
   // Icon by entity
   let Icon = Star;
@@ -125,7 +114,7 @@ export default function ActivityTab() {
           <Loader2 size={20} className="animate-spin" /> Lade Protokoll…
         </div>
       ) : error ? (
-        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
           <AlertCircle size={15} /> {error}
         </div>
       ) : entries.length === 0 ? (
@@ -148,7 +137,7 @@ export default function ActivityTab() {
                   </div>
 
                   {/* Card */}
-                  <div className="flex-1 bg-white border border-gray-100 rounded-xl px-4 py-3 shadow-sm">
+                  <div className="flex-1 bg-white border border-gray-100 rounded-lg px-4 py-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-gray-900 truncate">{entry.action}</p>

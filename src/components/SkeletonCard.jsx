@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SkeletonCard = () => (
-  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden animate-pulse flex flex-col">
+  <div className="bg-white border border-gray-100 overflow-hidden animate-pulse flex flex-col">
     {/* Image area */}
     <div className="aspect-video bg-gray-200 w-full" />
 
@@ -39,7 +39,7 @@ const SkeletonCard = () => (
       <div className="h-5 w-28 bg-gray-200 rounded-lg mt-auto" />
 
       {/* Button */}
-      <div className="h-11 w-full bg-gray-200 rounded-xl mt-1" />
+      <div className="h-11 w-full bg-gray-200 mt-1" />
     </div>
   </div>
 );

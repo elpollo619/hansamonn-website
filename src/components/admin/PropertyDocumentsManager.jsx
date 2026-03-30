@@ -19,6 +19,7 @@ export default function PropertyDocumentsManager({ propertyId }) {
       .finally(() => setLoading(false));
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { reload(); }, [propertyId]);
 
   async function handleUpload(e) {

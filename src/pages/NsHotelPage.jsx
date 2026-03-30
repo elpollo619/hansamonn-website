@@ -1,13 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  Phone,
-  Mail,
-  MessageCircle,
-  MessageSquare,
-  Hotel,
-  CalendarDays,
-  ArrowRight,
+  Phone, Mail, MessageCircle, MessageSquare,
+  Hotel, CalendarDays, ArrowRight,
 } from "lucide-react";
 import { Helmet } from 'react-helmet';
 
@@ -21,24 +16,28 @@ function getBookingDates() {
 export default function NsHotelPage() {
   const { arrival, departure } = getBookingDates();
   return (
-    <div className="bg-white text-slate-900">
+    <div className="bg-white text-gray-900">
       <Helmet>
         <title>N's Hotel Kerzers – Boutique Hotel | Hans Amonn AG</title>
         <meta name="description" content="Modernes Boutique-Hotel in Kerzers mit Self Check-in. Ideal für Geschäftsreisen und Kurzaufenthalte." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="N's Hotel Kerzers – Boutique Hotel | Hans Amonn AG" />
+        <meta property="og:description" content="Modernes Boutique-Hotel in Kerzers mit Self Check-in. Ideal für Geschäftsreisen und Kurzaufenthalte." />
+        <meta property="og:image" content="https://www.hansamonn.ch/images/kerzers/titel.jpg" />
+        <meta property="og:url" content="https://www.hansamonn.ch/ns-hotel" />
+        <meta property="og:site_name" content="Hans Amonn AG" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
-      <section className="bg-gradient-to-br from-sky-50 via-white to-slate-50 border-b">
+
+      {/* Hero */}
+      <section className="bg-gray-50 border-b border-gray-100">
         <div className="container mx-auto px-6 py-20">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white px-4 py-2 text-sm text-sky-700 mb-6">
-              <Hotel size={16} />
-              Short Stay
-            </div>
-
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              N&apos;s Hotel
+            <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">Hans Amonn AG · Short Stay</p>
+            <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
+              N&apos;s <span className="font-black">Hotel</span>
             </h1>
-
-            <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-8">
+            <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
               Kurzaufenthalte und Übernachtungen mit direkter Buchung über unsere
               Website oder über Booking und Airbnb.
             </p>
@@ -46,132 +45,88 @@ export default function NsHotelPage() {
         </div>
       </section>
 
+      {/* Content */}
       <section className="container mx-auto px-6 py-16">
         <div className="grid gap-10 lg:grid-cols-2 items-start">
-          <div className="rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 min-h-[340px] flex items-center justify-center">
-            <span className="text-slate-500 text-lg">Hier Hotelbilder einfügen</span>
+          <div className="overflow-hidden border border-gray-100 bg-gray-50 min-h-[340px] flex items-center justify-center">
+            <span className="text-gray-400 text-base">Hier Hotelbilder einfügen</span>
           </div>
 
           <div>
-            <h2 className="text-3xl font-bold mb-4">Ihr Aufenthalt im N&apos;s Hotel</h2>
+            <h2 className="text-3xl font-light text-gray-900 mb-4">
+              Ihr Aufenthalt im <span className="font-black">N's Hotel</span>
+            </h2>
 
-            <p className="text-slate-600 leading-8 mb-6">
+            <p className="text-gray-600 leading-relaxed mb-5">
               Das N&apos;s Hotel ist ideal für Gäste, Touristen und Business-Trips.
               Buchungen können direkt über unsere eigene Plattform oder alternativ
               über Booking und Airbnb erfolgen.
             </p>
 
-            <p className="text-slate-600 leading-8 mb-8">
+            <p className="text-gray-600 leading-relaxed mb-8">
               Für direkte Anfragen kann das Formular ebenfalls verwendet werden.
-              Die Angaben für Short Stay und N&apos;s Hotel werden automatisch übernommen.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               <a
                 href={`https://my.ns-hotel.ch/search/offers?ADULTS=1&CHILDREN=&ARRIVAL=${arrival}&DEPARTURE=${departure}&PROPERTY_IDS=NSH`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-white font-semibold hover:bg-sky-700 transition"
+                className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold transition-colors text-sm"
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
-                <CalendarDays size={18} />
-                Direkt buchen
+                <CalendarDays size={16} /> Direkt buchen
               </a>
-
-              <a
-                href="https://www.booking.com/Share-WIWuII"
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50 transition"
-              >
+              <a href="https://www.booking.com/Share-WIWuII" target="_blank" rel="noreferrer"
+                className="border border-gray-200 px-6 py-3 font-semibold text-gray-700 hover:bg-gray-50 transition-colors text-sm">
                 Zu Booking
               </a>
-
-              <a
-                href={`https://www.airbnb.ch/rooms/1300557231274190252?check_in=${arrival}&check_out=${departure}&guests=1&adults=1`}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50 transition"
-              >
+              <a href={`https://www.airbnb.ch/rooms/1300557231274190252?check_in=${arrival}&check_out=${departure}&guests=1&adults=1`}
+                target="_blank" rel="noreferrer"
+                className="border border-gray-200 px-6 py-3 font-semibold text-gray-700 hover:bg-gray-50 transition-colors text-sm">
                 Zu Airbnb
               </a>
-
-              <Link
-                to="/immobilien/anfrage"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-50 transition"
-              >
-                Direkt anfragen
-                <ArrowRight size={18} />
+              <Link to="/immobilien/anfrage"
+                className="inline-flex items-center gap-2 border border-gray-200 px-6 py-3 font-semibold text-gray-700 hover:bg-gray-50 transition-colors text-sm">
+                Direkt anfragen <ArrowRight size={15} />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-slate-50 border-t border-b">
+      {/* Contact section */}
+      <section className="bg-gray-50 border-t border-gray-100">
         <div className="container mx-auto px-6 py-16">
-          <div className="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm p-8 md:p-12">
+          <div className="max-w-5xl mx-auto bg-white border border-gray-100 p-8 md:p-12">
             <div className="flex justify-center mb-6">
-              <MessageSquare className="text-sky-500" size={36} />
+              <MessageSquare style={{ color: 'var(--brand-color, #1D3D78)' }} size={32} />
             </div>
-
-            <h3 className="text-3xl md:text-5xl font-bold text-center mb-10">
-              Fragen oder Probleme? Kontaktiere uns:
+            <h3 className="text-3xl font-light text-gray-900 text-center mb-10">
+              Fragen oder Probleme? <span className="font-black">Kontaktiere uns:</span>
             </h3>
-
-            <div className="space-y-6">
-              <a
-                href="tel:+41319518554"
-                className="flex items-center gap-6 rounded-2xl bg-slate-50 p-6 border border-slate-200 hover:bg-slate-100 transition"
-              >
-                <Phone className="text-sky-500 shrink-0" size={44} />
-                <div>
-                  <div className="text-2xl font-bold">Telefon</div>
-                  <div className="text-sky-500 text-2xl font-semibold">
-                    +41 31 951 85 54
+            <div className="space-y-4">
+              {[
+                { href: 'tel:+41319518554', Icon: Phone, label: 'Telefon', value: '+41 31 951 85 54' },
+                { href: 'https://wa.me/41319518553', Icon: MessageCircle, label: 'WhatsApp', value: '+41 31 951 85 53', external: true },
+                { href: 'mailto:info@ns-hotel.ch', Icon: Mail, label: 'E-Mail', value: 'info@ns-hotel.ch' },
+                { href: 'sms:+41775350668', Icon: MessageSquare, label: 'SMS', value: '+41 77 535 06 68' },
+              ].map(({ href, Icon, label, value, external }) => (
+                <a
+                  key={label}
+                  href={href}
+                  {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  className="flex items-center gap-6 bg-gray-50 border border-gray-100 p-5 hover:bg-gray-100 transition-colors"
+                >
+                  <Icon style={{ color: 'var(--brand-color, #1D3D78)' }} className="shrink-0" size={28} />
+                  <div>
+                    <div className="text-sm font-semibold text-gray-900">{label}</div>
+                    <div className="text-base font-medium" style={{ color: 'var(--brand-color, #1D3D78)' }}>{value}</div>
                   </div>
-                </div>
-              </a>
-
-              <a
-                href="https://wa.me/41319518553"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-6 rounded-2xl bg-slate-50 p-6 border border-slate-200 hover:bg-slate-100 transition"
-              >
-                <MessageCircle className="text-sky-500 shrink-0" size={44} />
-                <div>
-                  <div className="text-2xl font-bold">Whatsapp</div>
-                  <div className="text-sky-500 text-2xl font-semibold">
-                    +41 31 951 85 53
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="mailto:info@ns-hotel.ch"
-                className="flex items-center gap-6 rounded-2xl bg-slate-50 p-6 border border-slate-200 hover:bg-slate-100 transition"
-              >
-                <Mail className="text-sky-500 shrink-0" size={44} />
-                <div>
-                  <div className="text-2xl font-bold">E-Mail</div>
-                  <div className="text-sky-500 text-2xl font-semibold break-all">
-                    info@ns-hotel.ch
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="sms:+41775350668"
-                className="flex items-center gap-6 rounded-2xl bg-slate-50 p-6 border border-slate-200 hover:bg-slate-100 transition"
-              >
-                <MessageSquare className="text-sky-500 shrink-0" size={44} />
-                <div>
-                  <div className="text-2xl font-bold">SMS</div>
-                  <div className="text-sky-500 text-2xl font-semibold">
-                    +41 77 535 06 68
-                  </div>
-                </div>
-              </a>
+                </a>
+              ))}
             </div>
           </div>
         </div>

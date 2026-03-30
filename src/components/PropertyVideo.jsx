@@ -36,16 +36,16 @@ export default function PropertyVideo({ videoUrl }) {
   return (
     <div>
       <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-        <Play size={18} className="text-blue-500" />
+        <Play size={18} className="text-gray-500" />
         Video
       </h2>
-      <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingTop: '56.25%' }}>
+      <div className="relative w-full overflow-hidden" style={{ paddingTop: '56.25%' }}>
         <iframe
           src={embedUrl}
           title="Video"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="absolute inset-0 w-full h-full rounded-xl"
+          className="absolute inset-0 w-full h-full"
           loading="lazy"
         />
       </div>

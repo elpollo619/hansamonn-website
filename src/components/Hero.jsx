@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AmonnLogo from '@/components/AmonnLogo';
+import { getSettings } from '@/data/settingsStore';
 
 const SECTIONS = [
   {
@@ -30,6 +31,8 @@ const SECTIONS = [
 
 const Hero = () => {
   const [activeIdx, setActiveIdx] = useState(0);
+  const settings = getSettings();
+  const stripText = settings.heroSubtitle || 'Architektur & Immobilien in der Region Bern.';
 
   return (
     <section className="min-h-screen flex flex-col bg-white">
@@ -51,7 +54,7 @@ const Hero = () => {
           </span>
         </div>
         <p className="text-gray-400 text-sm max-w-xs md:text-right">
-          Architektur & Immobilien in der Region Bern.
+          {stripText}
         </p>
       </motion.div>
 
@@ -92,7 +95,7 @@ const Hero = () => {
                 </p>
                 <motion.div
                   className="flex items-center gap-2 text-sm font-medium mt-4"
-                  style={{ color: activeIdx === i ? '#1D3D78' : '#d1d5db' }}
+                  style={{ color: activeIdx === i ? 'var(--brand-color, #1D3D78)' : '#d1d5db' }}
                   animate={{ x: activeIdx === i ? 4 : 0 }}
                   transition={{ duration: 0.2 }}
                 >

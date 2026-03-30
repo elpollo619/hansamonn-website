@@ -11,7 +11,7 @@ const RentalImage = ({ src, alt, className }) => {
       <Hotel size={28} className="text-gray-300" />
     </div>
   ) : (
-    <img src={src} alt={alt} className={className} loading="lazy" onError={() => setErr(true)} />
+    <img src={src} alt={alt} className={className} loading="lazy" decoding="async" onError={() => setErr(true)} />
   );
 };
 
@@ -23,7 +23,7 @@ export default function ShortStayPage() {
         <meta name="description" content="N's Hotel Kerzers und Casa Reto am Lago Maggiore. Kurzaufenthalte und Ferienhaus-Vermietung." />
       </Helmet>
       {/* Hero */}
-      <section className="relative text-white overflow-hidden" style={{ backgroundColor: '#1D3D78' }}>
+      <section className="relative text-white overflow-hidden" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div />
         <div className="relative container mx-auto px-6 py-16 md:py-24">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -81,9 +81,9 @@ export default function ShortStayPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 px-5 transition-colors"
-                    style={{ backgroundColor: '#1D3D78' }}
-                    onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
-                    onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
+                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                   >
                     <ExternalLink size={15} /> Direkt buchen
                   </a>
@@ -92,7 +92,7 @@ export default function ShortStayPage() {
                       href="https://www.booking.com/Share-BhDPswK"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-indigo-600 hover:border-indigo-200 py-2.5 px-4 rounded-xl transition-colors text-sm font-medium"
+                      className="flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 py-2.5 px-4 transition-colors text-sm font-medium"
                     >
                       <ExternalLink size={12} /> Booking.com
                     </a>
@@ -100,14 +100,14 @@ export default function ShortStayPage() {
                       href="https://www.airbnb.ch/rooms/1300557231274190252"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-rose-600 hover:border-rose-200 py-2.5 px-4 rounded-xl transition-colors text-sm font-medium"
+                      className="flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-300 py-2.5 px-4 transition-colors text-sm font-medium"
                     >
                       <ExternalLink size={12} /> Airbnb
                     </a>
                   </div>
                   <a
                     href="mailto:office@reto-amonn.ch?subject=Anfrage%20N%27s%20Hotel"
-                    className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 py-2.5 px-5 rounded-xl transition-colors text-sm"
+                    className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 py-2.5 px-5 transition-colors text-sm"
                   >
                     <Mail size={13} /> Direkt anfragen
                   </a>
@@ -149,9 +149,9 @@ export default function ShortStayPage() {
                   <Link
                     to="/casa-reto"
                     className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 px-5 transition-colors"
-                    style={{ backgroundColor: '#1D3D78' }}
-                    onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
-                    onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
+                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                   >
                     Alle Details ansehen <ArrowRight size={15} />
                   </Link>
@@ -160,7 +160,7 @@ export default function ShortStayPage() {
                       href="https://www.airbnb.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:text-rose-600 py-2.5 px-3 rounded-xl transition-colors text-xs font-medium"
+                      className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:text-gray-900 py-2.5 px-3 transition-colors text-xs font-medium"
                     >
                       <ExternalLink size={11} /> Airbnb
                     </a>
@@ -168,7 +168,7 @@ export default function ShortStayPage() {
                       href="https://www.booking.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:text-blue-600 py-2.5 px-3 rounded-xl transition-colors text-xs font-medium"
+                      className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:text-gray-900 py-2.5 px-3 transition-colors text-xs font-medium"
                     >
                       <ExternalLink size={11} /> Booking
                     </a>
@@ -176,14 +176,14 @@ export default function ShortStayPage() {
                       href="https://www.fewo-direkt.de"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:text-emerald-600 py-2.5 px-3 rounded-xl transition-colors text-xs font-medium"
+                      className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-600 hover:text-gray-900 py-2.5 px-3 transition-colors text-xs font-medium"
                     >
                       <ExternalLink size={11} /> Fewo
                     </a>
                   </div>
                   <a
                     href="mailto:office@reto-amonn.ch?subject=Anfrage%20Casa%20Reto"
-                    className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 py-2.5 px-5 rounded-xl transition-colors text-sm"
+                    className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 py-2.5 px-5 transition-colors text-sm"
                   >
                     <Mail size={13} /> Direkt anfragen
                   </a>
@@ -213,9 +213,9 @@ export default function ShortStayPage() {
             <Link
               to="/immobilien/anfrage"
               className="inline-flex items-center gap-2 text-white font-semibold px-7 py-3.5 transition-colors"
-              style={{ backgroundColor: '#1D3D78' }}
-              onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
-              onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
             >
               Zur Anfrage <ArrowRight size={15} />
             </Link>

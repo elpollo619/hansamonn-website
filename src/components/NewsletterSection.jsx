@@ -35,7 +35,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="text-white py-20 px-4" style={{ backgroundColor: '#1D3D78' }}>
+    <section className="text-white py-20 px-4" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
       <div className="container mx-auto max-w-2xl text-center">
         <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4">
           Neue Immobilien als Erster erfahren

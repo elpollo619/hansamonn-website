@@ -34,7 +34,7 @@ const TypeBadge = ({ type, t }) => {
     project:     t('vermietung.types.project'),
   };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${cfg.badge}`}>
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border ${cfg.badge}`}>
       <Icon size={11} />
       {labels[type] || type}
     </span>
@@ -55,6 +55,7 @@ const RentalImage = ({ src, alt, className }) => {
       alt={alt}
       className={className}
       loading="lazy"
+      decoding="async"
       onError={() => setErrored(true)}
     />
   );
@@ -72,7 +73,7 @@ const HotelCTA = ({ item, t }) => (
     <Link
       to={getDetailUrl(item)}
       className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm"
-      style={{ backgroundColor: '#1D3D78' }}
+      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
     >
       {t('vermietung.card.viewProject')}
       <ArrowRight size={14} />
@@ -80,13 +81,13 @@ const HotelCTA = ({ item, t }) => (
     <div className="grid grid-cols-2 gap-2">
       {item.bookingUrls?.booking && (
         <a href={item.bookingUrls.booking} target="_blank" rel="noopener noreferrer"
-          className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-lg transition-colors text-xs font-medium">
+          className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 transition-colors text-xs font-medium">
           <ExternalLink size={10} /> Booking.com
         </a>
       )}
       {item.bookingUrls?.airbnb && (
         <a href={item.bookingUrls.airbnb} target="_blank" rel="noopener noreferrer"
-          className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 rounded-lg transition-colors text-xs font-medium">
+          className="flex items-center justify-center gap-1.5 border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 py-2 px-3 transition-colors text-xs font-medium">
           <ExternalLink size={10} /> Airbnb
         </a>
       )}
@@ -94,39 +95,22 @@ const HotelCTA = ({ item, t }) => (
   </div>
 );
 
-const LongStayCTA = ({ item, t }) => (
+const NavyCTA = ({ to, label }) => (
   <Link
-    to={getDetailUrl(item)}
-    className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
+    to={to}
+    className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm"
+    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
   >
-    {t('vermietung.card.viewProject')}
+    {label}
     <ArrowRight size={14} />
   </Link>
 );
 
-const ProjectCTA = ({ item, t }) => (
-  <div className="space-y-2">
-    <Link
-      to={getDetailUrl(item)}
-      className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
-    >
-      {t('vermietung.card.viewProject')}
-      <ArrowRight size={14} />
-    </Link>
-  </div>
-);
-
-const ApartmentCTA = ({ item }) => (
-  <div className="space-y-2">
-    <Link
-      to={item.link || `/immobilien/${item.id || item.slug}`}
-      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors text-sm"
-    >
-      <ArrowRight size={14} />
-      Mehr erfahren
-    </Link>
-  </div>
-);
+const LongStayCTA = ({ item, t }) => <NavyCTA to={getDetailUrl(item)} label={t('vermietung.card.viewProject')} />;
+const ProjectCTA  = ({ item, t }) => <NavyCTA to={getDetailUrl(item)} label={t('vermietung.card.viewProject')} />;
+const ApartmentCTA = ({ item })    => <NavyCTA to={item.link || `/immobilien/${item.id || item.slug}`} label="Mehr erfahren" />;
 
 // ─── Listing Card ─────────────────────────────────────────────────────────────
 
@@ -143,9 +127,7 @@ const ListingCard = ({ item, index, t }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: index * 0.07 }}
       viewport={{ once: true }}
-      className={`bg-white rounded-2xl overflow-hidden shadow-sm border flex flex-col transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 ${
-        isProject ? 'border-emerald-100 ring-1 ring-emerald-100' : 'border-gray-100'
-      }`}
+      className="bg-white overflow-hidden border border-gray-100 flex flex-col transition-colors duration-300 hover:border-gray-300"
     >
       {/* Image */}
       <Link to={getDetailUrl(item)} className={`relative overflow-hidden block ${isProject ? 'h-56' : 'h-52'}`}>
@@ -168,7 +150,7 @@ const ListingCard = ({ item, index, t }) => {
 
         {/* Price chip */}
         <div className="absolute bottom-3 right-3">
-          <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm">
+          <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5">
             {item.price ? (
               <span className="font-bold text-sm text-gray-900">
                 CHF {item.price.toLocaleString('de-CH')}
@@ -177,7 +159,7 @@ const ListingCard = ({ item, index, t }) => {
                 </span>
               </span>
             ) : (
-              <span className="text-emerald-700 font-semibold text-xs">
+              <span className="text-gray-600 font-semibold text-xs">
                 {t('vermietung.project.onRequest')}
               </span>
             )}
@@ -188,7 +170,7 @@ const ListingCard = ({ item, index, t }) => {
       {/* Content */}
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-0.5">
-          <Link to={getDetailUrl(item)} className="hover:text-blue-700 transition-colors">
+          <Link to={getDetailUrl(item)} className="hover:text-[#1D3D78] transition-colors">
             <h3 className="text-base font-semibold text-gray-900 leading-snug">{item.title}</h3>
           </Link>
           <OccupancyBadge status={item.occupancy || 'frei'} />
@@ -204,7 +186,7 @@ const ListingCard = ({ item, index, t }) => {
         {isLongStay && item.longStayRooms && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.longStayRooms.filter(r => !r.isAddon).slice(0, 2).map((room, i) => (
-              <span key={i} className="bg-amber-50 text-amber-700 text-xs px-2.5 py-1 rounded-full border border-amber-100">
+              <span key={i} className="bg-gray-50 text-gray-500 text-xs px-2.5 py-1 border border-gray-100">
                 {room.label}{room.size ? ` ${room.size}m²` : ''} — CHF {room.price}
               </span>
             ))}
@@ -215,7 +197,7 @@ const ListingCard = ({ item, index, t }) => {
         {isHotel && item.features?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.features.slice(0, 3).map((f) => (
-              <span key={f} className="bg-indigo-50 text-indigo-600 text-xs px-2 py-0.5 rounded-full">{f}</span>
+              <span key={f} className="bg-gray-50 text-gray-500 text-xs px-2 py-0.5">{f}</span>
             ))}
           </div>
         )}
@@ -224,7 +206,7 @@ const ListingCard = ({ item, index, t }) => {
         {isProject && item.features?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.features.slice(0, 3).map((f) => (
-              <span key={f} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-0.5 rounded-full">{f}</span>
+              <span key={f} className="bg-gray-50 text-gray-500 text-xs px-2 py-0.5">{f}</span>
             ))}
           </div>
         )}
@@ -233,7 +215,7 @@ const ListingCard = ({ item, index, t }) => {
         {isLongStay && !item.longStayRooms && item.features?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.features.slice(0, 3).map((f) => (
-              <span key={f} className="bg-amber-50 text-amber-700 text-xs px-2.5 py-1 rounded-full border border-amber-100">{f}</span>
+              <span key={f} className="bg-gray-50 text-gray-500 text-xs px-2.5 py-1 border border-gray-100">{f}</span>
             ))}
           </div>
         )}
@@ -263,9 +245,9 @@ const ApartmentsEmptyState = () => (
     animate={{ opacity: 1, y: 0 }}
     className="col-span-full"
   >
-    <div className="bg-white rounded-2xl border border-gray-100 p-10 md:p-14 text-center max-w-xl mx-auto">
-      <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-        <Home size={24} className="text-blue-400" />
+    <div className="bg-white border border-gray-100 p-10 md:p-14 text-center max-w-xl mx-auto">
+      <div className="w-14 h-14 bg-gray-100 flex items-center justify-center mx-auto mb-5">
+        <Home size={24} className="text-gray-400" />
       </div>
       <h3 className="text-lg font-semibold text-gray-900 mb-2">
         Aktuell keine Wohnungen verfügbar
@@ -275,7 +257,10 @@ const ApartmentsEmptyState = () => (
       </p>
       <a
         href="mailto:office@reto-amonn.ch?subject=Warteliste%20Wohnung&body=Ich%20m%C3%B6chte%20auf%20die%20Warteliste%20f%C3%BCr%20eine%20Mietwohnung%20gesetzt%20werden."
-        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+        className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
+        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+        onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
       >
         <Bell size={15} />
         Auf Warteliste setzen
@@ -409,9 +394,6 @@ const VermietungPage = () => {
       label: 'Long Stay',
       tagline: t('vermietung.hero.serviceLongStay'),
       price: 'ab CHF 750 / Monat',
-      color: 'from-amber-500/20 to-amber-600/10',
-      border: 'border-amber-300/30',
-      iconBg: 'bg-amber-500/20',
       active: true,
     },
     {
@@ -420,9 +402,6 @@ const VermietungPage = () => {
       label: "N's Hotel",
       tagline: t('vermietung.hero.serviceHotel'),
       price: 'ab CHF 89 / Nacht',
-      color: 'from-indigo-500/20 to-indigo-600/10',
-      border: 'border-indigo-300/30',
-      iconBg: 'bg-indigo-500/20',
       active: true,
     },
     {
@@ -431,9 +410,6 @@ const VermietungPage = () => {
       label: 'Casa Reto',
       tagline: t('vermietung.hero.serviceCasaReto'),
       price: t('vermietung.project.onRequest'),
-      color: 'from-emerald-500/20 to-emerald-600/10',
-      border: 'border-emerald-300/30',
-      iconBg: 'bg-emerald-500/20',
       active: true,
     },
     {
@@ -442,9 +418,6 @@ const VermietungPage = () => {
       label: 'Wohnungen',
       tagline: counts.apartment > 0 ? `${counts.apartment} Objekt${counts.apartment > 1 ? 'e' : ''} verfügbar` : 'Aktuell nicht verfügbar',
       price: counts.apartment > 0 ? 'Jetzt anfragen' : 'Warteliste offen',
-      color: counts.apartment > 0 ? 'from-blue-500/20 to-blue-600/10' : 'from-gray-500/10 to-gray-500/5',
-      border: counts.apartment > 0 ? 'border-blue-300/30' : 'border-gray-500/20',
-      iconBg: counts.apartment > 0 ? 'bg-blue-500/20' : 'bg-gray-400/20',
       active: counts.apartment > 0,
     },
   ];
@@ -457,7 +430,7 @@ const VermietungPage = () => {
       </Helmet>
 
       {/* ── Hero ── */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white overflow-hidden">
+      <section className="relative text-white overflow-hidden" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)', backgroundSize: '48px 48px' }}
@@ -469,13 +442,13 @@ const VermietungPage = () => {
             transition={{ duration: 0.55 }}
             className="text-center mb-10"
           >
-            <span className="inline-block bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
+            <span className="inline-block bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 mb-5">
               AMONN IMMOBILIEN
             </span>
             <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
               Immobilien &amp; Wohnlösungen
             </h1>
-            <p className="text-blue-200/80 text-base md:text-lg max-w-2xl mx-auto">
+            <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto">
               {t('vermietung.hero.subtitle')}
             </p>
           </motion.div>
@@ -493,15 +466,15 @@ const VermietungPage = () => {
                 <button
                   key={s.key}
                   onClick={() => s.active && setFilter(s.key)}
-                  className={`text-left p-4 rounded-2xl border backdrop-blur-sm transition-all duration-200 ${
-                    s.active ? 'cursor-pointer' : 'cursor-default'
+                  className={`text-left p-4 border transition-all duration-200 ${
+                    s.active ? 'cursor-pointer' : 'cursor-default opacity-50'
                   } ${
                     filter === s.key
-                      ? 'bg-white/20 border-white/40 shadow-lg scale-[1.02]'
-                      : `bg-gradient-to-br ${s.color} ${s.border} ${s.active ? 'hover:bg-white/10' : 'opacity-50'}`
+                      ? 'bg-white/20 border-white/40'
+                      : 'bg-white/10 border-white/20 hover:bg-white/15'
                   }`}
                 >
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${s.iconBg}`}>
+                  <div className="w-9 h-9 flex items-center justify-center mb-3 bg-white/15">
                     <Icon size={18} className="text-white" />
                   </div>
                   <p className={`text-sm font-semibold mb-0.5 ${s.active ? 'text-white' : 'text-white/50'}`}>{s.label}</p>
@@ -517,10 +490,10 @@ const VermietungPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200/60"
+            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60"
           >
             <span className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-green-400" />
+              <CheckCircle2 size={14} className="text-white/60" />
               <span><strong className="text-white">{allItems.length}</strong> aktive Angebote</span>
             </span>
             <span className="flex items-center gap-2">
@@ -545,17 +518,18 @@ const VermietungPage = () => {
               <button
                 key={tab.key}
                 onClick={() => !tab.disabled && setFilter(tab.key)}
-                className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                style={!tab.disabled && filter === tab.key ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+                className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all duration-200 whitespace-nowrap border ${
                   tab.disabled
-                    ? 'bg-white text-gray-300 border border-gray-100 cursor-not-allowed'
+                    ? 'bg-white text-gray-300 border-gray-100 cursor-not-allowed'
                     : filter === tab.key
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-blue-300 hover:text-blue-600'
+                    ? 'text-white border-transparent'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
                 }`}
               >
                 {tab.label}
                 {tab.count > 0 && (
-                  <span className={`text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[20px] text-center ${
+                  <span className={`text-xs font-bold px-1.5 py-0.5 min-w-[20px] text-center ${
                     filter === tab.key ? 'bg-white/25 text-white' : 'bg-gray-100 text-gray-500'
                   }`}>
                     {tab.count}
@@ -569,7 +543,7 @@ const VermietungPage = () => {
           </div>
 
           {/* ── Search & filter bar ── */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-6 shadow-sm">
+          <div className="bg-white border border-gray-200 p-4 mb-6">
             <div className="flex flex-col sm:flex-row gap-3">
 
               {/* Search input */}
@@ -580,7 +554,7 @@ const VermietungPage = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Suchen nach Titel, Ort, Beschreibung …"
-                  className="w-full pl-9 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors"
+                  className="w-full pl-9 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#1D3D78] transition-colors"
                 />
                 {searchQuery && (
                   <button
@@ -599,7 +573,7 @@ const VermietungPage = () => {
                 <select
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="w-full appearance-none pl-8 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors cursor-pointer"
+                  className="w-full appearance-none pl-8 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
                 >
                   {Object.entries(TYPE_LABELS).map(([val, label]) => (
                     <option key={val} value={val}>{label}</option>
@@ -618,7 +592,7 @@ const VermietungPage = () => {
                 <select
                   value={locationFilter}
                   onChange={(e) => setLocationFilter(e.target.value)}
-                  className="w-full appearance-none pl-8 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors cursor-pointer"
+                  className="w-full appearance-none pl-8 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
                 >
                   {uniqueLocations.map((loc) => (
                     <option key={loc} value={loc}>
@@ -638,7 +612,7 @@ const VermietungPage = () => {
                 <select
                   value={priceFilter}
                   onChange={(e) => setPriceFilter(e.target.value)}
-                  className="w-full appearance-none pl-4 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-400 transition-colors cursor-pointer"
+                  className="w-full appearance-none pl-4 pr-8 py-2.5 text-sm bg-gray-50 border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
                 >
                   {PRICE_RANGES.map((r) => (
                     <option key={r.key} value={r.key}>{r.label}</option>
@@ -661,7 +635,7 @@ const VermietungPage = () => {
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                  className="flex items-center gap-1.5 text-xs font-medium transition-colors" style={{ color: 'var(--brand-color, #1D3D78)' }}
                 >
                   <X size={12} />
                   Filter zurücksetzen
@@ -695,8 +669,8 @@ const VermietungPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="col-span-full"
                 >
-                  <div className="bg-white rounded-2xl border border-gray-100 p-10 md:p-14 text-center max-w-lg mx-auto">
-                    <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="bg-white border border-gray-100 p-10 md:p-14 text-center max-w-lg mx-auto">
+                    <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-4">
                       <Search size={20} className="text-gray-400" />
                     </div>
                     <h3 className="text-base font-semibold text-gray-900 mb-2">
@@ -707,7 +681,10 @@ const VermietungPage = () => {
                     </p>
                     <button
                       onClick={resetFilters}
-                      className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm"
+                      className="inline-flex items-center gap-2 text-white font-semibold px-5 py-2.5 transition-colors text-sm"
+                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                     >
                       <X size={14} />
                       Filter zurücksetzen
@@ -733,7 +710,7 @@ const VermietungPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="mt-0 bg-white rounded-2xl border border-gray-100 p-8 md:p-10 text-center"
+            className="mt-0 bg-white border border-gray-100 p-8 md:p-10 text-center"
           >
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {t('vermietung.cta.title')}
@@ -744,14 +721,17 @@ const VermietungPage = () => {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="tel:+41319518554"
-                className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+                className="inline-flex items-center justify-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
                 <Phone size={15} />
                 +41 (0)31 951 85 54
               </a>
               <a
                 href="mailto:office@reto-amonn.ch"
-                className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+                className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold px-6 py-3 transition-colors text-sm"
               >
                 <Mail size={15} />
                 office@reto-amonn.ch

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 
 export default function MuriPage() {
   return (
-    <div className="bg-white text-slate-900">
+    <div className="bg-white text-gray-900">
       <Helmet>
         <title>Long Stay Muri bei Bern – Möblierte Zimmer | Hans Amonn AG</title>
         <meta name="description" content="Komfortables Wohnen in Muri bei Bern. Vollmöblierte Zimmer, zentrale Lage, ab 1 Monat. Hans Amonn AG." />
@@ -17,6 +17,8 @@ export default function MuriPage() {
           src="/images/muri/titel.jpg"
           alt="Muri bei Bern"
           className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
         />
 
         <div className="absolute inset-0 bg-black/40" />
@@ -24,7 +26,7 @@ export default function MuriPage() {
         <div className="relative container mx-auto px-6 h-full flex items-center">
           <div className="max-w-3xl text-white">
 
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 mb-6">
               <Building2 size={16} />
               Long Stay
             </div>
@@ -49,25 +51,33 @@ export default function MuriPage() {
           <img
             src="/images/muri/01.jpg"
             alt="Muri bei Bern"
-            className="rounded-2xl shadow-sm"
+            className=""
+            loading="lazy"
+            decoding="async"
           />
 
           <img
             src="/images/muri/02.jpg"
             alt="Muri bei Bern"
-            className="rounded-2xl shadow-sm"
+            className=""
+            loading="lazy"
+            decoding="async"
           />
 
           <img
             src="/images/muri/03.jpg"
             alt="Muri bei Bern"
-            className="rounded-2xl shadow-sm"
+            className=""
+            loading="lazy"
+            decoding="async"
           />
 
           <img
             src="/images/muri/04.jpg"
             alt="Muri bei Bern"
-            className="rounded-2xl shadow-sm"
+            className=""
+            loading="lazy"
+            decoding="async"
           />
 
         </div>
@@ -75,9 +85,9 @@ export default function MuriPage() {
 
       {/* BESCHREIBUNG */}
       <section className="container mx-auto px-6 pb-20">
-        <div className="rounded-3xl border border-slate-200 p-8 md:p-10 bg-white shadow-sm max-w-4xl">
+        <div className="border border-gray-200 p-8 md:p-10 bg-white max-w-4xl">
 
-          <div className="flex items-center gap-2 text-sky-600 mb-4">
+          <div className="flex items-center gap-2 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }}>
             <MapPin size={18} />
             Muri bei Bern
           </div>
@@ -86,7 +96,7 @@ export default function MuriPage() {
             Long Stay Unterkunft
           </h2>
 
-          <p className="text-slate-600 leading-8 mb-8">
+          <p className="text-gray-600 leading-8 mb-8">
             Unsere Unterkunft in Muri bei Bern eignet sich ideal für längere Aufenthalte,
             Mitarbeitende, Projektteams oder temporäres Wohnen in der Region Bern.
             Die ruhige Lage kombiniert mit guter Anbindung an die Stadt macht
@@ -95,7 +105,10 @@ export default function MuriPage() {
 
           <Link
             to="/vermieten?anfrageart=Long%20Stay&objekt=Muri%20bei%20Bern"
-            className="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-6 py-3 text-white font-semibold hover:bg-sky-700 transition"
+            className="inline-flex items-center gap-2 px-6 py-3 text-white font-semibold transition"
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
           >
             Mietanfrage senden
             <ArrowRight size={18} />

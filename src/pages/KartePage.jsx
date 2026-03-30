@@ -7,10 +7,10 @@ import { rentalData } from '@/data/rentalData';
 
 // ── Type labels & colours ─────────────────────────────────────────────────────
 const TYPE_CFG = {
-  'long-stay': { label: 'Long Stay',       hex: '#f59e0b', bg: 'bg-amber-100',   text: 'text-amber-700'  },
-  hotel:       { label: 'Short Stay',      hex: '#6366f1', bg: 'bg-indigo-100',  text: 'text-indigo-700' },
-  project:     { label: 'Ferienhaus',      hex: '#f43f5e', bg: 'bg-rose-100',    text: 'text-rose-700'   },
-  apartment:   { label: 'Wohnung',         hex: '#3b82f6', bg: 'bg-blue-100',    text: 'text-blue-700'   },
+  'long-stay': { label: 'Long Stay',       hex: '#1D3D78', bg: 'bg-gray-100',   text: 'text-gray-600'  },
+  hotel:       { label: 'Short Stay',      hex: '#1D3D78', bg: 'bg-gray-100',  text: 'text-gray-600' },
+  project:     { label: 'Ferienhaus',      hex: '#1D3D78', bg: 'bg-gray-100',    text: 'text-gray-600'   },
+  apartment:   { label: 'Wohnung',         hex: '#1D3D78', bg: 'bg-gray-100',    text: 'text-gray-600'   },
 };
 function cfg(type) { return TYPE_CFG[type] || TYPE_CFG['long-stay']; }
 
@@ -171,7 +171,7 @@ export default function KartePage() {
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-blue-50 via-white to-indigo-50 border-b border-gray-100">
+      <section className="bg-gray-50 border-b border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -179,7 +179,7 @@ export default function KartePage() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1.5 mb-5">
               <MapPin size={13} />
               Kartenansicht
             </div>
@@ -212,7 +212,7 @@ export default function KartePage() {
             {/* Map card */}
             <div className="lg:col-span-2">
               <div
-                className="relative rounded-2xl border border-gray-200 overflow-hidden shadow-sm bg-gray-50"
+                className="relative border border-gray-200 overflow-hidden bg-gray-50"
                 style={{ height: 500 }}
               >
                 {cssLoaded ? (
@@ -246,7 +246,7 @@ export default function KartePage() {
             <div className="space-y-2">
               {activeListing ? (
                 /* Detail card */
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="bg-white border border-gray-200 overflow-hidden">
                   {/* colour bar */}
                   <div
                     className="h-1.5"
@@ -256,7 +256,7 @@ export default function KartePage() {
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <span
-                          className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full mb-1.5 ${cfg(activeListing.type).bg} ${cfg(activeListing.type).text}`}
+                          className={`inline-block text-[10px] font-semibold px-2 py-0.5 mb-1.5 ${cfg(activeListing.type).bg} ${cfg(activeListing.type).text}`}
                         >
                           {cfg(activeListing.type).label}
                         </span>
@@ -266,7 +266,7 @@ export default function KartePage() {
                       </div>
                       <button
                         onClick={() => setActiveId(null)}
-                        className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600 text-xs"
+                        className="p-1.5 hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600 text-xs"
                         aria-label="Schliessen"
                       >
                         ✕
@@ -288,7 +288,10 @@ export default function KartePage() {
 
                     <Link
                       to={detailLink(activeListing)}
-                      className="flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-colors"
+                      className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-2.5 px-4 transition-colors"
+                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                     >
                       Details ansehen <ArrowRight size={13} />
                     </Link>
@@ -306,13 +309,12 @@ export default function KartePage() {
                       <button
                         key={item.id}
                         onClick={() => setActiveId(item.id)}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
+                        className="w-full flex items-center gap-3 p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
                       >
                         <div
-                          className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
-                          style={{ background: c.hex }}
+                          className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0"
                         >
-                          <MapPin size={14} className="text-white" />
+                          <MapPin size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-gray-900 truncate">{item.title}</p>

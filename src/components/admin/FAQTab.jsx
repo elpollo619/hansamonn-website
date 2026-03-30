@@ -129,7 +129,7 @@ export default function FAQTab() {
       </div>
 
       {/* Table */}
-      <div className="border border-gray-200 rounded-xl overflow-hidden">
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
@@ -184,7 +184,7 @@ export default function FAQTab() {
                       onClick={() => toggleVisible(faq)}
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-colors ${
                         faq.visible
-                          ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                          ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                           : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                       }`}
                       title={faq.visible ? 'Verbergen' : 'Anzeigen'}
@@ -228,7 +228,7 @@ export default function FAQTab() {
       {drawerOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/40" onClick={() => setDrawerOpen(false)} />
-          <div className="w-full max-w-lg bg-white shadow-2xl flex flex-col">
+          <div className="w-full max-w-lg bg-white flex flex-col" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             {/* Drawer header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 flex-shrink-0">
               <h3 className="font-bold text-gray-900">
@@ -342,7 +342,7 @@ export default function FAQTab() {
       {/* Delete confirmation */}
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-start gap-3 mb-5">
               <AlertTriangle size={22} className="text-red-500 flex-shrink-0 mt-0.5" />
               <div>

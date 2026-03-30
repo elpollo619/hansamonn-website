@@ -7,10 +7,10 @@ import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 // ─── Type config ──────────────────────────────────────────────────────────────
 
 const TYPE_CFG = {
-  apartment:   { icon: Home,      badge: 'bg-blue-100 text-blue-700',    label: 'Wohnung' },
-  'long-stay': { icon: Coffee,    badge: 'bg-amber-100 text-amber-700',  label: 'Long Stay' },
-  hotel:       { icon: Building2, badge: 'bg-indigo-100 text-indigo-700', label: 'Hotel' },
-  project:     { icon: Sun,       badge: 'bg-emerald-100 text-emerald-700', label: 'Ferienhaus' },
+  apartment:   { icon: Home,      badge: 'bg-gray-100 text-gray-700',    label: 'Wohnung' },
+  'long-stay': { icon: Coffee,    badge: 'bg-gray-100 text-gray-700',    label: 'Long Stay' },
+  hotel:       { icon: Building2, badge: 'bg-gray-100 text-gray-700',    label: 'Hotel' },
+  project:     { icon: Sun,       badge: 'bg-gray-100 text-gray-700',    label: 'Ferienhaus' },
 };
 
 // ─── Detail URL mapping ───────────────────────────────────────────────────────
@@ -49,14 +49,14 @@ const ResultRow = ({ item, isActive, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-colors ${
-        isActive ? 'bg-blue-50 ring-1 ring-blue-200' : 'hover:bg-gray-50'
+      className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+        isActive ? 'bg-gray-100 ring-1 ring-gray-300' : 'hover:bg-gray-50'
       }`}
     >
       {/* Thumbnail */}
-      <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+      <div className="w-12 h-12 overflow-hidden flex-shrink-0 bg-gray-100">
         {image ? (
-          <img src={image} alt={item.title} className="w-full h-full object-cover" />
+          <img src={image} alt={item.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Icon size={18} className="text-gray-400" />
@@ -74,7 +74,7 @@ const ResultRow = ({ item, isActive, onClick }) => {
       </div>
 
       {/* Type badge */}
-      <span className={`flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${cfg.badge}`}>
+      <span className={`flex-shrink-0 inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium ${cfg.badge}`}>
         <Icon size={10} />
         {cfg.label}
       </span>
@@ -164,7 +164,7 @@ const GlobalSearch = ({ isOpen, onClose }) => {
             className="fixed top-[12vh] left-1/2 -translate-x-1/2 w-full max-w-xl z-50 px-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-white border border-gray-200 overflow-hidden" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.25)' }}>
               {/* Input row */}
               <div className="flex items-center gap-3 px-4 py-4 border-b border-gray-100">
                 <Search size={20} className="text-gray-400 flex-shrink-0" />
@@ -179,7 +179,7 @@ const GlobalSearch = ({ isOpen, onClose }) => {
                 {query && (
                   <button
                     onClick={() => setQuery('')}
-                    className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="p-1 hover:bg-gray-100 transition-colors"
                     aria-label="Suche leeren"
                   >
                     <X size={16} className="text-gray-400" />
@@ -187,7 +187,7 @@ const GlobalSearch = ({ isOpen, onClose }) => {
                 )}
                 <button
                   onClick={onClose}
-                  className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors ml-1"
+                  className="p-1.5 hover:bg-gray-100 transition-colors ml-1"
                   aria-label="Schliessen"
                 >
                   <X size={18} className="text-gray-500" />

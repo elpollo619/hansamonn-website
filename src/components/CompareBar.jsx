@@ -29,8 +29,8 @@ const CompareBar = () => {
             <div className="flex items-center justify-between gap-4">
               {/* Left: icon + count */}
               <div className="flex items-center gap-3 flex-shrink-0">
-                <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <GitCompare size={15} className="text-green-700" />
+                <div className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0">
+                  <GitCompare size={15} className="text-gray-600" />
                 </div>
                 <span className="text-sm font-semibold text-gray-700 hidden sm:block">
                   {compared.length} {compared.length === 1 ? 'Objekt' : 'Objekte'} ausgewählt
@@ -53,13 +53,15 @@ const CompareBar = () => {
                   return (
                     <div
                       key={prop.id}
-                      className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5 flex-shrink-0"
+                      className="flex items-center gap-2 bg-gray-50 border border-gray-200 px-3 py-1.5 flex-shrink-0"
                     >
                       {imgSrc ? (
                         <img
                           src={imgSrc}
                           alt={prop.title}
                           className="w-8 h-8 object-cover rounded-md flex-shrink-0"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="w-8 h-8 bg-gray-200 rounded-md flex-shrink-0" />
@@ -76,7 +78,7 @@ const CompareBar = () => {
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                   onClick={clearComparison}
-                  className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
                   title="Vergleich zurücksetzen"
                 >
                   <X size={16} />
@@ -84,7 +86,10 @@ const CompareBar = () => {
 
                 <Link
                   to="/vergleich"
-                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+                  className="inline-flex items-center gap-2 text-white font-semibold px-4 py-2 transition-colors text-sm"
+                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                 >
                   Vergleichen
                   <ArrowRight size={14} />

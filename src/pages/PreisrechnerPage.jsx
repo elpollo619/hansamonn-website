@@ -16,7 +16,7 @@ const PreisrechnerPage = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-green-50 via-white to-emerald-50 border-b border-gray-100">
+      <section className="bg-gray-50 border-b border-gray-100">
         <div className="container mx-auto px-4 sm:px-6 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -24,7 +24,7 @@ const PreisrechnerPage = () => {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1.5 mb-5">
               <Calculator size={13} />
               Preisrechner
             </div>

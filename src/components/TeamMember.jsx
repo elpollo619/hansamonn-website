@@ -36,13 +36,15 @@ const TeamMember = ({ member, index }) => {
           src={imageUrl}
           alt={`${member.name} – ${member.position} bei Hans Amonn AG`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Role icon badge */}
         {Icon && (
           <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 flex items-center justify-center">
-            <Icon size={18} style={{ color: '#1D3D78' }} />
+            <Icon size={18} style={{ color: 'var(--brand-color, #1D3D78)' }} />
           </div>
         )}
 
@@ -54,12 +56,12 @@ const TeamMember = ({ member, index }) => {
             className="w-9 h-9 bg-white/90 flex items-center justify-center hover:bg-white transition-colors"
             title={`E-Mail an ${member.name}`}
           >
-            <Mail size={16} style={{ color: '#1D3D78' }} />
+            <Mail size={16} style={{ color: 'var(--brand-color, #1D3D78)' }} />
           </a>
           <Link
             to={`/team/${member.slug}`}
             className="flex-1 bg-white/90 py-1.5 px-3 flex items-center justify-center gap-1 hover:bg-white transition-colors text-xs font-medium"
-            style={{ color: '#1D3D78' }}
+            style={{ color: 'var(--brand-color, #1D3D78)' }}
           >
             Profil ansehen <ArrowRight size={12} />
           </Link>
@@ -69,7 +71,7 @@ const TeamMember = ({ member, index }) => {
       {/* Info */}
       <div className="p-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-0.5">{member.name}</h3>
-        <p className="font-medium text-sm mb-3" style={{ color: '#1D3D78' }}>{member.position}</p>
+        <p className="font-medium text-sm mb-3" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
 
         <div className="space-y-1.5 mb-4 text-xs text-gray-600">
           <div className="flex items-center gap-2">
@@ -89,7 +91,7 @@ const TeamMember = ({ member, index }) => {
         <Link
           to={`/team/${member.slug}`}
           className="inline-flex items-center gap-1 text-xs font-medium hover:gap-2 transition-all"
-          style={{ color: '#1D3D78' }}
+          style={{ color: 'var(--brand-color, #1D3D78)' }}
         >
           Profil ansehen <ArrowRight size={12} />
         </Link>

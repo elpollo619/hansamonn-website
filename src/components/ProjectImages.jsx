@@ -26,6 +26,8 @@ const ProjectImages = ({ project, onImageClick }) => {
                   src={item.url}
                   alt={item.alt}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
                 <div className="absolute bottom-2 left-2 text-white p-2">

@@ -59,8 +59,8 @@ function FeatureCell({ hasFeature }) {
     <td className={CELL_CLASS}>
       {hasFeature ? (
         <div className="flex justify-center">
-          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-            <Check size={12} className="text-green-700" />
+          <div className="w-6 h-6 bg-gray-100 flex items-center justify-center">
+            <Check size={12} style={{ color: 'var(--brand-color, #1D3D78)' }} />
           </div>
         </div>
       ) : (
@@ -103,8 +103,8 @@ const VergleichPage = () => {
                 <ArrowLeft size={14} /> Zurück zu Vermietung
               </Link>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-green-100 rounded-xl flex items-center justify-center">
-                  <GitCompare size={17} className="text-green-700" />
+                <div className="w-9 h-9 bg-gray-100 flex items-center justify-center">
+                  <GitCompare size={17} className="text-gray-600" />
                 </div>
                 <h1 className="text-2xl font-black text-gray-900">Objektvergleich</h1>
               </div>
@@ -113,7 +113,7 @@ const VergleichPage = () => {
             {compared.length > 0 && (
               <button
                 onClick={clearComparison}
-                className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 hover:text-red-600 hover:border-red-200 hover:bg-red-50 px-4 py-2 rounded-xl text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-400 px-4 py-2 text-sm font-medium transition-colors"
               >
                 <RotateCcw size={14} />
                 Zurücksetzen
@@ -131,7 +131,7 @@ const VergleichPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-md mx-auto text-center py-20"
           >
-            <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <div className="w-16 h-16 bg-gray-100 flex items-center justify-center mx-auto mb-5">
               <GitCompare size={28} className="text-gray-400" />
             </div>
             <h2 className="text-xl font-bold text-gray-800 mb-3">
@@ -143,7 +143,10 @@ const VergleichPage = () => {
             </p>
             <Link
               to="/immobilien/vermietung"
-              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
             >
               <ArrowLeft size={14} />
               Zur Übersicht
@@ -174,10 +177,12 @@ const VergleichPage = () => {
                             <img
                               src={imgSrc}
                               alt={prop.name || prop.title}
-                              className="w-full max-w-[160px] h-28 object-cover rounded-xl shadow-sm"
+                              className="w-full max-w-[160px] h-28 object-cover"
+                              loading="lazy"
+                              decoding="async"
                             />
                           ) : (
-                            <div className="w-full max-w-[160px] h-28 bg-gray-100 rounded-xl flex items-center justify-center">
+                            <div className="w-full max-w-[160px] h-28 bg-gray-100 flex items-center justify-center">
                               <span className="text-gray-300 text-xs">Kein Bild</span>
                             </div>
                           )}
@@ -216,7 +221,7 @@ const VergleichPage = () => {
                 <tr className="bg-gray-50/50">
                   <td className={ROW_LABEL_CLASS}>Preis</td>
                   {properties.map((prop, i) => (
-                    <td key={i} className={`${CELL_CLASS} font-semibold text-green-700`}>
+                    <td key={i} className={`${CELL_CLASS} font-semibold text-gray-800`}>
                       {formatPrice(prop)}
                     </td>
                   ))}
@@ -241,9 +246,9 @@ const VergleichPage = () => {
                     return (
                       <td key={i} className={CELL_CLASS}>
                         <span
-                          className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold ${
+                          className={`inline-block px-2.5 py-1 text-xs font-semibold ${
                             isAvail
-                              ? 'bg-green-100 text-green-700'
+                              ? 'bg-gray-100 text-gray-700'
                               : 'bg-gray-100 text-gray-500'
                           }`}
                         >
@@ -288,7 +293,10 @@ const VergleichPage = () => {
                       <td key={i} className="py-6 px-3 text-center">
                         <Link
                           to={link}
-                          className="inline-flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-xl transition-colors text-sm"
+                          className="inline-flex items-center gap-1.5 text-white font-semibold px-4 py-2 transition-colors text-sm"
+                          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                         >
                           Details
                         </Link>

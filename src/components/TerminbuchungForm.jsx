@@ -68,19 +68,19 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
   };
 
   const inputCls =
-    'w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition';
+    'w-full border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1D3D78] transition';
   const labelCls = 'block text-xs font-semibold text-gray-600 mb-1.5';
 
   if (success) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-center">
-        <CheckCircle2 size={40} className="mx-auto text-green-500 mb-3" />
-        <p className="font-semibold text-green-800 text-base">
+      <div className="bg-gray-50 border border-gray-200 p-6 text-center">
+        <CheckCircle2 size={40} className="mx-auto mb-3" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+        <p className="font-semibold text-gray-900 text-base">
           Ihr Terminwunsch wurde übermittelt. Wir melden uns in Kürze.
         </p>
         <button
           onClick={() => setSuccess(false)}
-          className="mt-4 text-sm text-green-700 hover:underline"
+          className="mt-4 text-sm text-gray-600 hover:underline"
         >
           Weiteren Termin anfragen
         </button>
@@ -91,7 +91,7 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {propertyName && (
-        <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 text-sm text-blue-800">
+        <div className="bg-gray-50 border border-gray-100 px-4 py-3 text-sm text-gray-700">
           Termin anfragen für: <strong>{propertyName}</strong>
         </div>
       )}
@@ -199,7 +199,7 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
       </div>
 
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+        <p className="text-sm text-gray-700 bg-gray-50 border border-gray-200 px-4 py-3">
           {error}
         </p>
       )}
@@ -207,7 +207,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
       <button
         type="submit"
         disabled={submitting}
-        className="w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 disabled:opacity-60 text-white font-semibold py-3.5 px-4 rounded-xl transition-colors"
+        className="w-full flex items-center justify-center gap-2 disabled:opacity-60 text-white font-semibold py-3.5 px-4 transition-colors"
+        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+        onMouseOver={e => !submitting && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
       >
         {submitting ? (
           <><Loader2 size={16} className="animate-spin" /> Wird gesendet…</>

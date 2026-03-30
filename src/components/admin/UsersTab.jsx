@@ -19,12 +19,12 @@ export default function UsersTab() {
   const reload = () => setUsers(getUsers());
   useEffect(() => { reload(); }, []);
 
-  function save() {
+  async function save() {
     if (!form.name.trim() || !form.email.trim() || !form.password.trim()) {
       toast({ title: 'Alle Felder sind erforderlich', variant: 'destructive' }); return;
     }
     try {
-      createUser(form);
+      await createUser(form);
       toast({ title: '✓ Benutzer erstellt', description: `${form.name} wurde hinzugefügt.` });
       reload(); setDrawerOpen(false); setForm(EMPTY);
     } catch (e) {
@@ -32,9 +32,9 @@ export default function UsersTab() {
     }
   }
 
-  function doResetPassword() {
+  async function doResetPassword() {
     try {
-      adminResetPassword(resetPwTarget.id, resetPwValue);
+      await adminResetPassword(resetPwTarget.id, resetPwValue);
       toast({ title: '✓ Passwort zurückgesetzt', description: `Passwort für ${resetPwTarget.name} wurde geändert.` });
       setResetPwTarget(null); setResetPwValue(''); setShowResetPw(false);
     } catch (e) {
@@ -62,7 +62,7 @@ export default function UsersTab() {
         <button onClick={() => { setForm(EMPTY); setDrawerOpen(true); }} className="inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors"><Plus size={16} /> Benutzer hinzufügen</button>
       </div>
 
-      <div className="border border-gray-200 rounded-xl overflow-hidden">
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
@@ -88,7 +88,7 @@ export default function UsersTab() {
                 </td>
                 <td className="px-4 py-3 text-gray-600 hidden md:table-cell">{u.email}</td>
                 <td className="px-4 py-3 text-center">
-                  <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${u.role === 'admin' ? 'bg-gray-900 text-white' : 'bg-blue-100 text-blue-700'}`}>
+                  <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${u.role === 'admin' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700'}`}>
                     {u.role === 'admin' ? <><Shield size={10} /> Admin</> : <><User size={10} /> Staff</>}
                   </span>
                 </td>
@@ -96,7 +96,7 @@ export default function UsersTab() {
                   <div className="flex items-center justify-end gap-1">
                     <button
                       onClick={() => { setResetPwTarget({ id: u.id, name: u.name }); setResetPwValue(''); setShowResetPw(false); }}
-                      className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                      className="p-1.5 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                       title="Passwort zurücksetzen"
                     >
                       <KeyRound size={15} />
@@ -112,14 +112,14 @@ export default function UsersTab() {
         </table>
       </div>
 
-      <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
+      <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700">
         <strong>Rollen:</strong> <span className="font-semibold">Admin</span> — voller Zugriff, kann Benutzer verwalten und alles löschen. <span className="font-semibold">Staff</span> — kann Inhalte bearbeiten, aber nicht löschen oder Benutzer verwalten.
       </div>
 
       {drawerOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/40" onClick={() => setDrawerOpen(false)} />
-          <div className="w-full max-w-md bg-white shadow-2xl flex flex-col">
+          <div className="w-full max-w-md bg-white flex flex-col" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 flex-shrink-0">
               <h3 className="font-bold text-gray-900">Neuer Benutzer</h3>
               <button onClick={() => setDrawerOpen(false)} className="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"><X size={18} /></button>
@@ -146,7 +146,7 @@ export default function UsersTab() {
 
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-start gap-3 mb-5"><AlertTriangle size={22} className="text-red-500 flex-shrink-0 mt-0.5" /><div><h3 className="font-bold text-gray-900 mb-1">Benutzer löschen?</h3><p className="text-sm text-gray-500">Dieser Benutzer verliert sofort den Zugang.</p></div></div>
             <div className="flex gap-3">
               <button onClick={() => doDelete(deleteConfirm)} className="flex-1 bg-red-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">Ja, löschen</button>
@@ -158,7 +158,7 @@ export default function UsersTab() {
 
       {resetPwTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm">
+          <div className="bg-white rounded-lg w-full max-w-sm" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <KeyRound size={17} className="text-gray-700" />

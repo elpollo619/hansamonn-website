@@ -46,7 +46,7 @@ export default function ProjectsEditTab() {
         <button onClick={openCreate} className="inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors"><Plus size={16} /> Hinzufügen</button>
       </div>
 
-      <div className="border border-gray-200 rounded-xl overflow-hidden">
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
@@ -63,7 +63,7 @@ export default function ProjectsEditTab() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 flex items-center justify-center">
-                      {p.coverImage ? <img src={p.coverImage} alt={p.title} className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none'; }} /> : <Image size={16} className="text-gray-400" />}
+                      {p.coverImage ? <img src={p.coverImage} alt={p.title} className="w-full h-full object-cover" loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none'; }} /> : <Image size={16} className="text-gray-400" />}
                     </div>
                     <div><p className="font-medium text-gray-900">{p.title}</p><p className="text-xs text-gray-400 md:hidden">{catLabel(p.category)} · {p.year}</p></div>
                   </div>
@@ -71,7 +71,7 @@ export default function ProjectsEditTab() {
                 <td className="px-4 py-3 text-gray-600 hidden md:table-cell">{catLabel(p.category)}</td>
                 <td className="px-4 py-3 text-gray-600 hidden md:table-cell">{p.year}</td>
                 <td className="px-4 py-3 text-center">
-                  <button onClick={() => toggleVisible(p)} className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-colors ${p.visible !== false ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
+                  <button onClick={() => toggleVisible(p)} className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium transition-colors ${p.visible !== false ? 'bg-gray-100 text-gray-700 hover:bg-gray-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
                     {p.visible !== false ? <><Eye size={11} /> Aktiv</> : <><EyeOff size={11} /> Versteckt</>}
                   </button>
                 </td>
@@ -91,7 +91,7 @@ export default function ProjectsEditTab() {
       {drawerOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/40" onClick={() => setDrawerOpen(false)} />
-          <div className="w-full max-w-md bg-white shadow-2xl flex flex-col">
+          <div className="w-full max-w-md bg-white flex flex-col" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 flex-shrink-0">
               <h3 className="font-bold text-gray-900">{editingId ? 'Projekt bearbeiten' : 'Neues Projekt'}</h3>
               <button onClick={() => setDrawerOpen(false)} className="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"><X size={18} /></button>
@@ -119,7 +119,7 @@ export default function ProjectsEditTab() {
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Titelbild-URL</label>
                 <input type="url" value={form.coverImage} onChange={e => setForm(f => ({ ...f, coverImage: e.target.value }))} placeholder="https://..." className={cls} />
-                {form.coverImage && <div className="mt-2 w-full h-28 rounded-lg overflow-hidden bg-gray-100"><img src={form.coverImage} alt="" className="w-full h-full object-cover" /></div>}
+                {form.coverImage && <div className="mt-2 w-full h-28 rounded-lg overflow-hidden bg-gray-100"><img src={form.coverImage} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" /></div>}
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" checked={form.visible} onChange={e => setForm(f => ({ ...f, visible: e.target.checked }))} className="w-4 h-4 rounded border-gray-300" />
@@ -136,7 +136,7 @@ export default function ProjectsEditTab() {
 
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-start gap-3 mb-5"><AlertTriangle size={22} className="text-red-500 flex-shrink-0 mt-0.5" /><div><h3 className="font-bold text-gray-900 mb-1">Projekt löschen?</h3><p className="text-sm text-gray-500">Diese Aktion kann nicht rückgängig gemacht werden.</p></div></div>
             <div className="flex gap-3">
               <button onClick={doDelete} className="flex-1 bg-red-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">Ja, löschen</button>

@@ -16,8 +16,8 @@ const ImpressumPage = () => {
         transition={{ duration: 0.5 }}
         className="container mx-auto px-6 py-12"
       >
-        <h1 className="text-4xl font-bold mb-8 gradient-text">Impressum</h1>
-        <div className="bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold mb-8 text-gray-900">Impressum</h1>
+        <div className="bg-white p-8 border border-gray-100">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">Angaben gemäß § 5 TMG</h2>
           <p className="text-gray-600 mb-2">Hans Amonn AG</p>
           <p className="text-gray-600 mb-2">Blümlisalpstrasse 4</p>

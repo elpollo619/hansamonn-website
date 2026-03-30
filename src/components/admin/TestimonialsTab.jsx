@@ -178,7 +178,7 @@ export default function TestimonialsTab() {
       {loading ? (
         <div className="text-sm text-gray-400 py-12 text-center">Laden…</div>
       ) : items.length === 0 ? (
-        <div className="text-sm text-gray-400 py-12 text-center border border-dashed border-gray-200 rounded-xl">
+        <div className="text-sm text-gray-400 py-12 text-center border border-dashed border-gray-200 rounded-lg">
           Noch keine Bewertungen. Klicken Sie auf «Neue Bewertung».
         </div>
       ) : (
@@ -252,7 +252,7 @@ export default function TestimonialsTab() {
           />
 
           {/* Panel */}
-          <div className="w-full max-w-md bg-white shadow-2xl flex flex-col overflow-y-auto">
+          <div className="w-full max-w-md bg-white flex flex-col overflow-y-auto" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             {/* Drawer header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
               <h3 className="font-semibold text-gray-900">
@@ -271,7 +271,7 @@ export default function TestimonialsTab() {
               {/* Name */}
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1.5">
-                  Name <span className="text-red-500">*</span>
+                  Name <span className="text-gray-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -297,7 +297,7 @@ export default function TestimonialsTab() {
               {/* Text */}
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1.5">
-                  Bewertungstext <span className="text-red-500">*</span>
+                  Bewertungstext <span className="text-gray-400">*</span>
                 </label>
                 <textarea
                   rows={4}
@@ -366,7 +366,7 @@ export default function TestimonialsTab() {
 
               {/* Error */}
               {error && (
-                <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                <p className="text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
                   {error}
                 </p>
               )}
@@ -396,7 +396,7 @@ export default function TestimonialsTab() {
       {/* ── Delete confirmation dialog ───────────────────────────────────── */}
       {deleteId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-sm mx-4" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <h4 className="font-semibold text-gray-900 mb-2">Bewertung löschen?</h4>
             <p className="text-sm text-gray-500 mb-5">
               Diese Aktion kann nicht rückgängig gemacht werden.

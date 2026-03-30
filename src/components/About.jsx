@@ -51,9 +51,9 @@ const About = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 text-sm font-semibold text-white transition-colors"
-                style={{ backgroundColor: '#1D3D78' }}
-                onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
-                onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
+                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
               >
                 <Linkedin className="mr-3 h-5 w-5" />
                 Unser Unternehmensprofil auf LinkedIn
@@ -71,7 +71,7 @@ const About = () => {
                   viewport={{ once: true }}
                   className="text-center"
                 >
-                  <stat.icon className="w-8 h-8 mx-auto mb-2" style={{ color: '#1D3D78' }} />
+                  <stat.icon className="w-8 h-8 mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   <div className="text-2xl font-bold text-gray-900 mb-1">
                     {stat.number}
                   </div>
@@ -92,9 +92,12 @@ const About = () => {
             className="relative"
           >
             <div className="relative overflow-hidden">
-              <img   
+              <img
                 alt="Wohnkomplex Allmendstrasse in Kerzers, ein Projekt der Hans Amonn AG"
-                className="w-full h-96 object-cover" src="https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg" />
+                className="w-full h-96 object-cover"
+                src="https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg"
+                loading="lazy"
+                decoding="async" />
             </div>
             
             {/* Floating Card */}

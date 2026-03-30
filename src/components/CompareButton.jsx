@@ -8,28 +8,31 @@ const CompareButton = ({ propertyId, propertyName }) => {
   const active = isCompared(propertyId);
   const maxReached = compared.length >= 3 && !active;
 
+  const label = maxReached
+    ? 'Maximal 3 Objekte vergleichbar'
+    : active
+    ? `${propertyName} aus Vergleich entfernen`
+    : `${propertyName} zum Vergleich hinzufügen`;
+
   return (
     <button
       type="button"
       onClick={() => !maxReached && toggleCompare(propertyId)}
       disabled={maxReached}
-      title={
-        maxReached
-          ? 'Maximal 3 Objekte vergleichbar'
-          : active
-          ? `${propertyName} aus Vergleich entfernen`
-          : `${propertyName} zum Vergleich hinzufügen`
-      }
+      title={label}
+      aria-label={label}
+      aria-pressed={active}
       className={`
         inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
         border transition-all duration-200
         ${active
-          ? 'bg-green-600 border-green-600 text-white hover:bg-green-700 hover:border-green-700'
+          ? 'text-white'
           : maxReached
           ? 'bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed'
-          : 'bg-white border-gray-300 text-gray-600 hover:border-green-500 hover:text-green-700 hover:bg-green-50'
+          : 'bg-white border-gray-300 text-gray-600 hover:border-gray-500 hover:text-gray-800 hover:bg-gray-50'
         }
       `}
+      style={active ? { backgroundColor: 'var(--brand-color, #1D3D78)', borderColor: 'var(--brand-color, #1D3D78)' } : {}}
     >
       {active ? (
         <>

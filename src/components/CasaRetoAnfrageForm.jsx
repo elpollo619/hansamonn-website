@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, Users, User, Mail, Phone, MessageSquare, Check, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
-const inp = 'w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition';
+const inp = 'w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition';
 const lbl = 'block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5';
 
 const INIT = { ankunft: '', abreise: '', gaeste: 2, vorname: '', nachname: '', email: '', telefon: '', nachricht: '' };
@@ -32,7 +32,7 @@ export default function CasaRetoAnfrageForm() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await supabase.from('casa_reto_anfragen').insert([{
+      const { error: insertError } = await supabase.from('casa_reto_anfragen').insert([{
         ankunft:  form.ankunft,
         abreise:  form.abreise,
         gaeste:   Number(form.gaeste),
@@ -42,6 +42,7 @@ export default function CasaRetoAnfrageForm() {
         telefon:  form.telefon,
         nachricht: form.nachricht,
       }]);
+      if (insertError) throw insertError;
 
       // Email notification (fire-and-forget)
       const nights = Math.ceil((new Date(form.abreise) - new Date(form.ankunft)) / 86400000);
@@ -74,8 +75,8 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
 
   if (done) return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
-      <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-        <Check size={28} className="text-emerald-600" />
+      <div className="w-16 h-16 bg-gray-100 flex items-center justify-center mb-4">
+        <Check size={28} className="text-gray-600" />
       </div>
       <h3 className="text-xl font-bold text-gray-900 mb-2">Anfrage gesendet!</h3>
       <p className="text-gray-500 max-w-sm">Wir melden uns innerhalb von 24 Stunden bei Ihnen. Vielen Dank!</p>
@@ -139,13 +140,19 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
       </div>
 
       {errors.submit && (
-        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 px-4 py-3">
           <AlertCircle size={14} /> {errors.submit}
         </div>
       )}
 
-      <button type="submit" disabled={loading}
-        className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 rounded-xl transition-colors disabled:opacity-50">
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 transition-colors disabled:opacity-50"
+        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+        onMouseOver={e => { if (!e.currentTarget.disabled) e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)'); }}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+      >
         {loading ? <><Loader2 size={16} className="animate-spin" /> Senden…</> : <><Check size={16} /> Anfrage senden</>}
       </button>
       <p className="text-xs text-gray-400 text-center">Wir antworten innerhalb von 24 Stunden.</p>

@@ -62,7 +62,7 @@ const ShareButtons = ({ title, url }) => {
         <button
           type="button"
           onClick={handleCopy}
-          className={`${btnBase} ${copied ? 'border-green-300 text-green-700 bg-green-50 hover:bg-green-50' : ''}`}
+          className={`${btnBase} ${copied ? 'border-gray-400 text-gray-700 bg-gray-100 hover:bg-gray-100' : ''}`}
           aria-label="Link kopieren"
         >
           {copied ? <Check size={13} /> : <Link2 size={13} />}

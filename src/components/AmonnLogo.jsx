@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-const NAVY = '#1D3D78';
+const NAVY = 'var(--brand-color, #1D3D78)';
 
 const VARIANTS = {
   main:         { bold: 'HANS',  light: 'AMONN AG' },

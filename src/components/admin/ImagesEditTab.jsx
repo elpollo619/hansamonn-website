@@ -55,7 +55,7 @@ export default function ImagesEditTab() {
       </div>
 
       {/* Add image */}
-      <div className="border border-gray-200 rounded-xl p-5 mb-6 bg-gray-50">
+      <div className="border border-gray-200 rounded-lg p-5 mb-6 bg-gray-50">
         <h3 className="text-sm font-semibold text-gray-700 mb-3">Bild-URL hinzufügen</h3>
         <div className="grid md:grid-cols-3 gap-3 mb-3">
           <div className="md:col-span-2">
@@ -84,12 +84,12 @@ export default function ImagesEditTab() {
       {filtered.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filtered.map(img => (
-            <div key={img.id} className="border border-gray-200 rounded-xl overflow-hidden group hover:border-gray-400 transition-colors">
+            <div key={img.id} className="border border-gray-200 rounded-lg overflow-hidden group hover:border-gray-400 transition-colors">
               <div className="aspect-square bg-gray-100 relative overflow-hidden">
-                <img src={img.url} alt={img.label} className="w-full h-full object-cover" onError={e => { e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center"><svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#9ca3af\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg></div>'; }} />
+                <img src={img.url} alt={img.label} className="w-full h-full object-cover" loading="lazy" decoding="async" onError={e => { e.target.parentElement.innerHTML = '<div class="w-full h-full flex items-center justify-center"><svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#9ca3af\' stroke-width=\'1.5\'><rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\'/><circle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'/><path d=\'m21 15-5-5L5 21\'/></svg></div>'; }} />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                   <button onClick={() => copyUrl(img.url, img.id)} className="p-1.5 bg-white rounded-lg shadow text-gray-700 hover:text-gray-900 transition-colors" title="URL kopieren">
-                    {copied === img.id ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                    {copied === img.id ? <Check size={14} className="text-gray-700" /> : <Copy size={14} />}
                   </button>
                   <a href={img.url} target="_blank" rel="noopener noreferrer" className="p-1.5 bg-white rounded-lg shadow text-gray-700 hover:text-gray-900 transition-colors" title="Öffnen"><ExternalLink size={14} /></a>
                   <button onClick={() => setDeleteConfirm(img.id)} className="p-1.5 bg-white rounded-lg shadow text-red-500 hover:text-red-700 transition-colors" title="Löschen"><Trash2 size={14} /></button>
@@ -103,7 +103,7 @@ export default function ImagesEditTab() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 border border-dashed border-gray-200 rounded-xl">
+        <div className="text-center py-16 border border-dashed border-gray-200 rounded-lg">
           <ImageIcon size={40} className="mx-auto text-gray-300 mb-3" />
           <p className="text-sm text-gray-400">Noch keine Bilder gespeichert</p>
           <p className="text-xs text-gray-300 mt-1">Füge eine Bild-URL oben hinzu</p>
@@ -112,7 +112,7 @@ export default function ImagesEditTab() {
 
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
             <div className="flex items-start gap-3 mb-5"><AlertTriangle size={22} className="text-red-500 flex-shrink-0 mt-0.5" /><div><h3 className="font-bold text-gray-900 mb-1">Bild entfernen?</h3><p className="text-sm text-gray-500">Das Bild wird aus der Verwaltung entfernt.</p></div></div>
             <div className="flex gap-3">
               <button onClick={() => doDelete(deleteConfirm)} className="flex-1 bg-red-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">Entfernen</button>

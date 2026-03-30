@@ -3,7 +3,6 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, Phone, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { servicesData } from '@/components/servicesData';
 
 const ServiceDetailPage = () => {
@@ -33,6 +32,8 @@ const ServiceDetailPage = () => {
           src={service.coverImage}
           alt={service.title}
           className="w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
         <div className="absolute inset-0 flex flex-col justify-end pb-10 px-6">
@@ -87,7 +88,7 @@ const ServiceDetailPage = () => {
                       transition={{ duration: 0.4, delay: i * 0.08 }}
                       className="flex items-start gap-3"
                     >
-                      <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                       <span className="text-gray-700">{bullet}</span>
                     </motion.li>
                   ))}
@@ -98,7 +99,7 @@ const ServiceDetailPage = () => {
                   {service.features.map((feature) => (
                     <span
                       key={feature}
-                      className="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-1 rounded-full"
+                      className="bg-gray-50 text-gray-600 text-sm font-medium px-3 py-1 border border-gray-100"
                     >
                       {feature}
                     </span>
@@ -114,7 +115,7 @@ const ServiceDetailPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-gray-50 rounded-xl p-6 border border-gray-100"
+                className="bg-gray-50 p-6 border border-gray-100"
               >
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   Haben Sie Fragen?
@@ -123,22 +124,26 @@ const ServiceDetailPage = () => {
                   Wir beraten Sie gerne unverbindlich zu diesem Leistungsbereich.
                 </p>
                 <div className="space-y-3">
-                  <a href="tel:+41319518554" className="w-full">
-                    <Button className="w-full brand-gradient text-white flex items-center gap-2">
-                      <Phone size={16} />
-                      +41 (0)31 951 85 54
-                    </Button>
+                  <a
+                    href="tel:+41319518554"
+                    className="w-full flex items-center justify-center gap-2 text-white font-semibold py-2.5 px-4 text-sm transition-colors"
+                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                  >
+                    <Phone size={15} /> +41 (0)31 951 85 54
                   </a>
-                  <a href="mailto:office@reto-amonn.ch" className="w-full">
-                    <Button variant="outline" className="w-full flex items-center gap-2">
-                      <Mail size={16} />
-                      E-Mail schreiben
-                    </Button>
+                  <a
+                    href="mailto:office@reto-amonn.ch"
+                    className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 hover:bg-gray-50 font-medium py-2.5 px-4 text-sm transition-colors"
+                  >
+                    <Mail size={15} /> E-Mail schreiben
                   </a>
-                  <Link to="/kontakt" className="w-full">
-                    <Button variant="outline" className="w-full">
-                      Kontaktformular
-                    </Button>
+                  <Link
+                    to="/kontakt"
+                    className="w-full flex items-center justify-center border border-gray-200 text-gray-600 hover:bg-gray-50 font-medium py-2.5 px-4 text-sm transition-colors"
+                  >
+                    Kontaktformular
                   </Link>
                 </div>
               </motion.div>
@@ -149,7 +154,7 @@ const ServiceDetailPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.35 }}
-                  className="bg-gray-50 rounded-xl p-6 border border-gray-100"
+                  className="bg-gray-50 p-6 border border-gray-100"
                 >
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Weitere Leistungen
@@ -161,10 +166,10 @@ const ServiceDetailPage = () => {
                         <li key={s.slug}>
                           <Link
                             to={`/leistungen/${s.slug}`}
-                            className="flex items-center gap-3 text-gray-700 hover:text-blue-600 transition-colors group"
+                            className="flex items-center gap-3 text-gray-700 hover:text-[#1D3D78] transition-colors group"
                           >
-                            <div className="w-8 h-8 rounded-lg bg-white border border-gray-200 flex items-center justify-center group-hover:border-blue-200 transition-colors">
-                              <RelIcon className="w-4 h-4 text-blue-600" />
+                            <div className="w-8 h-8 bg-white border border-gray-200 flex items-center justify-center group-hover:border-gray-400 transition-colors">
+                              <RelIcon className="w-4 h-4" style={{ color: 'var(--brand-color, #1D3D78)' }} />
                             </div>
                             <span className="text-sm font-medium">{s.title}</span>
                           </Link>
@@ -174,7 +179,7 @@ const ServiceDetailPage = () => {
                   </ul>
                   <Link
                     to="/leistungen"
-                    className="mt-4 inline-flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="mt-4 inline-flex items-center text-sm font-medium" style={{ color: 'var(--brand-color, #1D3D78)' }}
                   >
                     <ArrowLeft size={14} className="mr-1" />
                     Alle Leistungen

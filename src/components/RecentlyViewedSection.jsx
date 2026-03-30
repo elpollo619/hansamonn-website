@@ -7,10 +7,10 @@ import { getProperties } from '@/data/propertiesStore';
 
 // Map propertiesStore IDs to rentalData-based detail page URLs
 const DETAIL_URL_MAP = {
-  'kerzers-ls':        '/immobilien/long-stay-kerzers',
-  'munchenbuchsee-ls': '/immobilien/long-stay-munchenbuchsee',
-  'muri-ls':           '/immobilien/long-stay-muri',
-  'ns-hotel':          '/immobilien/ns-hotel-kerzers',
+  'kerzers-ls':        '/immobilien/kerzers-ls',
+  'munchenbuchsee-ls': '/immobilien/munchenbuchsee-ls',
+  'muri-ls':           '/immobilien/muri-ls',
+  'ns-hotel':          '/immobilien/ns-hotel',
   'casa-reto':         '/immobilien/casa-reto',
 };
 
@@ -89,6 +89,7 @@ const CardImage = ({ src, alt }) => {
       alt={alt}
       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
       loading="lazy"
+      decoding="async"
       onError={() => setErr(true)}
     />
   );

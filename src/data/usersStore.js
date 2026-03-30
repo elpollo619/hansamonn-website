@@ -9,6 +9,25 @@ const DEFAULT_ADMIN = {
   createdAt: new Date().toISOString(),
 };
 
+// ── Hashing ──────────────────────────────────────────────────────────────────
+
+async function hashPassword(plaintext) {
+  const buf = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(plaintext),
+  );
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+/** SHA-256 hex is exactly 64 lowercase hex chars. */
+function isHashed(pw) {
+  return typeof pw === 'string' && /^[0-9a-f]{64}$/.test(pw);
+}
+
+// ── Storage helpers ───────────────────────────────────────────────────────────
+
 export function getUsers() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -28,21 +47,47 @@ export function getUserByEmail(email) {
   return getUsers().find(u => u.email.toLowerCase() === email.toLowerCase()) ?? null;
 }
 
-export function validateCredentials(email, password) {
-  const user = getUserByEmail(email);
-  if (!user) return null;
-  if (user.password !== password) return null;
-  const { password: _pw, ...safe } = user;
+// ── Auth ──────────────────────────────────────────────────────────────────────
+
+/**
+ * Async — hashes the supplied password and compares to stored value.
+ * Lazy migration: if the stored password is still plaintext and matches,
+ * it is transparently re-saved as a hash.
+ */
+export async function validateCredentials(email, password) {
+  const users  = getUsers();
+  const idx    = users.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
+  if (idx === -1) return null;
+
+  const user = users[idx];
+
+  if (isHashed(user.password)) {
+    // Stored hash — compare against hash of supplied password
+    const supplied = await hashPassword(password);
+    if (supplied !== user.password) return null;
+  } else {
+    // Plaintext (legacy) — compare directly
+    if (user.password !== password) return null;
+    // Lazy migration: upgrade to hashed storage
+    const hashed = await hashPassword(password);
+    users[idx] = { ...user, password: hashed };
+    _save(users);
+  }
+
+  const { password: _pw, ...safe } = users[idx];
   return safe;
 }
 
-export function createUser(data) {
+// ── CRUD ──────────────────────────────────────────────────────────────────────
+
+export async function createUser(data) {
   const users = getUsers();
   if (getUserByEmail(data.email)) throw new Error('E-Mail bereits vergeben');
+  const hashed = await hashPassword(data.password);
   const user = {
     id: Date.now().toString(),
     email: data.email,
-    password: data.password,
+    password: hashed,
     name: data.name || data.email,
     role: data.role || 'staff',
     createdAt: new Date().toISOString(),
@@ -69,13 +114,23 @@ export function deleteUser(id) {
  * Change own password — requires current password to be correct.
  * Returns true on success, throws on error.
  */
-export function changeOwnPassword(userId, currentPassword, newPassword) {
+export async function changeOwnPassword(userId, currentPassword, newPassword) {
   const users = getUsers();
   const idx = users.findIndex(u => u.id === userId);
   if (idx === -1) throw new Error('Benutzer nicht gefunden');
-  if (users[idx].password !== currentPassword) throw new Error('Aktuelles Passwort ist falsch');
+
+  // Verify current password
+  const user = users[idx];
+  if (isHashed(user.password)) {
+    const supplied = await hashPassword(currentPassword);
+    if (supplied !== user.password) throw new Error('Aktuelles Passwort ist falsch');
+  } else {
+    if (user.password !== currentPassword) throw new Error('Aktuelles Passwort ist falsch');
+  }
+
   if (!newPassword || newPassword.length < 6) throw new Error('Neues Passwort muss mindestens 6 Zeichen haben');
-  users[idx] = { ...users[idx], password: newPassword };
+  const hashed = await hashPassword(newPassword);
+  users[idx] = { ...users[idx], password: hashed };
   _save(users);
   return true;
 }
@@ -83,12 +138,13 @@ export function changeOwnPassword(userId, currentPassword, newPassword) {
 /**
  * Admin resets another user's password — no current password check.
  */
-export function adminResetPassword(targetUserId, newPassword) {
+export async function adminResetPassword(targetUserId, newPassword) {
   if (!newPassword || newPassword.length < 6) throw new Error('Passwort muss mindestens 6 Zeichen haben');
   const users = getUsers();
   const idx = users.findIndex(u => u.id === targetUserId);
   if (idx === -1) throw new Error('Benutzer nicht gefunden');
-  users[idx] = { ...users[idx], password: newPassword };
+  const hashed = await hashPassword(newPassword);
+  users[idx] = { ...users[idx], password: hashed };
   _save(users);
   return true;
 }

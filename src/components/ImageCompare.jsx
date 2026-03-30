@@ -3,7 +3,7 @@ import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slide
 
 const ImageCompare = ({ before, after, beforeAlt, afterAlt }) => {
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg">
+    <div className="overflow-hidden">
       <ReactCompareSlider
         itemOne={<ReactCompareSliderImage src={before} alt={beforeAlt} />}
         itemTwo={<ReactCompareSliderImage src={after} alt={afterAlt} />}

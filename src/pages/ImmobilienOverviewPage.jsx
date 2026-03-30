@@ -42,6 +42,13 @@ const ImmobilienOverviewPage = () => {
     <Helmet>
       <title>Immobilien – Vermietung & Verkauf | Hans Amonn AG</title>
       <meta name="description" content="Entdecken Sie das Immobilienangebot der Hans Amonn AG: Vermietung von Long Stay, Short Stay und Apartments sowie Kaufobjekte in der Region." />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Immobilien – Vermietung & Verkauf | Hans Amonn AG" />
+      <meta property="og:description" content="Long Stay, Short Stay, Apartments und Kaufobjekte in der Region Bern – Hans Amonn AG." />
+      <meta property="og:image" content="https://www.hansamonn.ch/images/kerzers/titel.jpg" />
+      <meta property="og:url" content="https://www.hansamonn.ch/immobilien" />
+      <meta property="og:site_name" content="Hans Amonn AG" />
+      <meta name="twitter:card" content="summary_large_image" />
     </Helmet>
 
     <section className="min-h-screen bg-white py-16 border-t border-gray-100">
@@ -104,7 +111,7 @@ const ImmobilienOverviewPage = () => {
 
                 {/* CTA */}
                 <div className="px-8 pb-8">
-                  <span className="inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 transition-colors" style={{ backgroundColor: '#1D3D78' }}>
+                  <span className="inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 transition-colors" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
                     {cta}
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -128,7 +135,7 @@ const ImmobilienOverviewPage = () => {
           <Link
             to="/immobilien/anfrage"
             className="inline-flex items-center gap-2 text-white px-5 py-2.5 text-sm font-semibold transition-colors flex-shrink-0"
-            style={{ backgroundColor: '#1D3D78' }}
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
           >
             {t('immobilien.contact.cta')}
             <ArrowRight size={14} />

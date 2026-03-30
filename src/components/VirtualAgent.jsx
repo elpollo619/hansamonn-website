@@ -744,7 +744,7 @@ export default function VirtualAgent() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleOpen}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gray-900 hover:bg-gray-800 text-white rounded-full shadow-2xl flex items-center justify-center transition-colors group"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center transition-colors group"
         aria-label="Chat öffnen"
       >
         <AnimatePresence mode="wait">
@@ -760,7 +760,7 @@ export default function VirtualAgent() {
         </AnimatePresence>
         {/* Sparkle badge */}
         {!open && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
             <Sparkles size={10} className="text-white" />
           </span>
         )}
@@ -774,18 +774,18 @@ export default function VirtualAgent() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.97 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col"
+            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white border border-gray-100 overflow-hidden flex flex-col"
             style={{ maxHeight: 'min(560px, calc(100vh - 120px))' }}
           >
             {/* Header */}
             <div className="bg-gray-900 px-4 py-3 flex items-center gap-3 flex-shrink-0">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
                 <Bot size={17} className="text-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-white font-semibold text-sm leading-tight">HANS AMONN AG</p>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full" />
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#4ade80' }} />
                   <p className="text-gray-400 text-xs">Digitaler Assistent · Online</p>
                 </div>
               </div>
@@ -806,16 +806,17 @@ export default function VirtualAgent() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full right-0 mt-1 bg-white rounded-xl shadow-xl border border-gray-100 py-1 min-w-[120px] z-10"
+                      className="absolute top-full right-0 mt-1 bg-white border border-gray-200 py-1 min-w-[120px] z-10"
                     >
                       {Object.entries(LANG_LABELS).map(([code, info]) => (
                         <button
                           key={code}
                           onClick={() => { setChatLang(code); setShowLangPicker(false); }}
-                          className={`w-full flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${chatLang === code ? 'text-blue-600 font-semibold' : 'text-gray-700'}`}
+                          className={`w-full flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${chatLang === code ? 'font-semibold' : 'text-gray-700'}`}
+                          style={chatLang === code ? { color: 'var(--brand-color, #1D3D78)' } : {}}
                         >
                           <span>{info.label}</span>
-                          {chatLang === code && <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />}
+                          {chatLang === code && <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} />}
                         </button>
                       ))}
                     </motion.div>
@@ -830,11 +831,10 @@ export default function VirtualAgent() {
                 <div key={i} className={`flex ${msg.from === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`flex items-end gap-2 max-w-[88%] ${msg.from === 'user' ? 'flex-row-reverse' : ''}`}>
                     {/* Avatar */}
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mb-0.5 ${
-                      msg.from === 'bot'
-                        ? 'bg-gradient-to-br from-blue-500 to-indigo-600'
-                        : 'bg-gray-700'
-                    }`}>
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mb-0.5"
+                      style={msg.from === 'bot' ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : { backgroundColor: '#374151' }}
+                    >
                       {msg.from === 'bot' ? <Bot size={11} className="text-white" /> : <User size={11} className="text-white" />}
                     </div>
                     <div>
@@ -848,7 +848,8 @@ export default function VirtualAgent() {
                       {msg.link && (
                         <Link
                           to={msg.link}
-                          className={`flex items-center gap-1 text-xs text-blue-500 hover:text-blue-700 mt-1.5 transition-colors font-medium ${msg.from === 'user' ? 'justify-end mr-1' : 'ml-1'}`}
+                          className={`flex items-center gap-1 text-xs mt-1.5 transition-colors font-medium ${msg.from === 'user' ? 'justify-end mr-1' : 'ml-1'}`}
+                          style={{ color: 'var(--brand-color, #1D3D78)' }}
                         >
                           {msg.linkLabel || 'Mehr erfahren'} <ArrowRight size={10} />
                         </Link>
@@ -862,7 +863,7 @@ export default function VirtualAgent() {
               {typing && (
                 <div className="flex justify-start">
                   <div className="flex items-end gap-2">
-                    <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
                       <Bot size={11} className="text-white" />
                     </div>
                     <div className="bg-white border border-gray-100 shadow-sm px-4 py-3.5 rounded-2xl rounded-bl-sm">
@@ -899,7 +900,7 @@ export default function VirtualAgent() {
                         <button
                           key={s.label}
                           onClick={() => send(s.q)}
-                          className="text-xs bg-gray-50 border border-gray-200 text-gray-700 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 py-1.5 px-2.5 rounded-lg transition-colors font-medium"
+                          className="text-xs bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 hover:border-gray-300 py-1.5 px-2.5 rounded-lg transition-colors font-medium"
                         >
                           {s.label}
                         </button>
@@ -920,14 +921,14 @@ export default function VirtualAgent() {
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && !typing && send()}
                   placeholder={L.placeholder}
-                  className="flex-1 text-sm border border-gray-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900/20 focus:border-gray-400 placeholder-gray-400 transition-all"
+                  className="flex-1 text-sm border border-gray-200 rounded px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900/20 focus:border-gray-400 placeholder-gray-400 transition-all"
                   disabled={typing}
                 />
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={() => send()}
                   disabled={!input.trim() || typing}
-                  className="w-10 h-10 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed text-white disabled:text-gray-300 rounded-xl flex items-center justify-center transition-colors flex-shrink-0"
+                  className="w-10 h-10 bg-gray-900 hover:bg-gray-800 disabled:bg-gray-100 disabled:cursor-not-allowed text-white disabled:text-gray-300 flex items-center justify-center transition-colors flex-shrink-0"
                 >
                   <Send size={14} />
                 </motion.button>

@@ -20,7 +20,7 @@ export default function MietanfragePage() {
           </Link>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
+              <div className="inline-flex items-center gap-2 bg-gray-100 border border-gray-200 text-gray-600 text-xs font-semibold px-3 py-1.5 mb-3">
                 <ClipboardList size={12} /> Mietanfrage
               </div>
               <h1 className="text-3xl md:text-4xl font-light text-gray-900">Mietanfrage stellen</h1>

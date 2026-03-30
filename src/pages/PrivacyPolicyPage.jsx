@@ -17,7 +17,7 @@ const PrivacyPolicyPage = () => {
         className="container mx-auto px-6 py-12"
       >
         <h1 className="text-4xl font-bold mb-8 gradient-text">Datenschutzerklärung</h1>
-        <div className="bg-white p-8 rounded-lg shadow-lg">
+        <div className="bg-white p-8 rounded-lg border border-gray-100">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">Datenschutz</h2>
           <p className="text-gray-600 leading-relaxed mb-4">
             Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten 

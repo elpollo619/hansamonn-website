@@ -51,6 +51,13 @@ export default function BeforeAfterSlider({
     setDragging(false);
   }, []);
 
+  const onKeyDown = useCallback((e) => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); setPosition(p => Math.max(0,   p - 2)); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); setPosition(p => Math.min(100, p + 2)); }
+    if (e.key === 'Home')       { e.preventDefault(); setPosition(0); }
+    if (e.key === 'End')        { e.preventDefault(); setPosition(100); }
+  }, []);
+
   useEffect(() => {
     if (dragging) {
       window.addEventListener('mousemove', onMouseMove);
@@ -69,7 +76,7 @@ export default function BeforeAfterSlider({
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-hidden rounded-2xl shadow-md select-none"
+      className="relative w-full overflow-hidden select-none"
       style={{ aspectRatio: '16/9', cursor: dragging ? 'ew-resize' : 'col-resize' }}
     >
       {/* Before image (full width, bottom layer) */}
@@ -78,6 +85,8 @@ export default function BeforeAfterSlider({
         alt={beforeLabel}
         className="absolute inset-0 w-full h-full object-cover"
         draggable={false}
+        loading="lazy"
+        decoding="async"
       />
 
       {/* After image (clipped on the right) */}
@@ -90,6 +99,8 @@ export default function BeforeAfterSlider({
           alt={afterLabel}
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
+          loading="lazy"
+          decoding="async"
         />
       </div>
 
@@ -102,9 +113,16 @@ export default function BeforeAfterSlider({
 
         {/* Handle circle */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-xl flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gray-400"
           onMouseDown={onMouseDown}
           onTouchStart={onTouchStart}
+          onKeyDown={onKeyDown}
+          role="slider"
+          tabIndex={0}
+          aria-label="Vorher/Nachher vergleichen"
+          aria-valuenow={Math.round(position)}
+          aria-valuemin={0}
+          aria-valuemax={100}
           style={{ cursor: 'ew-resize' }}
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-gray-600">

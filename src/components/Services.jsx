@@ -115,7 +115,7 @@ const Services = () => (
     </section>
 
     {/* ── CTA ── */}
-    <section className="py-20 px-6" style={{ backgroundColor: '#1D3D78' }}>
+    <section className="py-20 px-6" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
       <div className="container mx-auto max-w-3xl text-center">
         <p className="text-[10px] font-semibold tracking-[0.25em] text-white/40 uppercase mb-5">
           Kontakt

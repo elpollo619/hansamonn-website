@@ -41,7 +41,7 @@ const TeamMemberPage = () => {
           {/* Back */}
           <Link
             to="/team"
-            className="inline-flex items-center text-gray-600 hover:text-blue-600 mb-8 transition-colors"
+            className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8 transition-colors"
           >
             <ArrowLeft size={16} className="mr-2" />
             Zurück zum Team
@@ -55,16 +55,18 @@ const TeamMemberPage = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-1"
             >
-              <div className="bg-white rounded-xl overflow-hidden shadow-lg">
+              <div className="bg-white overflow-hidden border border-gray-100">
                 <div className="relative h-80">
                   <img
                     src={imageUrl}
                     alt={`${member.name} – ${member.position}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   {Icon && (
-                  <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow">
-                    <Icon size={20} className="text-blue-600" />
+                  <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 flex items-center justify-center border border-gray-100">
+                    <Icon size={20} style={{ color: 'var(--brand-color, #1D3D78)' }} />
                   </div>
                 )}
                 </div>
@@ -73,7 +75,7 @@ const TeamMemberPage = () => {
                   <h1 className="text-2xl font-semibold text-gray-900 mb-1">
                     {member.name}
                   </h1>
-                  <p className="text-blue-600 font-medium mb-4">{member.position}</p>
+                  <p className="font-medium mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
 
                   <div className="space-y-3 text-sm text-gray-600 mb-6">
                     <div className="flex items-start gap-2">
@@ -107,7 +109,7 @@ const TeamMemberPage = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="lg:col-span-2"
             >
-              <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
+              <div className="bg-white border border-gray-100 p-8 mb-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
                   Über {member.name.split(' ')[0]}
                 </h2>
@@ -116,15 +118,15 @@ const TeamMemberPage = () => {
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl shadow-lg p-8">
+              <div className="bg-white border border-gray-100 p-8">
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
                   Spezialisierung
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {member.specialization.split(',').map((s) => (
+                  {(member.specialization || '').split(',').map((s) => (
                     <span
                       key={s}
-                      className="bg-blue-50 text-blue-700 text-sm font-medium px-3 py-1 rounded-full"
+                      className="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1"
                     >
                       {s.trim()}
                     </span>
@@ -139,7 +141,7 @@ const TeamMemberPage = () => {
             {prev ? (
               <Link
                 to={`/team/${prev.slug}`}
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <ArrowLeft size={16} />
                 <span className="text-sm font-medium">{prev.name}</span>
@@ -149,14 +151,14 @@ const TeamMemberPage = () => {
             )}
             <Link
               to="/team"
-              className="text-sm text-gray-500 hover:text-blue-600 transition-colors"
+              className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
             >
               Alle Teammitglieder
             </Link>
             {next ? (
               <Link
                 to={`/team/${next.slug}`}
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <span className="text-sm font-medium">{next.name}</span>
                 <ArrowLeft size={16} className="rotate-180" />

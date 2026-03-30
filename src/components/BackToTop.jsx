@@ -25,7 +25,7 @@ const BackToTop = () => {
           transition={{ duration: 0.2 }}
           onClick={scrollToTop}
           aria-label="Nach oben scrollen"
-          className="fixed bottom-6 right-6 z-30 w-11 h-11 rounded-full bg-gray-900 text-white shadow-lg hover:bg-gray-700 active:scale-95 transition-colors flex items-center justify-center"
+          className="fixed bottom-6 right-6 z-30 w-11 h-11 bg-gray-900 text-white hover:bg-gray-700 active:scale-95 transition-colors flex items-center justify-center"
         >
           <ArrowUp size={18} />
         </motion.button>

@@ -110,6 +110,8 @@ const Lightbox = ({ images = [], initialIndex = 0, onClose }) => {
             alt={current.alt || `Bild ${activeIndex + 1}`}
             className="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl"
             draggable={false}
+            loading="lazy"
+            decoding="async"
           />
         </motion.div>
 

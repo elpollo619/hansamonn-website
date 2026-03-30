@@ -20,6 +20,7 @@ const AptImage = ({ src, alt, className }) => {
       alt={alt}
       className={className}
       loading="lazy"
+      decoding="async"
       onError={() => setErrored(true)}
     />
   );
@@ -59,7 +60,7 @@ const ApartmentCard = ({ item, index }) => {
         {/* Price chip */}
         {item.price && (
           <div className="absolute bottom-3 right-3">
-            <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm">
+            <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5">
               <span className="font-bold text-sm text-gray-900">
                 CHF {item.price.toLocaleString('de-CH')}
                 <span className="text-gray-400 font-normal text-xs"> / Mt.</span>
@@ -102,7 +103,7 @@ const ApartmentCard = ({ item, index }) => {
         <div className="mt-auto">
           <Link
             to={detailUrl}
-            className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm" style={{ backgroundColor: '#1D3D78' }}
+            className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
           >
             Details ansehen
             <ArrowRight size={14} />
@@ -132,7 +133,7 @@ const EmptyState = () => (
     <div className="space-y-3">
       <a
         href="mailto:office@reto-amonn.ch?subject=Warteliste%20Wohnung&body=Ich%20m%C3%B6chte%20auf%20die%20Warteliste%20f%C3%BCr%20eine%20Mietwohnung%20gesetzt%20werden."
-        className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors" style={{ backgroundColor: '#1D3D78' }}
+        className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
       >
         <Bell size={15} /> Auf Warteliste setzen
       </a>
@@ -174,7 +175,7 @@ export default function ApartmentsPage() {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative text-white overflow-hidden" style={{ backgroundColor: '#1D3D78' }}>
+      <section className="relative text-white overflow-hidden" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div />
         <div className="relative container mx-auto px-6 py-16 md:py-24">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>

@@ -154,6 +154,8 @@ const ArchitekturPage = () => {
                       src={p.coverImage}
                       alt={p.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="p-6">

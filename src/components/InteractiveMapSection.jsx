@@ -6,10 +6,10 @@ import { getVisibleProperties } from '@/data/propertiesStore';
 
 // ── Type → visual config ──────────────────────────────────────────────────────
 const TYPE_CFG = {
-  'long-stay':  { icon: BedDouble, color: 'bg-amber-500',  ring: 'ring-amber-200',  accent: 'text-amber-600',  hex: '#f59e0b', label: 'Long Stay' },
-  'short-stay': { icon: Hotel,     color: 'bg-indigo-500', ring: 'ring-indigo-200', accent: 'text-indigo-600', hex: '#6366f1', label: 'Short Stay · Hotel' },
-  ferienhaus:   { icon: Sun,       color: 'bg-rose-500',   ring: 'ring-rose-200',   accent: 'text-rose-600',   hex: '#f43f5e', label: 'Ferienhaus' },
-  apartment:    { icon: Home,      color: 'bg-blue-500',   ring: 'ring-blue-200',   accent: 'text-blue-600',   hex: '#3b82f6', label: 'Apartment' },
+  'long-stay':  { icon: BedDouble, colorHex: '#1D3D78', label: 'Long Stay' },
+  'short-stay': { icon: Hotel,     colorHex: '#374151', label: 'Short Stay · Hotel' },
+  ferienhaus:   { icon: Sun,       colorHex: '#6B7280', label: 'Ferienhaus' },
+  apartment:    { icon: Home,      colorHex: '#1D3D78', label: 'Apartment' },
 };
 function getCfg(type) { return TYPE_CFG[type] || TYPE_CFG['long-stay']; }
 
@@ -84,7 +84,7 @@ function LeafletMap({ locations, activeId, onPinClick }) {
         className: '',
         html: `<div style="
           width:36px;height:36px;border-radius:50%;
-          background:${loc.hex};
+          background:${loc.colorHex};
           border:3px solid white;
           box-shadow:0 2px 8px rgba(0,0,0,0.25);
           display:flex;align-items:center;justify-content:center;
@@ -121,7 +121,7 @@ function LeafletMap({ locations, activeId, onPinClick }) {
   }, [activeId]);
 
   return (
-    <div ref={mapRef} className="w-full h-full rounded-3xl overflow-hidden" style={{ minHeight: 380 }} />
+    <div ref={mapRef} className="w-full h-full overflow-hidden" style={{ minHeight: 380 }} />
   );
 }
 
@@ -145,10 +145,7 @@ export default function InteractiveMapSection() {
           description: p.description || '',
           link:        p.link || `/immobilien/${p.id}`,
           typeIcon:    cfg.icon,
-          color:       cfg.color,
-          ring:        cfg.ring,
-          accent:      cfg.accent,
-          hex:         cfg.hex,
+          colorHex:    cfg.colorHex,
           lat:         p.lat,
           lng:         p.lng,
         };
@@ -168,10 +165,10 @@ export default function InteractiveMapSection() {
   }, []);
 
   const legendItems = [
-    { color: 'bg-amber-500',  label: 'Long Stay' },
-    { color: 'bg-indigo-500', label: 'Hotel' },
-    { color: 'bg-rose-500',   label: 'Ferienhaus' },
-    { color: 'bg-blue-500',   label: 'Apartment' },
+    { label: 'Long Stay' },
+    { label: 'Hotel' },
+    { label: 'Ferienhaus' },
+    { label: 'Apartment' },
   ];
 
   return (
@@ -188,7 +185,7 @@ export default function InteractiveMapSection() {
           {/* Map */}
           <div className="lg:col-span-2">
             <div
-              className="relative rounded-3xl border border-gray-100 overflow-hidden shadow-sm bg-gray-50"
+              className="relative border border-gray-100 overflow-hidden bg-gray-50"
               style={{ height: 420 }}
             >
               {leafletCssLoaded && locations.length > 0 ? (
@@ -213,7 +210,7 @@ export default function InteractiveMapSection() {
             <div className="flex flex-wrap gap-4 mt-4 justify-center">
               {legendItems.map((item) => (
                 <div key={item.label} className="flex items-center gap-2 text-xs text-gray-500">
-                  <div className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} />
                   {item.label}
                 </div>
               ))}
@@ -230,9 +227,9 @@ export default function InteractiveMapSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
+                  className="bg-white border border-gray-100 overflow-hidden"
                 >
-                  <div className={`h-2 ${activeLocation.color}`} />
+                  <div className="h-2" style={{ backgroundColor: activeLocation.colorHex }} />
                   <div className="p-5">
                     <div className="flex items-start justify-between mb-3">
                       <div>
@@ -241,7 +238,7 @@ export default function InteractiveMapSection() {
                       </div>
                       <button
                         onClick={() => setActive(null)}
-                        className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="p-1.5 hover:bg-gray-100 transition-colors"
                       >
                         <X size={14} className="text-gray-400" />
                       </button>
@@ -250,7 +247,10 @@ export default function InteractiveMapSection() {
                     <p className="text-sm text-gray-600 leading-relaxed mb-4">{activeLocation.description}</p>
                     <Link
                       to={activeLocation.link}
-                      className="flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white text-sm font-semibold py-2.5 px-4 rounded-xl transition-colors"
+                      className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-2.5 px-4 transition-colors"
+                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                     >
                       Details ansehen <ArrowRight size={13} />
                     </Link>
@@ -273,10 +273,10 @@ export default function InteractiveMapSection() {
                       <button
                         key={loc.id}
                         onClick={() => setActive(loc.id)}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
+                        className="w-full flex items-center gap-3 p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
                       >
-                        <div className={`w-8 h-8 rounded-xl ${loc.color} flex items-center justify-center flex-shrink-0`}>
-                          <Icon size={14} className="text-white" />
+                        <div className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0">
+                          <Icon size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-gray-900 truncate">{loc.name}</p>

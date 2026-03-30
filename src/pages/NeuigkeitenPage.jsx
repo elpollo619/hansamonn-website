@@ -7,9 +7,9 @@ import { getBlogPosts } from '@/data/blogStore';
 import { useTranslation } from '@/i18n';
 
 const CATEGORY_COLORS = {
-  Immobilien: 'bg-blue-100 text-blue-700',
-  Architektur: 'bg-emerald-100 text-emerald-700',
-  Unternehmen: 'bg-amber-100 text-amber-700',
+  Immobilien: 'bg-gray-100 text-gray-600',
+  Architektur: 'bg-gray-100 text-gray-600',
+  Unternehmen: 'bg-gray-100 text-gray-600',
   Allgemein:   'bg-gray-100 text-gray-600',
 };
 
@@ -29,7 +29,7 @@ function formatDate(dateStr) {
 // ── Skeleton card ────────────────────────────────────────────────────────────
 function SkeletonCard() {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
+    <div className="bg-white overflow-hidden border border-gray-100 animate-pulse">
       <div className="h-48 bg-gray-200" />
       <div className="p-6 space-y-3">
         <div className="h-4 bg-gray-200 rounded w-1/4" />
@@ -51,7 +51,7 @@ function BlogCard({ post, index, lang }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow group"
+      className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors group"
     >
       {/* Cover image */}
       <Link to={`/neuigkeiten/${post.slug}`} className="block overflow-hidden h-48 bg-gray-100">
@@ -60,6 +60,8 @@ function BlogCard({ post, index, lang }) {
             src={post.cover_image}
             alt={post.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
@@ -71,7 +73,7 @@ function BlogCard({ post, index, lang }) {
       <div className="p-6">
         {/* Category + date */}
         <div className="flex items-center gap-3 mb-3">
-          <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full ${categoryColor(post.category)}`}>
+          <span className={`inline-block text-xs font-semibold px-2.5 py-1 ${categoryColor(post.category)}`}>
             {post.category}
           </span>
           <span className="flex items-center gap-1 text-xs text-gray-400">
@@ -82,7 +84,7 @@ function BlogCard({ post, index, lang }) {
 
         {/* Title */}
         <Link to={`/neuigkeiten/${post.slug}`}>
-          <h2 className="text-gray-900 font-bold text-lg leading-snug mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+          <h2 className="text-gray-900 font-bold text-lg leading-snug mb-2 group-hover:text-[#1D3D78] transition-colors line-clamp-2">
             {displayTitle}
           </h2>
         </Link>
@@ -97,7 +99,7 @@ function BlogCard({ post, index, lang }) {
         {/* Weiterlesen */}
         <Link
           to={`/neuigkeiten/${post.slug}`}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors" style={{ color: 'var(--brand-color, #1D3D78)' }}
         >
           Weiterlesen <ArrowRight size={14} />
         </Link>
@@ -124,10 +126,13 @@ export default function NeuigkeitenPage() {
     <>
       <Helmet>
         <title>Neuigkeiten – Hans Amonn AG</title>
-        <meta
-          name="description"
-          content="Aktuelle Neuigkeiten, Projekte und Einblicke von Hans Amonn AG – Immobilien und Architektur in Bern."
-        />
+        <meta name="description" content="Aktuelle Neuigkeiten, Projekte und Einblicke von Hans Amonn AG – Immobilien und Architektur in Bern." />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Neuigkeiten – Hans Amonn AG" />
+        <meta property="og:description" content="Aktuelle Neuigkeiten, Projekte und Einblicke von Hans Amonn AG – Immobilien und Architektur in Bern." />
+        <meta property="og:url" content="https://www.hansamonn.ch/neuigkeiten" />
+        <meta property="og:site_name" content="Hans Amonn AG" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
       <div className="min-h-screen bg-gray-50">

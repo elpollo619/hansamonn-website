@@ -74,7 +74,7 @@ const RentCalculator = () => {
   const suffix = result.isNight ? '/ Nacht' : '/ Mt.';
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="bg-white border border-gray-100 overflow-hidden">
       {/* Form */}
       <div className="p-6 md:p-8 grid md:grid-cols-2 gap-6">
         {/* Wohnfläche */}
@@ -161,25 +161,25 @@ const RentCalculator = () => {
       </div>
 
       {/* Result */}
-      <div className="border-t border-gray-100 bg-gradient-to-br from-green-50 to-emerald-50 p-6 md:p-8">
-        <p className="text-xs font-semibold text-green-700 uppercase tracking-widest mb-3">
+      <div className="border-t border-gray-100 bg-gray-50 p-6 md:p-8">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
           Geschätzter Mietpreis
         </p>
 
         {/* Big price range */}
         <div className="flex items-baseline gap-2 mb-4">
-          <span className="text-4xl md:text-5xl font-black text-green-700 tabular-nums">
+          <span className="text-4xl md:text-5xl font-black text-gray-900 tabular-nums">
             CHF {formatCHF(result.min)}
           </span>
-          <span className="text-xl font-bold text-green-500">–</span>
-          <span className="text-4xl md:text-5xl font-black text-green-700 tabular-nums">
+          <span className="text-xl font-bold text-gray-400">–</span>
+          <span className="text-4xl md:text-5xl font-black text-gray-900 tabular-nums">
             {formatCHF(result.max)}
           </span>
-          <span className="text-base text-green-600 font-medium ml-1">{suffix}</span>
+          <span className="text-base text-gray-500 font-medium ml-1">{suffix}</span>
         </div>
 
         {/* Breakdown */}
-        <div className="bg-white/70 rounded-xl p-4 mb-4 space-y-1.5">
+        <div className="bg-white p-4 mb-4 space-y-1.5 border border-gray-100">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">
               Basispreis ({flaeche} m² × CHF {BASE[standort][typ]})
@@ -216,7 +216,10 @@ const RentCalculator = () => {
         {/* CTA */}
         <Link
           to="/immobilien/anfrage"
-          className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
+          className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
+          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
         >
           Jetzt Anfrage stellen
           <ArrowRight size={15} />

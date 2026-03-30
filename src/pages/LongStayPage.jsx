@@ -11,7 +11,7 @@ const RentalImage = ({ src, alt, className }) => {
       <Building2 size={28} className="text-gray-300" />
     </div>
   ) : (
-    <img src={src} alt={alt} className={className} loading="lazy" onError={() => setErr(true)} />
+    <img src={src} alt={alt} className={className} loading="lazy" decoding="async" onError={() => setErr(true)} />
   );
 };
 
@@ -71,7 +71,7 @@ export default function LongStayPage() {
         <meta name="description" content="Möblierte Langzeitaufenthalte in Kerzers, Münchenbuchsee und Muri. Ab 1 Monat, Nebenkosten inklusive." />
       </Helmet>
       {/* Hero */}
-      <section className="relative text-white overflow-hidden" style={{ backgroundColor: '#1D3D78' }}>
+      <section className="relative text-white overflow-hidden" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div />
         <div className="relative container mx-auto px-6 py-16 md:py-24">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -91,7 +91,7 @@ export default function LongStayPage() {
               {idealFor.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <div key={item.title} className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 max-w-xs">
+                  <div key={item.title} className="flex items-start gap-3 bg-white/5 border border-white/10 px-4 py-3 max-w-xs">
                     <Icon size={18} className="text-white/60 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-semibold text-white">{item.title}</p>
@@ -136,7 +136,7 @@ export default function LongStayPage() {
                   </div>
                   <div className="space-y-2 mb-4">
                     {loc.rooms.map((room) => (
-                      <div key={room.label} className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2">
+                      <div key={room.label} className="flex items-center justify-between bg-gray-50 px-3 py-2">
                         <span className="text-xs text-gray-600">{room.label}{room.detail ? ` · ${room.detail}` : ''}</span>
                         <span className="text-xs font-semibold text-gray-900">{room.price}</span>
                       </div>
@@ -153,9 +153,9 @@ export default function LongStayPage() {
                     <Link
                       to={loc.link}
                       className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm"
-                      style={{ backgroundColor: '#1D3D78' }}
-                      onMouseOver={e => e.currentTarget.style.backgroundColor='#162E5A'}
-                      onMouseOut={e => e.currentTarget.style.backgroundColor='#1D3D78'}
+                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                     >
                       Details ansehen <ArrowRight size={14} />
                     </Link>
@@ -176,7 +176,7 @@ export default function LongStayPage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
             className="max-w-3xl mx-auto p-8 md:p-12 text-center text-white"
-            style={{ backgroundColor: '#1D3D78' }}
+            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
           >
             <div className="w-14 h-14 bg-white/10 flex items-center justify-center mx-auto mb-5">
               <Mail size={24} className="text-white" />

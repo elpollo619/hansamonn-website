@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { getProjectById } from '@/data/projectsStore';
@@ -9,10 +9,10 @@ import ProjectImages from '@/components/ProjectImages';
 import Lightbox from '@/components/Lightbox';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
 
@@ -31,10 +31,7 @@ const ProjectDetailPage = () => {
   };
 
   const handleContactClick = () => {
-    toast({
-      title: "🚧 Kontaktfunktion in Kürze verfügbar!",
-      description: "Wir arbeiten daran. In der Zwischenzeit erreichen Sie uns per E-Mail. 🚀"
-    });
+    navigate('/kontakt');
   };
 
   if (!project) {
@@ -59,7 +56,7 @@ const ProjectDetailPage = () => {
             Zurück zu den Projekten
           </Link>
 
-          <div className="bg-white rounded-lg overflow-hidden shadow-xl">
+          <div className="bg-white overflow-hidden border border-gray-100">
             {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
             <ProjectInfo project={project} onButtonClick={handleContactClick} />
             {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}

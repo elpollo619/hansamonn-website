@@ -45,7 +45,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer style={{ backgroundColor: '#1D3D78' }} className="text-white">
+    <footer style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} className="text-white">
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-14">
 

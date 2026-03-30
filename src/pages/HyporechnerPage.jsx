@@ -6,20 +6,17 @@ import MortgageCalculator from '@/components/MortgageCalculator';
 
 const RULES = [
   {
-    icon: <Percent size={18} className="text-blue-600" />,
-    bg: 'bg-blue-50',
+    icon: <Percent size={18} style={{ color: 'var(--brand-color, #1D3D78)' }} />,
     title: 'Maximale Belehnung (LTV)',
     body: 'Banken finanzieren in der Schweiz maximal 80% des Kaufpreises. Die restlichen 20% müssen als Eigenkapital eingebracht werden, wovon mindestens 10% aus eigenen Mitteln (nicht Pensionskasse) stammen müssen.',
   },
   {
-    icon: <ShieldCheck size={18} className="text-emerald-600" />,
-    bg: 'bg-emerald-50',
+    icon: <ShieldCheck size={18} style={{ color: 'var(--brand-color, #1D3D78)' }} />,
     title: 'Tragbarkeit (max. 33%)',
     body: 'Die jährlichen Wohnkosten (Zinsen kalkulatorisch mit 5%, Amortisation, Nebenkosten) dürfen in der Regel nicht mehr als ein Drittel des Bruttoeinkommens betragen. Dieser Richtwert gilt auch bei niedrigem Marktzins.',
   },
   {
-    icon: <Home size={18} className="text-orange-600" />,
-    bg: 'bg-orange-50',
+    icon: <Home size={18} style={{ color: 'var(--brand-color, #1D3D78)' }} />,
     title: 'Amortisation',
     body: 'Die Hypothek ist innert 15 Jahren auf 65% des Verkehrswertes amortisiert zu haben (Richtwert). Direkte oder indirekte Amortisation via Säule 3a sind möglich.',
   },
@@ -37,7 +34,7 @@ const HyporechnerPage = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <section className="text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div className="container mx-auto px-4 sm:px-6 py-16 md:py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -45,15 +42,15 @@ const HyporechnerPage = () => {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 bg-white/10 text-white/80 text-xs font-semibold px-3 py-1.5 mb-5">
               <Calculator size={13} />
               Hypothekenrechner
             </div>
             <h1 className="text-3xl md:text-4xl font-black mb-4 leading-tight">
               Hypothek & Tragbarkeit<br />
-              <span className="text-gray-300 font-light">berechnen</span>
+              <span className="text-white/70 font-light">berechnen</span>
             </h1>
-            <p className="text-gray-300 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-xl">
               Ermitteln Sie Ihre monatliche Rate, jährliche Zinslast und Tragbarkeit nach
               Schweizer Standard — in Echtzeit und vollständig kostenlos.
             </p>
@@ -98,9 +95,9 @@ const HyporechnerPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm"
+                  className="bg-white p-5 border border-gray-100"
                 >
-                  <div className={`w-9 h-9 rounded-xl ${r.bg} flex items-center justify-center mb-3`}>
+                  <div className="w-9 h-9 bg-gray-100 flex items-center justify-center mb-3">
                     {r.icon}
                   </div>
                   <h3 className="text-sm font-bold text-gray-900 mb-2">{r.title}</h3>
