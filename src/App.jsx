@@ -43,7 +43,6 @@ import ApartmentDetailPage from '@/pages/ApartmentDetailPage';
 import LongStayPage from '@/pages/LongStayPage';
 import ShortStayPage from '@/pages/ShortStayPage';
 import ApartmentsPage from '@/pages/ApartmentsPage';
-import CasaRetoPage from '@/pages/CasaRetoPage';
 import NsHotelPage from '@/pages/NsHotelPage';
 import MietanfragePage from '@/pages/MietanfragePage';
 import TerminbuchungPage from '@/pages/TerminbuchungPage';

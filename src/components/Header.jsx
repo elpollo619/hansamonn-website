@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, BedDouble, Building2, Map, Calculator, Search, Heart } from 'lucide-react';
+import { Menu, X, ChevronDown, BedDouble, Building2, Map, Calculator, Search, Heart, ClipboardList } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
@@ -68,6 +68,20 @@ const ImmobilienDropdown = ({ onClose }) => {
           <div>
             <p className="text-sm font-semibold">Hypothekenrechner</p>
             <p className="text-xs text-gray-400 group-hover:text-amber-500">Rate & Tragbarkeit berechnen</p>
+          </div>
+        </Link>
+        <div className="my-2 border-t border-gray-100" />
+        <Link
+          to="/immobilien/anfrage"
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition-colors group"
+        >
+          <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
+            <ClipboardList size={15} className="text-white" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-white">Mietanfrage stellen</p>
+            <p className="text-xs text-blue-100">Zimmer oder Wohnung anfragen</p>
           </div>
         </Link>
       </motion.div>

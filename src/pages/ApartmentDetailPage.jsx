@@ -562,15 +562,42 @@ const ApartmentDetailPage = () => {
         if (y + needed > 275) { doc.addPage(); y = 20; }
       };
 
-      // Header bar
-      doc.setFillColor(30, 64, 175);
-      doc.rect(0, 0, pageW, 14, 'F');
-      doc.setTextColor(255, 255, 255);
+      // ── Logo header ────────────────────────────────────────────────────────
+      const lx = margin;
+      // Square bracket logo
+      doc.setDrawColor(17, 24, 39);
+      doc.setLineWidth(1.2);
+      doc.line(lx, 10, lx, 26);
+      doc.line(lx, 10, lx + 4, 10);
+      doc.line(lx, 26, lx + 4, 26);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(17, 24, 39);
+      doc.text('A', lx + 0.8, 22);
+      // "AMONN" text
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'black');
+      doc.setTextColor(17, 24, 39);
+      doc.text('AMONN', lx + 7, 19);
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(107, 114, 128);
+      doc.text('IMMOBILIEN', lx + 7, 25);
+      // "EXPOSÉ" right side
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(17, 24, 39);
+      doc.text('EXPOSÉ', pageW - margin, 20, { align: 'right' });
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
-      doc.text('Hans Amonn AG · Immobilien · office@reto-amonn.ch · +41 (0)31 951 85 54', margin, 9);
+      doc.setTextColor(107, 114, 128);
+      doc.text(new Date().toLocaleDateString('de-CH'), pageW - margin, 26, { align: 'right' });
+      // Separator
+      doc.setDrawColor(229, 231, 235);
+      doc.setLineWidth(0.4);
+      doc.line(margin, 30, pageW - margin, 30);
 
-      y = 26;
+      y = 38;
 
       // Title
       doc.setTextColor(17, 24, 39);
@@ -690,7 +717,7 @@ const ApartmentDetailPage = () => {
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(156, 163, 175);
         doc.text(
-          `Exposé – ${apt.title} · ${new Date().toLocaleDateString('de-CH')} · Seite ${p} / ${pages}`,
+          `AMONN IMMOBILIEN · Hans Amonn AG · office@reto-amonn.ch · +41 (0)31 951 85 54 · Seite ${p} / ${pages}`,
           margin, 291,
         );
       }

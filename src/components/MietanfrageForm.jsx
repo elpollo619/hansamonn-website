@@ -98,17 +98,44 @@ function generatePDF(data, docFiles) {
   const addPage = () => { doc.addPage(); y = 20; };
   const checkPage = (needed = 10) => { if (y + needed > 280) addPage(); };
 
-  // Header
-  doc.setFillColor(37, 99, 235);
-  doc.rect(0, 0, W, 28, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(18);
+  // ── Logo / Header ──────────────────────────────────────────────────────────
+  // Square bracket logo (left)
+  doc.setDrawColor(30, 64, 175);
+  doc.setLineWidth(1.2);
+  const lx = MARGIN;
+  // Outer bracket
+  doc.line(lx, 10, lx, 28);       // left bar
+  doc.line(lx, 10, lx + 5, 10);   // top bracket
+  doc.line(lx, 28, lx + 5, 28);   // bottom bracket
+  // Inner notch to give the "N" shape
+  doc.setFillColor(30, 64, 175);
+  doc.setFontSize(13);
+  doc.setFont("helvetica", "black");
+  doc.setTextColor(30, 64, 175);
+  doc.text("N", lx + 1.5, 24);
+  // "N's HOTEL" text
+  doc.setFontSize(11);
   doc.setFont("helvetica", "bold");
-  doc.text("Mietanfrage — Hans Amonn AG", MARGIN, 12);
-  doc.setFontSize(9);
+  doc.setTextColor(17, 24, 39);
+  doc.text("N's HOTEL", lx + 8, 18);
+  doc.setFontSize(7);
   doc.setFont("helvetica", "normal");
-  doc.text(`Eingereicht am: ${new Date().toLocaleDateString("de-CH")}  |  office@reto-amonn.ch  |  +41 31 951 85 54`, MARGIN, 21);
-  y = 36;
+  doc.setTextColor(100, 116, 139);
+  doc.text("LONGSTAY", lx + 8, 25);
+  // Document reference (right)
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(17, 24, 39);
+  doc.text("MIETANFRAGE", W - MARGIN, 20, { align: "right" });
+  doc.setFontSize(8.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(107, 114, 128);
+  doc.text(new Date().toLocaleDateString("de-CH"), W - MARGIN, 26, { align: "right" });
+  // Separator line
+  doc.setDrawColor(229, 231, 235);
+  doc.setLineWidth(0.5);
+  doc.line(MARGIN, 32, W - MARGIN, 32);
+  y = 40;
 
   const sectionTitle = (title, icon = "") => {
     checkPage(14);
