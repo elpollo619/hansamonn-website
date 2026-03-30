@@ -4,43 +4,101 @@ import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
 
-/* ─── Cycling "Wir bauen ..." text ──────────────────────────────────────── */
-const BAUEN_WORDS = [
-  'Wohnhäuser.',
-  'Mehrfamilienhäuser.',
-  'Ihr Zuhause.',
-  'für Generationen.',
-  'mit Verantwortung.',
-  'Neubauten.',
-  'Sanierungen.',
-  'Träume.',
+/* ─── Hero: "Wir bauen" with cycling word on its own line ───────────────── */
+const INTERVAL = 2600;
+
+const BAUEN_ITEMS = [
+  { word: 'Wohnhäuser.',        sub: 'Einfamilienhäuser, Mehrfamilienhäuser' },
+  { word: 'Ihr Zuhause.',       sub: 'Individuell, nachhaltig, auf Mass' },
+  { word: 'Sanierungen.',       sub: 'Umbau, Renovation, Energieeffizienz' },
+  { word: 'Neubauten.',         sub: 'Von der Planung bis zur Schlüsselübergabe' },
+  { word: 'für Generationen.',  sub: 'Qualität, die bleibt' },
+  { word: 'Träume.',            sub: 'Ihr Projekt — unsere Leidenschaft' },
 ];
 
 const WirBauen = () => {
   const [idx, setIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % BAUEN_WORDS.length), 2200);
+    setProgress(0);
+    const start = performance.now();
+    let raf;
+    const tick = (now) => {
+      const p = Math.min((now - start) / INTERVAL, 1);
+      setProgress(p);
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [idx]);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % BAUEN_ITEMS.length), INTERVAL);
     return () => clearInterval(t);
   }, []);
 
+  const item = BAUEN_ITEMS[idx];
+
   return (
-    <div className="flex items-baseline gap-3 flex-wrap">
-      <span className="text-4xl md:text-6xl font-light text-gray-900">Wir bauen</span>
-      <span className="relative inline-block min-w-[14rem] md:min-w-[22rem] h-[1.2em] overflow-hidden align-baseline">
+    <div>
+      {/* Static first line */}
+      <p className="text-4xl md:text-6xl font-light text-gray-900 leading-tight">
+        Wir bauen
+      </p>
+
+      {/* Animated second line */}
+      <div className="overflow-hidden" style={{ height: '1.25em' }}>
         <AnimatePresence mode="wait">
-          <motion.span
+          <motion.p
             key={idx}
-            initial={{ y: '100%', opacity: 0 }}
-            animate={{ y: '0%', opacity: 1 }}
-            exit={{ y: '-100%', opacity: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-0 top-0 text-4xl md:text-6xl font-black text-gray-900 whitespace-nowrap"
+            initial={{ y: '100%' }}
+            animate={{ y: '0%' }}
+            exit={{ y: '-100%' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="text-4xl md:text-6xl font-black text-gray-900 leading-tight"
           >
-            {BAUEN_WORDS[idx]}
-          </motion.span>
+            {item.word}
+          </motion.p>
         </AnimatePresence>
-      </span>
+      </div>
+
+      {/* Subtitle */}
+      <div className="overflow-hidden mt-3" style={{ height: '1.4em' }}>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={idx + '-sub'}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="text-sm text-gray-400 tracking-wide"
+          >
+            {item.sub}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
+      {/* Progress bar + dots */}
+      <div className="mt-6 flex items-center gap-3">
+        <div className="relative h-px w-32 bg-gray-200 overflow-hidden">
+          <motion.div
+            className="absolute left-0 top-0 h-full bg-gray-900"
+            style={{ width: `${progress * 100}%` }}
+          />
+        </div>
+        <div className="flex gap-1.5">
+          {BAUEN_ITEMS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              className={`rounded-full transition-all duration-300 ${
+                i === idx ? 'w-4 h-1.5 bg-gray-900' : 'w-1.5 h-1.5 bg-gray-300'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
@@ -269,9 +327,9 @@ const Services = () => {
               Tätigkeit
             </p>
             <WirBauen />
-            <p className="mt-6 text-gray-400 text-base leading-relaxed max-w-xl">
-              Architektur mit Verantwortung für Raum, Bestand und Kosten — seit über
-              55 Jahren in der Region Bern.
+            <p className="mt-6 text-gray-400 text-sm leading-relaxed max-w-xl">
+              Architektur mit Verantwortung für Raum, Bestand und Kosten —<br />
+              seit über 55 Jahren in der Region Bern.
             </p>
           </motion.div>
         </div>
