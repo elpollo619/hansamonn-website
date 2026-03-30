@@ -1120,22 +1120,54 @@ export default function PropertiesTab() {
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <div>
-                        <p className="font-medium text-gray-900">{prop.name}</p>
-                        {prop.location && (
-                          <p className="text-xs text-gray-500 mt-0.5">{prop.location}</p>
+                      <div className="flex items-center gap-3">
+                        {prop.images?.[0] && (
+                          <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 border border-gray-200">
+                            <img
+                              src={prop.images[0]}
+                              alt=""
+                              className="w-full h-full object-cover"
+                              onError={(e) => { e.target.style.display = 'none'; }}
+                            />
+                          </div>
                         )}
+                        <div>
+                          <p className="font-medium text-gray-900">{prop.name}</p>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            {prop.location && (
+                              <p className="text-xs text-gray-500">{prop.location}</p>
+                            )}
+                            {prop.icalUrl && (
+                              <span className="inline-flex items-center gap-1 text-xs text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full border border-emerald-100">
+                                📅 Kalender
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td className="px-4 py-3">
                       <TypeBadge type={prop.type} />
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1.5">
                         <StatusBadge status={prop.status} />
-                        {prop.occupancy && prop.occupancy !== 'frei' && (
-                          <StatusBadge status={prop.occupancy} />
-                        )}
+                        <div className="flex gap-1">
+                          {OCCUPANCY_OPTIONS.map((o) => (
+                            <button
+                              key={o.value}
+                              title={o.label}
+                              onClick={() => { updateProperty(prop.id, { occupancy: o.value }); reload(); }}
+                              className={`px-2 py-0.5 rounded-full text-xs font-medium border transition-all ${
+                                (prop.occupancy || 'frei') === o.value
+                                  ? o.cls
+                                  : 'bg-white border-gray-200 text-gray-400 hover:border-gray-300'
+                              }`}
+                            >
+                              {o.label}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-gray-700">
