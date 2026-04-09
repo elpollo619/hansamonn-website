@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Inbox, Eye, X, ChevronDown, ChevronUp, Loader2, AlertCircle, Check, Download } from 'lucide-react';
+import { Eye, X, Loader2, AlertCircle, Download, Mail, Phone, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/use-toast';
 import { logActivity } from '@/data/activityLogStore';
 
 const STATUS_CONFIG = {
-  neu:        { label: 'Neu',        cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
-  bearbeitet: { label: 'Bearbeitet', cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
-  abgelehnt:  { label: 'Abgelehnt', cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
-  akzeptiert: { label: 'Akzeptiert', cls: 'bg-gray-100 text-gray-700 border border-gray-200' },
+  neu:        { label: 'Neu',        cls: 'bg-blue-50 text-blue-700 border border-blue-200',    dot: 'bg-blue-500' },
+  bearbeitet: { label: 'Bearbeitet', cls: 'bg-yellow-50 text-yellow-700 border border-yellow-200', dot: 'bg-yellow-400' },
+  akzeptiert: { label: 'Akzeptiert', cls: 'bg-green-50 text-green-700 border border-green-200',  dot: 'bg-green-500' },
+  abgelehnt:  { label: 'Abgelehnt', cls: 'bg-gray-100 text-gray-500 border border-gray-200',    dot: 'bg-gray-400' },
 };
 
 function StatusBadge({ status }) {
   const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.neu;
-  return <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${cfg.cls}`}>{cfg.label}</span>;
+  return (
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${cfg.cls}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+      {cfg.label}
+    </span>
+  );
 }
 
 function DetailDrawer({ row, onClose, onStatusChange }) {
@@ -39,27 +44,54 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
   const Field = ({ label, value }) => value ? (
     <div className="flex gap-3 text-sm">
       <span className="w-36 flex-shrink-0 text-gray-500">{label}</span>
-      <span className="text-gray-900 font-medium">{value}</span>
+      <span className="text-gray-900 font-medium break-words">{value}</span>
     </div>
   ) : null;
+
+  // Build mailto reply with prefilled subject
+  const replySubject = encodeURIComponent(`Re: Anfrage ${row.objekt ?? ''} – ${row.vorname} ${row.nachname}`);
+  const replyHref    = `mailto:${row.email}?subject=${replySubject}`;
 
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="flex-1 bg-black/40" onClick={onClose} />
       <div className="w-full max-w-lg bg-white flex flex-col" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)' }}>
+        {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h3 className="font-bold text-gray-900">Anfrage: {row.vorname} {row.nachname}</h3>
+          <div>
+            <h3 className="font-bold text-gray-900">{row.vorname} {row.nachname}</h3>
+            {row.objekt && <p className="text-xs text-gray-400 mt-0.5">{row.objekt}</p>}
+          </div>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100"><X size={18} /></button>
         </div>
+
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          {/* Quick actions */}
+          <div className="flex gap-2 flex-wrap">
+            <a href={replyHref}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-colors"
+              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+            >
+              <Mail size={14} /> Per E-Mail antworten
+            </a>
+            {row.telefon && (
+              <a href={`tel:${row.telefon.replace(/\s/g, '')}`}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
+                <Phone size={14} /> Anrufen
+              </a>
+            )}
+          </div>
+
           {/* Status */}
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Status</p>
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Status ändern</p>
             <div className="flex flex-wrap gap-2">
               {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
                 <button key={key} onClick={() => saveStatus(key)} disabled={saving}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
-                    status === key ? `${cfg.cls} border-transparent` : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                    status === key ? `${cfg.cls}` : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
                   }`}>
                   {cfg.label}
                 </button>
@@ -71,21 +103,22 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
           {/* Contact */}
           <div className="space-y-2">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Kontakt</p>
-            <Field label="Name" value={`${row.vorname} ${row.nachname}`} />
-            <Field label="E-Mail" value={row.email} />
+            <Field label="Name"    value={`${row.vorname} ${row.nachname}`} />
+            <Field label="E-Mail"  value={row.email} />
             <Field label="Telefon" value={row.telefon} />
-            <Field label="Objekt" value={row.objekt} />
+            <Field label="Objekt"  value={row.objekt} />
+            <Field label="Datum"   value={row.created_at ? new Date(row.created_at).toLocaleString('de-CH') : ''} />
           </div>
 
-          {/* Full form data */}
+          {/* Parsed form data */}
           {Object.keys(data).length > 0 && (
             <div className="space-y-2">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Alle Angaben</p>
-              <div className="bg-gray-50 rounded-lg p-4 space-y-2 max-h-80 overflow-y-auto">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Angaben</p>
+              <div className="bg-gray-50 border border-gray-100 p-4 space-y-2 max-h-80 overflow-y-auto">
                 {Object.entries(data).filter(([k, v]) => v && k !== 'dokumente').map(([k, v]) => (
                   <div key={k} className="flex gap-3 text-xs">
                     <span className="w-32 flex-shrink-0 text-gray-500 capitalize">{k.replace(/([A-Z])/g, ' $1').trim()}</span>
-                    <span className="text-gray-800">{Array.isArray(v) ? v.join(', ') : String(v)}</span>
+                    <span className="text-gray-800 break-words">{Array.isArray(v) ? v.join(', ') : String(v)}</span>
                   </div>
                 ))}
               </div>
@@ -115,6 +148,7 @@ export default function MietanfragenTab() {
   const [error, setError]       = useState(null);
   const [selected, setSelected] = useState(null);
   const [filter, setFilter]     = useState('alle');
+  const [search, setSearch]     = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -134,10 +168,20 @@ export default function MietanfragenTab() {
     if (selected?.id === id) setSelected(s => ({ ...s, status }));
   }
 
-  const filtered = filter === 'alle' ? rows : rows.filter(r => r.status === filter);
+  // Search filter
+  const q = search.toLowerCase();
+  const afterSearch = q
+    ? rows.filter(r =>
+        `${r.vorname} ${r.nachname} ${r.email} ${r.objekt ?? ''}`.toLowerCase().includes(q)
+      )
+    : rows;
+
+  const filtered = filter === 'alle' ? afterSearch : afterSearch.filter(r => r.status === filter);
+
   const counts = Object.fromEntries(
     Object.keys(STATUS_CONFIG).map(k => [k, rows.filter(r => r.status === k).length])
   );
+  const neuCount = counts.neu ?? 0;
 
   function csvEscape(val) {
     const str = val == null ? '' : String(val);
@@ -164,13 +208,13 @@ export default function MietanfragenTab() {
       try { parsed = JSON.parse(r.nachricht ?? '{}'); } catch { /* ignore */ }
 
       const nachricht = Object.entries(parsed)
-        .filter(([k, v]) => v && !['von', 'bis', 'personen', 'dokumente'].includes(k.toLowerCase()))
+        .filter(([k, v]) => v && !['von', 'bis', 'personen', 'dokumente', 'ankunft', 'abreise', 'gaeste', 'quelle'].includes(k.toLowerCase()))
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
         .join(' | ');
 
-      const von      = parsed.von      ?? parsed.Von      ?? parsed.einzug  ?? '';
-      const bis      = parsed.bis      ?? parsed.Bis      ?? parsed.auszug  ?? '';
-      const personen = parsed.personen ?? parsed.Personen ?? parsed.anzahl  ?? '';
+      const von      = parsed.von      ?? parsed.Von      ?? parsed.einzug   ?? parsed.ankunft  ?? '';
+      const bis      = parsed.bis      ?? parsed.Bis      ?? parsed.auszug   ?? parsed.abreise  ?? '';
+      const personen = parsed.personen ?? parsed.Personen ?? parsed.anzahl   ?? parsed.gaeste   ?? '';
 
       return [
         r.created_at ? new Date(r.created_at).toLocaleDateString('de-CH') : '',
@@ -200,19 +244,39 @@ export default function MietanfragenTab() {
     <div className="relative">
       {selected && <DetailDrawer row={selected} onClose={() => setSelected(null)} onStatusChange={handleStatusChange} />}
 
+      {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-bold text-gray-900">Mietanfragen</h2>
+          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            Anfragen
+            {neuCount > 0 && (
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 text-white text-xs font-bold">
+                {neuCount}
+              </span>
+            )}
+          </h2>
           <p className="text-sm text-gray-500">{rows.length} Anfragen gesamt</p>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={exportCsv} className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
-            <Download size={14} /> CSV exportieren
+            <Download size={14} /> CSV
           </button>
           <button onClick={load} className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 px-3 py-2 rounded-lg text-sm hover:bg-gray-50 transition-colors">
             Aktualisieren
           </button>
         </div>
+      </div>
+
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+        <input
+          type="text"
+          placeholder="Suchen nach Name, E-Mail, Objekt…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="w-full border border-gray-200 pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 bg-white"
+        />
       </div>
 
       {/* Filter tabs */}
@@ -222,7 +286,7 @@ export default function MietanfragenTab() {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
               filter === key ? 'bg-gray-900 text-white border-gray-900' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}>
-            {label} {count > 0 && <span className="ml-1 opacity-70">({count})</span>}
+            {label} {count > 0 && <span className="ml-1 opacity-60">({count})</span>}
           </button>
         ))}
       </div>
@@ -232,7 +296,7 @@ export default function MietanfragenTab() {
           <Loader2 size={20} className="animate-spin" /> Lade Anfragen…
         </div>
       ) : error ? (
-        <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 border border-gray-200 px-4 py-3">
           <AlertCircle size={15} /> {error}
         </div>
       ) : (
@@ -248,27 +312,56 @@ export default function MietanfragenTab() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {filtered.map(row => (
-                <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-3">
-                    <p className="font-medium text-gray-900">{row.vorname} {row.nachname}</p>
-                    <p className="text-xs text-gray-400">{row.email}</p>
-                  </td>
-                  <td className="px-4 py-3 text-gray-600 hidden md:table-cell">{row.objekt}</td>
-                  <td className="px-4 py-3 text-gray-500 text-xs hidden sm:table-cell">
-                    {new Date(row.created_at).toLocaleDateString('de-CH')}
-                  </td>
-                  <td className="px-4 py-3 text-center"><StatusBadge status={row.status} /></td>
-                  <td className="px-4 py-3 text-right">
-                    <button onClick={() => setSelected(row)}
-                      className="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
-                      <Eye size={15} />
-                    </button>
+              {filtered.map(row => {
+                const isNeu = (!row.status || row.status === 'neu');
+                return (
+                  <tr key={row.id}
+                    className={`transition-colors cursor-pointer ${isNeu ? 'bg-blue-50/40 hover:bg-blue-50' : 'hover:bg-gray-50'}`}
+                    onClick={() => setSelected(row)}
+                  >
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        {isNeu && <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" title="Neu" />}
+                        <div>
+                          <p className={`font-medium ${isNeu ? 'text-gray-900' : 'text-gray-700'}`}>
+                            {row.vorname} {row.nachname}
+                          </p>
+                          <p className="text-xs text-gray-400">{row.email}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-gray-600 hidden md:table-cell">{row.objekt ?? '–'}</td>
+                    <td className="px-4 py-3 text-gray-500 text-xs hidden sm:table-cell">
+                      {new Date(row.created_at).toLocaleDateString('de-CH')}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <StatusBadge status={row.status ?? 'neu'} />
+                    </td>
+                    <td className="px-4 py-3 text-right" onClick={e => e.stopPropagation()}>
+                      <div className="flex items-center justify-end gap-1">
+                        <a href={`mailto:${row.email}?subject=${encodeURIComponent(`Re: Anfrage ${row.objekt ?? ''} – ${row.vorname} ${row.nachname}`)}`}
+                          className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          title="Per E-Mail antworten"
+                        >
+                          <Mail size={14} />
+                        </a>
+                        <button onClick={() => setSelected(row)}
+                          className="p-1.5 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                          title="Details anzeigen"
+                        >
+                          <Eye size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+              {!filtered.length && (
+                <tr>
+                  <td colSpan={5} className="px-4 py-12 text-center text-gray-400">
+                    {search ? `Keine Ergebnisse für „${search}"` : 'Keine Anfragen vorhanden'}
                   </td>
                 </tr>
-              ))}
-              {!filtered.length && (
-                <tr><td colSpan={5} className="px-4 py-12 text-center text-gray-400">Keine Anfragen vorhanden</td></tr>
               )}
             </tbody>
           </table>

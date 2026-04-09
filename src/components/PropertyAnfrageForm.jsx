@@ -72,15 +72,19 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
 </div>`;
 
     try {
-      // Save to DB (fire-and-forget, table may not exist yet)
-      supabase.from('property_anfragen').insert([{
-        property_name: propertyName,
-        vorname:   form.vorname,
-        nachname:  form.nachname,
-        email:     form.email,
-        telefon:   form.telefon,
-        einzug:    form.einzug || null,
-        nachricht: form.nachricht,
+      // Save to mietanfragen table (visible in admin dashboard)
+      supabase.from('mietanfragen').insert([{
+        vorname:  form.vorname,
+        nachname: form.nachname,
+        email:    form.email,
+        telefon:  form.telefon,
+        objekt:   propertyName,
+        nachricht: JSON.stringify({
+          einzug:    form.einzug || null,
+          nachricht: form.nachricht,
+          quelle:    'Direkte Anfrage',
+        }),
+        status: 'neu',
       }]).then(() => {}).catch(() => {});
 
       // Company notification email (fire-and-forget)

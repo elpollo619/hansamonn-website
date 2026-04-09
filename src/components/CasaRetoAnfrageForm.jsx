@@ -32,15 +32,21 @@ export default function CasaRetoAnfrageForm() {
     if (!validate()) return;
     setLoading(true);
     try {
-      const { error: insertError } = await supabase.from('casa_reto_anfragen').insert([{
-        ankunft:  form.ankunft,
-        abreise:  form.abreise,
-        gaeste:   Number(form.gaeste),
+      // Save to mietanfragen (visible in admin dashboard)
+      const { error: insertError } = await supabase.from('mietanfragen').insert([{
         vorname:  form.vorname,
         nachname: form.nachname,
         email:    form.email,
         telefon:  form.telefon,
-        nachricht: form.nachricht,
+        objekt:   'Casa Reto',
+        nachricht: JSON.stringify({
+          ankunft:   form.ankunft,
+          abreise:   form.abreise,
+          gaeste:    Number(form.gaeste),
+          nachricht: form.nachricht,
+          quelle:    'Casa Reto Anfrage',
+        }),
+        status: 'neu',
       }]);
       if (insertError) throw insertError;
 
