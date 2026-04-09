@@ -115,6 +115,10 @@ const TypeBadge = ({ type, t }) => {
   );
 };
 
+// Module-level settings (read once from settingsStore, used across all sidebar components)
+const settingsPhone = getSetting('phone');
+const settingsEmail = getSetting('email');
+
 // ─── HOTEL SIDEBAR ─────────────────────────────────────────────────────────
 
 const HotelSidebar = ({ apt, t }) => (
@@ -199,7 +203,7 @@ const HotelSidebar = ({ apt, t }) => (
       </div>
 
       {/* Phone + email */}
-      <a href={`tel:${settingsPhone.replace(/\\D/g, "")}`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 transition-colors text-sm">
+      <a href={`tel:${settingsPhone.replace(/\D/g, '')}`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 transition-colors text-sm">
         <Phone size={15} />
         {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
       </a>
@@ -376,7 +380,7 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
 
         {/* Phone */}
         <a
-          href={`tel:${settingsPhone.replace(/\\D/g, "")}`}
+          href={`tel:${settingsPhone.replace(/\D/g, '')}`}
           className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm"
         >
           <Phone size={15} />
@@ -597,9 +601,6 @@ const ApartmentDetailPage = () => {
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading]   = useState(true);
-
-  const settingsPhone = getSetting('phone');
-  const settingsEmail = getSetting('email');
 
   const fromStore  = getPropertyById(slug);
   const fromRental = !fromStore ? getListingBySlug(slug) : null;
