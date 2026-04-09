@@ -104,6 +104,8 @@ const EMPTY_FORM = {
   bookingUrl: '',
   airbnbUrl: '',
   icalUrl: '',
+  icalUrl2: '',
+  icalUrl3: '',
   videoUrl: '',
   tourUrl: '',
   contactEmail: '',
@@ -651,13 +653,33 @@ function PropertyForm({ property, onSave, onClose }) {
               </div>
             </div>
             <div>
-              <label className={labelCls}>iCal-Export-URL (.ics)</label>
+              <label className={labelCls}>Airbnb iCal-URL (.ics)</label>
               <input
                 className={inputCls}
                 type="url"
                 value={form.icalUrl}
                 onChange={(e) => set('icalUrl', e.target.value)}
                 placeholder="https://www.airbnb.com/calendar/ical/XXXXXX.ics?t=..."
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Booking.com iCal-URL (.ics) <span className="text-gray-400 font-normal">(optional)</span></label>
+              <input
+                className={inputCls}
+                type="url"
+                value={form.icalUrl2}
+                onChange={(e) => set('icalUrl2', e.target.value)}
+                placeholder="https://ical.booking.com/v1/export?token=..."
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Fewo-direkt / weitere Plattform iCal-URL (.ics) <span className="text-gray-400 font-normal">(optional)</span></label>
+              <input
+                className={inputCls}
+                type="url"
+                value={form.icalUrl3}
+                onChange={(e) => set('icalUrl3', e.target.value)}
+                placeholder="https://..."
               />
             </div>
             <details className="group">
@@ -688,9 +710,12 @@ function PropertyForm({ property, onSave, onClose }) {
                 </p>
               </div>
             </details>
-            {form.icalUrl && (
+            {(form.icalUrl || form.icalUrl2 || form.icalUrl3) && (
               <p className="text-xs text-gray-600 flex items-center gap-1.5">
-                <span>✓</span> Kalender wird auf der Detailseite angezeigt.
+                <span>✓</span> Kalender wird auf der Detailseite angezeigt
+                {[form.icalUrl, form.icalUrl2, form.icalUrl3].filter(Boolean).length > 1
+                  ? ` (${[form.icalUrl, form.icalUrl2, form.icalUrl3].filter(Boolean).length} Plattformen synchronisiert).`
+                  : '.'}
               </p>
             )}
           </div>

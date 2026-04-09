@@ -189,13 +189,17 @@ function migrate(props) {
     const storedImages = Array.isArray(p.images) ? p.images : [];
     const defaultImages = def?.images ?? [];
     const images = storedImages.length < defaultImages.length ? defaultImages : storedImages;
-    // Restore icalUrl from defaults if missing
-    const icalUrl = p.icalUrl || def?.icalUrl || '';
+    // Restore icalUrls from defaults if missing
+    const icalUrl  = p.icalUrl  || def?.icalUrl  || '';
+    const icalUrl2 = p.icalUrl2 || def?.icalUrl2 || '';
+    const icalUrl3 = p.icalUrl3 || def?.icalUrl3 || '';
     return {
       address: p.location || '',
       ...p,
       images,
       icalUrl,
+      icalUrl2,
+      icalUrl3,
       lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
       lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
       occupancy: p.occupancy || 'frei',
@@ -304,6 +308,8 @@ export function getNormalizedVisibleProperties() {
         airbnb: p.airbnbUrl || '',
       },
       icalUrl: p.icalUrl || '',
+      icalUrl2: p.icalUrl2 || '',
+      icalUrl3: p.icalUrl3 || '',
       videoUrl: p.videoUrl || '',
       tourUrl: p.tourUrl || '',
       link: p.link || `/immobilien/${p.id}`,

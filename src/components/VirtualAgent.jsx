@@ -65,7 +65,7 @@ const KB = {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessin', 'ferienhaus', 'ferien', 'ferienwohnung', 'lago maggiore', 'gordemo', 'urlaub', 'erholung', 'natur', 'süd', 'sommer', 'escapada'],
         answer: 'Casa Reto ist unser privates Ferienhaus am Lago Maggiore im Tessin — in einer traumhaften Naturlage direkt am See. Perfekt für Ferien, Erholung und Auszeit vom Alltag.',
-        link: '/casa-reto',
+        link: '/immobilien/casa-reto',
         linkLabel: 'Casa Reto entdecken',
       },
       {
@@ -265,7 +265,7 @@ const KB = {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessin', 'ticino', 'holiday', 'vacation', 'lago maggiore', 'nature', 'summer', 'relax'],
         answer: 'Casa Reto is our private holiday house at Lake Maggiore in Ticino — a dream location surrounded by nature. Perfect for holidays and a relaxing getaway.',
-        link: '/casa-reto',
+        link: '/immobilien/casa-reto',
         linkLabel: 'Discover Casa Reto',
       },
       {
@@ -374,7 +374,7 @@ const KB = {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessin', 'vacances', 'maison', 'lago maggiore', 'nature', 'repos'],
         answer: "Casa Reto est notre maison de vacances privée au Lac Majeur, dans le Tessin — un cadre naturel magnifique. Parfait pour les vacances et un séjour ressourçant.",
-        link: '/casa-reto',
+        link: '/immobilien/casa-reto',
         linkLabel: 'Découvrir Casa Reto',
       },
       {
@@ -455,7 +455,7 @@ const KB = {
         id: 'casa-reto',
         triggers: ['casa reto', 'ticino', 'vacanze', 'lago maggiore', 'natura', 'riposo'],
         answer: "Casa Reto è la nostra casa vacanze privata sul Lago Maggiore in Ticino — una location da sogno immersa nella natura.",
-        link: '/casa-reto',
+        link: '/immobilien/casa-reto',
         linkLabel: 'Scopri Casa Reto',
       },
       {
@@ -522,7 +522,7 @@ const KB = {
         id: 'casa-reto',
         triggers: ['casa reto', 'tesino', 'vacaciones', 'lago maggiore', 'naturaleza', 'descanso', 'escapada'],
         answer: 'Casa Reto es nuestra casa de vacaciones privada en el Lago Maggiore, en el Tesino — un lugar de ensueño rodeado de naturaleza. Perfecto para vacaciones y escapadas.',
-        link: '/casa-reto',
+        link: '/immobilien/casa-reto',
         linkLabel: 'Descubrir Casa Reto',
       },
       {
@@ -596,7 +596,7 @@ const KB = {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessino', 'férias', 'lago maggiore', 'natureza', 'descanso'],
         answer: 'Casa Reto é a nossa casa de férias privada no Lago Maggiore, no Tessino — uma localização de sonho rodeada de natureza.',
-        link: '/casa-reto',
+        link: '/immobilien/casa-reto',
         linkLabel: 'Descobrir Casa Reto',
       },
       {

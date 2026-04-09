@@ -67,12 +67,14 @@ function MonthGrid({ year, month, isBlocked, todayStr }) {
 }
 
 /**
- * AvailabilityCalendar — shows 2 months of availability from an iCal feed.
- * @prop {string} icalUrl  - The .ics export URL from Airbnb (or Booking.com)
+ * AvailabilityCalendar — shows 2 months of availability from one or more iCal feeds.
+ * @prop {string|string[]} icalUrls - One or more .ics export URLs (Airbnb, Booking.com, Fewo-direkt)
+ * @prop {string}          icalUrl  - Legacy single-URL prop (still supported)
  */
-export default function AvailabilityCalendar({ icalUrl }) {
+export default function AvailabilityCalendar({ icalUrls, icalUrl }) {
+  const urls = icalUrls ?? (icalUrl ? [icalUrl] : []);
   const [offset, setOffset] = useState(0); // months from current
-  const { loading, error, isBlocked } = useAvailability(icalUrl);
+  const { loading, error, isBlocked } = useAvailability(urls);
 
   const today    = new Date();
   const todayStr = toStr(today.getFullYear(), today.getMonth(), today.getDate());
@@ -154,7 +156,9 @@ export default function AvailabilityCalendar({ icalUrl }) {
       )}
 
       <p className="text-[10px] text-gray-300 mt-3 text-center">
-        Synchronisiert mit Airbnb · Booking.com · Alle Plattformen
+        {urls.length > 1
+          ? `Synchronisiert mit ${urls.length} Plattformen · Airbnb · Booking.com · Fewo-direkt`
+          : 'Synchronisiert mit Airbnb · Booking.com · Alle Plattformen'}
       </p>
     </div>
   );

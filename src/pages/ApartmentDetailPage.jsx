@@ -58,6 +58,8 @@ function normalizeStoreProperty(p) {
     longStayRooms: p.longStayRooms || null,
     holidayHome: false,
     icalUrl: p.icalUrl || '',
+    icalUrl2: p.icalUrl2 || '',
+    icalUrl3: p.icalUrl3 || '',
     videoUrl: p.videoUrl || '',
     tourUrl: p.tourUrl || '',
     occupancy: p.occupancy || 'frei',
@@ -535,9 +537,9 @@ const ApartmentDetailPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading]   = useState(true);
 
-  const fromRental = getListingBySlug(slug);
-  const fromStore  = !fromRental ? getPropertyById(slug) : null;
-  const apt = fromRental ?? (fromStore ? normalizeStoreProperty(fromStore) : null);
+  const fromStore  = getPropertyById(slug);
+  const fromRental = !fromStore ? getListingBySlug(slug) : null;
+  const apt = fromStore ? normalizeStoreProperty(fromStore) : (fromRental ?? null);
 
   useEffect(() => {
     setLoading(true);
@@ -995,7 +997,9 @@ const ApartmentDetailPage = () => {
             {apt.icalUrl && (
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 mb-3">Verfügbarkeit</h2>
-                <AvailabilityCalendar icalUrl={apt.icalUrl} />
+                <AvailabilityCalendar
+                  icalUrls={[apt.icalUrl, apt.icalUrl2, apt.icalUrl3].filter(Boolean)}
+                />
               </div>
             )}
 
