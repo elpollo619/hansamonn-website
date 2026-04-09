@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
-import { projectsData } from '@/data/projectsData';
+import { projectsData } from '@/components/ProjectData';
 import { AmonnLogoBlock } from '@/components/AmonnLogo';
 
 const archServices = servicesData.filter((s) => s.category === 'architektur');

@@ -510,8 +510,7 @@ export default function MietanfrageForm() {
 
       setDone(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert(t('mietanfrage.errSend') || "Unerwarteter Fehler beim Senden. Bitte versuchen Sie es erneut.");
     } finally {
       setLoading(false);

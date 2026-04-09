@@ -5,29 +5,33 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { useTranslation } from '@/i18n';
 import { supabase } from '@/lib/supabase';
+import { getSetting } from '@/data/settingsStore';
 
 const Contact = () => {
   const { t } = useTranslation();
   const [submitting, setSubmitting] = useState(false);
   const formRef = useRef(null);
+  const phone   = getSetting('phone');
+  const email   = getSetting('email');
+  const address = getSetting('address');
 
   const contactInfo = [
     {
       icon: MapPin,
       title: t('common.address'),
-      details: ['Hans Amonn AG', 'Blümlisalpstrasse 4', '3074 Muri bei Bern']
+      details: ['Hans Amonn AG', ...address.split(',').map(s => s.trim())]
     },
     {
       icon: Phone,
       title: t('common.phone'),
-      details: ['+41 (0)31 951 85 54'],
-      href: 'tel:+41319518554'
+      details: [phone],
+      href: `tel:${phone.replace(/\D/g, '')}`
     },
     {
       icon: Mail,
       title: t('common.email'),
-      details: ['office@reto-amonn.ch'],
-      href: 'mailto:office@reto-amonn.ch'
+      details: [email],
+      href: `mailto:${email}`
     },
     {
       icon: Clock,

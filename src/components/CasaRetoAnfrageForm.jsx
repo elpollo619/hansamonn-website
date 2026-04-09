@@ -104,7 +104,7 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
 
       setDone(true);
     } catch (err) {
-      console.error(err);
+      void err;
       setErrors({ submit: 'Fehler beim Senden. Bitte versuchen Sie es erneut.' });
     } finally {
       setLoading(false);

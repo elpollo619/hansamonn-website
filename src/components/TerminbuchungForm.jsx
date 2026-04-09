@@ -61,7 +61,6 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
       setForm({ ...EMPTY });
     } catch (err) {
       setError('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
-      console.error(err);
     } finally {
       setSubmitting(false);
     }

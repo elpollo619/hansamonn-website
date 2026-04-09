@@ -13,6 +13,7 @@ import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
 import { getPropertyById } from '@/data/propertiesStore';
 import { trackPropertyView } from '@/data/statsStore';
+import { getSetting } from '@/data/settingsStore';
 import MietanfrageForm from '@/components/MietanfrageForm';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import PropertyDocuments from '@/components/PropertyDocuments';
@@ -53,7 +54,7 @@ function normalizeStoreProperty(p) {
     images,
     features: Array.isArray(p.features) ? p.features : [],
     details: p.details || null,
-    contact: p.contact || { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
+    contact: p.contact || { phone: getSetting('phone'), email: getSetting('email') },
     directBookingUrl: p.bookingUrl || '',
     bookingUrls: { booking: p.bookingUrl || '', airbnb: p.airbnbUrl || '' },
     longStayRooms: p.longStayRooms || null,
@@ -194,7 +195,7 @@ const HotelSidebar = ({ apt, t }) => (
       </div>
 
       {/* Phone + email */}
-      <a href="tel:+41319518554" className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 transition-colors text-sm">
+      <a href={`tel:${settingsPhone.replace(/\\D/g, "")}`} className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-2.5 px-4 transition-colors text-sm">
         <Phone size={15} />
         {apt.contact?.phone ?? '+41 (0)31 951 85 54'}
       </a>
@@ -360,7 +361,7 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
 
         {/* Phone */}
         <a
-          href="tel:+41319518554"
+          href={`tel:${settingsPhone.replace(/\\D/g, "")}`}
           className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm"
         >
           <Phone size={15} />
@@ -427,11 +428,11 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
                 {t('vermietung.card.requestInquiry')}
               </button>
               <a
-                href={`tel:+41319518554`}
+                href={`tel:${settingsPhone.replace(/\D/g, '')}`}
                 className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm"
               >
                 <Phone size={15} />
-                +41 (0)31 951 85 54
+                {settingsPhone}
               </a>
             </>
           ) : (
@@ -442,7 +443,7 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
               </div>
               <p className="text-xs text-gray-500">{t('vermietung.detail.rented.subtitle')}</p>
               <a
-                href="mailto:office@reto-amonn.ch?subject=Warteliste Wohnung"
+                href={`mailto:${settingsEmail}?subject=Warteliste Wohnung`}
                 className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-700 hover:bg-gray-50 py-3 px-4 transition-colors text-sm font-medium"
               >
                 <Mail size={15} />
@@ -537,6 +538,9 @@ const ApartmentDetailPage = () => {
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading]   = useState(true);
+
+  const settingsPhone = getSetting('phone');
+  const settingsEmail = getSetting('email');
 
   const fromStore  = getPropertyById(slug);
   const fromRental = !fromStore ? getListingBySlug(slug) : null;
@@ -732,7 +736,7 @@ const ApartmentDetailPage = () => {
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(156, 163, 175);
         doc.text(
-          `AMONN IMMOBILIEN · Hans Amonn AG · office@reto-amonn.ch · +41 (0)31 951 85 54 · Seite ${p} / ${pages}`,
+          `AMONN IMMOBILIEN · Hans Amonn AG · ${getSetting('email')} · ${getSetting('phone')} · Seite ${p} / ${pages}`,
           margin, 291,
         );
       }
@@ -790,8 +794,8 @@ const ApartmentDetailPage = () => {
       '@type': 'Organization',
       name: 'Hans Amonn AG',
       url: 'https://www.hansamonn.ch',
-      telephone: '+41319518554',
-      email: 'office@reto-amonn.ch',
+      telephone: settingsPhone.replace(/\D/g, ''),
+      email: settingsEmail,
     },
   };
 
@@ -1218,7 +1222,7 @@ const ApartmentDetailPage = () => {
               {t('vermietung.hotel.bookDirectly')}
             </a>
             <a
-              href={`tel:+41319518554`}
+              href={`tel:${settingsPhone.replace(/\D/g, '')}`}
               className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 px-4 text-sm"
             >
               <Phone size={16} />
@@ -1253,7 +1257,7 @@ const ApartmentDetailPage = () => {
               {t('vermietung.card.requestInquiry')}
             </button>
             <a
-              href="tel:+41319518554"
+              href={`tel:${settingsPhone.replace(/\D/g, '')}`}
               className="flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 px-4 text-sm"
             >
               <Phone size={16} />

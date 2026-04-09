@@ -3,11 +3,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { getSetting } from '@/data/settingsStore';
 
 const Footer = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const year = new Date().getFullYear();
+  const year    = new Date().getFullYear();
+  const phone   = getSetting('phone');
+  const email   = getSetting('email');
+  const address = getSetting('address');
 
   const cols = [
     {
@@ -71,18 +75,18 @@ const Footer = () => {
             <div className="space-y-2.5 mb-6">
               <div className="flex items-start gap-2.5">
                 <MapPin size={14} className="text-white/40 mt-0.5 flex-shrink-0" />
-                <p className="text-white/50 text-sm">Blümlisalpstrasse 4, 3074 Muri bei Bern</p>
+                <p className="text-white/50 text-sm">{address}</p>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone size={14} className="text-white/40 flex-shrink-0" />
-                <a href="tel:+41319518554" className="text-white/50 hover:text-white text-sm transition-colors">
-                  +41 (0)31 951 85 54
+                <a href={`tel:${phone.replace(/\D/g, '')}`} className="text-white/50 hover:text-white text-sm transition-colors">
+                  {phone}
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail size={14} className="text-white/40 flex-shrink-0" />
-                <a href="mailto:office@reto-amonn.ch" className="text-white/50 hover:text-white text-sm transition-colors">
-                  office@reto-amonn.ch
+                <a href={`mailto:${email}`} className="text-white/50 hover:text-white text-sm transition-colors">
+                  {email}
                 </a>
               </div>
             </div>
