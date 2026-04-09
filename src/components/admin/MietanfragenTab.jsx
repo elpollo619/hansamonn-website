@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Eye, X, Loader2, AlertCircle, Download, Mail, Phone, Search } from 'lucide-react';
+import { Eye, X, Loader2, AlertCircle, Download, Mail, Phone, Search, Send, ChevronDown } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/use-toast';
 import { logActivity } from '@/data/activityLogStore';
@@ -25,6 +25,10 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
   const data = (() => { try { return JSON.parse(row.nachricht ?? '{}'); } catch { return {}; } })();
   const [status, setStatus] = useState(row.status ?? 'neu');
   const [saving, setSaving] = useState(false);
+  const [replyOpen, setReplyOpen] = useState(false);
+  const [replyText, setReplyText] = useState('');
+  const [replySending, setReplySending] = useState(false);
+  const [replyResult, setReplyResult] = useState(null); // 'ok' | 'error'
 
   async function saveStatus(s) {
     setSaving(true);
@@ -49,8 +53,30 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
   ) : null;
 
   // Build mailto reply with prefilled subject
-  const replySubject = encodeURIComponent(`Re: Anfrage ${row.objekt ?? ''} – ${row.vorname} ${row.nachname}`);
-  const replyHref    = `mailto:${row.email}?subject=${replySubject}`;
+  const replySubject = `Re: Anfrage ${row.objekt ?? ''} – ${row.vorname} ${row.nachname}`;
+  const replyHref    = `mailto:${row.email}?subject=${encodeURIComponent(replySubject)}`;
+
+  async function sendReply() {
+    if (!replyText.trim()) return;
+    setReplySending(true);
+    setReplyResult(null);
+    try {
+      const { error } = await supabase.functions.invoke('send-email', {
+        body: {
+          to: row.email,
+          subject: replySubject,
+          html: `<p>${replyText.replace(/\n/g, '<br>')}</p>`,
+        },
+      });
+      if (error) throw error;
+      setReplyResult('ok');
+      setReplyText('');
+      await saveStatus('bearbeitet');
+    } catch {
+      setReplyResult('error');
+    }
+    setReplySending(false);
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex">
@@ -81,6 +107,46 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
                 <Phone size={14} /> Anrufen
               </a>
+            )}
+          </div>
+
+          {/* Quick reply */}
+          <div>
+            <button
+              onClick={() => { setReplyOpen(o => !o); setReplyResult(null); }}
+              className="inline-flex items-center gap-2 text-sm font-semibold border border-gray-200 px-4 py-2 hover:bg-gray-50 transition-colors"
+            >
+              <Send size={14} />
+              Antwort schreiben
+              <ChevronDown size={14} className={`transition-transform ${replyOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {replyOpen && (
+              <div className="mt-3 space-y-2">
+                <textarea
+                  rows={4}
+                  value={replyText}
+                  onChange={e => setReplyText(e.target.value)}
+                  placeholder={`Antwort an ${row.vorname} ${row.nachname}…`}
+                  className="w-full border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 bg-white resize-none"
+                />
+                {replyResult === 'ok' && (
+                  <p className="text-xs text-green-600 bg-green-50 px-3 py-2">E-Mail gesendet. Status auf „Bearbeitet" gesetzt.</p>
+                )}
+                {replyResult === 'error' && (
+                  <p className="text-xs text-red-600 bg-red-50 px-3 py-2">Fehler beim Senden. Bitte erneut versuchen.</p>
+                )}
+                <button
+                  onClick={sendReply}
+                  disabled={replySending || !replyText.trim()}
+                  className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50 transition-colors"
+                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                  onMouseOver={e => !replySending && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                >
+                  {replySending ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
+                  {replySending ? 'Senden…' : 'Senden'}
+                </button>
+              </div>
             )}
           </div>
 

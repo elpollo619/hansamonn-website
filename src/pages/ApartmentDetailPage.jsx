@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
+import { supabase } from '@/lib/supabase';
+import PriceCalculatorWidget from '@/components/PriceCalculatorWidget';
 import SkeletonDetail from '@/components/SkeletonDetail';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Helmet } from 'react-helmet';
@@ -69,6 +71,8 @@ function normalizeStoreProperty(p) {
     afterImage: p.afterImage || '',
     lat: p.lat ?? null,
     lng: p.lng ?? null,
+    seasons: p.seasons || [],
+    priceClean: p.priceClean ?? null,
   };
 }
 
@@ -347,6 +351,17 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
           <p className="text-xs text-gray-500 mt-0.5">Wir senden Ihnen gerne alle Details</p>
         </div>
 
+        {/* Price calculator */}
+        {apt.seasons?.length > 0 && (
+          <div className="px-0 pb-0">
+            <PriceCalculatorWidget
+              seasons={apt.seasons}
+              priceClean={apt.priceClean}
+              currency={apt.currency ?? 'CHF'}
+            />
+          </div>
+        )}
+
         {/* Primary CTA */}
         <a
           href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
@@ -495,6 +510,50 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
     </motion.div>
   );
 };
+
+// ─── Property Testimonials ─────────────────────────────────────────────────
+
+function PropertyTestimonials({ propertyTitle }) {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    supabase
+      .from('testimonials')
+      .select('*')
+      .eq('visible', true)
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => {
+        if (!data) return;
+        // Filter by property name match (case insensitive) or show all if none match
+        const matched = data.filter(t => t.property && propertyTitle &&
+          propertyTitle.toLowerCase().includes(t.property.toLowerCase()));
+        if (matched.length >= 1) setItems(matched);
+      });
+  }, [propertyTitle]);
+
+  if (items.length === 0) return null;
+
+  return (
+    <div>
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">Bewertungen</h2>
+      <div className="space-y-3">
+        {items.map(t => (
+          <div key={t.id} className="bg-gray-50 border border-gray-100 p-4">
+            <div className="flex items-center gap-1 mb-2">
+              {[1,2,3,4,5].map(n => (
+                <svg key={n} viewBox="0 0 20 20" className={`w-3.5 h-3.5 ${n <= (t.rating ?? 5) ? 'fill-yellow-400' : 'fill-gray-200'}`}>
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              ))}
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed mb-2">„{t.text}"</p>
+            <p className="text-xs font-semibold text-gray-500">{t.name}{t.role ? ` · ${t.role}` : ''}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // ─── Gallery grid ──────────────────────────────────────────────────────────
 
@@ -1020,6 +1079,9 @@ const ApartmentDetailPage = () => {
                 </div>
               </div>
             )}
+
+            {/* Testimonials */}
+            <PropertyTestimonials propertyTitle={apt.title} />
 
             {/* Availability calendar (main content — shown for all types when icalUrl set) */}
             {apt.icalUrl && (
