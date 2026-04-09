@@ -13,6 +13,7 @@ import {
   Upload,
   MapPin,
   GripVertical,
+  ChevronDown,
 } from 'lucide-react';
 import {
   getProperties,
@@ -115,6 +116,8 @@ const EMPTY_FORM = {
   lng: '',
   beforeImage: '',
   afterImage: '',
+  seasons: [],
+  priceClean: '',
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -719,6 +722,74 @@ function PropertyForm({ property, onSave, onClose }) {
               </p>
             )}
           </div>
+
+          {/* Seasonal pricing (ferienhaus / short-stay) */}
+          {(form.type === 'project' || form.type === 'short-stay' || form.type === 'ferienhaus') && (
+            <div className="bg-gray-50 border border-gray-100 rounded-lg p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">Saisonpreise</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Preise werden im Kalkulator auf der Detailseite angezeigt.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => set('seasons', [...(form.seasons || []), { name: 'Neue Saison', months: [], priceNight: 100, priceWeek: 600, minNights: 2 }])}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white rounded-lg"
+                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                >
+                  <Plus size={12} /> Saison hinzufügen
+                </button>
+              </div>
+              {(form.seasons || []).map((s, i) => (
+                <div key={i} className="bg-white border border-gray-200 rounded-lg p-3 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <input
+                      className={inputCls + ' flex-1'}
+                      value={s.name}
+                      onChange={e => { const ss = [...form.seasons]; ss[i] = { ...ss[i], name: e.target.value }; set('seasons', ss); }}
+                      placeholder="z.B. Sommer"
+                    />
+                    <button type="button" onClick={() => set('seasons', form.seasons.filter((_, j) => j !== i))}
+                      className="p-1.5 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0">
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <label className="block text-xs text-gray-500 mb-1">Preis/Nacht (CHF)</label>
+                      <input type="number" className={inputCls} value={s.priceNight}
+                        onChange={e => { const ss = [...form.seasons]; ss[i] = { ...ss[i], priceNight: Number(e.target.value) }; set('seasons', ss); }} />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-500 mb-1">Preis/Woche (CHF)</label>
+                      <input type="number" className={inputCls} value={s.priceWeek}
+                        onChange={e => { const ss = [...form.seasons]; ss[i] = { ...ss[i], priceWeek: Number(e.target.value) }; set('seasons', ss); }} />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-500 mb-1">Mindest-Nächte</label>
+                      <input type="number" min="1" className={inputCls} value={s.minNights}
+                        onChange={e => { const ss = [...form.seasons]; ss[i] = { ...ss[i], minNights: Number(e.target.value) }; set('seasons', ss); }} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">Monate (0=Jan … 11=Dez, kommagetrennt)</label>
+                    <input className={inputCls} value={(s.months || []).join(', ')}
+                      onChange={e => {
+                        const months = e.target.value.split(',').map(v => parseInt(v.trim())).filter(n => !isNaN(n) && n >= 0 && n <= 11);
+                        const ss = [...form.seasons]; ss[i] = { ...ss[i], months }; set('seasons', ss);
+                      }}
+                      placeholder="z.B. 5, 6, 7, 8 für Juni–September" />
+                  </div>
+                </div>
+              ))}
+              <div>
+                <label className={labelCls}>Endreinigung (CHF)</label>
+                <input type="number" className={inputCls} value={form.priceClean}
+                  onChange={e => set('priceClean', e.target.value === '' ? '' : Number(e.target.value))}
+                  placeholder="z.B. 80" />
+              </div>
+            </div>
+          )}
 
           {/* Video URL */}
           <div>

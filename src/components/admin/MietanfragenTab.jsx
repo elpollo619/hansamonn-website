@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Eye, X, Loader2, AlertCircle, Download, Mail, Phone, Search, Send, ChevronDown } from 'lucide-react';
+import { Eye, X, Loader2, AlertCircle, Download, Mail, Phone, Search, Send, ChevronDown, Star } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/use-toast';
 import { logActivity } from '@/data/activityLogStore';
@@ -29,6 +29,8 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
   const [replyText, setReplyText] = useState('');
   const [replySending, setReplySending] = useState(false);
   const [replyResult, setReplyResult] = useState(null); // 'ok' | 'error'
+  const [reviewSent, setReviewSent] = useState(false);
+  const [reviewSending, setReviewSending] = useState(false);
 
   async function saveStatus(s) {
     setSaving(true);
@@ -78,6 +80,39 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
     setReplySending(false);
   }
 
+  async function sendReviewRequest() {
+    setReviewSending(true);
+    try {
+      await supabase.functions.invoke('send-email', {
+        body: {
+          to: row.email,
+          subject: `Wie war Ihr Aufenthalt bei ${row.objekt ?? 'Hans Amonn AG'}?`,
+          html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto">
+<div style="background:#1D3D78;padding:24px 32px;color:white">
+  <h1 style="margin:0;font-size:20px;font-weight:700">Hans Amonn AG</h1>
+</div>
+<div style="padding:32px;background:#f9fafb;border:1px solid #e5e7eb">
+  <h2 style="color:#1D3D78;font-size:17px;margin-top:0">Wie war Ihr Aufenthalt?</h2>
+  <p style="color:#374151">Guten Tag ${row.vorname} ${row.nachname},</p>
+  <p style="color:#374151">wir hoffen, Ihr Aufenthalt bei <strong>${row.objekt ?? 'uns'}</strong> war angenehm. Wir würden uns sehr über Ihr Feedback freuen — es hilft uns, unseren Service zu verbessern.</p>
+  <p style="color:#374151">Schreiben Sie uns einfach eine kurze Antwort auf diese E-Mail oder kontaktieren Sie uns direkt:</p>
+  <p style="margin:4px 0;color:#1D3D78"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
+  <p style="margin:4px 0;color:#1D3D78"><strong>Tel:</strong> +41 31 951 85 54</p>
+  <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
+  <p style="color:#9ca3af;font-size:12px;margin:0">Hans Amonn AG · hansamonn.ch</p>
+</div>
+</div>`,
+          replyTo: 'office@reto-amonn.ch',
+        },
+      });
+      setReviewSent(true);
+      toast({ title: '✓ Bewertungsanfrage gesendet' });
+    } catch {
+      toast({ title: 'Fehler beim Senden', variant: 'destructive' });
+    }
+    setReviewSending(false);
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex">
       <div className="flex-1 bg-black/40" onClick={onClose} />
@@ -107,6 +142,17 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
                 <Phone size={14} /> Anrufen
               </a>
+            )}
+            {(status === 'akzeptiert') && (
+              <button
+                onClick={sendReviewRequest}
+                disabled={reviewSending || reviewSent}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                title="Bewertungsanfrage per E-Mail senden"
+              >
+                {reviewSending ? <Loader2 size={14} className="animate-spin" /> : <Star size={14} />}
+                {reviewSent ? 'Bewertung angefragt ✓' : 'Bewertung anfragen'}
+              </button>
             )}
           </div>
 

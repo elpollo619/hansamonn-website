@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   MapPin, Home, Phone, Mail, ArrowRight,
   CheckCircle2, ExternalLink, Coffee, Building2, Sun,
-  Bell, Search, X, SlidersHorizontal,
+  Bell, Search, X, SlidersHorizontal, CalendarCheck,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
@@ -14,6 +14,7 @@ import InteractiveMapSection from '@/components/InteractiveMapSection';
 import CompareButton from '@/components/CompareButton';
 import OccupancyBadge from '@/components/OccupancyBadge';
 import FavoriteButton from '@/components/FavoriteButton';
+import { useNextFree } from '@/hooks/useNextFree';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
@@ -120,6 +121,8 @@ const ListingCard = ({ item, index, t }) => {
   const isProject  = item.type === 'project';
   const isLongStay = item.type === 'long-stay';
   const isApartment = item.type === 'apartment';
+  const showCalendar = (isProject || isHotel) && item.icalUrl;
+  const nextFree   = useNextFree(showCalendar ? item.icalUrl : null);
 
   return (
     <motion.div
@@ -217,6 +220,16 @@ const ListingCard = ({ item, index, t }) => {
             {item.features.slice(0, 3).map((f) => (
               <span key={f} className="bg-gray-50 text-gray-500 text-xs px-2.5 py-1 border border-gray-100">{f}</span>
             ))}
+          </div>
+        )}
+
+        {/* Next free date badge (ferienhaus / hotel with calendar) */}
+        {nextFree && (
+          <div className="flex items-center gap-2 text-xs bg-green-50 border border-green-100 px-3 py-2 mb-2">
+            <CalendarCheck size={12} className="text-green-600 flex-shrink-0" />
+            <span className="text-green-700 font-medium">
+              Frei ab {new Date(nextFree).toLocaleDateString('de-CH', { day: '2-digit', month: 'short' })}
+            </span>
           </div>
         )}
 
