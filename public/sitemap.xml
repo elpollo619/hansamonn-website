@@ -2,46 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- ── Core ── -->
-  <url><loc>https://www.hansamonn.ch/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/uber-uns</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/team</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/kontakt</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/</loc><lastmod>2026-04-09</lastmod><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/uber-uns</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/team</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/kontakt</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/termin</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/faq</loc><lastmod>2026-04-09</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
 
   <!-- ── Immobilien ── -->
-  <url><loc>https://www.hansamonn.ch/immobilien</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/vermietung</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/long-stay</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/short-stay</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/apartments</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/verkauf</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/anfrage</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien</loc><lastmod>2026-04-09</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/vermietung</loc><lastmod>2026-04-09</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/long-stay</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/short-stay</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/apartments</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/verkauf</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/anfrage</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
 
   <!-- ── Einzelne Objekte (canonical URLs) ── -->
-  <url><loc>https://www.hansamonn.ch/ns-hotel</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/casa-reto</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/kerzers-ls</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/munchenbuchsee-ls</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/immobilien/muri-ls</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/ns-hotel</loc><lastmod>2026-04-09</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/casa-reto</loc><lastmod>2026-04-09</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/kerzers-ls</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/munchenbuchsee-ls</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/immobilien/muri-ls</loc><lastmod>2026-04-09</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
 
   <!-- ── Projekte & Leistungen ── -->
-  <url><loc>https://www.hansamonn.ch/projekte</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/leistungen</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/architektur</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/projekte</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/leistungen</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/architektur</loc><lastmod>2026-04-09</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
 
   <!-- ── Tools ── -->
-  <url><loc>https://www.hansamonn.ch/preisrechner</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/hyporechner</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/vergleich</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/karte</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/favoriten</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/preisrechner</loc><lastmod>2026-04-09</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/hyporechner</loc><lastmod>2026-04-09</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/vergleich</loc><lastmod>2026-04-09</lastmod><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/karte</loc><lastmod>2026-04-09</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/favoriten</loc><lastmod>2026-04-09</lastmod><priority>0.4</priority><changefreq>monthly</changefreq></url>
 
   <!-- ── Content ── -->
-  <url><loc>https://www.hansamonn.ch/neuigkeiten</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/faq</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/termin</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/neuigkeiten</loc><lastmod>2026-04-09</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
 
   <!-- ── Legal ── -->
-  <url><loc>https://www.hansamonn.ch/impressum</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
-  <url><loc>https://www.hansamonn.ch/datenschutz</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/impressum</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/datenschutz</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
 
 </urlset>

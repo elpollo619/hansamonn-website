@@ -27,6 +27,7 @@ import FavoriteButton from '@/components/FavoriteButton';
 import { addRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import TerminbuchungForm from '@/components/TerminbuchungForm';
+import PropertyAnfrageForm from '@/components/PropertyAnfrageForm';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -747,28 +748,51 @@ const ApartmentDetailPage = () => {
   const pageTitle = `${apt.title} – ${apt.location} | Hans Amonn AG`;
   const pageUrl   = `https://www.hansamonn.ch/immobilien/${apt.slug}`;
 
-  const schemaType = apt.type === 'hotel' || apt.type === 'project' ? 'Accommodation' : 'RealEstateListing';
+  const schemaType = apt.type === 'hotel' ? 'LodgingBusiness'
+    : apt.type === 'project' ? 'Accommodation'
+    : 'RealEstateListing';
+
+  const allImages = (apt.images ?? [])
+    .filter(img => img?.url)
+    .map(img => `https://www.hansamonn.ch${img.url}`);
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': schemaType,
     name: apt.title,
     description: apt.description,
     url: pageUrl,
-    image: apt.images?.[0]?.url
-      ? `https://www.hansamonn.ch${apt.images[0].url}`
-      : undefined,
+    image: allImages.length > 0 ? allImages : undefined,
     address: {
       '@type': 'PostalAddress',
       streetAddress: apt.location,
       addressCountry: 'CH',
     },
+    ...(apt.lat && apt.lng && {
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: apt.lat,
+        longitude: apt.lng,
+      },
+    }),
+    ...(apt.features?.length > 0 && {
+      amenityFeature: apt.features.map(f => ({ '@type': 'LocationFeatureSpecification', name: f, value: true })),
+    }),
     ...(apt.price && {
       offers: {
         '@type': 'Offer',
         price: apt.price,
         priceCurrency: apt.currency ?? 'CHF',
+        availability: 'https://schema.org/InStock',
       },
     }),
+    provider: {
+      '@type': 'Organization',
+      name: 'Hans Amonn AG',
+      url: 'https://www.hansamonn.ch',
+      telephone: '+41319518554',
+      email: 'office@reto-amonn.ch',
+    },
   };
 
   return (
@@ -1121,6 +1145,46 @@ const ApartmentDetailPage = () => {
                 />
               </div>
             </div>
+
+            {/* Direct contact + inquiry form (long-stay & ferienhaus/project) */}
+            {(apt.type === 'long-stay' || apt.type === 'project') && (
+              <div className="border-t border-gray-100 pt-8">
+                <div className="grid lg:grid-cols-2 gap-10 items-start">
+                  <div>
+                    <h2 className="text-2xl font-light text-gray-900 mb-3">
+                      Direkt <span className="font-black">anfragen</span>
+                    </h2>
+                    <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+                      {apt.type === 'long-stay'
+                        ? 'Interesse an einer Unterkunft? Füllen Sie das Formular aus — wir melden uns innerhalb von 24 Stunden.'
+                        : 'Fragen oder Buchungswunsch? Wir melden uns innerhalb von 24 Stunden.'}
+                    </p>
+                    <div className="space-y-3">
+                      {[
+                        { href: `tel:${(apt.contact?.phone ?? '+41319518554').replace(/\s/g, '')}`, icon: Phone, label: 'Telefon', value: apt.contact?.phone ?? '+41 31 951 85 54' },
+                        { href: `mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}`, icon: Mail, label: 'E-Mail', value: apt.contact?.email ?? 'office@reto-amonn.ch' },
+                      ].map(({ href, icon: Icon, label, value }) => (
+                        <a key={label} href={href}
+                          className="flex items-center gap-4 bg-gray-50 border border-gray-100 p-4 hover:bg-gray-100 transition-colors">
+                          <Icon className="shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} size={20} />
+                          <div>
+                            <div className="font-semibold text-xs text-gray-500 uppercase tracking-wider">{label}</div>
+                            <div className="text-sm font-medium text-gray-900">{value}</div>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="bg-white border border-gray-100 p-6">
+                    <PropertyAnfrageForm
+                      propertyName={apt.title}
+                      contactEmail={apt.contact?.email ?? 'office@reto-amonn.ch'}
+                      showDate={apt.type === 'long-stay'}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Recently viewed */}
             <RecentlyViewedSection currentId={apt.id ?? apt.slug} />
