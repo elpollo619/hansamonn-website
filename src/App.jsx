@@ -46,6 +46,7 @@ const LongStayPage           = lazy(() => import('@/pages/LongStayPage'));
 const ShortStayPage          = lazy(() => import('@/pages/ShortStayPage'));
 const ApartmentsPage         = lazy(() => import('@/pages/ApartmentsPage'));
 const NsHotelPage            = lazy(() => import('@/pages/NsHotelPage'));
+const CasaRetoPage           = lazy(() => import('@/pages/CasaRetoPage'));
 const MietanfragePage        = lazy(() => import('@/pages/MietanfragePage'));
 const TerminbuchungPage      = lazy(() => import('@/pages/TerminbuchungPage'));
 const NotFoundPage           = lazy(() => import('@/pages/NotFoundPage'));
@@ -144,6 +145,9 @@ function AppRoutes() {
 
           {/* IMMOBILIEN — Verkauf */}
           <Route path="/immobilien/verkauf" element={<VerkaufPage />} />
+
+          {/* CASA RETO — dedicated holiday-home page (must precede :slug) */}
+          <Route path="/immobilien/casa-reto" element={<CasaRetoPage />} />
 
           {/* IMMOBILIEN — detail pages */}
           <Route path="/immobilien/:slug" element={<ApartmentDetailPage />} />
