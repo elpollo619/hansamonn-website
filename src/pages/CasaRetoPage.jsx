@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -48,6 +48,72 @@ const SURROUNDINGS = [
   { Icon: Mountain, title: 'Wandern im Tessin', text: 'Zahlreiche Wege und Aussichtspunkte rund um Gordola und das Verzascatal.' },
   { Icon: Sun,      title: 'Mediterranes Klima', text: 'Palmen, Sonne und südliches Lebensgefühl auf der Schweizer Alpensüdseite.' },
 ];
+
+/* Small self-contained Leaflet map with a single marker (repo pattern: dynamic
+   import + CARTO tiles + dynamically injected Leaflet CSS). */
+function LocationMap({ lat, lng, label }) {
+  const mapRef = useRef(null);
+  const instanceRef = useRef(null);
+  const [cssReady, setCssReady] = useState(false);
+
+  useEffect(() => {
+    if (document.getElementById('leaflet-css')) { setCssReady(true); return; }
+    const link = document.createElement('link');
+    link.id = 'leaflet-css';
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    link.onload = () => setCssReady(true);
+    document.head.appendChild(link);
+  }, []);
+
+  useEffect(() => {
+    if (!cssReady || instanceRef.current || !mapRef.current) return;
+    let cancelled = false;
+    import('leaflet').then((L) => {
+      if (cancelled || instanceRef.current || !mapRef.current) return;
+      const map = L.map(mapRef.current, {
+        center: [lat, lng],
+        zoom: 12,
+        zoomControl: false,
+        scrollWheelZoom: false,
+        attributionControl: false,
+      });
+      instanceRef.current = map;
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        subdomains: 'abcd',
+      }).addTo(map);
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+      L.control.attribution({ position: 'bottomleft', prefix: false })
+        .addAttribution('© <a href="https://carto.com/">CARTO</a>')
+        .addTo(map);
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="width:36px;height:36px;border-radius:50%;background:#1D3D78;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
+          <svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M18.66 5.34l-1.41 1.41'/></svg>
+        </div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+      });
+      L.marker([lat, lng], { icon, title: label }).addTo(map);
+    });
+    return () => {
+      cancelled = true;
+      if (instanceRef.current) { instanceRef.current.remove(); instanceRef.current = null; }
+    };
+  }, [cssReady, lat, lng, label]);
+
+  return (
+    <div className="relative border border-gray-100 overflow-hidden bg-gray-50" style={{ height: 380 }}>
+      <div ref={mapRef} className="w-full h-full" style={{ minHeight: 380 }} />
+      {!cssReady && (
+        <div className="absolute inset-0 flex items-center justify-center text-gray-300 text-sm">
+          Karte wird geladen…
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function CasaRetoPage() {
   const listing = getListingBySlug('casa-reto');
@@ -326,14 +392,24 @@ export default function CasaRetoPage() {
           </p>
         </motion.div>
 
-        <div className="grid gap-px bg-gray-100 sm:grid-cols-2 lg:grid-cols-4 border border-gray-100 mb-8">
-          {SURROUNDINGS.map(({ Icon, title, text }) => (
-            <motion.div {...fadeUp} key={title} className="bg-white p-7">
-              <Icon size={24} style={{ color: BRAND }} className="mb-3" />
-              <h3 className="font-semibold text-gray-900 mb-1.5">{title}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
-            </motion.div>
-          ))}
+        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] items-stretch mb-8">
+          <motion.div {...fadeUp}>
+            <LocationMap
+              lat={listing?.lat ?? 46.12}
+              lng={listing?.lng ?? 8.73}
+              label="Casa Reto · Gordemo"
+            />
+          </motion.div>
+
+          <div className="grid gap-px bg-gray-100 sm:grid-cols-2 border border-gray-100">
+            {SURROUNDINGS.map(({ Icon, title, text }) => (
+              <motion.div {...fadeUp} key={title} className="bg-white p-6">
+                <Icon size={22} style={{ color: BRAND }} className="mb-3" />
+                <h3 className="font-semibold text-gray-900 mb-1.5 text-sm">{title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         <a
