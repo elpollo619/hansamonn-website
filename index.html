@@ -29,9 +29,25 @@
 		<div id="root"></div>
 		<script type="module" src="/src/main.jsx"></script>
 		<script>
-		  if ('serviceWorker' in navigator) {
-		    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
-		  }
+		  (function () {
+		    if (!('serviceWorker' in navigator)) return;
+		    var host = location.hostname;
+		    var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host === '';
+		    if (isLocal) {
+		      // Dev: never cache. Remove any stale service worker (e.g. from a
+		      // different app previously served on this port) and clear caches so
+		      // the local dev site always loads fresh.
+		      navigator.serviceWorker.getRegistrations().then(function (regs) {
+		        regs.forEach(function (r) { r.unregister(); });
+		      });
+		      if (window.caches && caches.keys) {
+		        caches.keys().then(function (keys) { keys.forEach(function (k) { caches.delete(k); }); });
+		      }
+		    } else {
+		      // Production only: register the PWA service worker.
+		      window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js'); });
+		    }
+		  })();
 		</script>
 	</body>
 </html>
