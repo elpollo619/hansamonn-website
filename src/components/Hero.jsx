@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getSettings } from '@/data/settingsStore';
 
@@ -57,10 +57,6 @@ const Hero = () => {
   }, [paused]);
 
   const active = SECTIONS[activeIdx];
-
-  const scrollDown = useCallback(() => {
-    window.scrollTo({ top: window.innerHeight - 60, behavior: 'smooth' });
-  }, []);
 
   return (
     <section
@@ -132,7 +128,25 @@ const Hero = () => {
         </div>
 
         {/* Destination band */}
-        <div className="pb-8">
+        <div className="pb-20 md:pb-14">
+          {/* Indicator dots (kept clear of the floating buttons) */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            {SECTIONS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { setActiveIdx(i); setPaused(true); }}
+                aria-label={`Bild ${i + 1}`}
+                className="transition-all duration-300"
+                style={{
+                  width: activeIdx === i ? 26 : 7,
+                  height: 7,
+                  borderRadius: 4,
+                  backgroundColor: activeIdx === i ? '#fff' : 'rgba(255,255,255,0.4)',
+                }}
+              />
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/15 border-t border-white/15">
             {SECTIONS.map((s, i) => {
               const isActive = activeIdx === i;
@@ -167,32 +181,6 @@ const Hero = () => {
                 </Link>
               );
             })}
-          </div>
-
-          {/* Scroll cue + dots */}
-          <div className="flex items-center justify-between pt-5">
-            <button
-              onClick={scrollDown}
-              className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs font-semibold uppercase tracking-widest"
-            >
-              <ArrowDown size={14} className="animate-bounce" /> Entdecken
-            </button>
-            <div className="flex gap-2">
-              {SECTIONS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setActiveIdx(i); setPaused(true); }}
-                  aria-label={`Bild ${i + 1}`}
-                  className="transition-all duration-300"
-                  style={{
-                    width: activeIdx === i ? 26 : 7,
-                    height: 7,
-                    borderRadius: 4,
-                    backgroundColor: activeIdx === i ? '#fff' : 'rgba(255,255,255,0.4)',
-                  }}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>

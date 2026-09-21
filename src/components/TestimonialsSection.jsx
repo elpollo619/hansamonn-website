@@ -45,14 +45,12 @@ export default function TestimonialsSection() {
   if (!loaded || testimonials.length === 0) return null;
 
   return (
-    <section className="py-20 bg-white border-t border-gray-100">
+    <section className="py-24 surface-warm border-t border-gray-100">
       <div className="max-w-5xl mx-auto px-6">
-        <div className="mb-10">
-          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-2">
-            Amonn Referenzen
-          </p>
-          <h2 className="text-3xl font-light text-gray-900">
-            Was unsere Kunden <span className="font-black">sagen</span>
+        <div className="mb-12">
+          <p className="eyebrow mb-3">Amonn Referenzen</p>
+          <h2 className="display-heading uppercase text-4xl md:text-5xl">
+            Was unsere Kunden sagen
           </h2>
         </div>
 
