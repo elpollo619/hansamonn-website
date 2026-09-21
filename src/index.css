@@ -9,7 +9,9 @@
 
 :root {
   --background: 0 0% 100%;
-  --foreground: 220 30% 10%;
+  --foreground: 218 44% 11%;
+  /* Warm off-white surface for alternating sections */
+  --surface: 40 33% 98%;
   --card: 0 0% 100%;
   --card-foreground: 220 30% 10%;
   --popover: 0 0% 100%;
@@ -114,4 +116,45 @@ body {
 .section-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+}
+
+/* ── New global look (site-wide refresh) ─────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+::selection {
+  background: #1D3D78;
+  color: #fff;
+}
+
+/* Warm off-white surface helper for alternating sections */
+.surface-warm { background-color: hsl(var(--surface)); }
+
+/* Small uppercase kicker used above headings */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+/* Condensed architectural display headings */
+.display-heading {
+  font-family: 'Barlow Semi Condensed', 'Jost', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: #0F1B2D;
+}
+
+/* Ken Burns slow zoom for cinematic imagery */
+@keyframes kenburns {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.12); }
+}
+.kenburns { animation: kenburns 12s ease-out forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .kenburns { animation: none; }
 }
