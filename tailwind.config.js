@@ -66,6 +66,10 @@ module.exports = {
 			},
 			fontFamily: {
 				sans: ['Jost', 'Inter', 'sans-serif'],
+				display: ['"Barlow Semi Condensed"', 'Jost', 'sans-serif'],
+			},
+			letterSpacing: {
+				'hairline': '0.28em',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
