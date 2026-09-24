@@ -127,7 +127,7 @@ export const projectsData = [
     description: 'Neubau eines Wohnhauses in steiler Hanglage: Eingang über einen Liftturm direkt von der Strasse, Wohnen unter dem Satteldach mit Lukarnen und Balkon, Schlafräume und Gartengeschoss darunter.',
     fullDescription: 'Das Wohnhaus gräbt sich in den Hang: Von der Strasse aus erscheint nur das Dach, während sich das Haus zum Garten hin über drei Geschosse öffnet. Ein Liftturm verbindet Carport und Strasse mit allen Ebenen. Zuoberst liegt der Wohn- und Essbereich unter dem 45°-Satteldach, belichtet durch drei Lukarnen und einen Balkon; darunter die Schlafräume, zuunterst das Gartengeschoss mit grossen Festverglasungen. Hinter dem Haus sorgt ein durchgehender Lichtschacht für Tageslicht im erdberührten Teil. Die Ausführungsplanung läuft, der Bau ist 2026 gestartet.',
     coverImage: '/images/projekte/bremgarten-3d.jpg',
-    gallery: [{ type: 'image', url: '/images/projekte/bremgarten-3d.jpg', alt: '3D-Modell aus den Ausführungsplänen (Aussenansicht, Umgebung schematisch)' }],
+    gallery: [{ type: 'image', url: '/images/projekte/bremgarten-3d.jpg', alt: '3D-Modell aus den Ausführungsplänen, mit Umgebung (Aare, Gelände swissALTI3D)' }],
     features: ['Hanglage', 'Liftturm mit Zugang von der Strasse', 'Satteldach mit Lukarnen', 'Lichtschacht'],
     amenities: [
       { icon: Home, label: 'Einfamilienhaus' },
