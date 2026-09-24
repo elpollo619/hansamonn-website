@@ -35,6 +35,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         metal: keep(new THREE.MeshBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.18, depthWrite: false })),
         blind: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide })),
         pv: keep(new THREE.MeshBasicMaterial({ color: 0xbfd6ff, transparent: true, opacity: 0.18, depthWrite: false, side: THREE.DoubleSide })),
+        wood: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.08, depthWrite: false, side: THREE.DoubleSide })),
+        shutter: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide })),
         line: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.8 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.35 })),
       }
@@ -51,9 +53,14 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         metal: keep(new THREE.MeshStandardMaterial({ color: 0xbfc4c9, roughness: 0.35, metalness: 0.55 })),
         blind: keep(new THREE.MeshStandardMaterial({ color: 0x8f969d, roughness: 0.55, metalness: 0.3, side: THREE.DoubleSide })),
         pv: keep(new THREE.MeshStandardMaterial({ color: 0x7d858c, roughness: 0.4, metalness: 0.7 })),
+        // weathered timber (cladding, Laube) and painted window shutters (Jalousieläden)
+        wood: keep(new THREE.MeshStandardMaterial({ color: 0x9a7a5a, roughness: 0.9, metalness: 0 })),
+        shutter: keep(new THREE.MeshStandardMaterial({ color: 0x5f7466, roughness: 0.7, metalness: 0 })),
         line: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.28 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 })),
       };
+
+  if (!blueprint && data.frameColor != null) mats.frame.color.setHex(data.frameColor);
 
   const shapeOf = (p) => {
     const s = new THREE.Shape(p.o.map(([x, z]) => new THREE.Vector2(x, -z)));
@@ -178,6 +185,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const panels = [];
     const blinds = [];
     const slats = [];
+    const shutters = [];
     lv.openings.forEach((o) => {
       const seg = segment(o, lv.footprint);
       if (seg.L < 0.3) return;
@@ -195,6 +203,14 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
             slats.push(...segPt(seg, 0.03, y, -0.045), ...segPt(seg, seg.L - 0.03, y, -0.045));
           }
         }
+      }
+      if (o[6] && !blueprint) {
+        // folding shutters open against the wall on both sides, with louvre lines
+        const sw = seg.L / 2;
+        [[-sw - 0.04, -0.04], [seg.L + 0.04, seg.L + sw + 0.04]].forEach(([u0, u1]) => {
+          shutters.push(segBox(seg, u0, u1, sill, head, 0.01, 0.05));
+          for (let y = sill + 0.08; y < head - 0.04; y += 0.07) slats.push(...segPt(seg, u0 + 0.03, y, 0.055), ...segPt(seg, u1 - 0.03, y, 0.055));
+        });
       }
       if (sill > 0.02) solid.push(segBox(seg, 0, seg.L, 0, sill, -T, 0));
       solid.push(segBox(seg, 0, seg.L, head, h, -T, 0));
@@ -222,6 +238,34 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       solid.push(segBox(seg, 0, seg.L, dh, h, -T, 0));
       door(seg, ds, dh, -0.1, panels, glassRow, glass);
     });
+    // Vertical board cladding (Ökonomieteil): 14 cm boards with open joints, left out at the openings
+    const boards = [];
+    (lv.cladding || []).forEach(([x1, z1, x2, z2, y0 = 0, y1 = h]) => {
+      const seg = segment([x1, z1, x2, z2], lv.footprint);
+      const dx = Math.cos(seg.ang), dz = Math.sin(seg.ang);
+      const holes = [];
+      lv.openings.forEach((o) => {
+        const off = (px, pz) => Math.abs((px - x1) * -dz + (pz - z1) * dx);
+        if (off(o[0], o[1]) > 0.35 || off(o[2], o[3]) > 0.35) return;
+        const ua = (o[0] - x1) * dx + (o[1] - z1) * dz, ub = (o[2] - x1) * dx + (o[3] - z1) * dz;
+        holes.push([Math.min(ua, ub) - 0.08, Math.max(ua, ub) + 0.08, (o[4] ?? sill0) - 0.08, Math.min(o[5] ?? head0, h - 0.1) + 0.08]);
+      });
+      for (let u = 0; u < seg.L - 0.02; u += 0.14) {
+        const ue = Math.min(seg.L, u + 0.128), um = (u + ue) / 2;
+        let ys = [[y0, y1]];
+        holes.filter(([a, b]) => um > a && um < b).forEach(([, , hy0, hy1]) => {
+          ys = ys.flatMap(([p, q]) => [[p, Math.min(q, hy0)], [Math.max(p, hy1), q]]).filter(([p, q]) => q - p > 0.03);
+        });
+        ys.forEach(([p, q]) => boards.push(segBox(seg, u, ue, p, q, 0.0, 0.035)));
+      }
+    });
+    const boardGeo = merged(clean(boards));
+    if (boardGeo) {
+      const bm = new THREE.Mesh(boardGeo, mats.wood);
+      bm.castShadow = !blueprint;
+      bm.receiveShadow = !blueprint;
+      content.add(bm);
+    }
     content.add(meshWithEdges(merged(clean(solid)), mats.wall, edge));
     const glassGeo = merged(clean(glass));
     if (glassGeo) {
@@ -241,6 +285,14 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const bm = new THREE.Mesh(blindGeo, mats.blind);
       bm.castShadow = true;
       content.add(bm);
+    }
+    const shutterGeo = merged(clean(shutters));
+    if (shutterGeo) {
+      const sm = new THREE.Mesh(shutterGeo, mats.shutter);
+      sm.castShadow = true;
+      content.add(sm);
+    }
+    if (slats.length) {
       const sg = keep(new THREE.BufferGeometry());
       sg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(slats), 3));
       content.add(new THREE.LineSegments(sg, mats.lineSoft));
@@ -262,10 +314,10 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     });
 
     // Balconies: slab at floor level with glass railing on the free edges
-    const bal = data.balconies;
-    if (bal && bal.levels.some((b) => Math.abs(b - lv.base) < 0.01)) {
+    const bals = Array.isArray(data.balconies) ? data.balconies : data.balconies ? [data.balconies] : [];
+    bals.filter((bal) => bal.levels.some((b) => Math.abs(b - lv.base) < 0.01)).forEach((bal) => {
       content.add(meshWithEdges(merged(extrude(bal.slabs.map((o) => ({ o, h: [] })), 0.22, -0.22)), mats.slab, mats.line, 30));
-      const pane = [], rail = [];
+      const pane = [], rail = [], board = [];
       const rh = bal.rail ?? 1.0;
       bal.rails.forEach(([x1, z1, x2, z2]) => {
         const L = Math.hypot(x2 - x1, z2 - z1);
@@ -274,6 +326,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
           // metal bar railing (vertical balusters)
           for (let u = 0.06; u < L - 0.03; u += 0.12) rail.push(segBox(seg, u - 0.012, u + 0.012, 0.05, rh - 0.04, -0.012, 0.012));
           rail.push(segBox(seg, 0, L, 0.04, 0.08, -0.02, 0.02));
+        } else if (bal.style === 'boards') {
+          // timber Laube parapet: vertical boards with joints
+          for (let u = 0.02; u < L - 0.02; u += 0.13) board.push(segBox(seg, u, Math.min(L - 0.02, u + 0.118), 0.04, rh - 0.06, -0.02, 0.02));
         } else {
           pane.push(segBox(seg, 0.05, L - 0.05, 0.05, rh - 0.05, -0.012, 0.012));
         }
@@ -285,8 +340,10 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const pg = merged(clean(pane));
       if (pg) content.add(new THREE.Mesh(pg, mats.glass));
       const rg = merged(clean(rail));
-      if (rg) content.add(new THREE.Mesh(rg, mats.frame));
-    }
+      if (rg) content.add(new THREE.Mesh(rg, bal.style === 'boards' ? mats.wood : mats.frame));
+      const bg = merged(clean(board));
+      if (bg) { const m = new THREE.Mesh(bg, mats.wood); m.castShadow = !blueprint; content.add(m); }
+    });
     // Louvred towers (Reduit) running through the levels
     (data.louvres || []).forEach((l) => {
       const y1 = Math.min(h, l.y1 - lv.base);
@@ -323,10 +380,12 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   const roof = new THREE.Group();
   roof.position.y = top.base + top.height;
   const roofY = roof.position.y;
+  let roofMat = mats.slab;
   if (pitched) {
     // roof faces: extruded plan polygon sheared onto its plane, with tile courses
     const th = pitched.thick ?? 0.3;
     const tileMat = blueprint ? mats.slab : keep(new THREE.MeshStandardMaterial({ color: pitched.color ?? 0x7b6a5e, roughness: 0.85, metalness: 0.05 }));
+    roofMat = tileMat;
     const faceGeos = [];
     const courses = [];
     pitched.faces.forEach(({ pts, plane }) => {
@@ -503,9 +562,56 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     }
   });
   (data.details || []).forEach((d) => {
+    if (d.kind === 'dormer') {
+      // shed dormer (Schleppgaube): front wall at zf, its roof rising back into the main roof at zb.
+      // Heights are absolute: yb = foot of the front (buried in the roof), yt = front top, ytb = roof line at zb.
+      const { x0, x1, zf, zb, yb, yt, ytb } = d;
+      const dir = Math.sign(zf - zb);
+      const prof = (pts) => {
+        // profile in (z, y) extruded along x from x0 to x1 (shape u = -z so the rotation maps it back to +z)
+        const sh = new THREE.Shape(pts.map(([z, y]) => new THREE.Vector2(-z, y - roofY)));
+        const g = new THREE.ExtrudeGeometry(sh, { depth: 1, bevelEnabled: false, curveSegments: 1 });
+        g.rotateY(Math.PI / 2);
+        return g;
+      };
+      const body = prof([[zf, yb], [zf, yt], [zb, ytb], [zb, yb]]);
+      body.scale(x1 - x0, 1, 1);
+      body.translate(x0, 0, 0);
+      roof.add(meshWithEdges(keep(body), mats.wall, blueprint ? mats.line : null, 30));
+      const o = 0.35, t = 0.14, k = (ytb - yt) / (zb - zf);
+      const cap = prof([[zf + dir * o, yt - k * dir * o + 0.02], [zb, ytb + 0.02], [zb, ytb + 0.02 + t], [zf + dir * o, yt - k * dir * o + 0.02 + t]]);
+      cap.scale(x1 - x0 + 0.5, 1, 1);
+      cap.translate(x0 - 0.25, 0, 0);
+      const cm = new THREE.Mesh(keep(cap), roofMat);
+      cm.castShadow = !blueprint;
+      roof.add(cm);
+      // window band on the front
+      const gl = [], fr = [];
+      (d.win || []).forEach(([wa, wb, wy0, wy1]) => {
+        const g = new THREE.BoxGeometry(wb - wa, wy1 - wy0, 0.04);
+        g.translate((wa + wb) / 2, (wy0 + wy1) / 2 - roofY, zf + dir * 0.02);
+        gl.push(g);
+        const n = Math.max(1, Math.round((wb - wa) / 0.5));
+        for (let i = 0; i <= n; i++) {
+          const f = new THREE.BoxGeometry(0.06, wy1 - wy0, 0.08);
+          f.translate(wa + ((wb - wa) * i) / n, (wy0 + wy1) / 2 - roofY, zf + dir * 0.04);
+          fr.push(f);
+        }
+        [wy0, wy1].forEach((y) => {
+          const f = new THREE.BoxGeometry(wb - wa, 0.06, 0.08);
+          f.translate((wa + wb) / 2, y - roofY, zf + dir * 0.04);
+          fr.push(f);
+        });
+      });
+      const gg = merged(gl);
+      if (gg) roof.add(new THREE.Mesh(gg, mats.glass));
+      const fg = merged(fr);
+      if (fg) roof.add(new THREE.Mesh(fg, mats.frame));
+      return;
+    }
     const g = new THREE.BoxGeometry(d.w, d.y1 - d.y0, d.d);
     g.translate(d.x, (d.y0 + d.y1) / 2, d.z);
-    roof.add(meshWithEdges(keep(g), mats.wall, mats.line));
+    roof.add(meshWithEdges(keep(g), d.kind === 'post' ? mats.wood : mats.wall, d.kind === 'post' ? null : mats.line));
     if (d.cap) {
       const c = new THREE.BoxGeometry(d.w + 0.12, 0.12, d.d + 0.12);
       c.translate(d.x, d.y1 + 0.06, d.z);

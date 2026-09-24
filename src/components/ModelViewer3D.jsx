@@ -154,6 +154,8 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       // zoom / reset animation goals (buttons)
       let goalDist = null;
       let resetting = false;
+      // a drag takes over from the reset / intro camera moves
+      controls.addEventListener('start', () => { resetting = false; introDone = true; });
       const offset = new THREE.Vector3();
       const dist = () => (el.clientWidth < 640 ? (site ? 2.6 : 2.35) : site ? 1.7 : 1.3) * bld.extent;
       const finalPos = new THREE.Vector3();

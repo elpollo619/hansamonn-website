@@ -88,6 +88,22 @@ export const BUILDING_MODELS = {
     load: () => import('./br.json').then((m) => m.default),
     site: () => import('./br-site.json').then((m) => m.default),
   },
+  hw: {
+    id: 'hw',
+    name: 'Höheweg 8',
+    short: 'HW',
+    address: 'Höheweg 8, 3074 Muri bei Bern',
+    kind: 'Umbau Bauernhaus',
+    source: 'Umbauprojekt 699, Fassaden 1:100',
+    siteNote: 'Aussenansicht – Innenräume privat',
+    facts: [
+      { label: 'Länge', value: '23.81 m' },
+      { label: 'First', value: '+11.45 m' },
+      { label: 'Geschosse', value: 'UG + EG + OG + DG' },
+    ],
+    load: () => import('./hw.json').then((m) => m.default),
+    site: () => import('./hw-site.json').then((m) => m.default),
+  },
 };
 
 export const MODEL_LIST = Object.values(BUILDING_MODELS);
