@@ -113,7 +113,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="font-display uppercase font-semibold leading-[0.92] tracking-tight text-white"
-            style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)' }}
+            style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)' }}
           >
             Bauen. Wohnen.<br />Bleiben.
           </motion.h1>

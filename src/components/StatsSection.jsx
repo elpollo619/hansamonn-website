@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const STATS = [
-  { value: 25,  suffix: '+', label: 'Jahre Erfahrung' },
+  { value: 55,  suffix: '+', label: 'Jahre Erfahrung' },
   { value: 200, suffix: '+', label: 'Objekte verwaltet' },
   { value: 500, suffix: '+', label: 'Zufriedene Kunden' },
   { value: 4,   suffix: '',  label: 'Standorte Schweiz' },

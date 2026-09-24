@@ -45,7 +45,7 @@ const ROOMS = [
     images: [
       { url: `${IMG}/familienzimmer.jpg`, alt: 'Familienzimmer mit Verbindungstür' },
       { url: `${IMG}/zimmer-hell.jpg`,    alt: 'Zimmer mit Sitzecke' },
-      { url: `${IMG}/doppelzimmer.jpg`,   alt: 'Schlafbereich' },
+      { url: `${IMG}/kueche.jpg`,         alt: 'Gemeinschaftsküche' },
     ],
   },
   {
@@ -55,7 +55,6 @@ const ROOMS = [
     images: [
       { url: `${IMG}/zimmer-barrierefrei.jpg`, alt: 'Barrierefreies Zimmer' },
       { url: `${IMG}/bad-barrierefrei.jpg`,    alt: 'Barrierefreies Badezimmer' },
-      { url: `${IMG}/zimmer-hell.jpg`,         alt: 'Zimmer mit Arbeitsplatz' },
     ],
   },
   {
@@ -133,7 +132,7 @@ export default function NsHotelPage() {
             <p className="text-[11px] font-semibold tracking-hairline text-white/70 uppercase mb-4">
               Hans Amonn AG · Short Stay · Kerzers
             </p>
-            <h1 className="font-display uppercase text-white text-6xl md:text-8xl font-semibold leading-[0.9] mb-6">
+            <h1 className="font-display uppercase text-white text-4xl md:text-6xl font-semibold leading-[0.92] mb-6">
               N&apos;s Hotel
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed mb-9">
@@ -184,7 +183,7 @@ export default function NsHotelPage() {
         <div className="grid gap-12 lg:grid-cols-12 items-center">
           <motion.div {...fadeUp} className="lg:col-span-5">
             <p className="eyebrow mb-3">Ihr Aufenthalt</p>
-            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-6">
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">
               Ankommen, <br />einchecken, wohlfühlen
             </h2>
             <p className="text-gray-600 leading-relaxed mb-5">
@@ -208,7 +207,7 @@ export default function NsHotelPage() {
             {[
               { url: `${IMG}/lounge.jpg`,        alt: 'Lounge',            cls: 'col-span-4 row-span-1' },
               { url: `${IMG}/detail-blumen.jpg`, alt: 'Essbereich',        cls: 'col-span-2 row-span-2' },
-              { url: `${IMG}/doppelzimmer.jpg`,  alt: 'Doppelzimmer',      cls: 'col-span-2 row-span-1' },
+              { url: `${IMG}/schliessfaecher.jpg`, alt: 'Self-Check-in Schliessfächer', cls: 'col-span-2 row-span-1' },
               { url: `${IMG}/kochnische.jpg`,    alt: 'Kochnische',        cls: 'col-span-2 row-span-1' },
             ].map((img, i, arr) => (
               <button
@@ -231,7 +230,7 @@ export default function NsHotelPage() {
           <motion.div {...fadeUp} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
             <div>
               <p className="eyebrow mb-3">Zimmer & Räume</p>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl">Für jeden Aufenthalt</h2>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl">Für jeden Aufenthalt</h2>
             </div>
             <div className="flex flex-wrap gap-2" role="tablist">
               {ROOMS.map((r) => (
@@ -304,7 +303,7 @@ export default function NsHotelPage() {
               <p className="text-[11px] font-semibold tracking-hairline text-white/60 uppercase mb-3 inline-flex items-center gap-2">
                 <Rotate3d size={14} /> 360° Rundgang
               </p>
-              <h2 className="font-display uppercase text-4xl md:text-5xl font-semibold leading-none">
+              <h2 className="font-display uppercase text-3xl md:text-4xl font-semibold leading-none">
                 Das Musterzimmer
               </h2>
             </div>
@@ -352,7 +351,7 @@ export default function NsHotelPage() {
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="max-w-2xl mb-10">
             <p className="eyebrow mb-3">Von oben</p>
-            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-4">Allmendstrasse 12 + 14</h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Allmendstrasse 12 + 14</h2>
             <p className="text-gray-600 leading-relaxed">
               Ruhig gelegen in Kerzers, direkt an der Bahnlinie Bern–Neuchâtel —
               mit begrünten Dächern, Garten und eigenen Parkplätzen.
@@ -384,7 +383,7 @@ export default function NsHotelPage() {
           <div className="grid lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-5">
               <MessageSquare style={{ color: BRAND }} size={30} className="mb-5" />
-              <h3 className="display-heading uppercase text-4xl md:text-5xl mb-4">
+              <h3 className="display-heading uppercase text-3xl md:text-4xl mb-4">
                 Fragen oder Probleme?
               </h3>
               <p className="text-gray-600 leading-relaxed">

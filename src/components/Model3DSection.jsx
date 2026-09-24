@@ -5,7 +5,6 @@ import { BUILDING_MODELS } from '@/data/models';
 
 /** Projects that have a 3D model built from their plans (project slug → model ids). */
 export const PROJECT_MODELS = {
-  'ns-hotel-kerzers': ['a14'],
   'wohnkomplex-allmendstrasse-kerzers': ['a4'],
 };
 
@@ -31,7 +30,7 @@ export default function Model3DSection({
         >
           <div className="lg:col-span-7">
             <p className="eyebrow mb-3">{eyebrow}</p>
-            <h2 className="display-heading uppercase text-4xl md:text-5xl">{title}</h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl">{title}</h2>
           </div>
           <p className="lg:col-span-5 text-gray-600 leading-relaxed">
             Diese Modelle entstehen direkt aus unseren Ausführungsplänen im Massstab 1:50 —

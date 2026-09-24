@@ -17,9 +17,9 @@ const ProjectInfo = ({ project, onButtonClick }) => {
       <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
         {/* Left Column */}
         <div className="lg:col-span-7">
-          <h3 className="display-heading uppercase text-4xl md:text-5xl mb-4">
-            {project.title}
-          </h3>
+          <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">
+            Über das Projekt
+          </h2>
           <div className="flex flex-wrap items-center text-gray-500 mb-8 gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider">
             <span className="flex items-center gap-1.5"><MapPin size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />{project.location}</span>
             <span className="flex items-center gap-1.5"><Calendar size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />{project.year}</span>

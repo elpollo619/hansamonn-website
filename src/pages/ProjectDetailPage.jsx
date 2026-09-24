@@ -57,7 +57,6 @@ const ProjectDetailPage = () => {
         transition={{ duration: 0.5 }}
       >
         <PageHero
-          image={project.coverImage}
           size="sm"
           back={{ to: '/projekte', label: 'Zurück zu den Projekten' }}
           eyebrow={[project.category?.replace('-', ' & '), project.location, project.year].filter(Boolean).join(' · ')}

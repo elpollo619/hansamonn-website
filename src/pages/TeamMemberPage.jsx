@@ -107,7 +107,7 @@ const TeamMemberPage = () => {
             >
               <div className="mb-12">
                 <p className="eyebrow mb-3">Profil</p>
-                <h2 className="display-heading uppercase text-4xl md:text-5xl mb-6">
+                <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">
                   Über {member.name.split(' ')[0]}
                 </h2>
                 <p className="text-gray-600 leading-relaxed text-lg max-w-3xl">

@@ -61,7 +61,7 @@ export default function ShortStayPage() {
                 <MapPin size={13} /> Kerzers, 3210
                 <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-[#1D3D78] text-[#1D3D78]" />)}</span>
               </div>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl mb-6">N's Hotel</h2>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">N's Hotel</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
                 Ein modernes Boutique-Hotel im Herzen von Kerzers — mit Self Check-in, durchdachtem Design und allem, was Sie für einen entspannten oder produktiven Aufenthalt brauchen.
               </p>
@@ -124,7 +124,7 @@ export default function ShortStayPage() {
               <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 mb-5 w-fit">
                 <Sun size={13} /> Ferienhaus
               </div>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl mb-6">Casa Reto</h2>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Casa Reto</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
                 Stellen Sie sich vor: Aufwachen mit dem Rauschen des Lago Maggiore, Zitronenbäume im Garten, keine Verpflichtungen. Casa Reto ist unser privates Ferienhaus in Gordemo, Tessin — ein stiller Ort zum Atmen, Geniessen und Loslassen.
               </p>
@@ -191,7 +191,7 @@ export default function ShortStayPage() {
             {...fadeUp}
             className="max-w-2xl mx-auto text-center"
           >
-            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-5">Allgemeine Anfrage für Short Stay</h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-5">Allgemeine Anfrage für Short Stay</h2>
             <p className="text-gray-600 leading-relaxed mb-8">Nicht sicher, was Sie brauchen? Wir helfen Ihnen gerne dabei, die richtige Option zu finden.</p>
             <Link
               to="/immobilien/anfrage"

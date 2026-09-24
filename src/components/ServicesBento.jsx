@@ -70,7 +70,7 @@ function BentoCard({ service, index }) {
           </span>
           <h3
             className={`font-display uppercase font-semibold leading-none tracking-tight ${
-              index === 0 ? 'text-3xl md:text-5xl' : 'text-xl md:text-2xl'
+              index === 0 ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
             }`}
           >
             {service.title}
@@ -104,7 +104,7 @@ export default function ServicesBento() {
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="eyebrow mb-3">Leistungen</p>
-            <h2 className="display-heading uppercase text-4xl md:text-6xl">Alles aus einer Hand</h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl">Alles aus einer Hand</h2>
           </div>
           <p className="text-gray-500 max-w-sm leading-relaxed md:text-right">
             Von der ersten Skizze über den Bau bis zur Vermietung und Bewirtschaftung.

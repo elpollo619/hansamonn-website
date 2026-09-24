@@ -86,7 +86,7 @@ const ImmobilienOverviewPage = () => {
                   </div>
 
                   {/* Title */}
-                  <h2 className="display-heading uppercase text-4xl md:text-5xl mb-2 group-hover:text-[#1D3D78] transition-colors">
+                  <h2 className="display-heading uppercase text-3xl md:text-4xl mb-2 group-hover:text-[#1D3D78] transition-colors">
                     {title}
                   </h2>
                   <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-5">{subtitle}</p>
@@ -128,7 +128,7 @@ const ImmobilienOverviewPage = () => {
           className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
           <div className="max-w-2xl">
-            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-4">{t('immobilien.contact.title')}</h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{t('immobilien.contact.title')}</h2>
             <p className="text-gray-600 leading-relaxed">{t('immobilien.hero.subtitle')}</p>
           </div>
           <Link

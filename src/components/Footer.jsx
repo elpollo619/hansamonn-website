@@ -66,7 +66,7 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
           >
             <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/50 mb-4">Kontakt</p>
-            <h2 className="font-display uppercase font-semibold leading-[0.95] tracking-tight text-4xl md:text-6xl">
+            <h2 className="font-display uppercase font-semibold leading-[0.95] tracking-tight text-3xl md:text-5xl">
               Haben Sie ein Projekt?<br />
               <span className="text-white/40">Sprechen wir darüber.</span>
             </h2>

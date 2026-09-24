@@ -58,7 +58,7 @@ const ArchitekturPage = () => {
           >
             <div>
               <p className="eyebrow mb-3">Leistungen</p>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl">
+              <h2 className="display-heading uppercase text-3xl md:text-4xl">
                 Was wir anbieten
               </h2>
             </div>
@@ -119,7 +119,7 @@ const ArchitekturPage = () => {
       </section>
 
       {/* ── Interaktive Modelle (A14 + A12) ─────────────────────── */}
-      <Model3DSection ids={['a14', 'a12', 'a4']} eyebrow="Projekte in 3D" title="Modelle aus unseren Plänen" className="bg-white" />
+      <Model3DSection ids={['a12', 'a4']} eyebrow="Weitere Projekte in 3D" title="Modelle aus unseren Plänen" className="bg-white" />
 
       {/* ── Projekte ─────────────────────────────────────────────── */}
       <section className="surface-warm py-20 md:py-24">
@@ -130,7 +130,7 @@ const ArchitekturPage = () => {
           >
             <div>
               <p className="eyebrow mb-3">Referenzen</p>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl">
+              <h2 className="display-heading uppercase text-3xl md:text-4xl">
                 Ausgewählte Projekte
               </h2>
             </div>

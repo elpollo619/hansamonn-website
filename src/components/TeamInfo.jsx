@@ -35,7 +35,7 @@ const TeamInfo = () => {
           <motion.div {...fadeUp} className="grid gap-8 lg:grid-cols-12 lg:items-end mb-14">
             <div className="lg:col-span-6 min-w-0">
               <p className="eyebrow mb-3">Hans Amonn AG</p>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl hyphens-auto break-words">
+              <h2 className="display-heading uppercase text-3xl md:text-4xl hyphens-auto break-words">
                 Familienunternehmen mit Herz
               </h2>
             </div>

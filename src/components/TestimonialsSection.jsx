@@ -70,7 +70,7 @@ export default function TestimonialsSection() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="mb-12">
           <p className="eyebrow mb-3">Amonn Referenzen</p>
-          <h2 className="display-heading uppercase text-4xl md:text-5xl">
+          <h2 className="display-heading uppercase text-3xl md:text-4xl">
             Was unsere Kunden sagen
           </h2>
         </div>

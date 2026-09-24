@@ -11,7 +11,7 @@ export const projectsData = [
     year: '2024',
     description: 'Modernes Self-Check-in Hotel in Kerzers, 22 km von Bern Hauptbahnhof entfernt. Das N\'s Hotel bietet komfortable Nichtraucher-Unterkünfte mit Garten, kostenlosem Privatparkplatz und Terrasse.',
     fullDescription: 'Die Unterkunft N\'s Hotel - Self-Check-in Hotel, die in Kerzers, 22 km von Bern Hauptbahnhof entfernt gelegen ist, verfügt über Übernachtungsmöglichkeiten mit einem Garten, einem kostenlosen Privatparkplatz und einer Terrasse. Dieses Hotel liegt ungefähr 22 km von Forum Fribourg entfernt, hat kostenloses WLAN und ist außerdem 23 km entfernt von Bundeshaus Bern. Die Nichtraucher Unterkunft ist 22 km von Universität Bern entfernt gelegen. In der Unterkunft N\'s Hotel - Self-Check-in Hotel sind alle Zimmer ergänzt mit einem Schreibtisch, einem Flachbild-TV, einem eigenen Badezimmer, Bettwäsche und Handtüchern. Die Zimmer bieten den Gästen einen Kleiderschrank und eine Kaffeemaschine.',
-    coverImage: '/images/ns-hotel/drohne-1.jpg',
+    coverImage: '/images/ns-hotel/aussen.jpg',
     gallery: [
       { type: 'image', url: '/images/ns-hotel/drohne-1.jpg', alt: "N's Hotel Kerzers – Luftaufnahme" },
       { type: 'image', url: '/images/ns-hotel/aussen.jpg', alt: "N's Hotel – Aussenansicht" },

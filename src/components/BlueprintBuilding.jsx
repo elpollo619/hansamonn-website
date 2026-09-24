@@ -233,7 +233,7 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
                 className="bg-[#0E2350]/70 md:bg-transparent backdrop-blur-sm md:backdrop-blur-0 p-4 -m-4 md:p-0 md:m-0"
               >
                 <p className="font-mono text-sm text-blue-100/60 mb-2">{current.no} / 03</p>
-                <h2 className="font-display uppercase text-5xl md:text-6xl font-semibold leading-none mb-4">{current.title}</h2>
+                <h2 className="font-display uppercase text-3xl md:text-4xl font-semibold leading-none mb-4">{current.title}</h2>
                 <p className="text-blue-50/80 leading-relaxed">{current.text}</p>
               </motion.div>
             </AnimatePresence>

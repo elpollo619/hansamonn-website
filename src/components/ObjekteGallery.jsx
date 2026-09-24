@@ -30,7 +30,7 @@ export default function ObjekteGallery() {
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="eyebrow mb-3">Unsere Objekte</p>
-            <h2 className="display-heading uppercase text-4xl md:text-6xl">Wohnen bei Amonn</h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl">Wohnen bei Amonn</h2>
           </div>
           <Link
             to="/immobilien"

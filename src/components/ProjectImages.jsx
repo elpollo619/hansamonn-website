@@ -5,7 +5,7 @@ const ProjectImages = ({ project, onImageClick }) => {
   return (
     <section className="surface-warm border-t border-gray-100 py-20 md:py-24">
       <div className="container mx-auto px-6">
-        <h4 className="display-heading uppercase text-4xl md:text-5xl mb-10">
+        <h4 className="display-heading uppercase text-3xl md:text-4xl mb-10">
           Weitere Impressionen
         </h4>
 

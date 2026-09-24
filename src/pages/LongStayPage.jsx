@@ -112,7 +112,7 @@ export default function LongStayPage() {
           <motion.div {...fadeUp} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
             <div>
               <p className="eyebrow mb-3">Long Stay</p>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl">Unsere Standorte</h2>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl">Unsere Standorte</h2>
             </div>
             <p className="text-gray-600 leading-relaxed max-w-md">Drei Standorte in der Region Bern — wählen Sie den passenden für Ihre Bedürfnisse.</p>
           </motion.div>
@@ -177,7 +177,7 @@ export default function LongStayPage() {
           >
             <div className="lg:col-span-7">
               <Mail size={28} className="mb-5" style={{ color: BRAND }} />
-              <h2 className="display-heading uppercase text-4xl md:text-5xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
               <p className="text-gray-600 leading-relaxed max-w-xl">
                 Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation — wir finden gemeinsam die beste Lösung.
               </p>

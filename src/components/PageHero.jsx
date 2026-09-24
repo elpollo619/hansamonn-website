@@ -35,15 +35,15 @@ export default function PageHero({
   const centered = align === 'center';
 
   const pad = {
-    lg: dark ? 'min-h-[78vh] pt-32 pb-16' : 'pt-24 pb-20 md:pt-32 md:pb-24',
-    md: dark ? 'min-h-[56vh] pt-32 pb-14' : 'pt-16 pb-14 md:pt-24 md:pb-20',
-    sm: dark ? 'min-h-[40vh] pt-28 pb-12' : 'pt-12 pb-10 md:pt-16 md:pb-14',
+    lg: dark ? 'min-h-[66vh] pt-32 pb-14' : 'pt-20 pb-16 md:pt-28 md:pb-20',
+    md: dark ? 'min-h-[48vh] pt-28 pb-12' : 'pt-14 pb-12 md:pt-20 md:pb-16',
+    sm: dark ? 'min-h-[36vh] pt-24 pb-10' : 'pt-10 pb-8 md:pt-14 md:pb-12',
   }[size];
 
   const titleSize = {
-    lg: 'text-[2.6rem] sm:text-5xl md:text-7xl lg:text-8xl',
-    md: 'text-[2.6rem] sm:text-5xl md:text-6xl lg:text-7xl',
-    sm: 'text-4xl md:text-5xl',
+    lg: 'text-4xl sm:text-5xl md:text-6xl',
+    md: 'text-3xl sm:text-4xl md:text-5xl',
+    sm: 'text-3xl md:text-4xl',
   }[size];
 
   return (

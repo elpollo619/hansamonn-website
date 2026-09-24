@@ -32,7 +32,7 @@ export default function ScrollShowcase({
         {/* Heading */}
         <div className="max-w-2xl mx-auto text-center mb-14">
           <p className="eyebrow mb-3">{eyebrow}</p>
-          <h2 className="display-heading uppercase text-4xl md:text-6xl mb-4">{title}</h2>
+          <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{title}</h2>
           <p className="text-gray-500 leading-relaxed">{caption}</p>
         </div>
 

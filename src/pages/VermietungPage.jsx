@@ -446,7 +446,7 @@ const VermietungPage = () => {
       {/* ── Hero ── */}
       <PageHero
         eyebrow="AMONN IMMOBILIEN"
-        title={<span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl">Immobilien &amp; <br className="hidden sm:block" />Wohnlösungen</span>}
+        title={<span className="block">Immobilien &amp; <br className="hidden sm:block" />Wohnlösungen</span>}
         subtitle={t('vermietung.hero.subtitle')}
         image="/images/muri/titel.jpg"
       >
@@ -705,7 +705,7 @@ const VermietungPage = () => {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h3 className="display-heading uppercase text-4xl md:text-5xl mb-5">
+            <h3 className="display-heading uppercase text-3xl md:text-4xl mb-5">
               {t('vermietung.cta.title')}
             </h3>
             <p className="text-gray-600 leading-relaxed max-w-md mx-auto mb-8">

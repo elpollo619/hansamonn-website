@@ -55,19 +55,13 @@ const About = () => {
             <motion.div {...fadeUp} className="lg:col-span-7 min-w-0 relative pb-6 md:pb-0">
               <div className="relative overflow-hidden bg-gray-100 group">
                 <img
-                  alt="N's Hotel in Kerzers aus der Luft, ein Projekt der Hans Amonn AG"
+                  alt="Signaletik im N's Hotel Kerzers – Architektur bis ins Detail"
                   className="w-full h-80 md:h-[460px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="/images/ns-hotel/drohne-1.jpg"
+                  src="/images/ns-hotel/signaletik.jpg"
                   loading="lazy"
                   decoding="async" />
               </div>
 
-              {/* Floating Card */}
-              <div className="absolute -bottom-2 left-4 md:-bottom-8 md:-left-8 bg-[#0B1220] text-white px-7 py-6">
-                <div className="font-display text-5xl font-semibold leading-none mb-2">55+</div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-white/60">Jahre Erfahrung</div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-white/60">seit 1968</div>
-              </div>
             </motion.div>
           </div>
 
@@ -99,7 +93,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="max-w-3xl mb-14">
             <p className="eyebrow mb-3">Unsere Geschichte</p>
-            <h2 className="display-heading uppercase text-4xl md:text-5xl">
+            <h2 className="display-heading uppercase text-3xl md:text-4xl">
               Tradition und Vision seit 1968
             </h2>
           </motion.div>

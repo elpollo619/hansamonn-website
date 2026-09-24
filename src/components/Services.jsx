@@ -58,7 +58,7 @@ const SectionHeader = ({ label, title, bold }) => (
     className="mb-10"
   >
     <p className="eyebrow mb-3">{label}</p>
-    <h2 className="display-heading uppercase text-4xl md:text-5xl">
+    <h2 className="display-heading uppercase text-3xl md:text-4xl">
       {title} {bold}
     </h2>
   </motion.div>
