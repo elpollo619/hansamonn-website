@@ -95,7 +95,7 @@ export const BUILDING_MODELS = {
     address: 'Höheweg 8, 3074 Muri bei Bern',
     kind: 'Umbau Bauernhaus',
     source: 'Umbauprojekt 699, Fassaden 1:100',
-    siteNote: 'Aussenansicht – Innenräume privat',
+    siteNote: 'Umgebung: Amtliche Vermessung · GWR (BFS) · © swisstopo',
     facts: [
       { label: 'Länge', value: '23.81 m' },
       { label: 'First', value: '+11.45 m' },
