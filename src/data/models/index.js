@@ -111,7 +111,7 @@ export const BUILDING_MODELS = {
     address: 'Bremgarten bei Bern',
     kind: 'Neubau Wohnhaus',
     source: 'Ausführungspläne 770 · 2026',
-    siteNote: 'Aussenansicht – Umgebung schematisch',
+    siteNote: 'Umgebung schematisch',
     facts: [
       { label: 'Länge', value: '17.75 m' },
       { label: 'Dach', value: 'Satteldach 45°' },

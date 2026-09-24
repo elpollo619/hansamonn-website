@@ -8,7 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 
 // Projects with an interactive 3D model built from their plans
-const HAS_3D_MODEL = new Set(['wohnkomplex-allmendstrasse-kerzers', 'baeren-kerzers', 'renovation-hoeheweg-muri', 'neubau-wohnhaus-bremgarten']);
+const HAS_3D_MODEL = new Set(['ns-hotel-kerzers', 'wohnkomplex-allmendstrasse-kerzers', 'baeren-kerzers', 'renovation-hoeheweg-muri', 'neubau-wohnhaus-bremgarten']);
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 
