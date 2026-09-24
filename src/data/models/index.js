@@ -57,6 +57,22 @@ export const BUILDING_MODELS = {
     load: () => import('./a4.json').then((m) => m.default),
     site: () => import('./a4-site.json').then((m) => m.default),
   },
+  cr: {
+    id: 'cr',
+    name: 'Casa Reto',
+    short: 'CR',
+    address: 'Gordemo, Tessin',
+    kind: 'Ferienhaus',
+    source: 'Pläne 248, 1:50 · 2024',
+    facts: [
+      { label: 'Grundfläche', value: '10.00 × 5.00 m' },
+      { label: 'Dach', value: 'Pultdach 8.3°' },
+      { label: 'Geschosse', value: 'EG + OG' },
+    ],
+    siteNote: 'Umgebung schematisch',
+    load: () => import('./cr.json').then((m) => m.default),
+    site: () => import('./cr-site.json').then((m) => m.default),
+  },
 };
 
 export const MODEL_LIST = Object.values(BUILDING_MODELS);

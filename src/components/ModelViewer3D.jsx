@@ -381,7 +381,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       </div>
       <div className="pointer-events-none absolute right-3 bottom-3 md:right-5 md:bottom-5 font-mono text-[10px] md:text-[11px] text-gray-500 text-right leading-relaxed">
         AMONN ARCHITEKTUR · {meta.source}<br />{meta.address}
-        {meta.site && <><br />Umgebung: Amtliche Vermessung · GWR (BFS) · © swisstopo</>}
+        {meta.site && <><br />{meta.siteNote ?? 'Umgebung: Amtliche Vermessung · GWR (BFS) · © swisstopo'}</>}
       </div>
     </div>
   );

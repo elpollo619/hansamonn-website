@@ -12,6 +12,7 @@ import { getListingBySlug } from '@/data/rentalData';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import CasaRetoAnfrageForm from '@/components/CasaRetoAnfrageForm';
 import Lightbox from '@/components/Lightbox';
+import Model3DSection from '@/components/Model3DSection';
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 const BRAND_DARK = 'var(--brand-color-dark, #162E5A)';
@@ -302,6 +303,8 @@ export default function CasaRetoPage() {
       </section>
 
       {/* ── Rooms / layout ───────────────────────────────────────────────── */}
+      <Model3DSection ids={['cr']} eyebrow="Das Haus in 3D" title="Aus unseren Plänen" className="bg-white" />
+
       <section className="bg-gray-50 border-y border-gray-100">
         <div className="container mx-auto px-6 py-20">
           <div className="grid gap-12 lg:grid-cols-2">
