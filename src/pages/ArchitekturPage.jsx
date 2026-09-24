@@ -47,7 +47,7 @@ const ArchitekturPage = () => {
       />
 
       {/* ── Vom Plan zum Gebäude (3D, scroll-driven) ─────────────── */}
-      <BlueprintBuilding />
+      <BlueprintBuilding modelId="a4" />
 
       {/* ── Leistungen grid ─────────────────────────────────────── */}
       <section className="py-20 md:py-24">
@@ -119,7 +119,7 @@ const ArchitekturPage = () => {
       </section>
 
       {/* ── Interaktive Modelle (A14 + A12) ─────────────────────── */}
-      <Model3DSection ids={['a12', 'a4']} eyebrow="Weitere Projekte in 3D" title="Modelle aus unseren Plänen" className="bg-white" />
+      <Model3DSection ids={['a14']} eyebrow="N's Hotel in 3D" title="Aus unseren Plänen" className="bg-white" />
 
       {/* ── Projekte ─────────────────────────────────────────────── */}
       <section className="surface-warm py-20 md:py-24">
