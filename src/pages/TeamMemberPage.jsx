@@ -60,7 +60,7 @@ const TeamMemberPage = () => {
                   <img
                     src={imageUrl}
                     alt={`${member.name} – ${member.position}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-[center_25%]"
                     loading="lazy"
                     decoding="async"
                   />
@@ -78,21 +78,27 @@ const TeamMemberPage = () => {
                   <p className="font-medium mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
 
                   <div className="space-y-3 text-sm text-gray-600 mb-6">
-                    <div className="flex items-start gap-2">
-                      <GraduationCap size={16} className="mt-0.5 flex-shrink-0 text-gray-400" />
-                      <span>{member.education}</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Award size={16} className="mt-0.5 flex-shrink-0 text-gray-400" />
-                      <span>{member.experience}</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Briefcase size={16} className="mt-0.5 flex-shrink-0 text-gray-400" />
-                      <span>{member.specialization}</span>
-                    </div>
+                    {member.education && (
+                      <div className="flex items-start gap-2">
+                        <GraduationCap size={16} className="mt-0.5 flex-shrink-0 text-gray-400" />
+                        <span>{member.education}</span>
+                      </div>
+                    )}
+                    {member.experience && (
+                      <div className="flex items-start gap-2">
+                        <Award size={16} className="mt-0.5 flex-shrink-0 text-gray-400" />
+                        <span>{member.experience}</span>
+                      </div>
+                    )}
+                    {member.specialization && (
+                      <div className="flex items-start gap-2">
+                        <Briefcase size={16} className="mt-0.5 flex-shrink-0 text-gray-400" />
+                        <span>{member.specialization}</span>
+                      </div>
+                    )}
                   </div>
 
-                  <a href={`mailto:${member.email}`} className="block w-full">
+                  <a href={`mailto:${member.email || 'office@reto-amonn.ch'}`} className="block w-full">
                     <Button className="w-full brand-gradient text-white flex items-center justify-center gap-2">
                       <Mail size={16} />
                       E-Mail senden
@@ -118,21 +124,23 @@ const TeamMemberPage = () => {
                 </p>
               </div>
 
-              <div className="bg-white border border-gray-100 p-8">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                  Spezialisierung
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {(member.specialization || '').split(',').map((s) => (
-                    <span
-                      key={s}
-                      className="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1"
-                    >
-                      {s.trim()}
-                    </span>
-                  ))}
+              {member.specialization && (
+                <div className="bg-white border border-gray-100 p-8">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Spezialisierung
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {member.specialization.split(',').map((s) => (
+                      <span
+                        key={s}
+                        className="bg-gray-100 text-gray-700 text-sm font-medium px-3 py-1"
+                      >
+                        {s.trim()}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </motion.div>
           </div>
 

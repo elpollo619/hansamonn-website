@@ -154,7 +154,16 @@ html { scroll-behavior: smooth; }
 }
 .kenburns { animation: kenburns 12s ease-out forwards; }
 
+/* Infinite marquee (content is duplicated once, so -50% loops seamlessly) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .kenburns { animation: none; }
+  .marquee-track { animation: none; }
 }

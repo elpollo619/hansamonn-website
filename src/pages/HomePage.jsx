@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet';
 import Hero from '@/components/Hero';
 import StatsSection from '@/components/StatsSection';
 import ScrollShowcase from '@/components/ScrollShowcase';
+import LocationsMarquee from '@/components/LocationsMarquee';
+import ServicesBento from '@/components/ServicesBento';
+import ObjekteGallery from '@/components/ObjekteGallery';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import StructuredData from '@/components/StructuredData';
@@ -36,7 +39,10 @@ const HomePage = () => {
       <StructuredData data={organizationSchema} />
 
       <Hero />
+      <LocationsMarquee />
+      <ServicesBento />
       <StatsSection />
+      <ObjekteGallery />
       <ScrollShowcase />
       <TestimonialsSection />
       <RecentlyViewedSection />

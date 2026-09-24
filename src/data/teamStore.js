@@ -1,6 +1,7 @@
 import { teamMembers as staticTeam } from '@/components/TeamData';
 
-const KEY = 'ha_team_v2';
+// Bump the key whenever TeamData.js changes so browsers drop their cached copy.
+const KEY = 'ha_team_v3';
 
 function buildSeed() {
   return staticTeam.map((m, i) => ({

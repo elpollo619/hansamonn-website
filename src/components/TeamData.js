@@ -95,20 +95,6 @@ export const teamMembers = [
     hasPhoto: false
   },
   {
-    id: 9,
-    slug: 'jhon-alexander-orrego',
-    name: 'Jhon Alexander Orrego',
-    position: 'Organisation & Facility Management',
-    email: 'orrego@reto-amonn.ch',
-    education: 'Facility Management Spezialist',
-    experience: '8+ Jahre Erfahrung',
-    specialization: 'Buchhaltung, Büroorganisation, Gebäudereinigung, Hotel-Facility Management',
-    description: 'Jhon Alexander Orrego unterstützt unser Team in vielfältigen organisatorischen Bereichen. Von der Buchhaltung über die Büroorganisation bis hin zur professionellen Reinigung unserer Gebäude und des N\'s Hotels - er sorgt dafür, dass alle Abläufe reibungslos funktionieren und unsere Räumlichkeiten stets in bestem Zustand sind.',
-    icon: Users,
-    hasPhoto: true,
-    photoUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/a986703e201596e3783e0cc31154064e.png'
-  },
-  {
     id: 10,
     slug: 'rayna-mridha',
     name: 'Rayna Mridha',
@@ -119,6 +105,22 @@ export const teamMembers = [
     specialization: 'CAD-Zeichnungen, Planungsassistenz',
     description: 'Rayna Mridha ist unsere neueste Auszubildende und startet ihre Karriere als Zeichnerin. Wir freuen uns, sie auf ihrem Weg zu begleiten und ihr Talent zu fördern.',
     icon: GraduationCap,
-    hasPhoto: false
+    hasPhoto: true,
+    photoUrl: '/images/team/rayna.jpg'
+  },
+  {
+    // TODO: surname, role, email and bio still to be confirmed
+    id: 11,
+    slug: 'sirin',
+    name: 'Sirin',
+    position: 'Mitarbeiterin',
+    email: '',
+    education: '',
+    experience: '',
+    specialization: '',
+    description: 'Sirin ist Teil des Teams der Hans Amonn AG.',
+    icon: Users,
+    hasPhoto: true,
+    photoUrl: '/images/team/sirin.jpg'
   }
 ];

@@ -35,7 +35,7 @@ const TeamMember = ({ member, index }) => {
         <img
           src={imageUrl}
           alt={`${member.name} – ${member.position} bei Hans Amonn AG`}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-[center_25%] group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
           decoding="async"
         />
@@ -51,7 +51,7 @@ const TeamMember = ({ member, index }) => {
         {/* Hover overlay buttons */}
         <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-3">
           <a
-            href={`mailto:${member.email}`}
+            href={`mailto:${member.email || 'office@reto-amonn.ch'}`}
             onClick={(e) => e.stopPropagation()}
             className="w-9 h-9 bg-white/90 flex items-center justify-center hover:bg-white transition-colors"
             title={`E-Mail an ${member.name}`}
@@ -73,16 +73,22 @@ const TeamMember = ({ member, index }) => {
         <h3 className="text-lg font-semibold text-gray-900 mb-0.5">{member.name}</h3>
         <p className="font-medium text-sm mb-3" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
 
-        <div className="space-y-1.5 mb-4 text-xs text-gray-600">
-          <div className="flex items-center gap-2">
-            <GraduationCap size={13} className="flex-shrink-0 text-gray-400" />
-            <span>{member.education}</span>
+        {(member.education || member.experience) && (
+          <div className="space-y-1.5 mb-4 text-xs text-gray-600">
+            {member.education && (
+              <div className="flex items-center gap-2">
+                <GraduationCap size={13} className="flex-shrink-0 text-gray-400" />
+                <span>{member.education}</span>
+              </div>
+            )}
+            {member.experience && (
+              <div className="flex items-center gap-2">
+                <Award size={13} className="flex-shrink-0 text-gray-400" />
+                <span>{member.experience}</span>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-2">
-            <Award size={13} className="flex-shrink-0 text-gray-400" />
-            <span>{member.experience}</span>
-          </div>
-        </div>
+        )}
 
         <p className="text-gray-600 text-xs leading-relaxed line-clamp-3 mb-4">
           {member.description}

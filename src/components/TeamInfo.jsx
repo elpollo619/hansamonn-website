@@ -18,8 +18,8 @@ const TeamInfo = () => {
         </h3>
         <p className="text-gray-600 text-center max-w-3xl mx-auto leading-relaxed">
           Die Hans Amonn AG ist ein echtes Familienunternehmen. Mit Reto und Roberta Amonn an der Spitze, 
-          unterstützt von langjährigen Partnern wie Martin Brand und einem vielseitigen Team aus erfahrenen 
-          Fachkräften wie Jhon Alexander und jungen Talenten, vereinen wir Tradition mit Innovation. Diese 
+          unterstützt von langjährigen Partnern wie Martin Brand und einem vielseitigen Team aus erfahrenen
+          Fachkräften und jungen Talenten, vereinen wir Tradition mit Innovation. Diese
           familiäre Atmosphäre spiegelt sich in unserer persönlichen Betreuung und dem Engagement für jeden 
           einzelnen Kunden wider.
         </p>
@@ -57,8 +57,8 @@ const TeamInfo = () => {
               Vielseitige Unterstützung
             </h4>
             <p className="text-gray-600 leading-relaxed">
-              Mit Daniel als IT-Support, Jhon Alexander für Organisation und Facility Management sowie 
-              jungen Talenten wie Beatriz verbinden wir traditionelle Handwerkskunst mit modernster 
+              Mit Daniel als IT-Support sowie jungen Talenten wie Beatriz und Rayna verbinden wir
+              traditionelle Handwerkskunst mit modernster
               Technologie und umfassenden Service-Lösungen.
             </p>
           </div>
