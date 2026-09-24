@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import a14Model from '@/data/a14Model';
-import { buildBuilding, setGroupOpacity } from '@/lib/buildingScene';
+import { BUILDING_MODELS } from '@/data/models';
+import { buildModel } from '@/lib/modelScene';
 
 /**
  * BlueprintBuilding — scroll-driven "vom Plan zum Gebäude" story.
@@ -35,12 +35,14 @@ const STEPS = [
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-export default function BlueprintBuilding({ model = a14Model }) {
+export default function BlueprintBuilding({ modelId = 'a14' }) {
+  const model = BUILDING_MODELS[modelId];
   const sectionRef = useRef(null);
   const mountRef = useRef(null);
   const progressRef = useRef(0);
   const [step, setStep] = useState(0);
   const [showDims, setShowDims] = useState(true);
+  const [planLabel, setPlanLabel] = useState('EG');
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
   useMotionValueEvent(scrollYProgress, 'change', (v) => {
@@ -53,7 +55,7 @@ export default function BlueprintBuilding({ model = a14Model }) {
     let disposed = false;
     let cleanup = () => {};
 
-    Promise.all([import('three'), import('three/examples/jsm/utils/BufferGeometryUtils.js')]).then(([THREE, { mergeGeometries }]) => {
+    Promise.all([import('three'), import('three/examples/jsm/utils/BufferGeometryUtils.js'), model.load()]).then(([THREE, { mergeGeometries }, data]) => {
       if (disposed || !mountRef.current) return;
       const el = mountRef.current;
       let renderer;
@@ -76,15 +78,17 @@ export default function BlueprintBuilding({ model = a14Model }) {
       grid.position.y = -0.01;
       scene.add(grid);
 
-      // Building from plan data
-      const bld = buildBuilding(THREE, model, { style: 'blueprint', scale: 0.42, mergeGeometries });
+      // Building from the plan-extracted model (walls, windows, slabs)
+      const bld = buildModel(THREE, mergeGeometries, data, { style: 'blueprint', scale: 0.4 });
       scene.add(bld.root);
       bld.levels.forEach((lv) => {
-        lv.walls.visible = false;
-        lv.walls.scale.y = 0.0001;
-        lv.slabs.forEach((sl) => { sl.visible = false; });
+        lv.group.visible = false;
+        lv.content.scale.y = 0.0001;
       });
+      bld.roof.visible = false;
+      bld.extras.scale.y = 0.0001;
       const LEVELS = bld.levels.length;
+      setPlanLabel(bld.plan.label);
 
       // Pointer parallax
       let mx = 0, my = 0;
@@ -125,19 +129,20 @@ export default function BlueprintBuilding({ model = a14Model }) {
         const s3 = clamp01((p - 0.58) / 0.36);
 
         bld.plan.geo.setDrawRange(0, Math.floor(bld.plan.count * s1) & ~1);
-        bld.plan.mat.opacity = 1 - 0.55 * s3;
+        bld.plan.mat.opacity = 1 - 0.6 * s3;
 
+        bld.extras.scale.y = Math.max(0.0001, s2);
+        bld.extras.visible = s2 > 0.01;
         bld.levels.forEach((lv, l) => {
           const t = l === 0 ? s2 : ease(clamp01(s3 * LEVELS - (l - 1)));
-          lv.walls.visible = t > 0.001;
-          lv.walls.scale.y = Math.max(0.0001, t);
-          const topT = l === 0 ? ease(clamp01(s3 * LEVELS)) : ease(clamp01(s3 * LEVELS - l + 0.3));
-          lv.slabs.forEach((sl) => {
-            sl.visible = topT > 0.02;
-            sl.position.y = sl.userData.baseY + (1 - topT) * 2;
-            setGroupOpacity(sl, topT, 0.12);
-          });
+          lv.group.visible = t > 0.002;
+          lv.content.scale.y = Math.max(0.0001, t);
+          lv.group.position.y = lv.base + (l === 0 ? 0 : (1 - t) * 2.5);
         });
+        const rT = ease(clamp01(s3 * LEVELS - (LEVELS - 1)));
+        const top = bld.levels[LEVELS - 1];
+        bld.roof.visible = rT > 0.02;
+        bld.roof.position.y = top.base + top.height + (1 - rT) * 3;
 
         if (!reduceMotion) spin += s2 > 0.5 ? 0.0016 : 0;
         const elev = THREE.MathUtils.degToRad(89 - 57 * s2 + pmy * 4 * s2);
@@ -250,10 +255,10 @@ export default function BlueprintBuilding({ model = a14Model }) {
         {/* Architectural title block */}
         <div className="absolute right-4 bottom-4 md:right-6 md:bottom-6 border border-blue-100/40 font-mono text-[10px] md:text-[11px] text-blue-50/80 bg-[#0E2350]/60 backdrop-blur-sm">
           <div className="px-3 py-2 border-b border-blue-100/30 font-sans font-semibold tracking-[0.2em]">AMONN ARCHITEKTUR</div>
-          <div className="px-3 py-1.5 border-b border-blue-100/30">{model.name} · {model.address.split(',')[0]}</div>
+          <div className="px-3 py-1.5 border-b border-blue-100/30">{model.short} · {model.name}</div>
           <div className="grid grid-cols-2">
-            <div className="px-3 py-1.5 border-r border-blue-100/30">Plan: {current.sheet}</div>
-            <div className="px-3 py-1.5">{model.scale}</div>
+            <div className="px-3 py-1.5 border-r border-blue-100/30">Plan: {step === 0 ? `Grundriss ${planLabel}` : current.sheet}</div>
+            <div className="px-3 py-1.5">M 1:50</div>
             <div className="px-3 py-1.5 border-r border-t border-blue-100/30">Blatt {current.no}/03</div>
             <div className="px-3 py-1.5 border-t border-blue-100/30">{model.address.split(',')[1]?.trim() || model.address}</div>
           </div>

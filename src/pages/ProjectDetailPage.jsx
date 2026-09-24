@@ -63,7 +63,7 @@ const ProjectDetailPage = () => {
         <div className="bg-white">
           {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
           <ProjectInfo project={project} onButtonClick={handleContactClick} />
-          {PROJECT_MODELS[project.slug] && <Model3DSection model={PROJECT_MODELS[project.slug]} />}
+          {PROJECT_MODELS[project.slug] && <Model3DSection ids={PROJECT_MODELS[project.slug]} />}
           {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}
         </div>
       </motion.div>

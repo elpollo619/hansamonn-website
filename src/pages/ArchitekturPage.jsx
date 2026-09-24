@@ -10,6 +10,7 @@ import PageHero from '@/components/PageHero';
 import BlueprintLines from '@/components/BlueprintLines';
 import BlueprintBuilding from '@/components/BlueprintBuilding';
 import TiltCard from '@/components/TiltCard';
+import Model3DSection from '@/components/Model3DSection';
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 const HERO_IMAGE =
@@ -116,6 +117,9 @@ const ArchitekturPage = () => {
           </div>
         </div>
       </section>
+
+      {/* ── Interaktive Modelle (A14 + A12) ─────────────────────── */}
+      <Model3DSection ids={['a14', 'a12']} eyebrow="Projekte in 3D" title="Modelle aus unseren Plänen" className="bg-white" />
 
       {/* ── Projekte ─────────────────────────────────────────────── */}
       <section className="surface-warm py-20 md:py-24">
