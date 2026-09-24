@@ -55,7 +55,7 @@ export default function ShortStayPage() {
           >
             <div className="grid lg:grid-cols-2">
               <div className="relative h-72 lg:h-auto min-h-[320px] overflow-hidden">
-                <RentalImage src="/images/ns-hotel/titel.jpg" alt="N's Hotel Kerzers" className="w-full h-full object-cover" />
+                <RentalImage src="/images/ns-hotel/aussen.jpg" alt="N's Hotel Kerzers" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <span className="inline-flex items-center gap-1.5 bg-white/90 text-gray-700 text-xs font-semibold px-3 py-1.5">

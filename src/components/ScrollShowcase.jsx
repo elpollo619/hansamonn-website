@@ -11,7 +11,7 @@ const BRAND = 'var(--brand-color, #1D3D78)';
  * enters the viewport, revealing a flagship project image.
  */
 export default function ScrollShowcase({
-  image = '/images/ns-hotel/01.jpg',
+  image = '/images/ns-hotel/drohne-2.jpg',
   eyebrow = 'Ausgewählte Arbeit',
   title = 'Räume, die bleiben',
   caption = 'Von der ersten Skizze bis zum fertigen Zuhause — seit 1968.',

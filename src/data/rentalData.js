@@ -14,7 +14,7 @@
  *  Naming: titel.jpg (hero), 01.jpg, 02.jpg, …
  *  Recommended: JPG or WebP, 1600px wide, max 300 KB each
  *
- *    /public/images/ns-hotel/         titel.jpg + 01–08.jpg
+ *    /public/images/ns-hotel/         aussen, zimmer, drohne-*, 360/*
  *    /public/images/kerzers/          titel.jpg + 01–08.jpg
  *    /public/images/muenchenbuchsee/  titel.jpg + 01–03.jpg
  *    /public/images/muri/             titel.jpg + 01–06.jpg
@@ -263,15 +263,18 @@ export const rentalData = [
     description:
       "Modernes Self-Check-in Boutique-Hotel in Kerzers, 22 km von Bern Hauptbahnhof entfernt. Komfortable Nichtraucher-Zimmer mit privatem Garten, kostenlosem Parkplatz und Terrasse. Jedes Zimmer verfügt über Flachbild-TV, Kaffeemaschine und eigenes Badezimmer.",
     images: [
-      { url: '/images/ns-hotel/titel.jpg', alt: "N's Hotel Kerzers – Hauptbild" },
-      { url: '/images/ns-hotel/01.jpg',    alt: "N's Hotel – Aussenansicht" },
-      { url: '/images/ns-hotel/02.jpg',    alt: 'Zimmer' },
-      { url: '/images/ns-hotel/03.jpg',    alt: 'Lobby' },
-      { url: '/images/ns-hotel/04.jpg',    alt: 'Hotelzimmer' },
-      { url: '/images/ns-hotel/05.jpg',    alt: 'Doppelzimmer' },
-      { url: '/images/ns-hotel/06.jpg',    alt: 'Gemeinschaftsbereich' },
-      { url: '/images/ns-hotel/07.jpg',    alt: 'Garten' },
-      { url: '/images/ns-hotel/08.jpg',    alt: 'Details' },
+      { url: '/images/ns-hotel/aussen.jpg', alt: "N's Hotel Kerzers – Aussenansicht" },
+      { url: '/images/ns-hotel/drohne-2.jpg', alt: "Luftaufnahme Allmendstrasse" },
+      { url: '/images/ns-hotel/doppelzimmer.jpg', alt: "Doppelzimmer" },
+      { url: '/images/ns-hotel/familienzimmer.jpg', alt: "Familienzimmer mit Verbindungstür" },
+      { url: '/images/ns-hotel/zimmer-barrierefrei.jpg', alt: "Barrierefreies Zimmer" },
+      { url: '/images/ns-hotel/bad.jpg', alt: "Badezimmer" },
+      { url: '/images/ns-hotel/lounge.jpg', alt: "Lounge" },
+      { url: '/images/ns-hotel/kueche.jpg', alt: "Gemeinschaftsküche" },
+      { url: '/images/ns-hotel/lounge-kueche.jpg', alt: "Essbereich" },
+      { url: '/images/ns-hotel/06.jpg', alt: "Zweibettzimmer" },
+      { url: '/images/ns-hotel/08.jpg', alt: "Details" },
+      { url: '/images/ns-hotel/schliessfaecher.jpg', alt: "Schliessfächer" },
     ],
     features: ['Self-Check-in', 'Kostenloses WLAN', 'Kostenloser Parkplatz', 'Garten & Terrasse', 'Kaffeemaschine', 'Flachbild-TV', 'Eigenes Badezimmer', 'Nichtraucher'],
     details: { heating: 'Zentralheizung', parking: 'Kostenloser Privatparkplatz', buildYear: '2024', energyClass: 'A' },
