@@ -32,6 +32,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         frame: keep(new THREE.MeshBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.22, depthWrite: false })),
         door: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.08, depthWrite: false, side: THREE.DoubleSide })),
         green: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.06, depthWrite: false })),
+        metal: keep(new THREE.MeshBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.18, depthWrite: false })),
+        blind: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide })),
+        pv: keep(new THREE.MeshBasicMaterial({ color: 0xbfd6ff, transparent: true, opacity: 0.18, depthWrite: false, side: THREE.DoubleSide })),
         line: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.8 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.35 })),
       }
@@ -43,7 +46,11 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         hall: keep(new THREE.MeshStandardMaterial({ color: 0xd7dadd, roughness: 0.6, metalness: 0.25 })),
         frame: keep(new THREE.MeshStandardMaterial({ color: 0x3a4048, roughness: 0.5, metalness: 0.4 })),
         door: keep(new THREE.MeshStandardMaterial({ color: 0xc4c9ce, roughness: 0.45, metalness: 0.35 })),
-        green: keep(new THREE.MeshStandardMaterial({ color: 0x8e9c6a, roughness: 1, metalness: 0 })),
+        // extensive green roof (sedum) — reddish brown in summer, as in the drone photos
+        green: keep(new THREE.MeshStandardMaterial({ color: 0x8c5b45, roughness: 1, metalness: 0 })),
+        metal: keep(new THREE.MeshStandardMaterial({ color: 0xbfc4c9, roughness: 0.35, metalness: 0.55 })),
+        blind: keep(new THREE.MeshStandardMaterial({ color: 0x8f969d, roughness: 0.55, metalness: 0.3, side: THREE.DoubleSide })),
+        pv: keep(new THREE.MeshStandardMaterial({ color: 0x2c3a4c, roughness: 0.25, metalness: 0.45 })),
         line: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.28 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 })),
       };
@@ -114,13 +121,17 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     }
   };
   // Sectional door: stacked panels (edges read as panel joints)
-  const door = (seg, sill, head, w, panels) => {
+  const door = (seg, sill, head, w, panels, glassRow = -1, glass = null) => {
     const n = Math.max(2, Math.round((head - sill) / 0.55));
     for (let i = 0; i < n; i++) {
       const y0 = sill + ((head - sill) * i) / n;
-      panels.push(segBox(seg, 0, seg.L, y0 + 0.01, y0 + (head - sill) / n - 0.01, w - 0.04, w + 0.04));
+      const target = i === glassRow && glass ? glass : panels;
+      target.push(segBox(seg, 0, seg.L, y0 + 0.01, y0 + (head - sill) / n - 0.01, w - 0.04, w + 0.04));
     }
   };
+  // point on a facade segment (u along, y up, w outward)
+  const segPt = (seg, u, y, w) => [seg.x1 + Math.cos(seg.ang) * u + seg.nx * w, y, seg.z1 + Math.sin(seg.ang) * u + seg.nz * w];
+  const hash = (a, b, c) => { const v = Math.sin(a * 12.9898 + b * 78.233 + c * 37.719) * 43758.5453; return v - Math.floor(v); };
   const clean = (arr) => arr.filter(Boolean);
 
   const root = new THREE.Group();
@@ -145,10 +156,24 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const glass = [];
     const frame = [];
     const panels = [];
+    const blinds = [];
+    const slats = [];
     lv.openings.forEach((o) => {
       const seg = segment(o, lv.footprint);
       if (seg.L < 0.3) return;
       const w = -T / 2; // negative = inwards
+      // external venetian blinds (Raffstoren), some lowered — as on the hotel photos
+      if (!blueprint && lv.base > 0.1 && seg.L <= 3.2) {
+        const r = hash(o[0], o[1], lv.base);
+        if (r < 0.45) {
+          const f = [0.3, 0.55, 1, 0.8, 1][Math.floor(r * 11) % 5];
+          const yb = head - f * (head - sill);
+          blinds.push(segBox(seg, 0.03, seg.L - 0.03, yb, head, -0.075, -0.05));
+          for (let y = head - 0.08; y > yb + 0.02; y -= 0.085) {
+            slats.push(...segPt(seg, 0.03, y, -0.045), ...segPt(seg, seg.L - 0.03, y, -0.045));
+          }
+        }
+      }
       if (sill > 0.02) solid.push(segBox(seg, 0, seg.L, 0, sill, -T, 0));
       solid.push(segBox(seg, 0, seg.L, head, h, -T, 0));
       glass.push(segBox(seg, 0, seg.L, sill, head, w - 0.02, w + 0.02));
@@ -169,10 +194,10 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       solid.push(segBox(seg, 0, seg.L, ch, h, -T, 0));
       curtain(seg, cs, ch, -0.08, glass, frame);
     });
-    (lv.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3]) => {
+    (lv.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3, glassRow = -1]) => {
       const seg = segment([x1, z1, x2, z2], lv.footprint);
       solid.push(segBox(seg, 0, seg.L, dh, h, -T, 0));
-      door(seg, ds, dh, -0.1, panels);
+      door(seg, ds, dh, -0.1, panels, glassRow, glass);
     });
     content.add(meshWithEdges(merged(clean(solid)), mats.wall, mats.line));
     const glassGeo = merged(clean(glass));
@@ -188,6 +213,30 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       content.add(fm);
     }
     content.add(meshWithEdges(merged(clean(panels)), mats.door, mats.lineSoft));
+    const blindGeo = merged(clean(blinds));
+    if (blindGeo) {
+      const bm = new THREE.Mesh(blindGeo, mats.blind);
+      bm.castShadow = true;
+      content.add(bm);
+      const sg = keep(new THREE.BufferGeometry());
+      sg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(slats), 3));
+      content.add(new THREE.LineSegments(sg, mats.lineSoft));
+    }
+    // Canopies on this level (e.g. entrance roof with planting)
+    (data.canopies || []).filter((c) => Math.abs((c.level ?? 0) - lv.base) < 0.01).forEach((c) => {
+      content.add(meshWithEdges(merged(extrude([{ o: c.o, h: [] }], c.t ?? 0.3, c.y - (c.t ?? 0.3))), mats.slab, mats.line, 30));
+      if (c.green && !blueprint) {
+        const inset = c.o;
+        const gm = new THREE.Mesh(merged(extrude([{ o: inset, h: [] }], 0.08, c.y)), mats.green);
+        gm.receiveShadow = true;
+        content.add(gm);
+      }
+      (c.posts || []).forEach(([px, pz]) => {
+        const g = new THREE.BoxGeometry(0.25, c.y - (c.t ?? 0.3), 0.25);
+        g.translate(px, (c.y - (c.t ?? 0.3)) / 2, pz);
+        content.add(meshWithEdges(keep(g), mats.slab, mats.lineSoft));
+      });
+    });
 
     // Balconies: slab at floor level with glass railing on the free edges
     const bal = data.balconies;
@@ -253,6 +302,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   }
   // parapet: thin wall along the footprint
   const par = [];
+  const caps = [];
   const fp = top.footprint;
   for (let i = 0; i < fp.length; i++) {
     const [x1, z1] = fp[i];
@@ -264,8 +314,47 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     g.rotateY(-ang);
     g.translate((x1 + x2) / 2, 0.35 + 0.4, (z1 + z2) / 2);
     par.push(g);
+    const cap = new THREE.BoxGeometry(L + 0.4, 0.06, 0.42);
+    cap.rotateY(-ang);
+    cap.translate((x1 + x2) / 2, 0.35 + 0.8 + 0.03, (z1 + z2) / 2);
+    caps.push(cap);
   }
   roof.add(meshWithEdges(merged(par), mats.wall, mats.line));
+  const capGeo = merged(caps);
+  if (capGeo) roof.add(new THREE.Mesh(capGeo, mats.metal));
+  // Rooftop: PV rows, ventilation ducts, technical boxes
+  const rd = data.roofDetails || {};
+  const pvs = [], ducts = [], boxes = [];
+  (rd.pv || []).forEach(([x1, z1, x2, z2]) => {
+    const L = Math.hypot(x2 - x1, z2 - z1), ang = Math.atan2(z2 - z1, x2 - x1);
+    const n = Math.max(1, Math.floor(L / 1.1));
+    for (let i = 0; i < n; i++) {
+      const u = (i + 0.5) * (L / n);
+      const g = new THREE.BoxGeometry(1.0, 0.05, 1.65);
+      g.rotateX(0.26);
+      g.rotateY(-ang);
+      g.translate(x1 + Math.cos(ang) * u, 0.85, z1 + Math.sin(ang) * u);
+      pvs.push(g);
+    }
+  });
+  (rd.ducts || []).forEach(([x1, z1, x2, z2, r = 0.28]) => {
+    const L = Math.hypot(x2 - x1, z2 - z1), ang = Math.atan2(z2 - z1, x2 - x1);
+    const g = new THREE.CylinderGeometry(r, r, L + r, 12);
+    g.rotateZ(Math.PI / 2);
+    g.rotateY(-ang);
+    g.translate((x1 + x2) / 2, 0.45 + r + 0.25, (z1 + z2) / 2);
+    ducts.push(g);
+  });
+  (rd.boxes || []).forEach(([x, z, w, d, hh]) => {
+    const g = new THREE.BoxGeometry(w, hh, d);
+    g.translate(x, 0.45 + hh / 2, z);
+    boxes.push(g);
+  });
+  const pvGeo = merged(pvs);
+  if (pvGeo) { const m = new THREE.Mesh(pvGeo, mats.pv); m.castShadow = !blueprint; roof.add(m); }
+  const dGeo = merged(ducts);
+  if (dGeo) { const m = new THREE.Mesh(dGeo, mats.metal); m.castShadow = !blueprint; roof.add(m); }
+  roof.add(meshWithEdges(merged(boxes), mats.metal, mats.lineSoft));
   root.add(roof);
 
   // Extra volumes (e.g. steel hall) and site walls
@@ -276,8 +365,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     (v.curtains || []).forEach(([x1, z1, x2, z2, cs = 0, ch = v.height - 0.4, bay = 1.2, rows = 4]) => {
       curtain(segment([x1, z1, x2, z2], v.footprint), cs, ch, 0.04, glass, frame, bay, rows);
     });
-    (v.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3.8]) => {
-      door(segment([x1, z1, x2, z2], v.footprint), ds, dh, 0.04, panels);
+    (v.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3.8, glassRow = -1]) => {
+      door(segment([x1, z1, x2, z2], v.footprint), ds, dh, 0.04, panels, glassRow, glass);
     });
     const gGeo = merged(clean(glass));
     if (gGeo) extras.add(new THREE.Mesh(gGeo, mats.glass));
