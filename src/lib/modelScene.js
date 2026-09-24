@@ -37,6 +37,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         pv: keep(new THREE.MeshBasicMaterial({ color: 0xbfd6ff, transparent: true, opacity: 0.18, depthWrite: false, side: THREE.DoubleSide })),
         wood: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.08, depthWrite: false, side: THREE.DoubleSide })),
         shutter: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.1, depthWrite: false, side: THREE.DoubleSide })),
+        beam: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.12, depthWrite: false })),
+        stone: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.08, depthWrite: false })),
         line: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.8 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.35 })),
       }
@@ -56,6 +58,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         // weathered timber (cladding, Laube) and painted window shutters (Jalousieläden)
         wood: keep(new THREE.MeshStandardMaterial({ color: 0x9a7a5a, roughness: 0.9, metalness: 0 })),
         shutter: keep(new THREE.MeshStandardMaterial({ color: 0x5f7466, roughness: 0.7, metalness: 0 })),
+        // dark oak of the half-timbering / verge boards, sandstone of quoins and plinth
+        beam: keep(new THREE.MeshStandardMaterial({ color: 0x5e4533, roughness: 0.85, metalness: 0 })),
+        stone: keep(new THREE.MeshStandardMaterial({ color: 0xd4cbb8, roughness: 0.95, metalness: 0 })),
         line: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.28 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 })),
       };
@@ -240,7 +245,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     });
     // Vertical board cladding (Ökonomieteil): 14 cm boards with open joints, left out at the openings
     const boards = [];
-    (lv.cladding || []).forEach(([x1, z1, x2, z2, y0 = 0, y1 = h]) => {
+    (lv.cladding || []).forEach(([x1, z1, x2, z2, y0 = 0, y1 = h, dirH = 0]) => {
       const seg = segment([x1, z1, x2, z2], lv.footprint);
       const dx = Math.cos(seg.ang), dz = Math.sin(seg.ang);
       const holes = [];
@@ -250,6 +255,18 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         const ua = (o[0] - x1) * dx + (o[1] - z1) * dz, ub = (o[2] - x1) * dx + (o[3] - z1) * dz;
         holes.push([Math.min(ua, ub) - 0.08, Math.max(ua, ub) + 0.08, (o[4] ?? sill0) - 0.08, Math.min(o[5] ?? head0, h - 0.1) + 0.08]);
       });
+      if (dirH) {
+        // horizontal boards (Stülpschalung look): courses of 16 cm, cut around the openings
+        for (let y = y0; y < y1 - 0.02; y += 0.16) {
+          const ye = Math.min(y1, y + 0.145), ym = (y + ye) / 2;
+          let us = [[0, seg.L]];
+          holes.filter(([, , hy0, hy1]) => ym > hy0 && ym < hy1).forEach(([a, b]) => {
+            us = us.flatMap(([p, q]) => [[p, Math.min(q, a)], [Math.max(p, b), q]]).filter(([p, q]) => q - p > 0.03);
+          });
+          us.forEach(([p, q]) => boards.push(segBox(seg, p, q, y, ye, 0.0, 0.035)));
+        }
+        return;
+      }
       for (let u = 0; u < seg.L - 0.02; u += 0.14) {
         const ue = Math.min(seg.L, u + 0.128), um = (u + ue) / 2;
         let ys = [[y0, y1]];
@@ -326,6 +343,10 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
           // metal bar railing (vertical balusters)
           for (let u = 0.06; u < L - 0.03; u += 0.12) rail.push(segBox(seg, u - 0.012, u + 0.012, 0.05, rh - 0.04, -0.012, 0.012));
           rail.push(segBox(seg, 0, L, 0.04, 0.08, -0.02, 0.02));
+        } else if (bal.style === 'balusters') {
+          // turned wooden balusters between a bottom and a top rail
+          for (let u = 0.08; u < L - 0.05; u += 0.15) board.push(segBox(seg, u - 0.03, u + 0.03, 0.08, rh - 0.05, -0.03, 0.03));
+          board.push(segBox(seg, 0, L, 0.02, 0.1, -0.05, 0.05));
         } else if (bal.style === 'boards') {
           // timber Laube parapet: vertical boards with joints
           for (let u = 0.02; u < L - 0.02; u += 0.13) board.push(segBox(seg, u, Math.min(L - 0.02, u + 0.118), 0.04, rh - 0.06, -0.02, 0.02));
@@ -340,7 +361,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const pg = merged(clean(pane));
       if (pg) content.add(new THREE.Mesh(pg, mats.glass));
       const rg = merged(clean(rail));
-      if (rg) content.add(new THREE.Mesh(rg, bal.style === 'boards' ? mats.wood : mats.frame));
+      if (rg) content.add(new THREE.Mesh(rg, bal.style === 'boards' || bal.style === 'balusters' ? mats.wood : mats.frame));
       const bg = merged(clean(board));
       if (bg) { const m = new THREE.Mesh(bg, mats.wood); m.castShadow = !blueprint; content.add(m); }
     });
@@ -561,7 +582,106 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       }
     }
   });
+  const matOf = (k) => mats[k] || mats.wall;
+  // a timber (or stone) member between two absolute points, lying in a facade with outward normal n
+  const beamGeo = (a, b, w, t, n = [0, 1]) => {
+    const A = new THREE.Vector3(a[0], a[1] - roofY, a[2]), B = new THREE.Vector3(b[0], b[1] - roofY, b[2]);
+    const L = A.distanceTo(B);
+    if (L < 0.01) return null;
+    const xa = B.clone().sub(A).normalize();
+    let za = new THREE.Vector3(n[0], 0, n[1]).normalize();
+    if (Math.abs(xa.dot(za)) > 0.95) za = new THREE.Vector3(0, 1, 0);
+    const ya = new THREE.Vector3().crossVectors(za, xa).normalize();
+    za = new THREE.Vector3().crossVectors(xa, ya).normalize();
+    const g = new THREE.BoxGeometry(L, w, t);
+    g.applyMatrix4(new THREE.Matrix4().makeBasis(xa, ya, za));
+    g.translate((A.x + B.x) / 2, (A.y + B.y) / 2, (A.z + B.z) / 2);
+    return g;
+  };
+  const byMat = {};
+  // facade details belong to the storey they sit on (so they hide / explode with it); roof details stay on the roof
+  const levelAt = (y) => {
+    const i = levels.findIndex((l) => !l.underground && y >= l.base - 0.01 && y < l.base + l.height);
+    return i >= 0 ? i : levels.length - 1;
+  };
+  const addTo = (k, g, y = null) => {
+    if (!g) return;
+    const key = y === null ? k : `${levelAt(y)}|${k}`;
+    (byMat[key] = byMat[key] || []).push(g);
+  };
   (data.details || []).forEach((d) => {
+    if (d.kind === 'beam') { addTo(d.mat || 'beam', beamGeo(d.a, d.b, d.w ?? 0.14, d.t ?? 0.05, d.n), d.roof ? null : (d.a[1] + d.b[1]) / 2); return; }
+    if (d.kind === 'block') {
+      // box with absolute heights (quoins, plinth, brackets)
+      const g = new THREE.BoxGeometry(d.w, d.y1 - d.y0, d.d);
+      g.translate(d.x, (d.y0 + d.y1) / 2 - roofY, d.z);
+      addTo(d.mat || 'stone', g, (d.y0 + d.y1) / 2);
+      return;
+    }
+    if (d.kind === 'stair') {
+      // straight timber stair: treads between two stringers, rising from x0 (at y0) to x1 (at y1)
+      const n = Math.max(2, Math.round((d.y1 - d.y0) / 0.18));
+      const run = (d.x1 - d.x0) / n, rise = (d.y1 - d.y0) / n;
+      for (let i = 0; i < n; i++) {
+        const g = new THREE.BoxGeometry(Math.abs(run) + 0.03, 0.05, Math.abs(d.z1 - d.z0) - 0.1);
+        g.translate(d.x0 + run * (i + 0.5), d.y0 + rise * (i + 1) - 0.025 - roofY, (d.z0 + d.z1) / 2);
+        addTo('wood', g, d.y0 + 0.5);
+      }
+      [d.z0, d.z1].forEach((z) => addTo('wood', beamGeo([d.x0, d.y0 + 0.1, z], [d.x1, d.y1 + 0.1, z], 0.28, 0.06, [0, 1]), d.y0 + 0.5));
+      return;
+    }
+    if (d.kind === 'skylight' && pitched) {
+      // roof window lying in its roof plane: frame + glass
+      const [a, b, c] = pitched.planes[d.plane];
+      [[0.07, 'frame', 0.06], [0, 'glass', 0.1]].forEach(([grow, mk, lift]) => {
+        const xs = d.pts.map((q) => q[0]), zs = d.pts.map((q) => q[1]);
+        const cx = xs.reduce((p, q) => p + q, 0) / xs.length, cz = zs.reduce((p, q) => p + q, 0) / zs.length;
+        const pts = d.pts.map(([x, z]) => [x + Math.sign(x - cx) * grow, z + Math.sign(z - cz) * grow]);
+        const g = new THREE.ExtrudeGeometry(shapeOf({ o: pts, h: [] }), { depth: 0.05, bevelEnabled: false, curveSegments: 1 });
+        g.rotateX(-Math.PI / 2);
+        const pos = g.attributes.position;
+        for (let i = 0; i < pos.count; i++) pos.setY(i, a * pos.getX(i) + b * pos.getZ(i) + c + lift - 0.05 + pos.getY(i) - roofY);
+        g.computeVertexNormals();
+        addTo(mk, g);
+      });
+      return;
+    }
+    if (d.kind === 'dormer' && d.gable) {
+      // gabled dormer: pentagon front extruded back into the roof, two small roof slabs
+      const { x0, x1, zf, zb, yb, yt, yr } = d;
+      const dir = Math.sign(zf - zb), xm = (x0 + x1) / 2;
+      const along = (pts, z0, z1) => {
+        const g = new THREE.ExtrudeGeometry(new THREE.Shape(pts.map(([x, y]) => new THREE.Vector2(x, y - roofY))), { depth: Math.abs(z1 - z0), bevelEnabled: false, curveSegments: 1 });
+        g.translate(0, 0, Math.min(z0, z1));
+        return g;
+      };
+      addTo('wall', along([[x0, yb], [x1, yb], [x1, yt], [xm, yr], [x0, yt]], zf, zb));
+      const o = 0.3, t = 0.12, k = (yr - yt) / (xm - x0);
+      [[x0 - o, xm], [x1 + o, xm]].forEach(([xe, xr]) => {
+        const ye = yt - k * o;
+        addTo('roof', along([[xe, ye], [xr, yr + 0.03], [xr, yr + 0.03 + t], [xe, ye + t]], zf + dir * o, zb));
+      });
+      // verge boards on the front gable
+      addTo('beam', beamGeo([x0 - o, yt - k * o - 0.02, zf + dir * (o + 0.02)], [xm, yr, zf + dir * (o + 0.02)], 0.2, 0.04, [0, dir]));
+      addTo('beam', beamGeo([x1 + o, yt - k * o - 0.02, zf + dir * (o + 0.02)], [xm, yr, zf + dir * (o + 0.02)], 0.2, 0.04, [0, dir]));
+      (d.win || []).forEach(([wa, wb, wy0, wy1]) => {
+        const g = new THREE.BoxGeometry(wb - wa, wy1 - wy0, 0.04);
+        g.translate((wa + wb) / 2, (wy0 + wy1) / 2 - roofY, zf + dir * 0.02);
+        addTo('glass', g);
+        const n = Math.max(1, Math.round((wb - wa) / 0.5));
+        for (let i = 0; i <= n; i++) {
+          const f = new THREE.BoxGeometry(0.06, wy1 - wy0, 0.08);
+          f.translate(wa + ((wb - wa) * i) / n, (wy0 + wy1) / 2 - roofY, zf + dir * 0.04);
+          addTo('frame', f);
+        }
+        [wy0, wy1].forEach((y) => {
+          const f = new THREE.BoxGeometry(wb - wa, 0.06, 0.08);
+          f.translate((wa + wb) / 2, y - roofY, zf + dir * 0.04);
+          addTo('frame', f);
+        });
+      });
+      return;
+    }
     if (d.kind === 'dormer') {
       // shed dormer (Schleppgaube): front wall at zf, its roof rising back into the main roof at zb.
       // Heights are absolute: yb = foot of the front (buried in the roof), yt = front top, ytb = roof line at zb.
@@ -617,6 +737,18 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       c.translate(d.x, d.y1 + 0.06, d.z);
       roof.add(meshWithEdges(keep(c), mats.frame, null));
     }
+  });
+  Object.entries(byMat).forEach(([key, geos]) => {
+    const g = merged(geos);
+    if (!g) return;
+    const [li, k] = key.includes('|') ? key.split('|') : [null, key];
+    const parent = li === null ? roof : levels[+li].content;
+    if (li !== null) g.translate(0, roofY - levels[+li].base, 0);
+    const m = new THREE.Mesh(g, k === 'roof' ? roofMat : matOf(k));
+    m.castShadow = !blueprint && k !== 'glass';
+    m.receiveShadow = !blueprint;
+    parent.add(m);
+    if (k === 'wall' && blueprint) parent.add(new THREE.LineSegments(keep(new THREE.EdgesGeometry(g, 30)), mats.line));
   });
   (data.site || []).forEach((s) => {
     if (s.kind === 'terrain') {
