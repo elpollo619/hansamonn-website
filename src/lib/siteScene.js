@@ -169,8 +169,8 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
     const trunkGeo = keep(new THREE.CylinderGeometry(0.1, 0.16, 1, 6));
     trunkGeo.translate(0, 0.5, 0);
     const crownGeo = keep(new THREE.IcosahedronGeometry(1, 1));
-    const trunks = new THREE.InstancedMesh(trunkGeo, keep(new THREE.MeshStandardMaterial({ color: 0x7a6a58, roughness: 1 })), trees.length);
-    const crowns = new THREE.InstancedMesh(crownGeo, keep(new THREE.MeshStandardMaterial({ roughness: 1, flatShading: true })), trees.length);
+    const trunks = new THREE.InstancedMesh(trunkGeo, fadeable(new THREE.MeshStandardMaterial({ color: 0x7a6a58, roughness: 1 })), trees.length);
+    const crowns = new THREE.InstancedMesh(crownGeo, fadeable(new THREE.MeshStandardMaterial({ roughness: 1, flatShading: true })), trees.length);
     const m = new THREE.Matrix4();
     const q = new THREE.Quaternion();
     const c = new THREE.Color();

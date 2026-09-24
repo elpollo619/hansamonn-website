@@ -52,7 +52,7 @@ export const BUILDING_MODELS = {
     facts: [
       { label: 'Länge', value: '43.60 m' },
       { label: 'Tiefe', value: '15.05 m' },
-      { label: 'Geschosse', value: 'EG + 3 OG' },
+      { label: 'Geschosse', value: 'UG + EG + 3 OG' },
     ],
     load: () => import('./a4.json').then((m) => m.default),
     site: () => import('./a4-site.json').then((m) => m.default),

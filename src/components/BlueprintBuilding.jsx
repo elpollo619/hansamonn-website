@@ -79,7 +79,9 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
       scene.add(grid);
 
       // Building from the plan-extracted model (walls, windows, slabs)
-      const bld = buildModel(THREE, mergeGeometries, data, { style: 'blueprint', scale: 0.4 });
+      // the plan-to-building story only rises above ground (basements stay out)
+      const aboveGround = { ...data, levels: data.levels.filter((l) => !l.underground) };
+      const bld = buildModel(THREE, mergeGeometries, aboveGround, { style: 'blueprint', scale: 0.4 });
       scene.add(bld.root);
       bld.levels.forEach((lv) => {
         lv.group.visible = false;
