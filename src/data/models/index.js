@@ -22,7 +22,7 @@ export const BUILDING_MODELS = {
     facts: [
       { label: 'Hotelgeschoss', value: '37.07 m' },
       { label: 'Zimmer', value: '36' },
-      { label: 'Geschosse', value: 'EG + 2 OG' },
+      { label: 'Geschosse', value: 'UG + EG + 2 OG' },
     ],
     load: () => import('./a14.json').then((m) => m.default),
     site: () => import('./a14-site.json').then((m) => m.default),

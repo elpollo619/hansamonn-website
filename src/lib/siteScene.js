@@ -38,13 +38,23 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
 
   // Model board
   const R = site.radius;
-  const board = new THREE.Mesh(
-    keep(new THREE.CylinderGeometry(R, R, 0.9, 96)),
-    keep(new THREE.MeshStandardMaterial({ color: 0xd8d2c6, roughness: 1 })),
-  );
-  board.position.y = -0.46;
+  const fadeMats = [];
+  const fadeable = (m) => { m.transparent = true; fadeMats.push(m); return keep(m); };
+  // model board cut like a soil sample: earth on the side, deep enough for basements
+  const D = 3.6;
+  const board = new THREE.Mesh(keep(new THREE.CylinderGeometry(R, R, D, 96)), [
+    fadeable(new THREE.MeshStandardMaterial({ color: 0xa8957a, roughness: 1 })),
+    fadeable(new THREE.MeshStandardMaterial({ color: 0xd8d2c6, roughness: 1 })),
+    fadeable(new THREE.MeshStandardMaterial({ color: 0x8f7d65, roughness: 1 })),
+  ]);
+  board.position.y = -D / 2 - 0.01;
   board.receiveShadow = true;
   group.add(board);
+  // thin topsoil line on the cut edge
+  const soil = new THREE.Mesh(keep(new THREE.CylinderGeometry(R + 0.02, R + 0.02, 0.35, 96, 1, true)),
+    fadeable(new THREE.MeshStandardMaterial({ color: 0x6f7f4f, roughness: 1 })));
+  soil.position.y = -0.18;
+  group.add(soil);
 
   // Land cover
   Object.entries(site.ground || {}).forEach(([cls, polys]) => {
@@ -56,10 +66,63 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
       g.translate(0, def.y, 0);
       return g;
     }));
-    const mesh = new THREE.Mesh(geo, keep(new THREE.MeshStandardMaterial({ color: def.color, roughness: 1, metalness: 0 })));
+    const mesh = new THREE.Mesh(geo, fadeable(new THREE.MeshStandardMaterial({ color: def.color, roughness: 1, metalness: 0 })));
     mesh.receiveShadow = true;
     group.add(mesh);
   });
+
+  // Railway (swissTLM3D centre lines): two rails on sleepers, overhead-line masts and contact wire
+  const railGeos = [], sleeperGeos = [], mastGeos = [];
+  const wirePts = [];
+  (site.tracks || []).forEach((pts) => {
+    let run = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [x1, z1] = pts[i], [x2, z2] = pts[i + 1];
+      const L = Math.hypot(x2 - x1, z2 - z1);
+      if (L < 0.05) continue;
+      const ang = Math.atan2(z2 - z1, x2 - x1);
+      const nx = -Math.sin(ang), nz = Math.cos(ang);
+      [-0.7175, 0.7175].forEach((o) => {
+        const r = new THREE.BoxGeometry(L + 0.02, 0.16, 0.07);
+        r.rotateY(-ang);
+        r.translate((x1 + x2) / 2 + nx * o, 0.2, (z1 + z2) / 2 + nz * o);
+        railGeos.push(r);
+      });
+      for (let u = (0.6 - (run % 0.6)); u < L; u += 0.6) {
+        const s = new THREE.BoxGeometry(0.24, 0.1, 2.5);
+        s.rotateY(-ang);
+        s.translate(x1 + Math.cos(ang) * u, 0.09, z1 + Math.sin(ang) * u);
+        sleeperGeos.push(s);
+      }
+      for (let u = (48 - (run % 48)) % 48; u < L; u += 48) {
+        const mx = x1 + Math.cos(ang) * u + nx * 3.2, mz = z1 + Math.sin(ang) * u + nz * 3.2;
+        const m = new THREE.BoxGeometry(0.28, 7.2, 0.28);
+        m.translate(mx, 3.6, mz);
+        mastGeos.push(m);
+        const arm = new THREE.BoxGeometry(0.1, 0.1, 3.6);
+        arm.rotateY(-ang);
+        arm.translate(mx - nx * 1.7, 6.6, mz - nz * 1.7);
+        mastGeos.push(arm);
+      }
+      run += L;
+      wirePts.push(x1, 6.1, z1, x2, 6.1, z2);
+    }
+  });
+  const railMat = keep(new THREE.MeshStandardMaterial({ color: 0x7c7f83, roughness: 0.35, metalness: 0.8 }));
+  const sleeperMat = keep(new THREE.MeshStandardMaterial({ color: 0x8a847a, roughness: 1 }));
+  [[railGeos, railMat], [sleeperGeos, sleeperMat], [mastGeos, railMat]].forEach(([geos, mat]) => {
+    const g = merged(geos);
+    if (!g) return;
+    const m = new THREE.Mesh(g, mat);
+    m.castShadow = true;
+    m.receiveShadow = true;
+    group.add(m);
+  });
+  if (wirePts.length) {
+    const wg = keep(new THREE.BufferGeometry());
+    wg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(wirePts), 3));
+    group.add(new THREE.LineSegments(wg, keep(new THREE.LineBasicMaterial({ color: 0x3b4046, transparent: true, opacity: 0.6 }))));
+  }
 
   // Neighbouring buildings (massing) — one mesh each so they can fade when they hide the model
   const lineMat = keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 }));
@@ -149,8 +212,15 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
     return best;
   };
 
+  // Fade the ground (to look into basements)
+  const setGroundOpacity = (o) => fadeMats.forEach((m) => {
+    m.opacity = o;
+    m.depthWrite = o > 0.95;
+  });
+
   return {
     group,
+    setGroundOpacity,
     bestAzimuth,
     updateOcclusion,
     radius: R * scale,
