@@ -161,33 +161,43 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
       b.mesh.castShadow = b.fade > 0.5;
       b.edges.visible = b.fade > 0.4;
     });
+    treeObjs.forEach((t) => {
+      rel.subVectors(t.center, target);
+      const tt = rel.dot(toCam);
+      const off = rel.addScaledVector(toCam, -tt).length();
+      const hides = tt > 0 && tt < L && off < t.radius * 0.9 + modelRadius * 0.55;
+      const want = hides ? 0.12 : 1;
+      if (Math.abs(want - t.fade) < 0.002) return;
+      t.fade += (want - t.fade) * Math.min(1, dt * 6);
+      t.mats.forEach((m) => { m.opacity = t.fade * (m.userData.groundO ?? 1); m.depthWrite = t.fade > 0.95; });
+      t.trunk.castShadow = t.crown.castShadow = t.fade > 0.5;
+    });
   };
 
-  // Trees (instanced trunks + low-poly crowns)
+  // Trees: low-poly crowns on trunks, one mesh each so trees in front of the model can fade out
   const trees = site.trees || [];
+  const treeObjs = [];
   if (trees.length) {
     const trunkGeo = keep(new THREE.CylinderGeometry(0.1, 0.16, 1, 6));
     trunkGeo.translate(0, 0.5, 0);
     const crownGeo = keep(new THREE.IcosahedronGeometry(1, 1));
-    const trunks = new THREE.InstancedMesh(trunkGeo, fadeable(new THREE.MeshStandardMaterial({ color: 0x7a6a58, roughness: 1 })), trees.length);
-    const crowns = new THREE.InstancedMesh(crownGeo, fadeable(new THREE.MeshStandardMaterial({ roughness: 1, flatShading: true })), trees.length);
-    const m = new THREE.Matrix4();
-    const q = new THREE.Quaternion();
-    const c = new THREE.Color();
+    const trunkBase = fadeable(new THREE.MeshStandardMaterial({ color: 0x7a6a58, roughness: 1 }));
+    const crownBase = CROWNS.map((c) => fadeable(new THREE.MeshStandardMaterial({ color: c, roughness: 1, flatShading: true })));
     trees.forEach(([x, z, r, h, shade], i) => {
       const trunkH = Math.max(1.2, h - r * 1.7);
-      m.compose(new THREE.Vector3(x, 0, z), q, new THREE.Vector3(1, trunkH, 1));
-      trunks.setMatrixAt(i, m);
-      q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (i * 1.7) % 6.28);
-      m.compose(new THREE.Vector3(x, trunkH + r * 0.8, z), q, new THREE.Vector3(r, r * 1.08, r));
-      crowns.setMatrixAt(i, m);
-      q.identity();
-      crowns.setColorAt(i, c.setHex(CROWNS[shade % CROWNS.length]));
+      const tm = keep(trunkBase.clone()), cm = keep(crownBase[shade % CROWNS.length].clone());
+      const trunk = new THREE.Mesh(trunkGeo, tm);
+      trunk.position.set(x, 0, z);
+      trunk.scale.set(1, trunkH, 1);
+      const crown = new THREE.Mesh(crownGeo, cm);
+      crown.position.set(x, trunkH + r * 0.8, z);
+      crown.scale.set(r, r * 1.08, r);
+      crown.rotation.y = (i * 1.7) % 6.28;
+      [trunk, crown].forEach((m) => { m.castShadow = true; m.receiveShadow = true; group.add(m); });
+      crown.receiveShadow = true;
+      treeObjs.push({ trunk, crown, mats: [tm, cm], center: new THREE.Vector3(x, trunkH, z).multiplyScalar(scale), radius: Math.max(r, h / 2) * scale, fade: 1 });
     });
-    trunks.castShadow = true;
-    crowns.castShadow = true;
-    crowns.receiveShadow = true;
-    group.add(trunks, crowns);
+    fadeMats.push(...treeObjs.flatMap((t) => t.mats));
   }
 
   // Most open viewing direction: least neighbour mass in a ±30° wedge (azimuth in radians, 0 = +x)
@@ -213,9 +223,11 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
   };
 
   // Fade the ground (to look into basements)
+  const treeMats = new Set(treeObjs.flatMap((t) => t.mats));
   const setGroundOpacity = (o) => fadeMats.forEach((m) => {
-    m.opacity = o;
-    m.depthWrite = o > 0.95;
+    if (treeMats.has(m)) { m.userData.groundO = o; m.opacity = o * (treeObjs.find((t) => t.mats.includes(m))?.fade ?? 1); }
+    else m.opacity = o;
+    m.depthWrite = m.opacity > 0.95;
   });
 
   return {

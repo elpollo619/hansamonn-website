@@ -191,6 +191,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const blinds = [];
     const slats = [];
     const shutters = [];
+    const surrounds = [];
     lv.openings.forEach((o) => {
       const seg = segment(o, lv.footprint);
       if (seg.L < 0.3) return;
@@ -208,6 +209,26 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
             slats.push(...segPt(seg, 0.03, y, -0.045), ...segPt(seg, seg.L - 0.03, y, -0.045));
           }
         }
+      }
+      // optional glazing bars (Sprossen): o[7] columns × o[8] rows
+      if (o[7] && !blueprint) {
+        const cols = o[7], rows = o[8] || 1, bw = 0.035;
+        for (let i = 1; i < cols; i++) {
+          const u = (seg.L * i) / cols;
+          frame.push(segBox(seg, u - bw / 2, u + bw / 2, sill, head, w - 0.035, w + 0.035));
+        }
+        for (let j = 1; j < rows; j++) {
+          const y = sill + ((head - sill) * j) / rows;
+          frame.push(segBox(seg, 0, seg.L, y - bw / 2, y + bw / 2, w - 0.035, w + 0.035));
+        }
+      }
+      // optional sandstone surround (Gewände) with a projecting sill: o[9]
+      if (o[9] && !blueprint) {
+        const g = 0.16, pr = 0.04;
+        surrounds.push(segBox(seg, -g, 0, sill - 0.02, head + g, -0.02, pr));
+        surrounds.push(segBox(seg, seg.L, seg.L + g, sill - 0.02, head + g, -0.02, pr));
+        surrounds.push(segBox(seg, -g, seg.L + g, head, head + g, -0.02, pr));
+        surrounds.push(segBox(seg, -g - 0.04, seg.L + g + 0.04, sill - 0.09, sill, -0.02, pr + 0.05));
       }
       if (o[6] && !blueprint) {
         // folding shutters open against the wall on both sides, with louvre lines
@@ -302,6 +323,13 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const bm = new THREE.Mesh(blindGeo, mats.blind);
       bm.castShadow = true;
       content.add(bm);
+    }
+    const surroundGeo = merged(clean(surrounds));
+    if (surroundGeo) {
+      const sm = new THREE.Mesh(surroundGeo, mats.stone);
+      sm.castShadow = true;
+      sm.receiveShadow = true;
+      content.add(sm);
     }
     const shutterGeo = merged(clean(shutters));
     if (shutterGeo) {
