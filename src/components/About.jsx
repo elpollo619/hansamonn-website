@@ -25,7 +25,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <div className="grid gap-14 lg:grid-cols-12 items-center">
             {/* Text Content */}
-            <motion.div {...fadeUp} className="lg:col-span-5">
+            <motion.div {...fadeUp} className="lg:col-span-5 min-w-0">
               <p className="eyebrow mb-3">Hans Amonn AG</p>
               <p className="font-display uppercase text-2xl md:text-3xl font-semibold leading-tight text-[#0F1B2D] mb-6">
                 Mit langjähriger Erfahrung und einem engagierten Team bieten wir massgeschneiderte
@@ -52,7 +52,7 @@ const About = () => {
             </motion.div>
 
             {/* Image */}
-            <motion.div {...fadeUp} className="lg:col-span-7 relative pb-6 md:pb-0">
+            <motion.div {...fadeUp} className="lg:col-span-7 min-w-0 relative pb-6 md:pb-0">
               <div className="relative overflow-hidden bg-gray-100 group">
                 <img
                   alt="Wohnkomplex Allmendstrasse in Kerzers, ein Projekt der Hans Amonn AG"

@@ -64,14 +64,14 @@ const ProjectInfo = ({ project, onButtonClick }) => {
         <div className="lg:col-span-5 lg:sticky lg:top-28 self-start">
           {/* Project Stats */}
           <div className="grid grid-cols-2 gap-3 mb-8">
-            <div className="p-5 surface-warm border border-gray-100">
+            <div className="p-5 min-w-0 surface-warm border border-gray-100">
               <Building2 className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }} />
-              <div className="font-display uppercase text-xl font-semibold text-[#0F1B2D] leading-tight">{project.size}</div>
+              <div className="font-display uppercase text-base sm:text-xl font-semibold text-[#0F1B2D] leading-tight break-words hyphens-auto">{project.size}</div>
               <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">Gesamtfläche</div>
             </div>
-            <div className="p-5 surface-warm border border-gray-100">
+            <div className="p-5 min-w-0 surface-warm border border-gray-100">
               <Award className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }} />
-              <div className="font-display uppercase text-xl font-semibold text-[#0F1B2D] leading-tight">{project.status}</div>
+              <div className="font-display uppercase text-base sm:text-xl font-semibold text-[#0F1B2D] leading-tight break-words hyphens-auto">{project.status}</div>
               <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">Status</div>
             </div>
           </div>

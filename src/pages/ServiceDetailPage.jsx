@@ -30,13 +30,14 @@ const ServiceDetailPage = () => {
       {/* Hero */}
       <PageHero
         image={service.coverImage}
+        size="sm"
         back={{ to: '/leistungen', label: 'Alle Leistungen' }}
         eyebrow={
           <span className="inline-flex items-center gap-2">
             <Icon size={14} /> Hans Amonn AG · {service.category}
           </span>
         }
-        title={service.title}
+        title={<span className="break-words hyphens-auto">{service.title}</span>}
       />
 
       <section className="py-20 md:py-24 bg-white">

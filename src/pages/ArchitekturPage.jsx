@@ -69,6 +69,7 @@ const ArchitekturPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
+                className="min-w-0"
               >
                 <Link
                   to={`/leistungen/${s.slug}`}
@@ -83,7 +84,7 @@ const ArchitekturPage = () => {
                       className="text-gray-300 group-hover:translate-x-1 transition-transform"
                     />
                   </div>
-                  <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3">{s.title}</h3>
+                  <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3 break-words hyphens-auto">{s.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{s.shortDescription}</p>
                   <div className="flex flex-wrap gap-2 mt-6">
                     {s.features.map((f) => (
@@ -172,7 +173,7 @@ const ArchitekturPage = () => {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="bg-[#0B1220] text-white py-20 md:py-24">
+      <section className="text-white py-20 md:py-24" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
         <div className="container mx-auto px-6">
           <motion.div
             {...fadeUp}

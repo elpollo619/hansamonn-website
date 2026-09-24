@@ -83,7 +83,7 @@ export default function LongStayPage() {
         eyebrow="Hans Amonn AG · Long Stay"
         title="Long Stay"
         subtitle="Möblierte Zimmer für Aufenthalte ab einem Monat — voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten."
-        image="/images/kerzers/03.jpg"
+        image="/images/kerzers/titel.jpg"
       />
 
       {/* Ideal for */}
@@ -169,29 +169,30 @@ export default function LongStayPage() {
       </section>
 
       {/* General inquiry CTA */}
-      <section className="py-20 md:py-24 bg-[#0B1220] text-white">
+      <section className="py-20 md:py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-6">
           <motion.div
             {...fadeUp}
             className="grid lg:grid-cols-12 gap-10 items-end"
           >
             <div className="lg:col-span-7">
-              <Mail size={28} className="text-white/60 mb-5" />
-              <h2 className="font-display uppercase text-4xl md:text-5xl font-semibold leading-none mb-5">Allgemeine Mietanfrage für Long Stay</h2>
-              <p className="text-white/60 leading-relaxed max-w-xl">
+              <Mail size={28} className="mb-5" style={{ color: BRAND }} />
+              <h2 className="display-heading uppercase text-4xl md:text-5xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
+              <p className="text-gray-600 leading-relaxed max-w-xl">
                 Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation — wir finden gemeinsam die beste Lösung.
               </p>
             </div>
             <div className="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">
               <Link
                 to="/immobilien/anfrage"
-                className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold text-sm px-6 py-3 hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center gap-2 text-white font-semibold text-sm px-6 py-3 transition-colors"
+                style={{ backgroundColor: BRAND }}
               >
                 Zur Mietanfrage <ArrowRight size={15} />
               </Link>
               <a
                 href="tel:+41319518554"
-                className="inline-flex items-center justify-center gap-2 border border-white/40 text-white font-semibold text-sm px-6 py-3 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-700 font-semibold text-sm px-6 py-3 hover:bg-gray-50 transition-colors"
               >
                 +41 (0)31 951 85 54
               </a>

@@ -39,8 +39,8 @@ export default function PageHero({
   }[size];
 
   const titleSize = {
-    lg: 'text-5xl md:text-7xl lg:text-8xl',
-    md: 'text-5xl md:text-6xl lg:text-7xl',
+    lg: 'text-[2.6rem] sm:text-5xl md:text-7xl lg:text-8xl',
+    md: 'text-[2.6rem] sm:text-5xl md:text-6xl lg:text-7xl',
     sm: 'text-4xl md:text-5xl',
   }[size];
 
@@ -88,7 +88,7 @@ export default function PageHero({
             </p>
           )}
           <h1
-            className={`font-display uppercase font-semibold leading-[0.92] ${titleSize} ${
+            className={`font-display uppercase font-semibold leading-[0.92] break-words hyphens-auto ${titleSize} ${
               dark ? 'text-white' : 'text-[#0F1B2D]'
             }`}
           >

@@ -185,17 +185,18 @@ export default function ShortStayPage() {
       </section>
 
       {/* General inquiry */}
-      <section className="py-20 md:py-24 bg-[#0B1220] text-white">
+      <section className="py-20 md:py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-6">
           <motion.div
             {...fadeUp}
             className="max-w-2xl mx-auto text-center"
           >
-            <h2 className="font-display uppercase text-4xl md:text-5xl font-semibold leading-none mb-5">Allgemeine Anfrage für Short Stay</h2>
-            <p className="text-white/60 leading-relaxed mb-8">Nicht sicher, was Sie brauchen? Wir helfen Ihnen gerne dabei, die richtige Option zu finden.</p>
+            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-5">Allgemeine Anfrage für Short Stay</h2>
+            <p className="text-gray-600 leading-relaxed mb-8">Nicht sicher, was Sie brauchen? Wir helfen Ihnen gerne dabei, die richtige Option zu finden.</p>
             <Link
               to="/immobilien/anfrage"
-              className="inline-flex items-center gap-2 bg-white text-gray-900 font-semibold text-sm px-6 py-3 hover:bg-gray-100 transition-colors"
+              className="inline-flex items-center gap-2 text-white font-semibold text-sm px-6 py-3 transition-colors"
+              style={{ backgroundColor: BRAND }}
             >
               Zur Anfrage <ArrowRight size={15} />
             </Link>

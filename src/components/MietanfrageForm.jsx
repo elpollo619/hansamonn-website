@@ -563,7 +563,7 @@ export default function MietanfrageForm() {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{t('mietanfrage.title')}</h1>
+        <h2 className="display-heading uppercase text-3xl md:text-4xl mb-3">{t('mietanfrage.title')}</h2>
         <p className="text-gray-500 text-base leading-relaxed max-w-2xl">
           {t('mietanfrage.subtitle')}
         </p>

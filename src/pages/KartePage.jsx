@@ -195,7 +195,7 @@ export default function KartePage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="grid lg:grid-cols-3 gap-8 items-start"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start"
           >
             {/* Map card */}
             <div className="lg:col-span-2">

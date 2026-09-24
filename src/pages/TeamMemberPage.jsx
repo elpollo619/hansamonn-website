@@ -51,7 +51,7 @@ const TeamMemberPage = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-4"
+              className="lg:col-span-4 min-w-0"
             >
               <div className="bg-white overflow-hidden border border-gray-100">
                 <div className="relative aspect-[4/5] bg-gray-100">
@@ -112,7 +112,7 @@ const TeamMemberPage = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-8 lg:pl-6"
+              className="lg:col-span-8 min-w-0 lg:pl-6"
             >
               <div className="mb-12">
                 <p className="eyebrow mb-3">Profil</p>

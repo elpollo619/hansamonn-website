@@ -946,7 +946,7 @@ const ApartmentDetailPage = () => {
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
             <div className="container mx-auto max-w-6xl">
               <TypeBadge type={apt.type} t={t} />
-              <h1 className="font-display uppercase text-4xl md:text-6xl font-semibold leading-[0.95] mt-4 mb-3">{apt.title}</h1>
+              <h1 className="font-display uppercase text-3xl sm:text-4xl md:text-6xl font-semibold leading-[0.95] mt-4 mb-3">{apt.title}</h1>
               <p className="text-white/80 flex items-center gap-2 text-sm">
                 <MapPin size={14} />
                 {apt.location}
@@ -1097,7 +1097,7 @@ const ApartmentDetailPage = () => {
             {/* Location map */}
             {apt.lat && apt.lng && (
               <div>
-                <h2 className="font-display uppercase text-2xl font-semibold leading-none text-[#0F1B2D] mb-1">Lage & Standort</h2>
+                <h2 className="font-display uppercase text-2xl font-semibold leading-none text-[#0F1B2D] mb-2">Lage & Standort</h2>
                 <p className="flex items-center gap-1.5 text-sm text-gray-500 mb-3">
                   <MapPin size={13} />
                   {apt.location}

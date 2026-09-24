@@ -70,7 +70,7 @@ const HyporechnerPage = () => {
             className="max-w-5xl mx-auto"
           >
             <p className="eyebrow mb-3">Schweizer Standard</p>
-            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-4">
+            <h2 className="display-heading uppercase text-3xl sm:text-4xl md:text-5xl mb-4">
               Schweizer Hypothekenregeln
             </h2>
             <p className="text-gray-600 leading-relaxed mb-10">

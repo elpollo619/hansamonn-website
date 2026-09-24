@@ -157,8 +157,8 @@ export default function CasaRetoPage() {
             <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-white/70 mb-4">
               Hans Amonn AG · Ferienhaus im Tessin
             </p>
-            <h1 className="text-5xl md:text-7xl font-light leading-[1.05] mb-5">
-              Casa <span className="font-black">Reto</span>
+            <h1 className="font-display uppercase text-6xl md:text-8xl font-semibold leading-[0.9] mb-6">
+              Casa Reto
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mb-8">
               Ein gemütliches Ferienhaus in Gordemo, hoch über dem Lago Maggiore.

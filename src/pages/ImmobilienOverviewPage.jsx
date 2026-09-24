@@ -118,7 +118,7 @@ const ImmobilienOverviewPage = () => {
     </section>
 
     {/* Bottom contact strip */}
-    <section className="bg-[#0B1220] text-white py-20 md:py-24">
+    <section className="bg-white border-t border-gray-100 py-20 md:py-24">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -128,12 +128,13 @@ const ImmobilienOverviewPage = () => {
           className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
           <div className="max-w-2xl">
-            <h2 className="font-display uppercase text-4xl md:text-5xl font-semibold leading-none mb-4">{t('immobilien.contact.title')}</h2>
-            <p className="text-white/60 leading-relaxed">{t('immobilien.hero.subtitle')}</p>
+            <h2 className="display-heading uppercase text-4xl md:text-5xl mb-4">{t('immobilien.contact.title')}</h2>
+            <p className="text-gray-600 leading-relaxed">{t('immobilien.hero.subtitle')}</p>
           </div>
           <Link
             to="/immobilien/anfrage"
-            className="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 text-sm font-semibold transition-colors flex-shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 text-white px-6 py-3 text-sm font-semibold transition-colors flex-shrink-0 self-start md:self-auto"
+            style={{ backgroundColor: BRAND }}
           >
             {t('immobilien.contact.cta')}
             <ArrowRight size={15} />

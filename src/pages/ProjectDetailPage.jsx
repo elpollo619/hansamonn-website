@@ -53,9 +53,10 @@ const ProjectDetailPage = () => {
       >
         <PageHero
           image={project.coverImage}
+          size="sm"
           back={{ to: '/projekte', label: 'Zurück zu den Projekten' }}
           eyebrow={[project.category?.replace('-', ' & '), project.location, project.year].filter(Boolean).join(' · ')}
-          title={project.title}
+          title={<span className="break-words hyphens-auto">{project.title}</span>}
         />
 
         <div className="bg-white">

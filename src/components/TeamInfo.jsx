@@ -33,13 +33,13 @@ const TeamInfo = () => {
       <section className="surface-warm py-20 md:py-24">
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="grid gap-8 lg:grid-cols-12 lg:items-end mb-14">
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-6 min-w-0">
               <p className="eyebrow mb-3">Hans Amonn AG</p>
-              <h2 className="display-heading uppercase text-4xl md:text-5xl">
+              <h2 className="display-heading uppercase text-4xl md:text-5xl hyphens-auto break-words">
                 Familienunternehmen mit Herz
               </h2>
             </div>
-            <p className="lg:col-span-7 text-gray-600 leading-relaxed text-lg">
+            <p className="lg:col-span-6 text-gray-600 leading-relaxed text-lg">
               Die Hans Amonn AG ist ein echtes Familienunternehmen. Mit Reto und Roberta Amonn an der Spitze,
               unterstützt von langjährigen Partnern wie Martin Brand und einem vielseitigen Team aus erfahrenen
               Fachkräften und jungen Talenten, vereinen wir Tradition mit Innovation. Diese
