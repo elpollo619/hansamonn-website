@@ -83,7 +83,7 @@ export const BUILDING_MODELS = {
     facts: [
       { label: 'Länge', value: '33.51 m' },
       { label: 'First', value: '+13.77 m' },
-      { label: 'Geschosse', value: 'EG + 2 OG + DG' },
+      { label: 'Geschosse', value: 'UG + EG + 2 OG + DG' },
     ],
     load: () => import('./br.json').then((m) => m.default),
     site: () => import('./br-site.json').then((m) => m.default),
