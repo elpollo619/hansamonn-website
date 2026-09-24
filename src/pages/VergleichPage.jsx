@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check, X, RotateCcw, GitCompare } from 'lucide-react';
 import { useComparison } from '@/context/ComparisonContext';
+import PageHero from '@/components/PageHero';
 import { getPropertyById, getNormalizedVisibleProperties } from '@/data/propertiesStore';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -51,21 +52,21 @@ function collectAllFeatures(properties) {
 
 // ─── Table Row helpers ────────────────────────────────────────────────────────
 
-const ROW_LABEL_CLASS = 'text-xs font-semibold text-gray-500 uppercase tracking-wide py-3 pr-4 whitespace-nowrap w-36';
-const CELL_CLASS = 'text-sm text-gray-800 py-3 px-3 text-center';
+const ROW_LABEL_CLASS = 'text-xs font-semibold text-gray-500 uppercase tracking-wider py-4 pr-4 pl-3 whitespace-nowrap w-36';
+const CELL_CLASS = 'text-sm text-gray-700 py-4 px-3 text-center';
 
 function FeatureCell({ hasFeature }) {
   return (
     <td className={CELL_CLASS}>
       {hasFeature ? (
         <div className="flex justify-center">
-          <div className="w-6 h-6 bg-gray-100 flex items-center justify-center">
+          <div className="w-6 h-6 surface-warm flex items-center justify-center">
             <Check size={12} style={{ color: 'var(--brand-color, #1D3D78)' }} />
           </div>
         </div>
       ) : (
         <div className="flex justify-center">
-          <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
+          <div className="w-6 h-6 bg-gray-50 flex items-center justify-center">
             <X size={12} className="text-gray-400" />
           </div>
         </div>
@@ -91,53 +92,39 @@ const VergleichPage = () => {
         <meta name="description" content="Vergleichen Sie unsere Mietobjekte direkt nebeneinander." />
       </Helmet>
 
-      {/* Hero bar */}
-      <section className="bg-white border-b border-gray-100">
-        <div className="container mx-auto px-4 sm:px-6 py-8">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <div>
-              <Link
-                to="/immobilien/vermietung"
-                className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-3 transition-colors"
-              >
-                <ArrowLeft size={14} /> Zurück zu Vermietung
-              </Link>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-gray-100 flex items-center justify-center">
-                  <GitCompare size={17} className="text-gray-600" />
-                </div>
-                <h1 className="text-2xl font-black text-gray-900">Objektvergleich</h1>
-              </div>
-            </div>
+      {/* Hero */}
+      <PageHero
+        eyebrow="Hans Amonn AG"
+        title="Objektvergleich"
+        back={{ to: '/immobilien/vermietung', label: 'Zurück zu Vermietung' }}
+        size="sm"
+      >
+        {compared.length > 0 && (
+          <button
+            onClick={clearComparison}
+            className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-6 py-3 text-sm font-semibold transition-colors"
+          >
+            <RotateCcw size={14} />
+            Zurücksetzen
+          </button>
+        )}
+      </PageHero>
 
-            {compared.length > 0 && (
-              <button
-                onClick={clearComparison}
-                className="inline-flex items-center gap-2 border border-gray-200 text-gray-600 hover:text-gray-900 hover:border-gray-400 px-4 py-2 text-sm font-medium transition-colors"
-              >
-                <RotateCcw size={14} />
-                Zurücksetzen
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="container mx-auto px-4 sm:px-6 py-10">
+      <section className="container mx-auto px-4 sm:px-6 py-16 md:py-20">
         {/* Not enough items */}
         {compared.length < 2 ? (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-md mx-auto text-center py-20"
+            className="max-w-lg mx-auto text-center py-12 md:py-16"
           >
-            <div className="w-16 h-16 bg-gray-100 flex items-center justify-center mx-auto mb-5">
-              <GitCompare size={28} className="text-gray-400" />
+            <div className="w-16 h-16 surface-warm flex items-center justify-center mx-auto mb-6">
+              <GitCompare size={28} style={{ color: 'var(--brand-color, #1D3D78)' }} />
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-3">
+            <h2 className="font-display uppercase text-2xl md:text-3xl font-semibold text-[#0F1B2D] leading-tight mb-4">
               Bitte wählen Sie mindestens 2 Objekte zum Vergleichen aus
             </h2>
-            <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+            <p className="text-gray-600 mb-8 leading-relaxed">
               Gehen Sie zurück zur Übersicht und klicken Sie bei den gewünschten Objekten auf
               «Vergleichen».
             </p>
@@ -172,21 +159,21 @@ const VergleichPage = () => {
                         className="px-3 pb-4 text-center align-bottom"
                         style={{ width: `${100 / colCount}%` }}
                       >
-                        <div className="flex flex-col items-center gap-2">
+                        <div className="flex flex-col items-center gap-3">
                           {imgSrc ? (
                             <img
                               src={imgSrc}
                               alt={prop.name || prop.title}
-                              className="w-full max-w-[160px] h-28 object-cover"
+                              className="w-full max-w-[200px] aspect-[4/3] object-cover"
                               loading="lazy"
                               decoding="async"
                             />
                           ) : (
-                            <div className="w-full max-w-[160px] h-28 bg-gray-100 flex items-center justify-center">
+                            <div className="w-full max-w-[200px] aspect-[4/3] surface-warm flex items-center justify-center">
                               <span className="text-gray-300 text-xs">Kein Bild</span>
                             </div>
                           )}
-                          <span className="text-sm font-bold text-gray-900 text-center leading-snug">
+                          <span className="font-display uppercase text-lg font-semibold text-[#0F1B2D] text-center leading-tight">
                             {prop.name || prop.title}
                           </span>
                         </div>
@@ -196,9 +183,9 @@ const VergleichPage = () => {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 border-t border-gray-200">
                 {/* Typ */}
-                <tr className="bg-gray-50/50">
+                <tr className="surface-warm">
                   <td className={ROW_LABEL_CLASS}>Typ</td>
                   {properties.map((prop, i) => (
                     <td key={i} className={CELL_CLASS}>
@@ -218,7 +205,7 @@ const VergleichPage = () => {
                 </tr>
 
                 {/* Preis */}
-                <tr className="bg-gray-50/50">
+                <tr className="surface-warm">
                   <td className={ROW_LABEL_CLASS}>Preis</td>
                   {properties.map((prop, i) => (
                     <td key={i} className={`${CELL_CLASS} font-semibold text-gray-800`}>
@@ -238,7 +225,7 @@ const VergleichPage = () => {
                 </tr>
 
                 {/* Verfügbarkeit */}
-                <tr className="bg-gray-50/50">
+                <tr className="surface-warm">
                   <td className={ROW_LABEL_CLASS}>Verfügbarkeit</td>
                   {properties.map((prop, i) => {
                     const status = getStatus(prop);
@@ -248,8 +235,8 @@ const VergleichPage = () => {
                         <span
                           className={`inline-block px-2.5 py-1 text-xs font-semibold ${
                             isAvail
-                              ? 'bg-gray-100 text-gray-700'
-                              : 'bg-gray-100 text-gray-500'
+                              ? 'bg-white border border-gray-200 text-gray-700'
+                              : 'bg-white border border-gray-100 text-gray-500'
                           }`}
                         >
                           {status}
@@ -264,7 +251,7 @@ const VergleichPage = () => {
                   <tr>
                     <td
                       colSpan={colCount + 1}
-                      className="pt-6 pb-2 text-xs font-bold text-gray-400 uppercase tracking-widest"
+                      className="pt-10 pb-3 pl-3 eyebrow"
                     >
                       Ausstattung
                     </td>
@@ -272,7 +259,7 @@ const VergleichPage = () => {
                 )}
 
                 {allFeatures.map((feature, fi) => (
-                  <tr key={feature} className={fi % 2 === 0 ? 'bg-gray-50/50' : ''}>
+                  <tr key={feature} className={fi % 2 === 0 ? 'surface-warm' : ''}>
                     <td className={ROW_LABEL_CLASS}>{feature}</td>
                     {properties.map((prop, i) => (
                       <FeatureCell
@@ -293,7 +280,7 @@ const VergleichPage = () => {
                       <td key={i} className="py-6 px-3 text-center">
                         <Link
                           to={link}
-                          className="inline-flex items-center gap-1.5 text-white font-semibold px-4 py-2 transition-colors text-sm"
+                          className="inline-flex items-center gap-1.5 text-white font-semibold px-6 py-3 transition-colors text-sm"
                           style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
                           onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
                           onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
