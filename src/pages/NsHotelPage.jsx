@@ -8,6 +8,7 @@ import {
 import { Helmet } from 'react-helmet';
 import Lightbox from '@/components/Lightbox';
 import PanoramaViewer from '@/components/PanoramaViewer';
+import Model3DSection from '@/components/Model3DSection';
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 const IMG = '/images/ns-hotel';
@@ -342,6 +343,9 @@ export default function NsHotelPage() {
           </div>
         </div>
       </section>
+
+      {/* ── 3D model from the plans ─────────────────────────────────────── */}
+      <Model3DSection />
 
       {/* ── Aerial ───────────────────────────────────────────────────────── */}
       <section className="py-24">

@@ -10,6 +10,7 @@ import Lightbox from '@/components/Lightbox';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PageHero from '@/components/PageHero';
+import Model3DSection, { PROJECT_MODELS } from '@/components/Model3DSection';
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -62,6 +63,7 @@ const ProjectDetailPage = () => {
         <div className="bg-white">
           {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
           <ProjectInfo project={project} onButtonClick={handleContactClick} />
+          {PROJECT_MODELS[project.slug] && <Model3DSection model={PROJECT_MODELS[project.slug]} />}
           {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}
         </div>
       </motion.div>

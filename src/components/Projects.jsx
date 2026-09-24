@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import TiltCard from '@/components/TiltCard';
 import { Link } from 'react-router-dom';
 import { getVisibleProjects, categories } from '@/data/projectsStore';
 import { ArrowRight } from 'lucide-react';
 import PageHero from '@/components/PageHero';
+
+// Projects with an interactive 3D model built from their plans
+const HAS_3D_MODEL = new Set(['ns-hotel-kerzers']);
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 
@@ -64,6 +68,7 @@ const Projects = () => {
                 transition={{ duration: 0.6, delay: index * 0.08 }}
                 viewport={{ once: true }}
               >
+                <TiltCard max={2.5}>
                 <Link
                   to={`/projekte/${project.id}`}
                   className="block bg-white border border-gray-100 hover:border-gray-300 transition-colors group"
@@ -84,6 +89,11 @@ const Projects = () => {
                         >
                           {project.status}
                         </span>
+                        {HAS_3D_MODEL.has(project.slug) && (
+                          <span className="absolute top-4 right-4 bg-white/95 text-[#0F1B2D] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
+                            3D-Modell
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="p-8 md:p-10 md:w-7/12 flex flex-col justify-between">
@@ -103,6 +113,7 @@ const Projects = () => {
                     </div>
                   </div>
                 </Link>
+                </TiltCard>
               </motion.div>
             ))}
           </div>
