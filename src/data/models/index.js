@@ -37,6 +37,20 @@ export const BUILDING_MODELS = {
     ],
     load: () => import('./a12.json').then((m) => m.default),
   },
+  a4: {
+    id: 'a4',
+    name: 'Allmendstrasse 4/4a',
+    short: 'A4',
+    address: 'Allmendstrasse 4/4a, 3210 Kerzers',
+    kind: 'Wohnkomplex',
+    source: 'Ausführungspläne 759, 1:50 · 2019',
+    facts: [
+      { label: 'Länge', value: '43.60 m' },
+      { label: 'Tiefe', value: '15.05 m' },
+      { label: 'Geschosse', value: 'EG + 3 OG' },
+    ],
+    load: () => import('./a4.json').then((m) => m.default),
+  },
 };
 
 export const MODEL_LIST = Object.values(BUILDING_MODELS);

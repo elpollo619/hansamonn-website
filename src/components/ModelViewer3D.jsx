@@ -94,7 +94,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       controls.addEventListener('start', () => { controls.autoRotate = false; });
       controls.target.set(0, bld.height * 0.32, 0);
 
-      const dist = () => (el.clientWidth < 640 ? 2.35 : 1.75) * bld.extent;
+      const dist = () => (el.clientWidth < 640 ? 2.35 : 1.3) * bld.extent;
       const finalPos = new THREE.Vector3();
       const setFinal = () => {
         const d = dist();

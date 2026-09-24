@@ -6,6 +6,7 @@ import { BUILDING_MODELS } from '@/data/models';
 /** Projects that have a 3D model built from their plans (project slug → model ids). */
 export const PROJECT_MODELS = {
   'ns-hotel-kerzers': ['a14'],
+  'wohnkomplex-allmendstrasse-kerzers': ['a4'],
 };
 
 /**
