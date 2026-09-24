@@ -9,6 +9,7 @@ import ProjectImages from '@/components/ProjectImages';
 import Lightbox from '@/components/Lightbox';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import PageHero from '@/components/PageHero';
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -35,7 +36,7 @@ const ProjectDetailPage = () => {
   };
 
   if (!project) {
-    return <div className="text-center py-20">Projekt nicht gefunden.</div>;
+    return <div className="text-center py-24 text-gray-600">Projekt nicht gefunden.</div>;
   }
 
   return (
@@ -50,17 +51,17 @@ const ProjectDetailPage = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="container mx-auto px-6 py-12">
-          <Link to="/projekte" className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8 transition-colors">
-            <ArrowLeft size={18} className="mr-2" />
-            Zurück zu den Projekten
-          </Link>
+        <PageHero
+          image={project.coverImage}
+          back={{ to: '/projekte', label: 'Zurück zu den Projekten' }}
+          eyebrow={[project.category?.replace('-', ' & '), project.location, project.year].filter(Boolean).join(' · ')}
+          title={project.title}
+        />
 
-          <div className="bg-white overflow-hidden border border-gray-100">
-            {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
-            <ProjectInfo project={project} onButtonClick={handleContactClick} />
-            {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}
-          </div>
+        <div className="bg-white">
+          {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
+          <ProjectInfo project={project} onButtonClick={handleContactClick} />
+          {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}
         </div>
       </motion.div>
 

@@ -79,7 +79,7 @@ const RentCalculator = () => {
       <div className="p-6 md:p-8 grid md:grid-cols-2 gap-6">
         {/* Wohnfläche */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
             Wohnfläche (m²)
           </label>
           <div className="flex items-center gap-3">
@@ -90,7 +90,7 @@ const RentCalculator = () => {
               step={5}
               value={flaeche}
               onChange={(e) => setFlaeche(Number(e.target.value))}
-              className="flex-1 accent-green-600 cursor-pointer"
+              className="flex-1 accent-[#1D3D78] cursor-pointer"
             />
             <input
               type="number"
@@ -101,18 +101,18 @@ const RentCalculator = () => {
                 const v = Math.max(20, Math.min(200, Number(e.target.value)));
                 setFlaeche(v);
               }}
-              className="w-20 border border-gray-200 rounded-lg px-3 py-2 text-sm text-center font-semibold focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-20 border border-gray-200 px-3 py-2 text-sm text-center font-semibold focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78]"
             />
           </div>
         </div>
 
         {/* Standort */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Standort</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Standort</label>
           <select
             value={standort}
             onChange={(e) => setStandort(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+            className="w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78] bg-white"
           >
             {STANDORTE.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -122,7 +122,7 @@ const RentCalculator = () => {
 
         {/* Typ */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Miettyp</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Miettyp</label>
           <div className="flex flex-col gap-2">
             {TYPEN.map((t) => (
               <label key={t.value} className="flex items-center gap-2.5 cursor-pointer">
@@ -132,7 +132,7 @@ const RentCalculator = () => {
                   value={t.value}
                   checked={typ === t.value}
                   onChange={() => setTyp(t.value)}
-                  className="accent-green-600"
+                  className="accent-[#1D3D78]"
                 />
                 <span className="text-sm text-gray-700">{t.label}</span>
               </label>
@@ -142,7 +142,7 @@ const RentCalculator = () => {
 
         {/* Optionen */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Optionen</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Optionen</label>
           <div className="flex flex-col gap-2.5">
             {OPTIONEN.map((opt) => (
               <label key={opt.key} className="flex items-center gap-2.5 cursor-pointer">
@@ -150,7 +150,7 @@ const RentCalculator = () => {
                   type="checkbox"
                   checked={options[opt.key]}
                   onChange={() => toggleOption(opt.key)}
-                  className="accent-green-600 w-4 h-4"
+                  className="accent-[#1D3D78] w-4 h-4"
                 />
                 <span className="text-sm text-gray-700">{opt.label}</span>
                 <span className="ml-auto text-xs text-gray-400">{opt.suffix}</span>
@@ -161,18 +161,18 @@ const RentCalculator = () => {
       </div>
 
       {/* Result */}
-      <div className="border-t border-gray-100 bg-gray-50 p-6 md:p-8">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+      <div className="border-t border-gray-100 surface-warm p-6 md:p-8">
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
           Geschätzter Mietpreis
         </p>
 
         {/* Big price range */}
-        <div className="flex items-baseline gap-2 mb-4">
-          <span className="text-4xl md:text-5xl font-black text-gray-900 tabular-nums">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-5">
+          <span className="font-display text-4xl md:text-5xl font-semibold text-[#0F1B2D] tabular-nums leading-none">
             CHF {formatCHF(result.min)}
           </span>
           <span className="text-xl font-bold text-gray-400">–</span>
-          <span className="text-4xl md:text-5xl font-black text-gray-900 tabular-nums">
+          <span className="font-display text-4xl md:text-5xl font-semibold text-[#0F1B2D] tabular-nums leading-none">
             {formatCHF(result.max)}
           </span>
           <span className="text-base text-gray-500 font-medium ml-1">{suffix}</span>
