@@ -145,7 +145,7 @@ export default function NeuigkeitenPage() {
 
       <div className="bg-white">
         {/* Grid */}
-        <div className="container mx-auto px-6 py-20 md:py-24">
+        <div className="container mx-auto px-6 py-20 md:py-24 min-h-[40vh]">
           {loading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               <SkeletonCard />

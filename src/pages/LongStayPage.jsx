@@ -93,7 +93,7 @@ export default function LongStayPage() {
             {idealFor.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.title} className="flex items-start gap-4 py-7 md:px-8 first:md:pl-0">
+                <div key={item.title} className="flex items-start gap-4 py-7 md:px-8 md:first:pl-0">
                   <Icon size={22} className="mt-0.5 flex-shrink-0" style={{ color: BRAND }} />
                   <div>
                     <p className="font-display uppercase text-lg font-semibold leading-none text-[#0F1B2D]">{item.title}</p>

@@ -1,34 +1,42 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+const STATS = [
+  { number: '9', label: 'Teammitglieder' },
+  { number: '133+', label: 'Jahre Gesamterfahrung' },
+  { number: '55+', label: 'Jahre Firmengeschichte' },
+  { number: '100%', label: 'Engagement' },
+];
+
 const TeamStats = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.3 }}
-      viewport={{ once: true }}
-      className="mt-16 bg-white rounded-lg p-8 border border-gray-100"
-    >
-      <div className="grid md:grid-cols-4 gap-8 text-center">
-        <div>
-          <div className="text-3xl font-bold mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }}>9</div>
-          <div className="text-gray-600">Teammitglieder</div>
+    <section className="bg-[#0B1220] text-white">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="container mx-auto px-6"
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4">
+          {STATS.map((s, i) => (
+            <div
+              key={s.label}
+              className={`py-12 md:py-16 px-4 md:px-8 text-center border-white/10 ${
+                i % 2 === 0 ? 'border-r' : 'md:border-r'
+              } ${i === STATS.length - 1 ? 'md:border-r-0' : ''} ${i < 2 ? 'border-b md:border-b-0' : ''}`}
+            >
+              <div className="font-display text-5xl md:text-6xl font-semibold leading-none tabular-nums">
+                {s.number}
+              </div>
+              <div className="mt-3 text-[10px] md:text-xs font-semibold uppercase tracking-[0.22em] text-white/50">
+                {s.label}
+              </div>
+            </div>
+          ))}
         </div>
-        <div>
-          <div className="text-3xl font-bold mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }}>133+</div>
-          <div className="text-gray-600">Jahre Gesamterfahrung</div>
-        </div>
-        <div>
-          <div className="text-3xl font-bold mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }}>55+</div>
-          <div className="text-gray-600">Jahre Firmengeschichte</div>
-        </div>
-        <div>
-          <div className="text-3xl font-bold mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }}>100%</div>
-          <div className="text-gray-600">Engagement</div>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </section>
   );
 };
 

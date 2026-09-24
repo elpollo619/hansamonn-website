@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { rentalData } from '@/data/rentalData';
+import PageHero from '@/components/PageHero';
 
 // ── Type labels & colours ─────────────────────────────────────────────────────
 const TYPE_CFG = {
@@ -127,7 +128,7 @@ function LeafletMap({ listings, activeId, onMarkerClick }) {
       const isActive = String(id) === String(activeId);
       inner.style.transform  = isActive ? 'scale(1.3)' : 'scale(1)';
       inner.style.boxShadow  = isActive
-        ? '0 0 0 6px rgba(99,102,241,0.25), 0 2px 8px rgba(0,0,0,0.22)'
+        ? '0 0 0 6px rgba(29,61,120,0.25), 0 2px 8px rgba(0,0,0,0.22)'
         : '0 2px 8px rgba(0,0,0,0.22)';
     });
   }, [activeId]);
@@ -171,33 +172,20 @@ export default function KartePage() {
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-gray-50 border-b border-gray-100">
-        <div className="container mx-auto px-4 sm:px-6 py-16 md:py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-2xl"
-          >
-            <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1.5 mb-5">
-              <MapPin size={13} />
-              Kartenansicht
-            </div>
-
-            <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 leading-tight">
-              Alle Immobilien auf der Karte
-            </h1>
-
-            <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-xl">
-              Von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore — alle
-              Objekte von Hans Amonn AG auf einen Blick.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Hans Amonn AG · Kartenansicht"
+        title="Alle Immobilien auf der Karte"
+        subtitle={
+          <>
+            Von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore — alle
+            Objekte von Hans Amonn AG auf einen Blick.
+          </>
+        }
+        size="sm"
+      />
 
       {/* Map + sidebar */}
-      <section className="container mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <section className="container mx-auto px-4 sm:px-6 py-16 md:py-20">
         {LISTINGS.length === 0 ? (
           <div className="text-center py-24 text-gray-400 text-sm">
             Koordinaten werden in Kürze hinzugefügt.
@@ -206,13 +194,13 @@ export default function KartePage() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="grid lg:grid-cols-3 gap-8 items-start"
           >
             {/* Map card */}
             <div className="lg:col-span-2">
               <div
-                className="relative border border-gray-200 overflow-hidden bg-gray-50"
+                className="relative border border-gray-100 overflow-hidden surface-warm"
                 style={{ height: 500 }}
               >
                 {cssLoaded ? (
@@ -229,11 +217,11 @@ export default function KartePage() {
               </div>
 
               {/* Legend */}
-              <div className="flex flex-wrap gap-4 mt-4">
+              <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4">
                 {Object.entries(TYPE_CFG).map(([type, c]) => (
-                  <div key={type} className="flex items-center gap-1.5 text-xs text-gray-500">
+                  <div key={type} className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
                     <span
-                      className="inline-block w-2.5 h-2.5 rounded-full"
+                      className="inline-block w-2.5 h-2.5"
                       style={{ background: c.hex }}
                     />
                     {c.label}
@@ -246,21 +234,21 @@ export default function KartePage() {
             <div className="space-y-2">
               {activeListing ? (
                 /* Detail card */
-                <div className="bg-white border border-gray-200 overflow-hidden">
+                <div className="bg-white border border-gray-100 overflow-hidden">
                   {/* colour bar */}
                   <div
                     className="h-1.5"
                     style={{ background: cfg(activeListing.type).hex }}
                   />
-                  <div className="p-5">
-                    <div className="flex items-start justify-between mb-2">
+                  <div className="p-6">
+                    <div className="flex items-start justify-between gap-3 mb-2">
                       <div>
                         <span
-                          className={`inline-block text-[10px] font-semibold px-2 py-0.5 mb-1.5 ${cfg(activeListing.type).bg} ${cfg(activeListing.type).text}`}
+                          className={`inline-block text-xs font-semibold uppercase tracking-wider mb-2 ${cfg(activeListing.type).text}`}
                         >
                           {cfg(activeListing.type).label}
                         </span>
-                        <h3 className="text-lg font-bold text-gray-900 leading-snug">
+                        <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] leading-tight">
                           {activeListing.title}
                         </h3>
                       </div>
@@ -273,7 +261,7 @@ export default function KartePage() {
                       </button>
                     </div>
 
-                    <p className="text-xs text-gray-400 mb-3">{activeListing.location}</p>
+                    <p className="text-xs text-gray-500 mb-4">{activeListing.location}</p>
 
                     {activeListing.price && (
                       <p className="text-sm font-semibold text-gray-700 mb-3">
@@ -282,13 +270,13 @@ export default function KartePage() {
                       </p>
                     )}
 
-                    <p className="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                    <p className="text-sm text-gray-600 leading-relaxed mb-5 line-clamp-3">
                       {activeListing.description}
                     </p>
 
                     <Link
                       to={detailLink(activeListing)}
-                      className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-2.5 px-4 transition-colors"
+                      className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-3 px-6 transition-colors"
                       style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
                       onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
                       onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
@@ -300,7 +288,7 @@ export default function KartePage() {
               ) : (
                 /* Property list */
                 <div>
-                  <p className="text-xs text-gray-400 font-medium uppercase tracking-wider mb-3">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">
                     Pin auf der Karte anklicken
                   </p>
                   {LISTINGS.map((item) => {
@@ -309,18 +297,18 @@ export default function KartePage() {
                       <button
                         key={item.id}
                         onClick={() => setActiveId(item.id)}
-                        className="w-full flex items-center gap-3 p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
+                        className="group w-full flex items-center gap-4 p-4 bg-white border border-gray-100 hover:border-gray-300 transition-colors text-left mb-2"
                       >
                         <div
-                          className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0"
+                          className="w-9 h-9 surface-warm flex items-center justify-center flex-shrink-0"
                         >
                           <MapPin size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-gray-900 truncate">{item.title}</p>
-                          <p className="text-xs text-gray-400 truncate">{item.location}</p>
+                          <p className="font-display uppercase text-lg font-semibold text-[#0F1B2D] leading-tight truncate">{item.title}</p>
+                          <p className="text-xs text-gray-500 truncate mt-0.5">{item.location}</p>
                         </div>
-                        <ArrowRight size={14} className="text-gray-300 ml-auto flex-shrink-0" />
+                        <ArrowRight size={14} className="text-gray-300 group-hover:text-gray-600 transition-colors ml-auto flex-shrink-0" />
                       </button>
                     );
                   })}

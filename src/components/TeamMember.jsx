@@ -24,22 +24,22 @@ const TeamMember = ({ member, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: (index % 4) * 0.08 }}
       viewport={{ once: true }}
-      className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors group"
+      className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors group flex flex-col"
     >
       {/* Photo */}
-      <div className="relative overflow-hidden h-64">
+      <div className="relative overflow-hidden aspect-[4/5] bg-gray-100">
         <img
           src={imageUrl}
           alt={`${member.name} – ${member.position} bei Hans Amonn AG`}
-          className="w-full h-full object-cover object-[center_25%] group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover object-[center_25%] group-hover:scale-105 transition-transform duration-700"
           loading="lazy"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/70 via-[#0B1220]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Role icon badge */}
         {Icon && (
@@ -49,18 +49,18 @@ const TeamMember = ({ member, index }) => {
         )}
 
         {/* Hover overlay buttons */}
-        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-3">
+        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-2">
           <a
             href={`mailto:${member.email || 'office@reto-amonn.ch'}`}
             onClick={(e) => e.stopPropagation()}
-            className="w-9 h-9 bg-white/90 flex items-center justify-center hover:bg-white transition-colors"
+            className="w-10 h-10 bg-white flex items-center justify-center hover:bg-gray-100 transition-colors"
             title={`E-Mail an ${member.name}`}
           >
             <Mail size={16} style={{ color: 'var(--brand-color, #1D3D78)' }} />
           </a>
           <Link
             to={`/team/${member.slug}`}
-            className="flex-1 bg-white/90 py-1.5 px-3 flex items-center justify-center gap-1 hover:bg-white transition-colors text-xs font-medium"
+            className="flex-1 h-10 bg-white px-3 flex items-center justify-center gap-1.5 hover:bg-gray-100 transition-colors text-xs font-semibold uppercase tracking-wider"
             style={{ color: 'var(--brand-color, #1D3D78)' }}
           >
             Profil ansehen <ArrowRight size={12} />
@@ -69,9 +69,9 @@ const TeamMember = ({ member, index }) => {
       </div>
 
       {/* Info */}
-      <div className="p-5">
-        <h3 className="text-lg font-semibold text-gray-900 mb-0.5">{member.name}</h3>
-        <p className="font-medium text-sm mb-3" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="font-display uppercase text-2xl font-semibold leading-tight text-[#0F1B2D]">{member.name}</h3>
+        <p className="text-xs font-semibold uppercase tracking-wider mt-1.5 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
 
         {(member.education || member.experience) && (
           <div className="space-y-1.5 mb-4 text-xs text-gray-600">
@@ -90,16 +90,16 @@ const TeamMember = ({ member, index }) => {
           </div>
         )}
 
-        <p className="text-gray-600 text-xs leading-relaxed line-clamp-3 mb-4">
+        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-5">
           {member.description}
         </p>
 
         <Link
           to={`/team/${member.slug}`}
-          className="inline-flex items-center gap-1 text-xs font-medium hover:gap-2 transition-all"
+          className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all"
           style={{ color: 'var(--brand-color, #1D3D78)' }}
         >
-          Profil ansehen <ArrowRight size={12} />
+          Profil ansehen <ArrowRight size={14} />
         </Link>
       </div>
     </motion.div>
