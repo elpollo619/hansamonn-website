@@ -29,6 +29,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         slab: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.06, depthWrite: false, side: THREE.DoubleSide })),
         glass: keep(new THREE.MeshBasicMaterial({ color: 0xbfd6ff, transparent: true, opacity: 0.16, depthWrite: false, side: THREE.DoubleSide })),
         hall: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.05, depthWrite: false, side: THREE.DoubleSide })),
+        frame: keep(new THREE.MeshBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.22, depthWrite: false })),
+        door: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.08, depthWrite: false, side: THREE.DoubleSide })),
+        green: keep(new THREE.MeshBasicMaterial({ color: 0x9cc0ff, transparent: true, opacity: 0.06, depthWrite: false })),
         line: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.8 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0xe6efff, transparent: true, opacity: 0.35 })),
       }
@@ -38,6 +41,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         slab: keep(new THREE.MeshStandardMaterial({ color: 0xdcd5c8, roughness: 0.9, metalness: 0 })),
         glass: keep(new THREE.MeshPhysicalMaterial({ color: 0x5d7a90, roughness: 0.06, metalness: 0.2, transparent: true, opacity: 0.72, envMapIntensity: 1.6 })),
         hall: keep(new THREE.MeshStandardMaterial({ color: 0xd7dadd, roughness: 0.6, metalness: 0.25 })),
+        frame: keep(new THREE.MeshStandardMaterial({ color: 0x3a4048, roughness: 0.5, metalness: 0.4 })),
+        door: keep(new THREE.MeshStandardMaterial({ color: 0xc4c9ce, roughness: 0.45, metalness: 0.35 })),
+        green: keep(new THREE.MeshStandardMaterial({ color: 0x8e9c6a, roughness: 1, metalness: 0 })),
         line: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.28 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 })),
       };
@@ -73,6 +79,50 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     return g;
   };
 
+  // Oriented box along a facade segment: u = along, v = height, w = depth (+ outward)
+  const segBox = (seg, u0, u1, y0, y1, w0, w1) => {
+    const { x1, z1, ang, nx, nz } = seg;
+    const L = u1 - u0, H = y1 - y0, D = w1 - w0;
+    if (L <= 0.001 || H <= 0.001 || D <= 0.001) return null;
+    const g = new THREE.BoxGeometry(L, H, D);
+    g.rotateY(-ang);
+    const u = (u0 + u1) / 2, w = (w0 + w1) / 2;
+    g.translate(x1 + Math.cos(ang) * u + nx * w, (y0 + y1) / 2, z1 + Math.sin(ang) * u + nz * w);
+    return g;
+  };
+  // Facade segment with its outward normal (away from the footprint)
+  const segment = ([x1, z1, x2, z2], footprint) => {
+    const L = Math.hypot(x2 - x1, z2 - z1);
+    const ang = Math.atan2(z2 - z1, x2 - x1);
+    let nx = -Math.sin(ang), nz = Math.cos(ang);
+    const cx = (x1 + x2) / 2, cz = (z1 + z2) / 2;
+    if (pointInPoly(cx + nx * 0.4, cz + nz * 0.4, footprint)) { nx = -nx; nz = -nz; }
+    return { x1, z1, L, ang, nx, nz };
+  };
+  // Glass curtain wall with mullion grid (w = offset of the glass plane)
+  const curtain = (seg, sill, head, w, glass, frame, bay = 1.2, rows = 4) => {
+    const n = Math.max(1, Math.round(seg.L / bay));
+    glass.push(segBox(seg, 0, seg.L, sill, head, w - 0.02, w + 0.02));
+    const f = 0.07;
+    for (let i = 0; i <= n; i++) {
+      const u = (seg.L * i) / n;
+      frame.push(segBox(seg, Math.max(0, u - f / 2), Math.min(seg.L, u + f / 2), sill, head, w - 0.05, w + 0.05));
+    }
+    for (let j = 0; j <= rows; j++) {
+      const y = sill + ((head - sill) * j) / rows;
+      frame.push(segBox(seg, 0, seg.L, Math.max(sill, y - f / 2), Math.min(head, y + f / 2), w - 0.05, w + 0.05));
+    }
+  };
+  // Sectional door: stacked panels (edges read as panel joints)
+  const door = (seg, sill, head, w, panels) => {
+    const n = Math.max(2, Math.round((head - sill) / 0.55));
+    for (let i = 0; i < n; i++) {
+      const y0 = sill + ((head - sill) * i) / n;
+      panels.push(segBox(seg, 0, seg.L, y0 + 0.01, y0 + (head - sill) / n - 0.01, w - 0.04, w + 0.04));
+    }
+  };
+  const clean = (arr) => arr.filter(Boolean);
+
   const root = new THREE.Group();
   root.scale.setScalar(scale);
 
@@ -87,32 +137,57 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     content.add(meshWithEdges(merged(extrude(lv.walls, h)), mats.wall, mats.line));
     content.add(meshWithEdges(merged(extrude(lv.partitions, h - 0.05)), mats.part, mats.lineSoft));
 
-    // Openings: sill + lintel (wall) and glass pane, pushed half a wall inwards
+    // Openings: sill + lintel (wall), framed glass pane with transom, half a wall inwards
     const T = 0.3;
     const sill = lv.sill ?? 0.85;
     const head = Math.min(lv.head ?? 2.35, h - 0.1);
     const solid = [];
     const glass = [];
-    lv.openings.forEach(([x1, z1, x2, z2]) => {
-      const L = Math.hypot(x2 - x1, z2 - z1);
-      if (L < 0.3) return;
-      const ang = Math.atan2(z2 - z1, x2 - x1);
-      let nx = -Math.sin(ang), nz = Math.cos(ang);
-      const cx = (x1 + x2) / 2, cz = (z1 + z2) / 2;
-      if (!pointInPoly(cx + nx * 0.4, cz + nz * 0.4, lv.footprint)) { nx = -nx; nz = -nz; }
-      const px = cx + nx * T / 2, pz = cz + nz * T / 2;
-      const place = (g, y) => { g.rotateY(-ang); g.translate(px, y, pz); return g; };
-      if (sill > 0.02) solid.push(place(new THREE.BoxGeometry(L, sill, T), sill / 2));
-      solid.push(place(new THREE.BoxGeometry(L, h - head, T), head + (h - head) / 2));
-      glass.push(place(new THREE.BoxGeometry(L, head - sill, 0.04), sill + (head - sill) / 2));
+    const frame = [];
+    const panels = [];
+    lv.openings.forEach((o) => {
+      const seg = segment(o, lv.footprint);
+      if (seg.L < 0.3) return;
+      const w = -T / 2; // negative = inwards
+      if (sill > 0.02) solid.push(segBox(seg, 0, seg.L, 0, sill, -T, 0));
+      solid.push(segBox(seg, 0, seg.L, head, h, -T, 0));
+      glass.push(segBox(seg, 0, seg.L, sill, head, w - 0.02, w + 0.02));
+      if (seg.L <= 3.2) {
+        const f = 0.06;
+        frame.push(segBox(seg, 0, f, sill, head, w - 0.04, w + 0.04));
+        frame.push(segBox(seg, seg.L - f, seg.L, sill, head, w - 0.04, w + 0.04));
+        frame.push(segBox(seg, 0, seg.L, head - f, head, w - 0.04, w + 0.04));
+        frame.push(segBox(seg, 0, seg.L, sill, sill + f, w - 0.04, w + 0.04));
+        if (head - sill > 1.6) {
+          const y = sill + (head - sill) * 0.36;
+          frame.push(segBox(seg, 0, seg.L, y - f / 2, y + f / 2, w - 0.04, w + 0.04));
+        }
+      }
     });
-    content.add(meshWithEdges(merged(solid), mats.wall, mats.line));
-    const glassGeo = merged(glass);
+    (lv.curtains || []).forEach(([x1, z1, x2, z2, cs = 0, ch = h - 0.4]) => {
+      const seg = segment([x1, z1, x2, z2], lv.footprint);
+      solid.push(segBox(seg, 0, seg.L, ch, h, -T, 0));
+      curtain(seg, cs, ch, -0.08, glass, frame);
+    });
+    (lv.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3]) => {
+      const seg = segment([x1, z1, x2, z2], lv.footprint);
+      solid.push(segBox(seg, 0, seg.L, dh, h, -T, 0));
+      door(seg, ds, dh, -0.1, panels);
+    });
+    content.add(meshWithEdges(merged(clean(solid)), mats.wall, mats.line));
+    const glassGeo = merged(clean(glass));
     if (glassGeo) {
       const gm = new THREE.Mesh(glassGeo, mats.glass);
       content.add(gm);
-      content.add(new THREE.LineSegments(keep(new THREE.EdgesGeometry(glassGeo, 25)), mats.lineSoft));
+      if (blueprint) content.add(new THREE.LineSegments(keep(new THREE.EdgesGeometry(glassGeo, 25)), mats.lineSoft));
     }
+    const frameGeo = merged(clean(frame));
+    if (frameGeo) {
+      const fm = new THREE.Mesh(frameGeo, mats.frame);
+      fm.castShadow = !blueprint;
+      content.add(fm);
+    }
+    content.add(meshWithEdges(merged(clean(panels)), mats.door, mats.lineSoft));
 
     // Floor slab (not on the ground floor)
     let slab = null;
@@ -129,6 +204,11 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   const roof = new THREE.Group();
   roof.position.y = top.base + top.height;
   roof.add(meshWithEdges(merged(extrude([{ o: top.footprint, h: [] }], 0.35)), mats.slab, mats.line, 30));
+  if (data.roof?.green) {
+    const gm = new THREE.Mesh(merged(extrude([{ o: top.footprint, h: [] }], 0.1, 0.35)), mats.green);
+    gm.receiveShadow = !blueprint;
+    roof.add(gm);
+  }
   // parapet: thin wall along the footprint
   const par = [];
   const fp = top.footprint;
@@ -150,6 +230,45 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   const extras = new THREE.Group();
   (data.volumes || []).forEach((v) => {
     extras.add(meshWithEdges(merged(extrude([{ o: v.footprint, h: [] }], v.height)), mats.hall, mats.line, 30));
+    const glass = [], frame = [], panels = [];
+    (v.curtains || []).forEach(([x1, z1, x2, z2, cs = 0, ch = v.height - 0.4, bay = 1.2, rows = 4]) => {
+      curtain(segment([x1, z1, x2, z2], v.footprint), cs, ch, 0.04, glass, frame, bay, rows);
+    });
+    (v.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3.8]) => {
+      door(segment([x1, z1, x2, z2], v.footprint), ds, dh, 0.04, panels);
+    });
+    const gGeo = merged(clean(glass));
+    if (gGeo) extras.add(new THREE.Mesh(gGeo, mats.glass));
+    const fGeo = merged(clean(frame));
+    if (fGeo) { const fm = new THREE.Mesh(fGeo, mats.frame); fm.castShadow = !blueprint; extras.add(fm); }
+    extras.add(meshWithEdges(merged(clean(panels)), mats.door, mats.lineSoft));
+    if (v.roof) {
+      // flat roof slab with overhang on the free sides, optional green layer
+      const xs = v.footprint.map((p) => p[0]), zs = v.footprint.map((p) => p[1]);
+      const [ox0, ox1, oz0, oz1] = v.roof.overhang || [0.3, 0.3, 0.3, 0.3];
+      const x0 = Math.min(...xs) - ox0, x1 = Math.max(...xs) + ox1;
+      const z0 = Math.min(...zs) - oz0, z1 = Math.max(...zs) + oz1;
+      const slab = new THREE.BoxGeometry(x1 - x0, 0.32, z1 - z0);
+      slab.translate((x0 + x1) / 2, v.height + 0.16, (z0 + z1) / 2);
+      extras.add(meshWithEdges(keep(slab), mats.slab, mats.line, 30));
+      if (v.roof.green) {
+        const gg = new THREE.BoxGeometry(x1 - x0 - 0.4, 0.1, z1 - z0 - 0.4);
+        gg.translate((x0 + x1) / 2, v.height + 0.37, (z0 + z1) / 2);
+        const gm = new THREE.Mesh(keep(gg), mats.green);
+        gm.receiveShadow = !blueprint;
+        extras.add(gm);
+      }
+    }
+  });
+  (data.details || []).forEach((d) => {
+    const g = new THREE.BoxGeometry(d.w, d.y1 - d.y0, d.d);
+    g.translate(d.x, (d.y0 + d.y1) / 2, d.z);
+    roof.add(meshWithEdges(keep(g), mats.wall, mats.line));
+    if (d.cap) {
+      const c = new THREE.BoxGeometry(d.w + 0.12, 0.12, d.d + 0.12);
+      c.translate(d.x, d.y1 + 0.06, d.z);
+      roof.add(meshWithEdges(keep(c), mats.frame, null));
+    }
   });
   (data.site || []).forEach((s) => {
     extras.add(meshWithEdges(merged(extrude(s.polys, s.height)), mats.wall, mats.lineSoft));
