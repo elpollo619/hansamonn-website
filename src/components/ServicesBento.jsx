@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import TiltCard from '@/components/TiltCard';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import { servicesData } from '@/components/servicesData';
 
@@ -39,6 +40,7 @@ function BentoCard({ service, index }) {
       transition={{ duration: 0.5, delay: (index % 4) * 0.06 }}
       className={SPANS[index] || ''}
     >
+      <TiltCard className="h-full" max={index === 0 ? 3 : 6}>
       <Link
         to={`/leistungen/${service.slug}`}
         className={`group relative flex h-full min-h-[180px] flex-col justify-between border p-6 md:p-7 transition-colors ${toneClass}`}
@@ -89,6 +91,7 @@ function BentoCard({ service, index }) {
           )}
         </div>
       </Link>
+      </TiltCard>
     </motion.div>
   );
 }

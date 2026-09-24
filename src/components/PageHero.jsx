@@ -18,6 +18,7 @@ import { ChevronLeft } from 'lucide-react';
  *   size      {'lg'|'md'|'sm'}  vertical size (image variant: lg = 78vh)
  *   align     {'left'|'center'}
  *   children  actions (buttons, filters) rendered under the subtitle
+ *   overlay   optional decorative layer rendered above the photo, below the text
  */
 export default function PageHero({
   eyebrow,
@@ -27,6 +28,7 @@ export default function PageHero({
   back,
   size = 'md',
   align = 'left',
+  overlay,
   children,
 }) {
   const dark = Boolean(image);
@@ -60,6 +62,7 @@ export default function PageHero({
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220] via-[#0B1220]/55 to-[#0B1220]/15" />
         </>
       )}
+      {overlay}
 
       <div className="relative container mx-auto px-6 w-full">
         <motion.div

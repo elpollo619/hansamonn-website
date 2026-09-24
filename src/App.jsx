@@ -7,6 +7,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 
+import { motion } from 'framer-motion';
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/i18n';
 import { ComparisonProvider } from '@/context/ComparisonContext';
@@ -104,13 +105,16 @@ const ScrollToTop = () => {
 };
 
 function AppRoutes() {
+  const { pathname } = useLocation();
   return (
     <>
       <GoogleAnalytics />
       <ScrollToTop />
       <Header />
-      <main className="pt-20">
+      <main className="pt-16">
         <Suspense fallback={<PageLoader />}>
+        {/* Soft fade between pages (opacity only, so fixed overlays inside pages keep working) */}
+        <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
         <Routes>
           {/* HOME */}
           <Route path="/" element={<HomePage />} />
@@ -201,6 +205,7 @@ function AppRoutes() {
           {/* CATCH-ALL — show 404 page for unknown URLs */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </motion.div>
         </Suspense>
       </main>
       <Footer />

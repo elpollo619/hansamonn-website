@@ -7,6 +7,9 @@ import { servicesData } from '@/components/servicesData';
 import { projectsData } from '@/components/ProjectData';
 import AmonnLogo from '@/components/AmonnLogo';
 import PageHero from '@/components/PageHero';
+import BlueprintLines from '@/components/BlueprintLines';
+import BlueprintBuilding from '@/components/BlueprintBuilding';
+import TiltCard from '@/components/TiltCard';
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 const HERO_IMAGE =
@@ -37,7 +40,13 @@ const ArchitekturPage = () => {
         eyebrow={<AmonnLogo variant="architektur" size="md" color="#fff" lightColor="rgba(255,255,255,0.75)" />}
         title={<>Architektur mit <br />Verantwortung.</>}
         subtitle="Von der ersten Skizze bis zur Schlüsselübergabe — wir begleiten Bauvorhaben mit Erfahrung, Präzision und gestalterischem Anspruch. Seit über 55 Jahren in Muri bei Bern."
+        overlay={
+          <BlueprintLines className="pointer-events-none absolute right-[-10%] top-20 w-[90%] opacity-25 text-blue-100 md:right-[2%] md:top-1/2 md:-translate-y-1/2 md:w-[46%] md:opacity-60" />
+        }
       />
+
+      {/* ── Vom Plan zum Gebäude (3D, scroll-driven) ─────────────── */}
+      <BlueprintBuilding />
 
       {/* ── Leistungen grid ─────────────────────────────────────── */}
       <section className="py-20 md:py-24">
@@ -71,6 +80,7 @@ const ArchitekturPage = () => {
                 transition={{ duration: 0.6, delay: i * 0.08 }}
                 className="min-w-0"
               >
+                <TiltCard className="h-full" max={5}>
                 <Link
                   to={`/leistungen/${s.slug}`}
                   className="group flex flex-col bg-white border border-gray-100 hover:border-gray-300 p-8 transition-colors h-full"
@@ -94,6 +104,7 @@ const ArchitekturPage = () => {
                     ))}
                   </div>
                 </Link>
+                </TiltCard>
               </motion.div>
             ))}
           </div>
@@ -137,6 +148,7 @@ const ArchitekturPage = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
               >
+                <TiltCard className="h-full">
                 <Link
                   to={`/projekte/${p.id}`}
                   className="group block h-full bg-white border border-gray-100 hover:border-gray-300 transition-colors"
@@ -160,6 +172,7 @@ const ArchitekturPage = () => {
                     <p className="text-sm text-gray-500 mt-1">{p.location}</p>
                   </div>
                 </Link>
+                </TiltCard>
               </motion.div>
             ))}
           </div>
