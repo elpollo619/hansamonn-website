@@ -12,8 +12,7 @@ export const teamMembers = [
     specialization: 'Unternehmensführung, Architektur, Bauprojekte',
     description: 'Reto Amonn übernahm 1983 die Verantwortung für das Familienunternehmen und führt die Hans Amonn AG mit Engagement und Weitblick. Seine fundierte Ausbildung als Hochbauzeichner und Architekt bildet das Fundament für die erfolgreiche Unternehmensführung.',
     icon: Building2,
-    hasPhoto: true,
-    photoUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/05f7934d1fa6e7fbf7cffe5310da5806.jpg'
+    hasPhoto: false
   },
   {
     id: 2,
@@ -78,8 +77,7 @@ export const teamMembers = [
     specialization: 'Technische Zeichnungen, Bauausführung',
     description: 'Cristian Amaya Orrego kombiniert praktische Bauerfahrung als Polybauer mit technischen Zeichnerfähigkeiten. Diese einzigartige Kombination ermöglicht es ihm, realitätsnahe und umsetzbare Planungen zu erstellen.',
     icon: Wrench,
-    hasPhoto: true,
-    photoUrl: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/75002ab94a7e2acf71825e9363087e6d.jpg'
+    hasPhoto: false
   },
   {
     id: 8,

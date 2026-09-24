@@ -40,6 +40,10 @@ const ProjectDetailPage = () => {
     return <div className="text-center py-24 text-gray-600">Projekt nicht gefunden.</div>;
   }
 
+  // The top gallery shows the first three photos — only list the rest below
+  let shown = 0;
+  const moreGallery = (project.gallery || []).filter((item) => item.type !== 'image' || ++shown > 3);
+
   return (
     <>
       <Helmet>
@@ -64,7 +68,9 @@ const ProjectDetailPage = () => {
           {project.gallery?.find(item => item.type === 'image') && <ProjectGallery project={project} onImageClick={openLightbox} />}
           <ProjectInfo project={project} onButtonClick={handleContactClick} />
           {PROJECT_MODELS[project.slug] && <Model3DSection ids={PROJECT_MODELS[project.slug]} />}
-          {project.gallery?.length > 0 && <ProjectImages project={project} onImageClick={openLightbox} />}
+          {moreGallery.some((item) => item.type !== 'header') && (
+            <ProjectImages project={{ ...project, gallery: moreGallery }} onImageClick={openLightbox} />
+          )}
         </div>
       </motion.div>
 

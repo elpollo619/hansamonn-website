@@ -3,8 +3,7 @@ import { Helmet } from 'react-helmet';
 import About from '@/components/About';
 import PageHero from '@/components/PageHero';
 
-const HERO_IMAGE =
-  'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/40ccd8d190aeb0a543c3ff4ab8cdf19d.jpg';
+const HERO_IMAGE = '/images/ns-hotel/drohne-2.jpg';
 
 const AboutPage = () => {
   return (

@@ -4,9 +4,8 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Mail, GraduationCap, Award, Briefcase } from 'lucide-react';
 import PageHero from '@/components/PageHero';
+import MemberPortrait from '@/components/MemberPortrait';
 import { getMemberBySlug, getVisibleTeam } from '@/data/teamStore';
-
-const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1591630156291-91b867f54b8c?w=800&q=80';
 
 const TeamMemberPage = () => {
   const { slug } = useParams();
@@ -16,8 +15,6 @@ const TeamMemberPage = () => {
   if (!member) {
     return <Navigate to="/team" replace />;
   }
-
-  const imageUrl = member.photoUrl || PLACEHOLDER_IMAGE;
 
   const Icon = member.icon ?? null;
 
@@ -55,13 +52,7 @@ const TeamMemberPage = () => {
             >
               <div className="bg-white overflow-hidden border border-gray-100">
                 <div className="relative aspect-[4/5] bg-gray-100">
-                  <img
-                    src={imageUrl}
-                    alt={`${member.name} – ${member.position}`}
-                    className="w-full h-full object-cover object-[center_25%]"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <MemberPortrait member={member} />
                   {Icon && (
                   <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 flex items-center justify-center">
                     <Icon size={20} style={{ color: 'var(--brand-color, #1D3D78)' }} />

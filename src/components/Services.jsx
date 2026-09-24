@@ -92,36 +92,6 @@ const Services = () => (
     </section>
 
     {/* ── CTA ── */}
-    <section className="text-white py-20 md:py-24" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-8"
-        >
-          <div>
-            <p className="text-[11px] font-semibold tracking-hairline text-white/60 uppercase mb-3">
-              Kontakt
-            </p>
-            <h2 className="font-display uppercase text-4xl md:text-5xl font-semibold leading-none">
-              Haben Sie ein Projekt?
-            </h2>
-            <p className="text-white/60 mt-4 max-w-xl leading-relaxed">
-              Egal ob Neubau, Sanierung oder Immobiliensuche — sprechen Sie uns an.
-              Die erste Beratung ist kostenlos.
-            </p>
-          </div>
-          <Link
-            to="/kontakt"
-            className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap self-start md:self-auto"
-          >
-            Kostenlose Beratung <ArrowRight size={15} />
-          </Link>
-        </motion.div>
-      </div>
-    </section>
 
   </div>
 );

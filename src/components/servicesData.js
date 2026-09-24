@@ -59,8 +59,7 @@ export const servicesData = [
       'Modernisierung der Haustechnik',
       'Innenraumgestaltung und Ausbau',
     ],
-    coverImage:
-      'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/40ccd8d190aeb0a543c3ff4ab8cdf19d.jpg',
+    coverImage: '/images/muenchenbuchsee/titel.jpg',
   },
   {
     slug: 'projektbegleitung',

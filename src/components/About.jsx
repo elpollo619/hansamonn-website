@@ -55,9 +55,9 @@ const About = () => {
             <motion.div {...fadeUp} className="lg:col-span-7 min-w-0 relative pb-6 md:pb-0">
               <div className="relative overflow-hidden bg-gray-100 group">
                 <img
-                  alt="Wohnkomplex Allmendstrasse in Kerzers, ein Projekt der Hans Amonn AG"
+                  alt="N's Hotel in Kerzers aus der Luft, ein Projekt der Hans Amonn AG"
                   className="w-full h-80 md:h-[460px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  src="https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg"
+                  src="/images/ns-hotel/drohne-1.jpg"
                   loading="lazy"
                   decoding="async" />
               </div>

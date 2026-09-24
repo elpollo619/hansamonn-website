@@ -2,25 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, GraduationCap, Award, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const PLACEHOLDER_IMAGES = {
-  2: 'https://images.unsplash.com/photo-1648469941040-b1c1fac2d4b2?w=600&q=80',
-  3: 'https://images.unsplash.com/photo-1581093196867-ca3dba3c721b?w=600&q=80',
-  4: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80',
-  5: 'https://images.unsplash.com/photo-1677272295529-e72d5f7dd97e?w=600&q=80',
-  8: 'https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?w=600&q=80',
-  9: 'https://images.unsplash.com/photo-1591630156291-91b867f54b8c?w=600&q=80',
-  10: 'https://images.unsplash.com/photo-1583737177686-bbee18dfbecd?w=600&q=80',
-};
+import MemberPortrait from '@/components/MemberPortrait';
 
 const TeamMember = ({ member, index }) => {
   const Icon = member.icon ?? null;
-
-  const imageUrl =
-    member.hasPhoto && member.photoUrl
-      ? member.photoUrl
-      : PLACEHOLDER_IMAGES[member.id] ||
-        'https://images.unsplash.com/photo-1591630156291-91b867f54b8c?w=600&q=80';
 
   return (
     <motion.div
@@ -32,13 +17,7 @@ const TeamMember = ({ member, index }) => {
     >
       {/* Photo */}
       <div className="relative overflow-hidden aspect-[4/5] bg-gray-100">
-        <img
-          src={imageUrl}
-          alt={`${member.name} – ${member.position} bei Hans Amonn AG`}
-          className="w-full h-full object-cover object-[center_25%] group-hover:scale-105 transition-transform duration-700"
-          loading="lazy"
-          decoding="async"
-        />
+        <MemberPortrait member={member} imgClassName="group-hover:scale-105 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/70 via-[#0B1220]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Role icon badge */}

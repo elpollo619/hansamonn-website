@@ -19,7 +19,7 @@ const SECTIONS = [
     eyebrow: 'Architektur',
     title: 'Bauen & Gestalten',
     sub: 'Planung · Neubauten · Sanierungen',
-    image: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg',
+    image: '/images/ns-hotel/drohne-1.jpg',
   },
   {
     to: '/uber-uns',
@@ -27,7 +27,7 @@ const SECTIONS = [
     eyebrow: 'Über uns',
     title: 'Menschen & Geschichte',
     sub: 'Team · Geschichte · Kontakt',
-    image: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/40ccd8d190aeb0a543c3ff4ab8cdf19d.jpg',
+    image: '/images/muenchenbuchsee/titel.jpg',
   },
 ];
 

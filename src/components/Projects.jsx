@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import TiltCard from '@/components/TiltCard';
+import ProjectCover from '@/components/ProjectCover';
 import { Link } from 'react-router-dom';
 import { getVisibleProjects, categories } from '@/data/projectsStore';
 import { ArrowRight } from 'lucide-react';
@@ -76,12 +77,11 @@ const Projects = () => {
                   <div className="md:flex">
                     <div className="md:flex-shrink-0 md:w-5/12">
                       <div className="relative h-64 md:h-full md:min-h-[320px] overflow-hidden bg-gray-100">
-                        <img
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        <ProjectCover
                           src={project.coverImage}
                           alt={project.title}
-                          loading="lazy"
-                          decoding="async"
+                          label={project.status === 'In Planung' ? 'In Planung · Bilder folgen' : undefined}
+                          className="group-hover:scale-105 transition-transform duration-700"
                         />
                         <span
                           className="absolute top-4 left-4 text-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider"

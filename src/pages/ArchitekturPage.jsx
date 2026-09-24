@@ -11,10 +11,10 @@ import BlueprintLines from '@/components/BlueprintLines';
 import BlueprintBuilding from '@/components/BlueprintBuilding';
 import TiltCard from '@/components/TiltCard';
 import Model3DSection from '@/components/Model3DSection';
+import ProjectCover from '@/components/ProjectCover';
 
 const BRAND = 'var(--brand-color, #1D3D78)';
-const HERO_IMAGE =
-  'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg';
+const HERO_IMAGE = '/images/ns-hotel/drohne-1.jpg';
 
 const archServices = servicesData.filter((s) => s.category === 'architektur');
 const featuredProjects = projectsData.slice(0, 3);
@@ -158,12 +158,10 @@ const ArchitekturPage = () => {
                   className="group block h-full bg-white border border-gray-100 hover:border-gray-300 transition-colors"
                 >
                   <div className="aspect-[4/3] overflow-hidden bg-gray-100">
-                    <img
+                    <ProjectCover
                       src={p.coverImage}
                       alt={p.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
+                      className="transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
@@ -189,41 +187,6 @@ const ArchitekturPage = () => {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="text-white py-20 md:py-24" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
-        <div className="container mx-auto px-6">
-          <motion.div
-            {...fadeUp}
-            className="flex flex-col md:flex-row md:items-end md:justify-between gap-8"
-          >
-            <div>
-              <p className="text-[11px] font-semibold tracking-hairline text-white/60 uppercase mb-3">
-                Kontakt
-              </p>
-              <h2 className="font-display uppercase text-4xl md:text-5xl font-semibold leading-none">
-                Haben Sie ein Projekt?
-              </h2>
-              <p className="text-white/60 mt-4 max-w-md leading-relaxed">
-                Sprechen Sie uns an — die erste Beratung ist kostenlos.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                to="/kontakt"
-                className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold hover:bg-gray-100 transition-colors whitespace-nowrap"
-              >
-                Beratung anfragen <ArrowRight size={15} />
-              </Link>
-              <Link
-                to="/projekte"
-                className="inline-flex items-center justify-center gap-2 border border-white/40 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition-colors whitespace-nowrap"
-              >
-                Alle Projekte
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   );
 };

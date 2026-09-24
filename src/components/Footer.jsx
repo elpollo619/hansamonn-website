@@ -1,12 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { getSetting } from '@/data/settingsStore';
 
+// Pages that already end in their own contact block skip the footer CTA band
+const NO_CTA = ['/kontakt', '/termin'];
+
 const Footer = () => {
+  const { pathname } = useLocation();
+  const showCta = !NO_CTA.includes(pathname);
   const { t } = useTranslation();
   const year    = new Date().getFullYear();
   const phone   = getSetting('phone');
@@ -51,6 +56,7 @@ const Footer = () => {
   return (
     <footer className="relative overflow-hidden bg-[#0B1220] text-white">
       {/* ── CTA band ── */}
+      {showCta && (
       <div className="container mx-auto px-6 pt-20 pb-14 border-b border-white/10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
           <motion.div
@@ -81,6 +87,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      )}
 
       {/* ── Columns ── */}
       <div className="container mx-auto px-6 py-14">
