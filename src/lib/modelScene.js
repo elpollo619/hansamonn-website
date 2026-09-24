@@ -175,10 +175,20 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     group.add(content);
     const h = lv.height;
 
-    // Walls + partitions
+    // Walls + partitions (under a pitched roof the outlines are densified so gables follow the roof when cut)
     const edge = blueprint ? mats.line : null;
-    content.add(meshWithEdges(merged(extrude(lv.walls, h)), mats.wall, edge));
-    content.add(meshWithEdges(merged(extrude(lv.partitions, h - 0.05)), mats.part, mats.lineSoft));
+    const dense = (ring) => {
+      const out = [];
+      ring.forEach((a, i) => {
+        const b = ring[(i + 1) % ring.length];
+        const n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / 0.4));
+        for (let k = 0; k < n; k++) out.push([a[0] + ((b[0] - a[0]) * k) / n, a[1] + ((b[1] - a[1]) * k) / n]);
+      });
+      return out;
+    };
+    const densify = (polys) => (pitched ? polys.map((p) => ({ o: dense(p.o), h: (p.h || []).map(dense) })) : polys);
+    content.add(meshWithEdges(merged(extrude(densify(lv.walls), h)), mats.wall, edge));
+    content.add(meshWithEdges(merged(extrude(densify(lv.partitions), h - 0.05)), mats.part, mats.lineSoft));
 
     // Openings: sill + lintel (wall), framed glass pane with transom, half a wall inwards
     const T = 0.3;

@@ -98,8 +98,8 @@ export const projectsData = [
     year: new Date().getFullYear().toString(),
     description: 'Umfassende Neugestaltung und Sanierung des historischen Hotel-Restaurants Bären in Kerzers. Ein Projekt, das Tradition ehrt und moderne Gastfreundschaft neu definiert.',
     fullDescription: 'Das Projekt "Bären Kerzers" ist eine ambitionierte Sanierung des traditionsreichen "Hotel de l\'Ours". Unser Ziel ist es, den historischen Charme des Gebäudes zu bewahren und es gleichzeitig in ein modernes Zentrum der Gastlichkeit zu verwandeln. Die Planung umfasst die vollständige Neugestaltung der Hotelzimmer, des Restaurants und der öffentlichen Bereiche, um ein unvergessliches Erlebnis für Gäste zu schaffen. Dieses Projekt befindet sich derzeit in der Planungs- und Entwicklungsphase.',
-    coverImage: '',
-    gallery: [],
+    coverImage: '/images/projekte/baeren-3d.jpg',
+    gallery: [{ type: 'image', url: '/images/projekte/baeren-3d.jpg', alt: '3D-Modell aus dem Umbauprojekt 754, mit Umgebung' }],
     documents: [
       { type: 'pdf', title: 'Baupläne Erdgeschoss', description: 'Grundrisse und Schnitte für das neue Restaurantkonzept.', status: 'Verfügbar auf Anfrage' },
       { type: 'pdf', title: 'Visualisierungen Fassade', description: '3D-Renderings der geplanten Fassadenrenovierung.', status: 'In Erstellung' }
