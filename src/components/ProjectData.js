@@ -49,8 +49,8 @@ export const projectsData = [
     year: '2023',
     description: 'Komplette Sanierung und Modernisierung eines historischen Fachwerkhauses in Muri bei Bern. Das Projekt umfasste die Erneuerung der Fassade, den Innenausbau und die energetische Optimierung.',
     fullDescription: 'Dieses Projekt zeigt die Transformation eines charmanten, aber in die Jahre gekommenen Fachwerkhauses in ein modernes und energieeffizientes Zuhause. Unter Berücksichtigung des ursprünglichen Charakters wurde die gesamte Bausubstanz saniert. Die Innenräume wurden neu gestaltet, um offene, lichtdurchflutete Wohnbereiche zu schaffen, während die Fassade sorgfältig restauriert wurde, um ihren historischen Wert zu bewahren.',
-    coverImage: '',
-    gallery: [],
+    coverImage: '/images/projekte/hoeheweg-3d.jpg',
+    gallery: [{ type: 'image', url: '/images/projekte/hoeheweg-3d.jpg', alt: '3D-Modell aus den Fassadenplänen 1:100 (Aussenansicht)' }],
     features: ['Denkmalschutzauflagen', 'Energetische Sanierung', 'Kernsanierung', 'Moderner Innenausbau'],
     amenities: [
       { icon: Wrench, label: 'Komplettsanierung' },
@@ -126,8 +126,8 @@ export const projectsData = [
     year: '2026',
     description: 'Neubau eines Wohnhauses in steiler Hanglage: Eingang über einen Liftturm direkt von der Strasse, Wohnen unter dem Satteldach mit Lukarnen und Balkon, Schlafräume und Gartengeschoss darunter.',
     fullDescription: 'Das Wohnhaus gräbt sich in den Hang: Von der Strasse aus erscheint nur das Dach, während sich das Haus zum Garten hin über drei Geschosse öffnet. Ein Liftturm verbindet Carport und Strasse mit allen Ebenen. Zuoberst liegt der Wohn- und Essbereich unter dem 45°-Satteldach, belichtet durch drei Lukarnen und einen Balkon; darunter die Schlafräume, zuunterst das Gartengeschoss mit grossen Festverglasungen. Hinter dem Haus sorgt ein durchgehender Lichtschacht für Tageslicht im erdberührten Teil. Die Ausführungsplanung läuft, der Bau ist 2026 gestartet.',
-    coverImage: '',
-    gallery: [],
+    coverImage: '/images/projekte/bremgarten-3d.jpg',
+    gallery: [{ type: 'image', url: '/images/projekte/bremgarten-3d.jpg', alt: '3D-Modell aus den Ausführungsplänen (Aussenansicht, Umgebung schematisch)' }],
     features: ['Hanglage', 'Liftturm mit Zugang von der Strasse', 'Satteldach mit Lukarnen', 'Lichtschacht'],
     amenities: [
       { icon: Home, label: 'Einfamilienhaus' },
