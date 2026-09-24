@@ -166,11 +166,12 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
       const tt = rel.dot(toCam);
       const off = rel.addScaledVector(toCam, -tt).length();
       const hides = tt > 0 && tt < L && off < t.radius * 0.9 + modelRadius * 0.55;
-      const want = hides ? 0.12 : 1;
+      const want = hides ? 0 : 1;
       if (Math.abs(want - t.fade) < 0.002) return;
       t.fade += (want - t.fade) * Math.min(1, dt * 6);
       t.mats.forEach((m) => { m.opacity = t.fade * (m.userData.groundO ?? 1); m.depthWrite = t.fade > 0.95; });
       t.trunk.castShadow = t.crown.castShadow = t.fade > 0.5;
+      t.trunk.visible = t.crown.visible = t.fade > 0.03;
     });
   };
 
