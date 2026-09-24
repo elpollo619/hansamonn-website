@@ -57,7 +57,7 @@ const TeamInfo = () => {
               Vielseitige Unterstützung
             </h4>
             <p className="text-gray-600 leading-relaxed">
-              Mit Daniel als IT-Support sowie jungen Talenten wie Beatriz und Rayna verbinden wir
+              Mit Daniel als IT-Support sowie jungen Talenten wie Beatriz, Rayna und Sirin verbinden wir
               traditionelle Handwerkskunst mit modernster
               Technologie und umfassenden Service-Lösungen.
             </p>
