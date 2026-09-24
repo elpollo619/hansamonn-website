@@ -116,6 +116,30 @@ export const projectsData = [
     status: 'In Planung',
     owner: 'Hans Amonn AG',
     distances: []
+  },
+  {
+    id: 5,
+    slug: 'neubau-wohnhaus-bremgarten',
+    title: 'Neubau Wohnhaus am Hang',
+    category: 'wohnbau',
+    location: 'Bremgarten bei Bern',
+    year: '2026',
+    description: 'Neubau eines Wohnhauses in steiler Hanglage: Eingang über einen Liftturm direkt von der Strasse, Wohnen unter dem Satteldach mit Lukarnen und Balkon, Schlafräume und Gartengeschoss darunter.',
+    fullDescription: 'Das Wohnhaus gräbt sich in den Hang: Von der Strasse aus erscheint nur das Dach, während sich das Haus zum Garten hin über drei Geschosse öffnet. Ein Liftturm verbindet Carport und Strasse mit allen Ebenen. Zuoberst liegt der Wohn- und Essbereich unter dem 45°-Satteldach, belichtet durch drei Lukarnen und einen Balkon; darunter die Schlafräume, zuunterst das Gartengeschoss mit grossen Festverglasungen. Hinter dem Haus sorgt ein durchgehender Lichtschacht für Tageslicht im erdberührten Teil. Die Ausführungsplanung läuft, der Bau ist 2026 gestartet.',
+    coverImage: '',
+    gallery: [],
+    features: ['Hanglage', 'Liftturm mit Zugang von der Strasse', 'Satteldach mit Lukarnen', 'Lichtschacht'],
+    amenities: [
+      { icon: Home, label: 'Einfamilienhaus' },
+      { icon: Building, label: 'Neubau' },
+      { icon: Car, label: 'Carport' },
+      { icon: ClipboardList, label: 'In Ausführung' }
+    ],
+    size: '17.75 × 8.67 m',
+    rooms: 'Level 0–2 + Galerie',
+    status: 'In Ausführung',
+    owner: 'Privat',
+    distances: []
   }
 ];
 

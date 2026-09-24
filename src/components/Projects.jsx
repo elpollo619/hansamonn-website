@@ -8,7 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 
 // Projects with an interactive 3D model built from their plans
-const HAS_3D_MODEL = new Set(['wohnkomplex-allmendstrasse-kerzers', 'baeren-kerzers', 'renovation-hoeheweg-muri']);
+const HAS_3D_MODEL = new Set(['wohnkomplex-allmendstrasse-kerzers', 'baeren-kerzers', 'renovation-hoeheweg-muri', 'neubau-wohnhaus-bremgarten']);
 
 const BRAND = 'var(--brand-color, #1D3D78)';
 
@@ -80,7 +80,7 @@ const Projects = () => {
                         <ProjectCover
                           src={project.coverImage}
                           alt={project.title}
-                          label={project.status === 'In Planung' ? 'In Planung · Bilder folgen' : undefined}
+                          label={project.status === 'In Planung' || project.status === 'In Ausführung' ? `${project.status} · Bilder folgen` : undefined}
                           className="group-hover:scale-105 transition-transform duration-700"
                         />
                         <span

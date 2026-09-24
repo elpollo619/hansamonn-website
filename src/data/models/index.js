@@ -104,6 +104,22 @@ export const BUILDING_MODELS = {
     load: () => import('./hw.json').then((m) => m.default),
     site: () => import('./hw-site.json').then((m) => m.default),
   },
+  bg: {
+    id: 'bg',
+    name: 'Wohnhaus am Hang',
+    short: 'BG',
+    address: 'Bremgarten bei Bern',
+    kind: 'Neubau Wohnhaus',
+    source: 'Ausführungspläne 770 · 2026',
+    siteNote: 'Aussenansicht – Umgebung schematisch',
+    facts: [
+      { label: 'Länge', value: '17.75 m' },
+      { label: 'Dach', value: 'Satteldach 45°' },
+      { label: 'Geschosse', value: 'Level 0–2 + Galerie' },
+    ],
+    load: () => import('./bg.json').then((m) => m.default),
+    site: () => import('./bg-site.json').then((m) => m.default),
+  },
 };
 
 export const MODEL_LIST = Object.values(BUILDING_MODELS);

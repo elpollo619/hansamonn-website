@@ -390,6 +390,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     let slab = null;
     if (Math.abs(lv.base) > 0.01) {
       slab = meshWithEdges(merged(extrude([{ o: lv.footprint, h: [] }], 0.3, -0.3)), mats.slab, blueprint ? mats.line : null, 30);
+      cutToRoof(slab, lv.base);      // a floor high up in a pitched roof stays under the tiles
       group.add(slab);
     }
     root.add(group);
@@ -604,18 +605,18 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const i = levels.findIndex((l) => !l.underground && y >= l.base - 0.01 && y < l.base + l.height);
     return i >= 0 ? i : levels.length - 1;
   };
-  const addTo = (k, g, y = null) => {
+  const addTo = (k, g, y = null, site = false) => {
     if (!g) return;
-    const key = y === null ? k : `${levelAt(y)}|${k}`;
+    const key = site ? `site|${k}` : y === null ? k : `${levelAt(y)}|${k}`;
     (byMat[key] = byMat[key] || []).push(g);
   };
   (data.details || []).forEach((d) => {
-    if (d.kind === 'beam') { addTo(d.mat || 'beam', beamGeo(d.a, d.b, d.w ?? 0.14, d.t ?? 0.05, d.n), d.roof ? null : (d.a[1] + d.b[1]) / 2); return; }
+    if (d.kind === 'beam') { addTo(d.mat || 'beam', beamGeo(d.a, d.b, d.w ?? 0.14, d.t ?? 0.05, d.n), d.roof ? null : (d.a[1] + d.b[1]) / 2, d.site); return; }
     if (d.kind === 'block') {
       // box with absolute heights (quoins, plinth, brackets)
       const g = new THREE.BoxGeometry(d.w, d.y1 - d.y0, d.d);
       g.translate(d.x, (d.y0 + d.y1) / 2 - roofY, d.z);
-      addTo(d.mat || 'stone', g, (d.y0 + d.y1) / 2);
+      addTo(d.mat || 'stone', g, (d.y0 + d.y1) / 2, d.site);
       return;
     }
     if (d.kind === 'stair') {
@@ -625,9 +626,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       for (let i = 0; i < n; i++) {
         const g = new THREE.BoxGeometry(Math.abs(run) + 0.03, 0.05, Math.abs(d.z1 - d.z0) - 0.1);
         g.translate(d.x0 + run * (i + 0.5), d.y0 + rise * (i + 1) - 0.025 - roofY, (d.z0 + d.z1) / 2);
-        addTo('wood', g, d.y0 + 0.5);
+        addTo(d.mat || 'wood', g, d.y0 + 0.5, d.site);
       }
-      [d.z0, d.z1].forEach((z) => addTo('wood', beamGeo([d.x0, d.y0 + 0.1, z], [d.x1, d.y1 + 0.1, z], 0.28, 0.06, [0, 1]), d.y0 + 0.5));
+      [d.z0, d.z1].forEach((z) => addTo(d.mat || 'wood', beamGeo([d.x0, d.y0 + 0.1, z], [d.x1, d.y1 + 0.1, z], 0.28, 0.06, [0, 1]), d.y0 + 0.5, d.site));
       return;
     }
     if (d.kind === 'skylight' && pitched) {
@@ -742,8 +743,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const g = merged(geos);
     if (!g) return;
     const [li, k] = key.includes('|') ? key.split('|') : [null, key];
-    const parent = li === null ? roof : levels[+li].content;
-    if (li !== null) g.translate(0, roofY - levels[+li].base, 0);
+    const parent = li === null ? roof : li === 'site' ? extras : levels[+li].content;
+    if (li === 'site') g.translate(0, roofY, 0);
+    else if (li !== null) g.translate(0, roofY - levels[+li].base, 0);
     const m = new THREE.Mesh(g, k === 'roof' ? roofMat : matOf(k));
     m.castShadow = !blueprint && k !== 'glass';
     m.receiveShadow = !blueprint;
@@ -758,7 +760,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const g = merged(extrude(s.polys, s.height - 0.08));
       if (g) { const m = new THREE.Mesh(g, blueprint ? mats.hall : earth); m.receiveShadow = true; m.castShadow = true; extras.add(m); }
       const t = merged(extrude(s.polys, 0.08, s.height - 0.08));
-      if (t) { const m = new THREE.Mesh(t, blueprint ? mats.hall : grass); m.receiveShadow = true; extras.add(m); }
+      const top = s.top != null ? keep(new THREE.MeshStandardMaterial({ color: s.top, roughness: 1 })) : grass;
+      if (t) { const m = new THREE.Mesh(t, blueprint ? mats.hall : top); m.receiveShadow = true; extras.add(m); }
       return;
     }
     extras.add(meshWithEdges(merged(extrude(s.polys, s.height)), mats.wall, mats.lineSoft));
