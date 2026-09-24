@@ -47,14 +47,38 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
     fadeable(new THREE.MeshStandardMaterial({ color: 0xd8d2c6, roughness: 1 })),
     fadeable(new THREE.MeshStandardMaterial({ color: 0x8f7d65, roughness: 1 })),
   ]);
-  board.position.y = -D / 2 - 0.01;
+  const base = site.base ?? 0;          // lowest terrain layer (river, lower garden) when the site has relief
+  board.position.y = base - D / 2 - 0.01;
   board.receiveShadow = true;
   group.add(board);
   // thin topsoil line on the cut edge
   const soil = new THREE.Mesh(keep(new THREE.CylinderGeometry(R + 0.02, R + 0.02, 0.35, 96, 1, true)),
     fadeable(new THREE.MeshStandardMaterial({ color: 0x6f7f4f, roughness: 1 })));
-  soil.position.y = -0.18;
+  soil.position.y = base - 0.18;
   group.add(soil);
+
+  // Relief (swissALTI3D): stacked contour layers like a cardboard site model
+  if (site.bands?.length) {
+    const layerGeos = [];
+    let prevY = base;
+    site.bands.forEach((b) => {
+      const dh = b.y - prevY;
+      if (dh > 0.001) b.polys.forEach((p) => {
+        const g = new THREE.ExtrudeGeometry(shapeOf(p), { depth: dh, bevelEnabled: false, curveSegments: 1 });
+        g.rotateX(-Math.PI / 2);
+        g.translate(0, prevY, 0);
+        layerGeos.push(g);
+      });
+      prevY = b.y;
+    });
+    const lg = merged(layerGeos);
+    if (lg) {
+      const m = new THREE.Mesh(lg, fadeable(new THREE.MeshStandardMaterial({ color: 0xd9ccb2, roughness: 1 })));
+      m.receiveShadow = true;
+      m.castShadow = true;
+      group.add(m);
+    }
+  }
 
   // Land cover
   Object.entries(site.ground || {}).forEach(([cls, polys]) => {
@@ -63,7 +87,7 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
     const geo = merged(polys.map((p) => {
       const g = new THREE.ShapeGeometry(shapeOf(p), 1);
       g.rotateX(-Math.PI / 2);
-      g.translate(0, def.y, 0);
+      g.translate(0, (p.y ?? 0) + def.y, 0);
       return g;
     }));
     const mesh = new THREE.Mesh(geo, fadeable(new THREE.MeshStandardMaterial({ color: def.color, roughness: 1, metalness: 0 })));
@@ -127,18 +151,75 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
   // Neighbouring buildings (massing) — one mesh each so they can fade when they hide the model
   const lineMat = keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 }));
   const blocks = [];
+  const pip = (x, z, pts) => {
+    let inside = false;
+    for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+      const [xi, zi] = pts[i], [xj, zj] = pts[j];
+      if ((zi > z) !== (zj > z) && x < ((xj - xi) * (z - zi)) / (zj - zi) + xi) inside = !inside;
+    }
+    return inside;
+  };
+  const dense = (ring, step = 0.8) => {
+    const out = [];
+    ring.forEach((a, i) => {
+      const b = ring[(i + 1) % ring.length];
+      const n = Math.max(1, Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / step));
+      for (let k = 0; k < n; k++) out.push([a[0] + ((b[0] - a[0]) * k) / n, a[1] + ((b[1] - a[1]) * k) / n]);
+    });
+    return out;
+  };
   (site.buildings || []).forEach((b) => {
-    const geo = keep(new THREE.ExtrudeGeometry(shapeOf(b), { depth: b.y, bevelEnabled: false, curveSegments: 1 }));
+    const y0 = b.y0 ?? 0;
+    const roof = b.roof;
+    const roofTop = roof ? (x, z) => Math.min(...roof.planes.map(([a, bb, c]) => a * x + bb * z + c)) : null;
+    const topY = roof ? roof.ridge : b.y;
+    const outline = roof ? { o: dense(b.o), h: (b.h || []).map((r) => dense(r)) } : b;
+    const geo = keep(new THREE.ExtrudeGeometry(shapeOf(outline), { depth: topY - y0, bevelEnabled: false, curveSegments: 1 }));
     geo.rotateX(-Math.PI / 2);
+    geo.translate(0, y0, 0);
+    if (roof) {
+      // walls rise into the gables: clamp to the underside of the roof planes
+      const pos = geo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const lim = roofTop(pos.getX(i), pos.getZ(i)) - 0.05;
+        if (pos.getY(i) > lim) pos.setY(i, lim);
+      }
+      geo.computeVertexNormals();
+    }
     geo.computeBoundingSphere();
-    const mat = keep(new THREE.MeshStandardMaterial({ color: b.own ? 0xe9e5de : 0xd3cec5, roughness: 0.95, transparent: true, opacity: 1 }));
+    const wallCol = b.own ? 0xe9e5de : 0xe3ddd3;
+    const mat = keep(new THREE.MeshStandardMaterial({ color: wallCol, roughness: 0.95, transparent: true, opacity: 1 }));
     const mesh = new THREE.Mesh(geo, mat);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
+    const mats = [mat];
+    const parts = [mesh];
     const edges = new THREE.LineSegments(keep(new THREE.EdgesGeometry(geo, 30)), lineMat);
     group.add(mesh, edges);
+    const roofCol = b.own ? 0xd6d0c6 : 0xcbc5bb;          // neighbours stay neutral massing, only the form of the roof
+    if (roof) {
+      // pitched roof: each face extruded and sheared onto its plane, coloured from the aerial photo
+      const rg = [];
+      roof.faces.forEach(({ pts, plane }) => {
+        const [a, bb, c] = roof.planes[plane];
+        const g = new THREE.ExtrudeGeometry(shapeOf({ o: pts, h: [] }), { depth: 0.22, bevelEnabled: false, curveSegments: 1 });
+        g.rotateX(-Math.PI / 2);
+        const p2 = g.attributes.position;
+        for (let i = 0; i < p2.count; i++) p2.setY(i, a * p2.getX(i) + bb * p2.getZ(i) + c - 0.12 + p2.getY(i));
+        g.computeVertexNormals();
+        rg.push(g);
+      });
+      const g = merged(rg);
+      if (g) {
+        const rm = keep(new THREE.MeshStandardMaterial({ color: roofCol, roughness: 0.85, transparent: true, opacity: 1 }));
+        const m = new THREE.Mesh(g, rm);
+        m.castShadow = true;
+        group.add(m);
+        mats.push(rm); parts.push(m);
+      }
+    }
     const c = geo.boundingSphere.center.clone().multiplyScalar(scale);
-    blocks.push({ mesh, mat, edges, center: c, radius: geo.boundingSphere.radius * scale, fade: 1 });
+    blocks.push({ mesh, mat, mats, parts, edges, center: c, radius: geo.boundingSphere.radius * scale, fade: 1 });
   });
 
   // Fade buildings standing between the camera and the model (x-ray)
@@ -156,9 +237,8 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
       const near = b.center.distanceTo(camera.position) < L * 0.6;
       const want = hides ? 0.18 : near ? 0.4 : 1;
       b.fade += (want - b.fade) * Math.min(1, dt * 6);
-      b.mat.opacity = b.fade;
-      b.mat.depthWrite = b.fade > 0.95;
-      b.mesh.castShadow = b.fade > 0.5;
+      b.mats.forEach((m) => { m.opacity = b.fade; m.depthWrite = b.fade > 0.95; });
+      b.parts.forEach((m) => { m.castShadow = b.fade > 0.5; });
       b.edges.visible = b.fade > 0.4;
     });
     treeObjs.forEach((t) => {
@@ -184,19 +264,19 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
     const crownGeo = keep(new THREE.IcosahedronGeometry(1, 1));
     const trunkBase = fadeable(new THREE.MeshStandardMaterial({ color: 0x7a6a58, roughness: 1 }));
     const crownBase = CROWNS.map((c) => fadeable(new THREE.MeshStandardMaterial({ color: c, roughness: 1, flatShading: true })));
-    trees.forEach(([x, z, r, h, shade], i) => {
+    trees.forEach(([x, z, r, h, shade, ty = 0], i) => {
       const trunkH = Math.max(1.2, h - r * 1.7);
       const tm = keep(trunkBase.clone()), cm = keep(crownBase[shade % CROWNS.length].clone());
       const trunk = new THREE.Mesh(trunkGeo, tm);
-      trunk.position.set(x, 0, z);
+      trunk.position.set(x, ty, z);
       trunk.scale.set(1, trunkH, 1);
       const crown = new THREE.Mesh(crownGeo, cm);
-      crown.position.set(x, trunkH + r * 0.8, z);
+      crown.position.set(x, ty + trunkH + r * 0.8, z);
       crown.scale.set(r, r * 1.08, r);
       crown.rotation.y = (i * 1.7) % 6.28;
       [trunk, crown].forEach((m) => { m.castShadow = true; m.receiveShadow = true; group.add(m); });
       crown.receiveShadow = true;
-      treeObjs.push({ trunk, crown, mats: [tm, cm], center: new THREE.Vector3(x, trunkH, z).multiplyScalar(scale), radius: Math.max(r, h / 2) * scale, fade: 1 });
+      treeObjs.push({ trunk, crown, mats: [tm, cm], center: new THREE.Vector3(x, ty + trunkH, z).multiplyScalar(scale), radius: Math.max(r, h / 2) * scale, fade: 1 });
     });
     fadeMats.push(...treeObjs.flatMap((t) => t.mats));
   }
@@ -231,8 +311,21 @@ export function buildSite(THREE, mergeGeometries, site, { scale = 0.4 } = {}) {
     m.depthWrite = m.opacity > 0.95;
   });
 
+  // Terrain height under a world point (for keeping the camera above the relief)
+  const hg = site.hgrid;
+  const groundAt = hg ? (wx, wz) => {
+    const x = wx / scale, z = wz / scale;
+    const fx = (x - hg.x0) / hg.step, fz = (z - hg.x0) / hg.step;
+    const i = Math.max(0, Math.min(hg.n - 2, Math.floor(fz))), j = Math.max(0, Math.min(hg.n - 2, Math.floor(fx)));
+    const tz = Math.max(0, Math.min(1, fz - i)), tx = Math.max(0, Math.min(1, fx - j));
+    const h = (a, b) => hg.h[a * hg.n + b];
+    const v = (h(i, j) * (1 - tx) + h(i, j + 1) * tx) * (1 - tz) + (h(i + 1, j) * (1 - tx) + h(i + 1, j + 1) * tx) * tz;
+    return v * scale;
+  } : null;
+
   return {
     group,
+    groundAt,
     setGroundOpacity,
     bestAzimuth,
     updateOcclusion,

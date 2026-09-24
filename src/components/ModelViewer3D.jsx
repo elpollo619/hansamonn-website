@@ -273,6 +273,11 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
           if (k >= 1) introDone = true;
         }
         controls.update();
+        // never let the camera dig into the relief (hillside sites)
+        if (site?.groundAt) {
+          const gy = site.groundAt(camera.position.x, camera.position.z) + 1.2;
+          if (camera.position.y < gy) camera.position.y = gy;
+        }
         site?.updateOcclusion(camera, controls.target, bld.extent * 0.5, dt);
         renderer.render(scene, camera);
       };

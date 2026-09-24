@@ -149,6 +149,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   // Pitched roofs: top surface y = min over planes (a·x + b·z + c); walls are cut to its underside
   const pitched = data.roof?.pitched || null;
   const roofTop = pitched ? (x, z) => Math.min(...pitched.planes.map(([a, b, c]) => a * x + b * z + c)) : null;
+  // only where the roof actually covers (a cut-out over a balcony or loggia leaves things full height)
+  const underRoof = pitched ? (x, z) => pitched.faces.some((f) => pointInPoly(x, z, f.pts)) : null;
   const cutToRoof = (obj, base) => {
     if (!pitched) return;
     const under = pitched.thick ?? 0.3;
@@ -156,6 +158,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const pos = o.geometry?.attributes?.position;
       if (!pos) return;
       for (let i = 0; i < pos.count; i++) {
+        if (!underRoof(pos.getX(i), pos.getZ(i))) continue;
         const lim = roofTop(pos.getX(i), pos.getZ(i)) - under - base;
         if (pos.getY(i) > lim) pos.setY(i, lim);
       }
@@ -654,7 +657,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       // box with absolute heights (quoins, plinth, brackets)
       const g = new THREE.BoxGeometry(d.w, d.y1 - d.y0, d.d);
       g.translate(d.x, (d.y0 + d.y1) / 2 - roofY, d.z);
-      addTo(d.mat || 'stone', g, (d.y0 + d.y1) / 2, d.site);
+      addTo(d.mat || 'stone', g, d.roof ? null : (d.y0 + d.y1) / 2, d.site);
       return;
     }
     if (d.kind === 'stair') {
