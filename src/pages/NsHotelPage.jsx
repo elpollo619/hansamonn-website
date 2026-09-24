@@ -318,6 +318,7 @@ export default function NsHotelPage() {
               key={currentPano.id}
               src={`${IMG}/360/${currentPano.id}.jpg`}
               initialLon={currentPano.lon}
+              fallback={`${IMG}/360/${currentPano.id}-thumb.jpg`}
               alt={`360° Ansicht Musterzimmer – ${currentPano.label}`}
             />
           </div>

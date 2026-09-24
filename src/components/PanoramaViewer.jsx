@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Move3d, Loader2 } from 'lucide-react';
+import { Move3d, Loader2, ImageOff } from 'lucide-react';
 
 /**
  * PanoramaViewer – drag-to-look 360° viewer for equirectangular photos.
@@ -10,11 +10,13 @@ import { Move3d, Loader2 } from 'lucide-react';
  *   alt      {string}  accessible label
  *   autoRotate {boolean} slowly rotate until the user interacts
  *   initialLon {number}  start heading in degrees (0 = left edge of the photo)
+ *   fallback   {string}  flat preview shown if WebGL or the panorama fails
  */
-const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initialLon = 0, className = '' }) => {
+const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initialLon = 0, fallback, className = '' }) => {
   const mountRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [hint, setHint] = useState(true);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     let disposed = false;
@@ -24,7 +26,13 @@ const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initial
       if (disposed || !mountRef.current) return;
       const el = mountRef.current;
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+      } catch {
+        setFailed(true); setLoading(false);
+        return;
+      }
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(el.clientWidth, el.clientHeight);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -35,15 +43,20 @@ const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initial
 
       const geometry = new THREE.SphereGeometry(500, 60, 40);
       geometry.scale(-1, 1, 1);
-      const material = new THREE.MeshBasicMaterial();
+      // Dark until the photo arrives, so there is no white flash while loading.
+      const material = new THREE.MeshBasicMaterial({ color: 0x0b1220 });
       scene.add(new THREE.Mesh(geometry, material));
 
       new THREE.TextureLoader().load(src, (texture) => {
         if (disposed) { texture.dispose(); return; }
         texture.colorSpace = THREE.SRGBColorSpace;
         material.map = texture;
+        material.color.set(0xffffff);
         material.needsUpdate = true;
         setLoading(false);
+      }, undefined, () => {
+        if (disposed) return;
+        setFailed(true); setLoading(false);
       });
 
       let lon = initialLon, lat = 0, fov = 75;
@@ -115,6 +128,8 @@ const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initial
         renderer.dispose();
         renderer.domElement.remove();
       };
+    }).catch(() => {
+      if (!disposed) { setFailed(true); setLoading(false); }
     });
 
     return () => { disposed = true; cleanup(); };
@@ -127,13 +142,21 @@ const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initial
       aria-label={alt}
       className={`relative w-full h-full cursor-grab active:cursor-grabbing touch-none select-none bg-[#0B1220] ${className}`}
     >
+      {failed && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/70 text-sm">
+          {fallback && <img src={fallback} alt={alt} className="absolute inset-0 w-full h-full object-cover opacity-60" />}
+          <span className="relative inline-flex items-center gap-2 bg-black/55 px-4 py-2">
+            <ImageOff size={15} /> 360° Ansicht konnte nicht geladen werden
+          </span>
+        </div>
+      )}
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center text-white/70">
           <Loader2 className="animate-spin" size={28} />
         </div>
       )}
-      {!loading && hint && (
-        <div className="pointer-events-none absolute left-1/2 bottom-5 -translate-x-1/2 inline-flex items-center gap-2 bg-black/55 backdrop-blur px-4 py-2 text-xs text-white tracking-wide">
+      {!loading && !failed && hint && (
+        <div className="pointer-events-none absolute left-1/2 bottom-5 -translate-x-1/2 inline-flex items-center gap-2 whitespace-nowrap bg-black/55 backdrop-blur px-4 py-2 text-xs text-white tracking-wide">
           <Move3d size={15} /> Ziehen zum Umsehen
         </div>
       )}
