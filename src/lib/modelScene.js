@@ -189,6 +189,45 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     }
     content.add(meshWithEdges(merged(clean(panels)), mats.door, mats.lineSoft));
 
+    // Balconies: slab at floor level with glass railing on the free edges
+    const bal = data.balconies;
+    if (bal && bal.levels.some((b) => Math.abs(b - lv.base) < 0.01)) {
+      content.add(meshWithEdges(merged(extrude(bal.slabs.map((o) => ({ o, h: [] })), 0.22, -0.22)), mats.slab, mats.line, 30));
+      const pane = [], rail = [];
+      const rh = bal.rail ?? 1.0;
+      bal.rails.forEach(([x1, z1, x2, z2]) => {
+        const L = Math.hypot(x2 - x1, z2 - z1);
+        const seg = { x1, z1, L, ang: Math.atan2(z2 - z1, x2 - x1), nx: 0, nz: 0 };
+        pane.push(segBox(seg, 0.05, L - 0.05, 0.05, rh - 0.05, -0.012, 0.012));
+        rail.push(segBox(seg, 0, L, rh - 0.05, rh, -0.03, 0.03));
+        for (let u = 0; u <= L + 0.01; u += Math.max(1.2, L / Math.max(1, Math.round(L / 1.5)))) {
+          rail.push(segBox(seg, Math.max(0, u - 0.025), Math.min(L, u + 0.025), 0, rh, -0.025, 0.025));
+        }
+      });
+      const pg = merged(clean(pane));
+      if (pg) content.add(new THREE.Mesh(pg, mats.glass));
+      const rg = merged(clean(rail));
+      if (rg) content.add(new THREE.Mesh(rg, mats.frame));
+    }
+    // Louvred towers (Reduit) running through the levels
+    (data.louvres || []).forEach((l) => {
+      const y1 = Math.min(h, l.y1 - lv.base);
+      if (y1 <= 0.05 || l.y0 > lv.base + h) return;
+      const xs = l.o.map((q) => q[0]), zs = l.o.map((q) => q[1]);
+      const x0 = Math.min(...xs), x1 = Math.max(...xs), z0 = Math.min(...zs), z1 = Math.max(...zs);
+      const core = new THREE.BoxGeometry(x1 - x0 - 0.1, y1, z1 - z0 - 0.1);
+      core.translate((x0 + x1) / 2, y1 / 2, (z0 + z1) / 2);
+      content.add(new THREE.Mesh(keep(core), mats.door));
+      const slats = [];
+      for (let y = 0.12; y < y1 - 0.02; y += 0.24) {
+        const g = new THREE.BoxGeometry(x1 - x0, 0.035, z1 - z0);
+        g.translate((x0 + x1) / 2, y, (z0 + z1) / 2);
+        slats.push(g);
+      }
+      const sg = merged(slats);
+      if (sg) content.add(new THREE.Mesh(sg, mats.frame));
+    });
+
     // Floor slab (not on the ground floor)
     let slab = null;
     if (lv.base > 0.01) {
@@ -204,6 +243,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   const roof = new THREE.Group();
   roof.position.y = top.base + top.height;
   roof.add(meshWithEdges(merged(extrude([{ o: top.footprint, h: [] }], 0.35)), mats.slab, mats.line, 30));
+  if (data.roof?.extra?.length) {
+    roof.add(meshWithEdges(merged(extrude(data.roof.extra, 0.3, 0.05)), mats.slab, mats.line, 30));
+  }
   if (data.roof?.green) {
     const gm = new THREE.Mesh(merged(extrude([{ o: top.footprint, h: [] }], 0.1, 0.35)), mats.green);
     gm.receiveShadow = !blueprint;

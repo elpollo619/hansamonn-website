@@ -7,6 +7,9 @@
  *   walls / partitions: polygons { o: outer ring, h: holes }
  *   openings: facade segments [x1, z1, x2, z2] (windows / doors)
  *   footprint: outline ring
+ *
+ * <id>-site.json: surroundings — land cover from the official survey (geodienste.ch),
+ * neighbour heights from the building register (GWR) and trees from SWISSIMAGE (swisstopo).
  */
 export const BUILDING_MODELS = {
   a14: {
@@ -22,6 +25,7 @@ export const BUILDING_MODELS = {
       { label: 'Geschosse', value: 'EG + 2 OG' },
     ],
     load: () => import('./a14.json').then((m) => m.default),
+    site: () => import('./a14-site.json').then((m) => m.default),
   },
   a12: {
     id: 'a12',
@@ -36,6 +40,7 @@ export const BUILDING_MODELS = {
       { label: 'Geschosse', value: 'EG + 3 OG' },
     ],
     load: () => import('./a12.json').then((m) => m.default),
+    site: () => import('./a12-site.json').then((m) => m.default),
   },
   a4: {
     id: 'a4',
@@ -50,6 +55,7 @@ export const BUILDING_MODELS = {
       { label: 'Geschosse', value: 'EG + 3 OG' },
     ],
     load: () => import('./a4.json').then((m) => m.default),
+    site: () => import('./a4-site.json').then((m) => m.default),
   },
 };
 

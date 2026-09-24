@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Loader2, Rotate3d, Layers3 } from 'lucide-react';
 import { BUILDING_MODELS } from '@/data/models';
 import { buildModel } from '@/lib/modelScene';
+import { buildSite } from '@/lib/siteScene';
 
 /**
  * ModelViewer3D — interactive architectural model generated from CAD plans.
@@ -36,7 +37,8 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       import('three/examples/jsm/utils/BufferGeometryUtils.js'),
       import('three/examples/jsm/environments/RoomEnvironment.js'),
       meta.load(),
-    ]).then(([THREE, { OrbitControls }, { mergeGeometries }, { RoomEnvironment }, data]) => {
+      meta.site ? meta.site().catch(() => null) : null,
+    ]).then(([THREE, { OrbitControls }, { mergeGeometries }, { RoomEnvironment }, data, siteData]) => {
       if (disposed || !mountRef.current) return;
       const el = mountRef.current;
       let renderer;
@@ -49,7 +51,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(el.clientWidth, el.clientHeight);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.05;
+      renderer.toneMappingExposure = siteData ? 0.9 : 1.05;
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.domElement.style.touchAction = 'pan-y';
@@ -62,12 +64,14 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
 
       const camera = new THREE.PerspectiveCamera(32, el.clientWidth / el.clientHeight, 0.1, 500);
 
-      scene.add(new THREE.HemisphereLight(0xffffff, 0xe9e2d4, 0.9));
-      const sun = new THREE.DirectionalLight(0xfff6ea, 2.2);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0xe9e2d4, siteData ? 0.6 : 0.9));
+      const sun = new THREE.DirectionalLight(0xfff6ea, siteData ? 2.0 : 2.2);
       sun.position.set(-16, 26, 14);
       sun.castShadow = true;
       sun.shadow.mapSize.set(2048, 2048);
-      Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 20, bottom: -20, near: 1, far: 90 });
+      const sh = siteData ? 34 : 20;
+      if (siteData) sun.position.set(-24, 40, 21);
+      Object.assign(sun.shadow.camera, { left: -sh, right: sh, top: sh, bottom: -sh, near: 1, far: 130 });
       sun.shadow.bias = -0.0004;
       sun.shadow.normalBias = 0.02;
       scene.add(sun);
@@ -75,7 +79,10 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       const ground = new THREE.Mesh(new THREE.CircleGeometry(60, 64), new THREE.ShadowMaterial({ opacity: 0.16 }));
       ground.rotation.x = -Math.PI / 2;
       ground.receiveShadow = true;
-      scene.add(ground);
+      // Surroundings (survey land cover, neighbours, trees) replace the plain shadow ground
+      const site = siteData ? buildSite(THREE, mergeGeometries, siteData, { scale: 0.4 }) : null;
+      if (site) scene.add(site.group);
+      else scene.add(ground);
 
       const bld = buildModel(THREE, mergeGeometries, data, { style: 'model', scale: 0.4 });
       scene.add(bld.root);
@@ -94,11 +101,14 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       controls.addEventListener('start', () => { controls.autoRotate = false; });
       controls.target.set(0, bld.height * 0.32, 0);
 
-      const dist = () => (el.clientWidth < 640 ? 2.35 : 1.3) * bld.extent;
+      const dist = () => (el.clientWidth < 640 ? (site ? 2.6 : 2.35) : site ? 1.7 : 1.3) * bld.extent;
       const finalPos = new THREE.Vector3();
+      // default view from +x/+z; with surroundings, turn to the most open side
+      const az = site ? site.bestAzimuth(Math.atan2(0.72, 0.66)) : Math.atan2(0.72, 0.66);
       const setFinal = () => {
         const d = dist();
-        finalPos.set(d * 0.66, d * 0.52, d * 0.72);
+        const hr = Math.hypot(0.66, 0.72);
+        finalPos.set(d * hr * Math.cos(az), d * (site ? 0.85 : 0.52), d * hr * Math.sin(az));
       };
       setFinal();
       camera.position.copy(finalPos).multiplyScalar(1.6).add(new THREE.Vector3(0, bld.extent * 0.6, 0));
@@ -165,6 +175,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
           if (k >= 1) introDone = true;
         }
         controls.update();
+        site?.updateOcclusion(camera, controls.target, bld.extent * 0.5, dt);
         renderer.render(scene, camera);
       };
       tick();
@@ -176,6 +187,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
         io.disconnect();
         controls.dispose();
         bld.dispose();
+        site?.dispose();
         envTex.dispose();
         pmrem.dispose();
         ground.geometry.dispose();
@@ -247,6 +259,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       </div>
       <div className="pointer-events-none absolute right-3 bottom-3 md:right-5 md:bottom-5 font-mono text-[10px] md:text-[11px] text-gray-500 text-right leading-relaxed">
         AMONN ARCHITEKTUR · {meta.source}<br />{meta.address}
+        {meta.site && <><br />Umgebung: Amtliche Vermessung · GWR (BFS) · © swisstopo</>}
       </div>
     </div>
   );
