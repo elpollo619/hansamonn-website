@@ -73,6 +73,21 @@ export const BUILDING_MODELS = {
     load: () => import('./cr.json').then((m) => m.default),
     site: () => import('./cr-site.json').then((m) => m.default),
   },
+  br: {
+    id: 'br',
+    name: 'Bären Kerzers',
+    short: 'BR',
+    address: 'Burgstatt 7, 3210 Kerzers',
+    kind: 'Umbau Gasthof',
+    source: 'Umbauprojekt 754, 1:100 · 2024',
+    facts: [
+      { label: 'Länge', value: '33.51 m' },
+      { label: 'First', value: '+13.77 m' },
+      { label: 'Geschosse', value: 'EG + 2 OG + DG' },
+    ],
+    load: () => import('./br.json').then((m) => m.default),
+    site: () => import('./br-site.json').then((m) => m.default),
+  },
 };
 
 export const MODEL_LIST = Object.values(BUILDING_MODELS);

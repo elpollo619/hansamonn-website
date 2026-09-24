@@ -348,12 +348,22 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         const xs = pts.map((q) => q[0] * dx + q[1] * dz);
         const lo = Math.min(...xs), hi = Math.max(...xs);
         const us = pts.map((q) => q[0] * ux + q[1] * uz);
-        const u0 = Math.min(...us), u1 = Math.max(...us);
         const step = 0.33 * Math.cos(Math.atan(slope));
         for (let s = lo + step; s < hi - 0.02; s += step) {
-          const p0 = [ux * u0 + dx * s, uz * u0 + dz * s], p1 = [ux * u1 + dx * s, uz * u1 + dz * s];
-          if (!pointInPoly((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2, pts)) continue;
-          [p0, p1].forEach(([x, z]) => courses.push(x, a * x + b * z + c + 0.01 - roofY, z));
+          // clip the course to the face: crossings of the outline, paired inside-out
+          const cuts = [];
+          for (let i = 0; i < pts.length; i++) {
+            const j = (i + 1) % pts.length;
+            const si = xs[i] - s, sj = xs[j] - s;
+            if ((si < 0) !== (sj < 0)) cuts.push(us[i] + (us[j] - us[i]) * (si / (si - sj)));
+          }
+          cuts.sort((p, q) => p - q);
+          for (let k = 0; k + 1 < cuts.length; k += 2) {
+            [cuts[k], cuts[k + 1]].forEach((u) => {
+              const x = ux * u + dx * s, z = uz * u + dz * s;
+              courses.push(x, a * x + b * z + c + 0.01 - roofY, z);
+            });
+          }
         }
       }
     });
