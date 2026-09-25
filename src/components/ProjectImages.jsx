@@ -38,12 +38,15 @@ const ProjectImages = ({ project, onImageClick }) => {
             }
             if (item.type === 'compare') {
               return (
-                <div key={index} className="col-span-full">
+                <div key={index} className="col-span-full md:col-span-1 lg:col-span-2">
                   <ImageCompare
                     before={item.before}
                     after={item.after}
-                    beforeAlt="Vor der Renovierung"
-                    afterAlt="Nach der Renovierung"
+                    beforeAlt={item.beforeAlt || 'Vor dem Umbau'}
+                    afterAlt={item.afterAlt || 'Nach dem Umbau'}
+                    beforeLabel={item.beforeLabel}
+                    afterLabel={item.afterLabel}
+                    caption={item.caption}
                   />
                 </div>
               );

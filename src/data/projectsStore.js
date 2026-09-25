@@ -1,7 +1,7 @@
 import { projectsData as staticProjects, categories as staticCategories } from '@/components/ProjectData';
 
 // Bump the key whenever ProjectData.js changes so browsers drop their cached copy.
-const KEY = 'ha_projects_v6';
+const KEY = 'ha_projects_v7';
 
 function buildSeed() {
   return staticProjects.map((p, i) => ({

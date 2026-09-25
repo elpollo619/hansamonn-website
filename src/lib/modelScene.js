@@ -66,6 +66,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       };
 
   if (!blueprint && data.frameColor != null) mats.frame.color.setHex(data.frameColor);
+  if (!blueprint && data.woodColor != null) mats.wood.color.setHex(data.woodColor); // painted timber (Laube, cladding)
 
   const shapeOf = (p) => {
     const s = new THREE.Shape(p.o.map(([x, z]) => new THREE.Vector2(x, -z)));
