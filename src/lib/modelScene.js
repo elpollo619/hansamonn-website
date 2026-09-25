@@ -57,6 +57,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         pv: keep(new THREE.MeshStandardMaterial({ color: 0x7d858c, roughness: 0.4, metalness: 0.7 })),
         // weathered timber (cladding, Laube) and painted window shutters (Jalousieläden)
         wood: keep(new THREE.MeshStandardMaterial({ color: 0x9a7a5a, roughness: 0.9, metalness: 0 })),
+        // fair-faced concrete (Sichtbeton plinths)
+        concrete: keep(new THREE.MeshStandardMaterial({ color: 0xc3c4c0, roughness: 0.95, metalness: 0 })),
         shutter: keep(new THREE.MeshStandardMaterial({ color: 0x5f7466, roughness: 0.7, metalness: 0 })),
         // dark oak of the half-timbering / verge boards, sandstone of quoins and plinth
         beam: keep(new THREE.MeshStandardMaterial({ color: 0x5e4533, roughness: 0.85, metalness: 0 })),
@@ -67,6 +69,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
 
   // glazed curtain walls keep dark metal frames even where the windows are painted light
   mats.cframe = blueprint ? mats.frame : keep(mats.frame.clone());
+  if (!mats.concrete) mats.concrete = mats.wall;
   if (!blueprint && data.frameColor != null) mats.frame.color.setHex(data.frameColor);
   if (!blueprint && data.woodColor != null) mats.wood.color.setHex(data.woodColor); // painted timber (Laube, cladding)
   if (!blueprint && data.beamColor != null) mats.beam.color.setHex(data.beamColor); // painted half-timbering / verge boards
@@ -284,7 +287,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       door(seg, ds, dh, -0.1, panels, glassRow, glass);
     });
     // Vertical board cladding (Ökonomieteil): 14 cm boards with open joints, left out at the openings
-    const boards = [];
+    const boards = [], skin = [];
     (lv.cladding || []).forEach(([x1, z1, x2, z2, y0 = 0, y1 = h, dirH = 0]) => {
       const seg = segment([x1, z1, x2, z2], lv.footprint);
       const dx = Math.cos(seg.ang), dz = Math.sin(seg.ang);
@@ -295,6 +298,18 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         const ua = (o[0] - x1) * dx + (o[1] - z1) * dz, ub = (o[2] - x1) * dx + (o[3] - z1) * dz;
         holes.push([Math.min(ua, ub) - 0.08, Math.max(ua, ub) + 0.08, (o[4] ?? sill0) - 0.08, Math.min(o[5] ?? head0, h - 0.1) + 0.08]);
       });
+      if (dirH === 3) {
+        // fair-faced concrete skin, cut around the openings
+        for (let y = y0; y < y1 - 0.02; y += 0.2) {
+          const ye = Math.min(y1, y + 0.2), ym = (y + ye) / 2;
+          let us = [[0, seg.L]];
+          holes.filter(([, , hy0, hy1]) => ym > hy0 && ym < hy1).forEach(([a, b]) => {
+            us = us.flatMap(([p, q]) => [[p, Math.min(q, a)], [Math.max(p, b), q]]).filter(([p, q]) => q - p > 0.03);
+          });
+          us.forEach(([p, q]) => skin.push(segBox(seg, p, q, y, ye, 0.0, 0.02)));
+        }
+        return;
+      }
       if (dirH === 2) {
         // open louvre screen (Lattenrost) standing off the wall: posts every ~1.5 m, 10 cm slats with 6 cm gaps
         const np = Math.max(1, Math.round(seg.L / 1.5));
@@ -326,6 +341,12 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         ys.forEach(([p, q]) => boards.push(segBox(seg, u, ue, p, q, 0.0, 0.035)));
       }
     });
+    const skinGeo = merged(clean(skin));
+    if (skinGeo) {
+      const cm = new THREE.Mesh(skinGeo, mats.concrete);
+      cm.receiveShadow = !blueprint;
+      content.add(cm);
+    }
     const boardGeo = merged(clean(boards));
     if (boardGeo) {
       const bm = new THREE.Mesh(boardGeo, mats.wood);
