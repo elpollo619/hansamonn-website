@@ -15,6 +15,7 @@ export default function CookieBanner() {
 
   const handleChoice = (choice) => {
     localStorage.setItem(STORAGE_KEY, choice);
+    window.dispatchEvent(new Event('ha:cookie-consent'));
     setVisible(false);
   };
 

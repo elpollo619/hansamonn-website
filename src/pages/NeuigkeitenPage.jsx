@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 import { getBlogPosts } from '@/data/blogStore';
+import { PROJECT_NEWS } from '@/data/newsFallback';
 import { useTranslation } from '@/i18n';
 import PageHero from '@/components/PageHero';
 
@@ -45,6 +46,7 @@ function SkeletonCard() {
 
 // ── Single blog card ─────────────────────────────────────────────────────────
 function BlogCard({ post, index, lang }) {
+  const to = post.href || `/neuigkeiten/${post.slug}`;
   const displayTitle   = (lang === 'it' && post.title_it)   || post.title;
   const displayExcerpt = (lang === 'it' && post.excerpt_it) || post.excerpt;
   return (
@@ -55,7 +57,7 @@ function BlogCard({ post, index, lang }) {
       className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors group flex flex-col"
     >
       {/* Cover image */}
-      <Link to={`/neuigkeiten/${post.slug}`} className="block overflow-hidden aspect-[4/3] bg-gray-100">
+      <Link to={to} className="block overflow-hidden aspect-[4/3] bg-gray-100">
         {post.cover_image ? (
           <img
             src={post.cover_image}
@@ -77,14 +79,16 @@ function BlogCard({ post, index, lang }) {
           <span className={`inline-block text-xs font-semibold uppercase tracking-wider ${categoryColor(post.category)}`}>
             {post.category}
           </span>
-          <span className="flex items-center gap-1 text-xs text-gray-400">
-            <Calendar size={12} />
-            {formatDate(post.published_at)}
-          </span>
+          {post.published_at && (
+            <span className="flex items-center gap-1 text-xs text-gray-400">
+              <Calendar size={12} />
+              {formatDate(post.published_at)}
+            </span>
+          )}
         </div>
 
         {/* Title */}
-        <Link to={`/neuigkeiten/${post.slug}`}>
+        <Link to={to}>
           <h2 className="font-display uppercase text-2xl font-semibold leading-tight text-[#0F1B2D] mb-3 group-hover:text-[#1D3D78] transition-colors line-clamp-2">
             {displayTitle}
           </h2>
@@ -99,7 +103,7 @@ function BlogCard({ post, index, lang }) {
 
         {/* Weiterlesen */}
         <Link
-          to={`/neuigkeiten/${post.slug}`}
+          to={to}
           className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all" style={{ color: 'var(--brand-color, #1D3D78)' }}
         >
           Weiterlesen <ArrowRight size={14} />
@@ -154,18 +158,15 @@ export default function NeuigkeitenPage() {
             </div>
           )}
 
-          {!loading && error && (
-            <div className="text-center py-20">
-              <p className="text-gray-400 text-sm">Beiträge konnten nicht geladen werden.</p>
-            </div>
-          )}
-
-          {!loading && !error && posts.length === 0 && (
-            <div className="text-center py-20">
-              <Tag size={40} className="text-gray-200 mx-auto mb-4" />
-              <p className="font-display uppercase text-2xl font-semibold text-[#0F1B2D]">Noch keine Beiträge vorhanden.</p>
-              <p className="text-gray-500 text-sm mt-2">Schauen Sie bald wieder vorbei.</p>
-            </div>
+          {!loading && (error || posts.length === 0) && (
+            <>
+              <p className="eyebrow mb-6">Aus unseren Projekten</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {PROJECT_NEWS.map((post, i) => (
+                  <BlogCard key={post.id} post={post} index={i} lang={lang} />
+                ))}
+              </div>
+            </>
           )}
 
           {!loading && !error && posts.length > 0 && (
