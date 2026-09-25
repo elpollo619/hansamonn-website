@@ -150,7 +150,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   const pitched = data.roof?.pitched || null;
   const roofTop = pitched ? (x, z) => Math.min(...pitched.planes.map(([a, b, c]) => a * x + b * z + c)) : null;
   // only where the roof actually covers (a cut-out over a balcony or loggia leaves things full height)
-  const underRoof = pitched ? (x, z) => pitched.faces.some((f) => pointInPoly(x, z, f.pts)) : null;
+  const underPolys = pitched ? (pitched.under || pitched.faces.map((f) => f.pts)) : [];
+  const underRoof = pitched ? (x, z) => underPolys.some((p) => pointInPoly(x, z, p)) : null;
   const cutToRoof = (obj, base) => {
     if (!pitched) return;
     const under = pitched.thick ?? 0.3;
