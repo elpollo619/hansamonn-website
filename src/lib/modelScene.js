@@ -430,7 +430,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     // Floor slab (not on the ground floor)
     let slab = null;
     if (Math.abs(lv.base) > 0.01) {
-      slab = meshWithEdges(merged(extrude([{ o: lv.footprint, h: [] }], 0.3, -0.3)), mats.slab, blueprint ? mats.line : null, 30);
+      slab = meshWithEdges(merged(extrude(lv.slab || [{ o: lv.footprint, h: [] }], 0.3, -0.3)), mats.slab, blueprint ? mats.line : null, 30);
       cutToRoof(slab, lv.base);      // a floor high up in a pitched roof stays under the tiles
       group.add(slab);
     }
@@ -670,6 +670,16 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         addTo(d.mat || 'wood', g, d.y0 + 0.5, d.site);
       }
       [d.z0, d.z1].forEach((z) => addTo(d.mat || 'wood', beamGeo([d.x0, d.y0 + 0.1, z], [d.x1, d.y1 + 0.1, z], 0.28, 0.06, [0, 1]), d.y0 + 0.5, d.site));
+      return;
+    }
+    if (d.kind === 'prism') {
+      // free (z, y) profile extruded along x from x0 to x1 (cheeks of a roof cut, glazing that follows the slope)
+      const sh = new THREE.Shape(d.pts.map(([z, y]) => new THREE.Vector2(-z, y - roofY)));
+      const g = new THREE.ExtrudeGeometry(sh, { depth: 1, bevelEnabled: false, curveSegments: 1 });
+      g.rotateY(Math.PI / 2);
+      g.scale(d.x1 - d.x0, 1, 1);
+      g.translate(d.x0, 0, 0);
+      addTo(d.mat || 'wall', g, d.roof ? null : Math.min(...d.pts.map((p) => p[1])) + 0.5, d.site);
       return;
     }
     if (d.kind === 'skylight' && pitched) {
