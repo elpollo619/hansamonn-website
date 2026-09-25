@@ -156,6 +156,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       let resetting = false;
       // a drag takes over from the reset / intro camera moves
       controls.addEventListener('start', () => { resetting = false; introDone = true; });
+      if (import.meta.env.VITE_MV_DEBUG) window.__mv = { camera, controls, root: bld.root, scene, THREE };
       const offset = new THREE.Vector3();
       const dist = () => (el.clientWidth < 640 ? (site ? 2.6 : 2.35) : site ? 1.7 : 1.3) * bld.extent;
       const finalPos = new THREE.Vector3();
