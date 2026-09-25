@@ -69,6 +69,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   mats.cframe = blueprint ? mats.frame : keep(mats.frame.clone());
   if (!blueprint && data.frameColor != null) mats.frame.color.setHex(data.frameColor);
   if (!blueprint && data.woodColor != null) mats.wood.color.setHex(data.woodColor); // painted timber (Laube, cladding)
+  if (!blueprint && data.beamColor != null) mats.beam.color.setHex(data.beamColor); // painted half-timbering / verge boards
+  if (!blueprint && data.shutterColor != null) mats.shutter.color.setHex(data.shutterColor);
 
   const shapeOf = (p) => {
     const s = new THREE.Shape(p.o.map(([x, z]) => new THREE.Vector2(x, -z)));
@@ -408,6 +410,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
           // turned wooden balusters between a bottom and a top rail
           for (let u = 0.08; u < L - 0.05; u += 0.15) board.push(segBox(seg, u - 0.03, u + 0.03, 0.08, rh - 0.05, -0.03, 0.03));
           board.push(segBox(seg, 0, L, 0.02, 0.1, -0.05, 0.05));
+        } else if (bal.style === 'panel') {
+          // perforated sheet-metal parapet (drawn solid)
+          board.push(segBox(seg, 0.02, L - 0.02, 0.1, rh - 0.05, -0.015, 0.015));
         } else if (bal.style === 'boards') {
           // timber Laube parapet: vertical boards with joints
           for (let u = 0.02; u < L - 0.02; u += 0.13) board.push(segBox(seg, u, Math.min(L - 0.02, u + 0.118), 0.04, rh - 0.06, -0.02, 0.02));
@@ -422,9 +427,10 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       const pg = merged(clean(pane));
       if (pg) content.add(new THREE.Mesh(pg, mats.glass));
       const rg = merged(clean(rail));
-      if (rg) content.add(new THREE.Mesh(rg, bal.style === 'boards' || bal.style === 'balusters' ? mats.wood : mats.frame));
+      const railMat = bal.style === 'panel' ? mats.cframe : bal.style === 'boards' || bal.style === 'balusters' ? mats.wood : mats.frame;
+      if (rg) content.add(new THREE.Mesh(rg, railMat));
       const bg = merged(clean(board));
-      if (bg) { const m = new THREE.Mesh(bg, mats.wood); m.castShadow = !blueprint; content.add(m); }
+      if (bg) { const m = new THREE.Mesh(bg, bal.style === 'panel' ? mats.cframe : mats.wood); m.castShadow = !blueprint; content.add(m); }
     });
     // Louvred towers (Reduit) running through the levels
     (data.louvres || []).forEach((l) => {

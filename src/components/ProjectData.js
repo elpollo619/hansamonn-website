@@ -52,9 +52,13 @@ export const projectsData = [
     coverImage: '/images/projekte/hoeheweg-3d.jpg',
     gallery: [
       { type: 'image', url: '/images/projekte/hoeheweg-3d.jpg', alt: '3D-Modell aus den Fassadenplänen 1:100 (Aussenansicht)' },
+      { type: 'image', url: '/images/projekte/hoeheweg/drohne-2024.jpg', alt: 'Südwestgiebel heute, Drohnenaufnahme (2024)' },
       { type: 'image', url: '/images/projekte/hoeheweg/oekonomie-giebel-2009.jpg', alt: 'Umgebauter Ökonomieteil, Giebelfassade (2009)' },
       { type: 'image', url: '/images/projekte/hoeheweg/bestand-2000-nord.jpg', alt: 'Bauernhaus mit Ökonomieteil vor dem Umbau (2000)' },
       { type: 'header', title: 'Vorher / Nachher' },
+      { type: 'compare', before: '/images/projekte/hoeheweg/bestand-2000-sw.jpg', after: '/images/projekte/hoeheweg/drohne-2024-sw.jpg',
+        beforeLabel: '2000', afterLabel: '2024', beforeAlt: 'Fachwerkgiebel mit Laube vor der Sanierung (2000)', afterAlt: 'Derselbe Giebel nach der Sanierung, Drohnenaufnahme (2024)',
+        caption: 'Südwestgiebel: Fachwerk grau gefasst, neue Ziegel, Balkon im Dachgeschoss – vorher und heute aus der Luft.' },
       { type: 'compare', before: '/images/projekte/hoeheweg/oekonomie-2005.jpg', after: '/images/projekte/hoeheweg/oekonomie-2009.jpg',
         beforeLabel: '2005', afterLabel: '2009', beforeAlt: 'Ökonomieteil vor dem Umbau (2005)', afterAlt: 'Ökonomieteil nach dem Umbau zu Wohnungen (2009)',
         caption: 'Ökonomieteil: aus Scheune und Anbau wurden Wohnungen – mit Lamellenfassade und verglastem Treppenhaus.' },
