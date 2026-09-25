@@ -97,11 +97,11 @@ const Hero = () => {
           transition={{ duration: 0.6 }}
           className="pt-10 flex items-center gap-4"
         >
-          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/90">
+          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/90 whitespace-nowrap">
             Hans Amonn AG
           </span>
-          <span className="h-px w-10 bg-white/40" />
-          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/60">
+          <span className="h-px w-10 bg-white/40 hidden sm:block" />
+          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/60 whitespace-nowrap hidden sm:inline">
             Seit 1968 · Muri bei Bern
           </span>
         </motion.div>

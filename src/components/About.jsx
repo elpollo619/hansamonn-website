@@ -27,7 +27,7 @@ const About = () => {
             {/* Text Content */}
             <motion.div {...fadeUp} className="lg:col-span-5 min-w-0">
               <p className="eyebrow mb-3">Hans Amonn AG</p>
-              <p className="font-display uppercase text-2xl md:text-3xl font-semibold leading-tight text-[#0F1B2D] mb-6">
+              <p className="font-display text-2xl md:text-[1.75rem] font-semibold leading-snug text-[#0F1B2D] mb-6">
                 Mit langjähriger Erfahrung und einem engagierten Team bieten wir massgeschneiderte
                 Lösungen für Ihre Projekte an – von der Planung bis zur Umsetzung.
               </p>

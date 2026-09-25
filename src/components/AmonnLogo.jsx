@@ -8,8 +8,8 @@
  *   team          →  AMONN TEAM
  *   default       →  AMONN (bare)
  *
- * The font is "Barlow Semi Condensed" — closest Google Fonts match to the
- * original logo typeface (geometric, semi-condensed, professional).
+ * Set in Open Sans like the HANS AMONN AG logo: bold first word, regular rest,
+ * normal width and tight spacing.
  */
 
 import React from 'react';
@@ -33,10 +33,10 @@ const AmonnLogo = ({ variant = 'main', size = 'md', color = NAVY, lightColor = n
   const lc = lightColor || color;
 
   const sizes = {
-    sm:  { bold: 13, light: 13, gap: 0, tracking: '0.12em' },
-    md:  { bold: 17, light: 17, gap: 0, tracking: '0.13em' },
-    lg:  { bold: 26, light: 26, gap: 1, tracking: '0.12em' },
-    xl:  { bold: 40, light: 40, gap: 2, tracking: '0.11em' },
+    sm:  { bold: 15, light: 15, gap: 0, tracking: '0.01em' },
+    md:  { bold: 17, light: 17, gap: 0, tracking: '0.01em' },
+    lg:  { bold: 26, light: 26, gap: 1, tracking: '0' },
+    xl:  { bold: 40, light: 40, gap: 2, tracking: '-0.005em' },
   };
 
   const s = sizes[size] || sizes.md;
@@ -44,7 +44,8 @@ const AmonnLogo = ({ variant = 'main', size = 'md', color = NAVY, lightColor = n
   return (
     <span
       style={{
-        fontFamily: '"Barlow Semi Condensed", "Jost", "Inter", sans-serif',
+        fontFamily: '"Open Sans Variable", "Open Sans", system-ui, sans-serif',
+        fontStretch: '100%',
         letterSpacing: s.tracking,
         display: 'inline-flex',
         alignItems: 'baseline',
@@ -53,11 +54,11 @@ const AmonnLogo = ({ variant = 'main', size = 'md', color = NAVY, lightColor = n
         userSelect: 'none',
       }}
     >
-      <span style={{ fontSize: s.bold, fontWeight: 700, color, textTransform: 'uppercase' }}>
+      <span style={{ fontSize: s.bold, fontWeight: 750, color, textTransform: 'uppercase' }}>
         {bold}
       </span>
       {light && (
-        <span style={{ fontSize: s.light, fontWeight: 400, color: lc, textTransform: 'uppercase', marginLeft: 5 }}>
+        <span style={{ fontSize: s.light, fontWeight: 400, color: lc, textTransform: 'uppercase', marginLeft: '0.3em' }}>
           {light}
         </span>
       )}
@@ -75,16 +76,17 @@ export const AmonnLogoBlock = ({ variant = 'main', className = '' }) => {
     <div
       className={className}
       style={{
-        fontFamily: '"Barlow Semi Condensed", "Jost", sans-serif',
+        fontFamily: '"Open Sans Variable", "Open Sans", system-ui, sans-serif',
+        fontStretch: '100%',
         lineHeight: 1,
         userSelect: 'none',
       }}
     >
-      <span style={{ fontSize: 28, fontWeight: 700, color: NAVY, textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+      <span style={{ fontSize: 28, fontWeight: 700, color: NAVY, textTransform: 'uppercase', letterSpacing: '0' }}>
         {bold}
       </span>
       {light && (
-        <span style={{ fontSize: 28, fontWeight: 400, color: NAVY, textTransform: 'uppercase', letterSpacing: '0.14em', marginLeft: 8 }}>
+        <span style={{ fontSize: 28, fontWeight: 400, color: NAVY, textTransform: 'uppercase', letterSpacing: '0', marginLeft: '0.3em' }}>
           {light}
         </span>
       )}

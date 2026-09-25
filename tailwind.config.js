@@ -65,8 +65,8 @@ module.exports = {
 				},
 			},
 			fontFamily: {
-				sans: ['Jost', 'Inter', 'sans-serif'],
-				display: ['"Barlow Semi Condensed"', 'Jost', 'sans-serif'],
+				sans: ['"Open Sans Variable"', '"Open Sans"', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
+				display: ['"Open Sans Variable"', '"Open Sans"', 'system-ui', 'sans-serif'],
 			},
 			letterSpacing: {
 				'hairline': '0.28em',
