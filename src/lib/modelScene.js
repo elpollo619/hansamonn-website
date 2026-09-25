@@ -65,6 +65,8 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 })),
       };
 
+  // glazed curtain walls keep dark metal frames even where the windows are painted light
+  mats.cframe = blueprint ? mats.frame : keep(mats.frame.clone());
   if (!blueprint && data.frameColor != null) mats.frame.color.setHex(data.frameColor);
   if (!blueprint && data.woodColor != null) mats.wood.color.setHex(data.woodColor); // painted timber (Laube, cladding)
 
@@ -201,7 +203,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const head0 = Math.min(lv.head ?? 2.35, h - 0.1);
     const solid = [];
     const glass = [];
-    const frame = [];
+    const frame = [], cframe = [];
     const panels = [];
     const blinds = [];
     const slats = [];
@@ -272,7 +274,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     (lv.curtains || []).forEach(([x1, z1, x2, z2, cs = 0, ch = h - 0.4]) => {
       const seg = segment([x1, z1, x2, z2], lv.footprint);
       solid.push(segBox(seg, 0, seg.L, ch, h, -T, 0));
-      curtain(seg, cs, ch, -0.08, glass, frame);
+      curtain(seg, cs, ch, -0.08, glass, cframe);
     });
     (lv.doors || []).forEach(([x1, z1, x2, z2, ds = 0, dh = 3, glassRow = -1]) => {
       const seg = segment([x1, z1, x2, z2], lv.footprint);
@@ -291,6 +293,16 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         const ua = (o[0] - x1) * dx + (o[1] - z1) * dz, ub = (o[2] - x1) * dx + (o[3] - z1) * dz;
         holes.push([Math.min(ua, ub) - 0.08, Math.max(ua, ub) + 0.08, (o[4] ?? sill0) - 0.08, Math.min(o[5] ?? head0, h - 0.1) + 0.08]);
       });
+      if (dirH === 2) {
+        // open louvre screen (Lattenrost) standing off the wall: posts every ~1.5 m, 10 cm slats with 6 cm gaps
+        const np = Math.max(1, Math.round(seg.L / 1.5));
+        for (let i = 0; i <= np; i++) {
+          const u = Math.min(seg.L - 0.06, Math.max(0.06, (seg.L * i) / np));
+          boards.push(segBox(seg, u - 0.06, u + 0.06, y0, y1, 0.02, 0.2));
+        }
+        for (let y = y0 + 0.04; y < y1 - 0.05; y += 0.16) boards.push(segBox(seg, 0, seg.L, y, y + 0.1, 0.2, 0.24));
+        return;
+      }
       if (dirH) {
         // horizontal boards (Stülpschalung look): courses of 16 cm, cut around the openings
         for (let y = y0; y < y1 - 0.02; y += 0.16) {
@@ -329,6 +341,12 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     const frameGeo = merged(clean(frame));
     if (frameGeo) {
       const fm = new THREE.Mesh(frameGeo, mats.frame);
+      fm.castShadow = !blueprint;
+      content.add(fm);
+    }
+    const cframeGeo = merged(clean(cframe));
+    if (cframeGeo) {
+      const fm = new THREE.Mesh(cframeGeo, mats.cframe);
       fm.castShadow = !blueprint;
       content.add(fm);
     }
@@ -453,9 +471,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
     roofMat = tileMat;
     const faceGeos = [];
     const courses = [];
-    pitched.faces.forEach(({ pts, plane }) => {
+    pitched.faces.forEach(({ pts, plane, holes = [] }) => {
       const [a, b, c] = pitched.planes[plane];
-      const g = new THREE.ExtrudeGeometry(shapeOf({ o: pts, h: [] }), { depth: th, bevelEnabled: false, curveSegments: 1 });
+      const g = new THREE.ExtrudeGeometry(shapeOf({ o: pts, h: holes }), { depth: th, bevelEnabled: false, curveSegments: 1 });
       g.rotateX(-Math.PI / 2);
       const pos = g.attributes.position;
       for (let i = 0; i < pos.count; i++) {
@@ -471,16 +489,18 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         const dx = a / slope, dz = b / slope;           // up the slope (plan)
         const xs = pts.map((q) => q[0] * dx + q[1] * dz);
         const lo = Math.min(...xs), hi = Math.max(...xs);
-        const us = pts.map((q) => q[0] * ux + q[1] * uz);
         const step = 0.33 * Math.cos(Math.atan(slope));
         for (let s = lo + step; s < hi - 0.02; s += step) {
           // clip the course to the face: crossings of the outline, paired inside-out
           const cuts = [];
-          for (let i = 0; i < pts.length; i++) {
-            const j = (i + 1) % pts.length;
-            const si = xs[i] - s, sj = xs[j] - s;
-            if ((si < 0) !== (sj < 0)) cuts.push(us[i] + (us[j] - us[i]) * (si / (si - sj)));
-          }
+          [pts, ...holes].forEach((ring) => {
+            const rx = ring.map((q) => q[0] * dx + q[1] * dz), ru = ring.map((q) => q[0] * ux + q[1] * uz);
+            for (let i = 0; i < ring.length; i++) {
+              const j = (i + 1) % ring.length;
+              const si = rx[i] - s, sj = rx[j] - s;
+              if ((si < 0) !== (sj < 0)) cuts.push(ru[i] + (ru[j] - ru[i]) * (si / (si - sj)));
+            }
+          });
           cuts.sort((p, q) => p - q);
           for (let k = 0; k + 1 < cuts.length; k += 2) {
             [cuts[k], cuts[k + 1]].forEach((u) => {
@@ -748,10 +768,38 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         g.rotateY(Math.PI / 2);
         return g;
       };
-      const body = prof([[zf, yb], [zf, yt], [zb, ytb], [zb, yb]]);
-      body.scale(x1 - x0, 1, 1);
-      body.translate(x0, 0, 0);
-      roof.add(meshWithEdges(keep(body), mats.wall, blueprint ? mats.line : null, 30));
+      const part = (pts, xa, xb) => {
+        const g = prof(pts);
+        g.scale(xb - xa, 1, 1);
+        g.translate(xa, 0, 0);
+        return g;
+      };
+      if (d.open) {
+        // roof loggia (gedeckte Dachterrasse): cheeks, lintel, parapet and a glazed back wall set in at zg
+        const [ypar, zg] = d.open, c = 0.3, yl = yt - 0.3, yf = ypar - 1.0, xa = x0 + c, xb = x1 - c;
+        const pieces = [
+          part([[zf, yb], [zf, yt], [zb, ytb], [zb, yb]], x0, xa),
+          part([[zf, yb], [zf, yt], [zb, ytb], [zb, yb]], xb, x1),
+          part([[zf, yl], [zf, yt], [zb, ytb], [zb, yl]], xa, xb),
+          part([[zf, yb], [zf, ypar], [zf - dir * 0.27, ypar], [zf - dir * 0.27, yb]], xa, xb),
+          part([[zf - dir * 0.27, yb], [zf - dir * 0.27, yf], [zg, yf], [zg, yb]], xa, xb),
+          part([[zg, yb], [zg, yl], [zb, yl], [zb, yb]], xa, xb),
+        ];
+        roof.add(meshWithEdges(merged(pieces), mats.wall, blueprint ? mats.line : null, 30));
+        const gl = new THREE.BoxGeometry(xb - xa - 0.1, yl - yf, 0.04);
+        gl.translate((xa + xb) / 2, (yl + yf) / 2 - roofY, zg + dir * 0.02);
+        roof.add(new THREE.Mesh(keep(gl), mats.glass));
+        const n = Math.max(1, Math.round((xb - xa) / 0.9));
+        const fr = [];
+        for (let i = 0; i <= n; i++) {
+          const f = new THREE.BoxGeometry(0.07, yl - yf, 0.08);
+          f.translate(xa + 0.05 + ((xb - xa - 0.1) * i) / n, (yl + yf) / 2 - roofY, zg + dir * 0.04);
+          fr.push(f);
+        }
+        roof.add(new THREE.Mesh(merged(fr), mats.cframe));
+      } else {
+        roof.add(meshWithEdges(keep(part([[zf, yb], [zf, yt], [zb, ytb], [zb, yb]], x0, x1)), mats.wall, blueprint ? mats.line : null, 30));
+      }
       const o = 0.35, t = 0.14, k = (ytb - yt) / (zb - zf);
       const cap = prof([[zf + dir * o, yt - k * dir * o + 0.02], [zb, ytb + 0.02], [zb, ytb + 0.02 + t], [zf + dir * o, yt - k * dir * o + 0.02 + t]]);
       cap.scale(x1 - x0 + 0.5, 1, 1);
