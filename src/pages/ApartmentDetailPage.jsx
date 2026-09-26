@@ -159,7 +159,7 @@ const HotelSidebar = ({ apt, t }) => (
           <ExternalLink size={18} />
           {t('vermietung.hotel.bookDirectly')}
         </a>
-        <p className="text-xs text-gray-400 text-center mt-1.5">ns-hotel.ch – {t('vermietung.hotel.directBookingNote')}</p>
+        <p className="text-xs text-gray-400 text-center mt-1.5">ns-hotel.ch · {t('vermietung.hotel.directBookingNote')}</p>
       </div>
 
       {/* Divider */}

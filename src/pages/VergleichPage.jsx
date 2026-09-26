@@ -94,7 +94,6 @@ const VergleichPage = () => {
 
       {/* Hero */}
       <PageHero
-        eyebrow="Hans Amonn AG"
         title="Objektvergleich"
         back={{ to: '/immobilien/vermietung', label: 'Zurück zu Vermietung' }}
         size="sm"

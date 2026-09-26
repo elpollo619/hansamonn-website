@@ -115,7 +115,6 @@ export default function FAQPage() {
 
       {/* Hero */}
       <PageHero
-        eyebrow="Hans Amonn AG · FAQ"
         title="Häufig gestellte Fragen"
         subtitle="Hier finden Sie Antworten auf die wichtigsten Fragen rund um Vermietung und Immobilien."
         size="sm"

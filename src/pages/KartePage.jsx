@@ -173,7 +173,6 @@ export default function KartePage() {
 
       {/* Hero */}
       <PageHero
-        eyebrow="Hans Amonn AG · Kartenansicht"
         title="Alle Immobilien auf der Karte"
         subtitle={
           <>

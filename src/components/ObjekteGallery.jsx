@@ -11,6 +11,9 @@ const TYPE_LABEL = {
   apartment: 'Apartment',
 };
 
+// The type label already says "Long Stay", so drop it from the name.
+const shortName = (name = '') => name.replace(/\s·\s(Long|Short) Stay$/, '');
+
 /**
  * ObjekteGallery — expanding-panel gallery (21st-style) of the visible
  * properties. Desktop: hovered/focused panel expands; mobile: stacked cards.
@@ -76,7 +79,7 @@ export default function ObjekteGallery() {
                   }`}
                   style={{ writingMode: 'vertical-rl', transform: 'translateX(-50%) rotate(180deg)' }}
                 >
-                  {p.name}
+                  {shortName(p.name)}
                 </span>
 
                 {/* Expanded caption */}
@@ -90,7 +93,7 @@ export default function ObjekteGallery() {
                     {TYPE_LABEL[p.type] || p.type}
                   </span>
                   <span className="block font-display uppercase text-3xl lg:text-4xl font-semibold text-white leading-none mb-3">
-                    {p.name}
+                    {shortName(p.name)}
                   </span>
                   <span className="flex items-center justify-between gap-4 text-sm text-white/80">
                     <span className="flex items-center gap-1.5">
@@ -117,7 +120,7 @@ export default function ObjekteGallery() {
                   {TYPE_LABEL[p.type] || p.type}
                 </span>
                 <span className="block font-display uppercase text-2xl font-semibold text-white leading-none">
-                  {p.name}
+                  {shortName(p.name)}
                 </span>
               </div>
             </Link>

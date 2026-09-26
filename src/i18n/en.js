@@ -42,12 +42,12 @@ const en = {
     meta: {
       title: 'Apartments for Rent – Hans Amonn AG',
       description:
-        'Modern apartments for rent in Kerzers and surroundings. Hans Amonn AG – your real estate partner since 1968.',
+        'Modern apartments for rent in Kerzers and surroundings. Hans Amonn AG, your real estate partner since 1968.',
     },
     hero: {
       title: 'Stay & Live in Kerzers',
       subtitle:
-        'Apartments, furnished long stays, hotel and exclusive projects – everything in Kerzers and the region.',
+        'Apartments, furnished long stays, hotel and exclusive projects, everything in Kerzers and the region.',
       badge: 'Current Listings',
       offeringTypes: 'Apartments · Long Stay · Hotel · Projects',
       serviceApartments: 'Modern rental apartments in Kerzers',
@@ -90,7 +90,7 @@ const en = {
       contact: {
         title: 'Interested? We are happy to help',
         subtitle:
-          'Call us or write to us – we respond quickly and straightforwardly.',
+          'Call us or write to us, we respond quickly and straightforwardly.',
         call: 'Call',
         email: 'Send email',
         form: 'Enquiry form',
@@ -98,7 +98,7 @@ const en = {
       rented: {
         title: 'This apartment is currently rented.',
         subtitle:
-          'Contact us – we will notify you as soon as an apartment becomes available.',
+          'Contact us, we will notify you as soon as an apartment becomes available.',
       },
       gallery: 'Gallery',
       backToList: 'View all apartments',
@@ -106,7 +106,7 @@ const en = {
     empty: {
       title: 'No apartments available',
       subtitle:
-        'No apartments are currently available. Leave your contact details – we will get in touch as soon as something becomes free.',
+        'No apartments are currently available. Leave your contact details, we will get in touch as soon as something becomes free.',
     },
     cta: {
       title: "Didn't find what you were looking for?",
@@ -214,6 +214,7 @@ const en = {
     contact: {
       title: 'Interested? We are happy to advise you.',
       cta: 'Submit rental inquiry',
+      text: 'Tell us what you are looking for: dates, budget, location. We reply within 24 hours.',
     },
   },
 
@@ -293,7 +294,7 @@ const en = {
       title: 'Hans Amonn AG',
       subtitle: 'Construction & Real Estate',
       tagline:
-        'Your partner for construction and real estate since 1968 – tradition and innovation united',
+        'Your partner for construction and real estate since 1968, tradition and innovation united',
       ctaProjects: 'View projects',
       ctaContact: 'Request consultation',
     },

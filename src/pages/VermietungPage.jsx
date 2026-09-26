@@ -445,7 +445,7 @@ const VermietungPage = () => {
 
       {/* ── Hero ── */}
       <PageHero
-        eyebrow="AMONN IMMOBILIEN"
+        eyebrow="Immobilien"
         title={<span className="block">Immobilien &amp; <br className="hidden sm:block" />Wohnlösungen</span>}
         subtitle={t('vermietung.hero.subtitle')}
         image="/images/muri/titel.jpg"

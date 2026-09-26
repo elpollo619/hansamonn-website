@@ -19,7 +19,7 @@ const AboutPage = () => {
       </Helmet>
       
       <PageHero
-        eyebrow="Hans Amonn AG · Seit 1968"
+        eyebrow="Seit 1968"
         title="Über uns"
         subtitle="Seit unserer Gründung 1968 stehen wir bei der Hans Amonn AG für Qualität, Zuverlässigkeit und Innovation in der Bau- und Immobilienbranche."
         image={HERO_IMAGE}

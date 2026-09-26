@@ -17,7 +17,6 @@ export default function TerminbuchungPage() {
 
       {/* Hero */}
       <PageHero
-        eyebrow="Hans Amonn AG · Terminbuchung"
         title="Termin vereinbaren"
         subtitle="Vereinbaren Sie eine Besichtigung oder ein Beratungsgespräch."
         size="sm"

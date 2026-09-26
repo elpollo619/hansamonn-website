@@ -194,7 +194,7 @@ export const rentalData = [
     id: 7,
     slug: 'long-stay-munchenbuchsee',
     type: 'long-stay',
-    title: 'Long Stay – Münchenbuchsee',
+    title: 'Long Stay · Münchenbuchsee',
     lat: 47.0214,
     lng: 7.4484,
     subtitle: 'Möblierte Zimmer · Vollinklusivpauschale · ab 1 Monat',
@@ -220,7 +220,7 @@ export const rentalData = [
     deposit: 500,
     includes: ['Strom', 'Internet', 'Wasser', 'Reinigung 1× Woche'],
     description:
-      'Vollmöblierte Zimmer in Münchenbuchsee, ideal für Berufspendler, Saisonniers und Personen im Übergang. Alles inklusive – Strom, Internet, Wasser, wöchentliche Reinigung. Kaution CHF 500. Direkte Zugverbindung nach Bern.',
+      'Vollmöblierte Zimmer in Münchenbuchsee, ideal für Berufspendler, Saisonniers und Personen im Übergang. Alles inklusive: Strom, Internet, Wasser, wöchentliche Reinigung. Kaution CHF 500. Direkte Zugverbindung nach Bern.',
     images: [
       { url: '/images/muenchenbuchsee/titel.jpg', alt: 'Long Stay Münchenbuchsee' },
       { url: '/images/muenchenbuchsee/01.jpg',    alt: 'Zimmer Münchenbuchsee' },
@@ -238,7 +238,7 @@ export const rentalData = [
     id: 8,
     slug: 'ns-hotel-kerzers',
     type: 'hotel',
-    title: "N's Hotel – Self-Check-in",
+    title: "N's Hotel · Self-Check-in",
     lat: 47.002,
     lng: 7.199,
     subtitle: 'Modernes Boutique-Hotel · Kerzers · ab CHF 89 / Nacht',
@@ -291,7 +291,7 @@ export const rentalData = [
     title: 'Casa Reto',
     lat: 46.12,
     lng: 8.73,
-    subtitle: 'Ferienhaus im Tessin – Natur, Garten & Aussicht auf den Lago Maggiore',
+    subtitle: 'Ferienhaus im Tessin: Natur, Garten & Aussicht auf den Lago Maggiore',
     location: 'Gordemo / Lago Maggiore, Tessin',
     floor: null,
     floorNumber: null,
@@ -337,7 +337,7 @@ export const rentalData = [
     id: 10,
     slug: 'long-stay-kerzers',
     type: 'long-stay',
-    title: 'Long Stay – Kerzers',
+    title: 'Long Stay · Kerzers',
     lat: 46.9949,
     lng: 7.1985,
     subtitle: 'Möblierte Zimmer · zentral in Kerzers · ab 1 Monat',
@@ -388,7 +388,7 @@ export const rentalData = [
     id: 11,
     slug: 'long-stay-muri',
     type: 'long-stay',
-    title: 'Long Stay – Muri bei Bern',
+    title: 'Long Stay · Muri bei Bern',
     lat: 46.9261,
     lng: 7.5039,
     subtitle: 'Möblierte Zimmer · zentral gelegen · ab 1 Monat',
@@ -456,10 +456,10 @@ export const getByType = (type) =>
  * (Apartments excluded – no availability currently.)
  */
 export const getMietanfrageOptions = () => [
-  { value: 'long-stay-muri',           label: 'Long Stay – Muri bei Bern',    group: 'Long Stay' },
-  { value: 'long-stay-kerzers',        label: 'Long Stay – Kerzers',           group: 'Long Stay' },
-  { value: 'long-stay-munchenbuchsee', label: 'Long Stay – Münchenbuchsee',   group: 'Long Stay' },
-  { value: 'casa-reto',                label: 'Casa Reto – Ferienhaus Tessin', group: 'Ferien' },
+  { value: 'long-stay-muri',           label: 'Long Stay · Muri bei Bern',    group: 'Long Stay' },
+  { value: 'long-stay-kerzers',        label: 'Long Stay · Kerzers',           group: 'Long Stay' },
+  { value: 'long-stay-munchenbuchsee', label: 'Long Stay · Münchenbuchsee',   group: 'Long Stay' },
+  { value: 'casa-reto',                label: 'Casa Reto · Ferienhaus Tessin', group: 'Ferien' },
 ];
 
 /** @deprecated Use getMietanfrageOptions */

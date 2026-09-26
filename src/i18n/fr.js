@@ -42,12 +42,12 @@ const fr = {
     meta: {
       title: 'Appartements à louer – Hans Amonn AG',
       description:
-        'Appartements modernes à louer à Kerzers et environs. Hans Amonn AG – votre partenaire immobilier depuis 1968.',
+        'Appartements modernes à louer à Kerzers et environs. Hans Amonn AG, votre partenaire immobilier depuis 1968.',
     },
     hero: {
       title: 'Logement & Séjour',
       subtitle:
-        'Appartements, longs séjours meublés, hôtel et projets exclusifs – tout à Kerzers et dans la région.',
+        'Appartements, longs séjours meublés, hôtel et projets exclusifs, tout à Kerzers et dans la région.',
       badge: 'Offres actuelles',
       offeringTypes: 'Appartements · Long Stay · Hôtel · Projets',
       serviceApartments: 'Appartements modernes à Kerzers',
@@ -90,7 +90,7 @@ const fr = {
       contact: {
         title: 'Intéressé(e)? Nous vous conseillons volontiers',
         subtitle:
-          'Appelez-nous ou écrivez-nous – nous répondons rapidement et sans formalités.',
+          'Appelez-nous ou écrivez-nous, nous répondons rapidement et sans formalités.',
         call: 'Appeler',
         email: 'Envoyer un e-mail',
         form: 'Formulaire de demande',
@@ -98,7 +98,7 @@ const fr = {
       rented: {
         title: 'Cet appartement est actuellement loué.',
         subtitle:
-          "Contactez-nous – nous vous informerons dès qu'un appartement se libère.",
+          "Contactez-nous, nous vous informerons dès qu'un appartement se libère.",
       },
       gallery: 'Galerie',
       backToList: 'Voir tous les appartements',
@@ -106,7 +106,7 @@ const fr = {
     empty: {
       title: 'Aucun appartement disponible',
       subtitle:
-        "Pour l'instant, aucun appartement n'est libre. Laissez vos coordonnées – nous vous contacterons dès qu'un logement se libère.",
+        "Pour l'instant, aucun appartement n'est libre. Laissez vos coordonnées, nous vous contacterons dès qu'un logement se libère.",
     },
     cta: {
       title: "Vous n'avez pas trouvé ce que vous cherchez?",
@@ -214,6 +214,7 @@ const fr = {
     contact: {
       title: 'Intéressé ? Nous vous conseillons volontiers.',
       cta: 'Envoyer une demande de location',
+      text: 'Dites-nous ce que vous cherchez : période, budget, lieu. Nous répondons sous 24 heures.',
     },
   },
 
@@ -293,7 +294,7 @@ const fr = {
       title: 'Hans Amonn AG',
       subtitle: 'Construction & Immobilier',
       tagline:
-        'Votre partenaire en construction et immobilier depuis 1968 – tradition et innovation réunies',
+        'Votre partenaire en construction et immobilier depuis 1968, tradition et innovation réunies',
       ctaProjects: 'Voir les projets',
       ctaContact: 'Demander un conseil',
     },

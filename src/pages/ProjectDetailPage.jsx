@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { getProjectById } from '@/data/projectsStore';
+import { getProjectById, categories } from '@/data/projectsStore';
 import ProjectGallery from '@/components/ProjectGallery';
 import ProjectInfo from '@/components/ProjectInfo';
 import ProjectImages from '@/components/ProjectImages';
@@ -59,7 +59,7 @@ const ProjectDetailPage = () => {
         <PageHero
           size="sm"
           back={{ to: '/projekte', label: 'Zurück zu den Projekten' }}
-          eyebrow={[project.category?.replace('-', ' & '), project.location, project.year].filter(Boolean).join(' · ')}
+          eyebrow={[categories.find((c) => c.id === project.category)?.label, project.location, project.year].filter(Boolean).join(' · ')}
           title={<span className="break-words hyphens-auto">{project.title}</span>}
         />
 

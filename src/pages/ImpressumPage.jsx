@@ -11,7 +11,7 @@ const ImpressumPage = () => {
         <meta name="description" content="Impressum und rechtliche Hinweise der Hans Amonn AG. Kontaktinformationen und Unternehmensangaben." />
       </Helmet>
 
-      <PageHero eyebrow="Hans Amonn AG · Rechtliches" title="Impressum" size="sm" />
+      <PageHero eyebrow="Rechtliches" title="Impressum" size="sm" />
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}

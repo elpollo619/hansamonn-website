@@ -199,7 +199,7 @@ const FavoritenPage = () => {
       </Helmet>
 
       <PageHero
-        eyebrow="Hans Amonn AG · Immobilien"
+        eyebrow="Immobilien"
         title="Meine Favoriten"
         subtitle={
           favoritedItems.length === 0

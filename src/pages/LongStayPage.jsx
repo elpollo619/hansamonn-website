@@ -80,7 +80,7 @@ export default function LongStayPage() {
       {/* Hero */}
       <PageHero
         back={{ to: '/immobilien', label: 'Immobilien' }}
-        eyebrow="Hans Amonn AG · Long Stay"
+        eyebrow="Vermietung"
         title="Long Stay"
         subtitle="Möblierte Zimmer für Aufenthalte ab einem Monat, voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten."
         image="/images/kerzers/titel.jpg"

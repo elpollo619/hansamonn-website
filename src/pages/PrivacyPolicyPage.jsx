@@ -11,7 +11,7 @@ const PrivacyPolicyPage = () => {
         <meta name="description" content="Datenschutzerklärung der Hans Amonn AG. Erfahren Sie, wie wir Ihre Daten schützen und verwenden." />
       </Helmet>
 
-      <PageHero eyebrow="Hans Amonn AG · Rechtliches" title="Datenschutzerklärung" size="sm" />
+      <PageHero eyebrow="Rechtliches" title="Datenschutzerklärung" size="sm" />
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}

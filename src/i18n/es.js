@@ -42,12 +42,12 @@ const es = {
     meta: {
       title: 'Apartamentos en alquiler – Hans Amonn AG',
       description:
-        'Modernos apartamentos en alquiler en Kerzers y alrededores. Hans Amonn AG – su socio inmobiliario desde 1968.',
+        'Modernos apartamentos en alquiler en Kerzers y alrededores. Hans Amonn AG, su socio inmobiliario desde 1968.',
     },
     hero: {
       title: 'Alojamiento & Estancia',
       subtitle:
-        'Apartamentos, largas estancias amuebladas, hotel y proyectos exclusivos – todo en Kerzers y la región.',
+        'Apartamentos, largas estancias amuebladas, hotel y proyectos exclusivos, todo en Kerzers y la región.',
       badge: 'Ofertas actuales',
       offeringTypes: 'Apartamentos · Long Stay · Hotel · Proyectos',
       serviceApartments: 'Apartamentos modernos en Kerzers',
@@ -89,7 +89,7 @@ const es = {
       availableFrom: 'Disponible desde',
       contact: {
         title: '¿Interesado? Con gusto le asesoramos',
-        subtitle: 'Llámenos o escríbanos – respondemos rápido y sin complicaciones.',
+        subtitle: 'Llámenos o escríbanos, respondemos rápido y sin complicaciones.',
         call: 'Llamar',
         email: 'Enviar correo',
         form: 'Formulario de consulta',
@@ -97,7 +97,7 @@ const es = {
       rented: {
         title: 'Este apartamento está actualmente alquilado.',
         subtitle:
-          'Contáctenos – le informaremos en cuanto haya disponibilidad.',
+          'Contáctenos, le informaremos en cuanto haya disponibilidad.',
       },
       gallery: 'Galería',
       backToList: 'Ver todos los apartamentos',
@@ -213,6 +213,7 @@ const es = {
     contact: {
       title: '¿Interesado? Le asesoramos con gusto.',
       cta: 'Solicitar alquiler',
+      text: 'Cuéntenos qué busca: fechas, presupuesto, ubicación. Le respondemos en 24 horas.',
     },
   },
 
@@ -292,7 +293,7 @@ const es = {
       title: 'Hans Amonn AG',
       subtitle: 'Construcción e Inmobiliaria',
       tagline:
-        'Su socio en construcción e inmobiliaria desde 1968 – tradición e innovación unidas',
+        'Su socio en construcción e inmobiliaria desde 1968, tradición e innovación unidas',
       ctaProjects: 'Ver proyectos',
       ctaContact: 'Solicitar consulta',
     },

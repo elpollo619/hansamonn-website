@@ -29,7 +29,7 @@ const About = () => {
               <p className="eyebrow mb-3">Hans Amonn AG</p>
               <p className="font-display text-2xl md:text-[1.75rem] font-semibold leading-snug text-[#0F1B2D] mb-6">
                 Mit langjähriger Erfahrung und einem engagierten Team bieten wir massgeschneiderte
-                Lösungen für Ihre Projekte an – von der Planung bis zur Umsetzung.
+                Lösungen für Ihre Projekte an, von der Planung bis zur Umsetzung.
               </p>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Für uns ist Architektur weit mehr als das Planen und Bauen von Gebäuden.
@@ -114,7 +114,7 @@ const About = () => {
               },
               {
                 mark: 'Heute',
-                text: 'Heute ist die Hans Amonn AG weit mehr als ein Architekturbüro. Das Unternehmen plant, baut, verkauft und vermietet Liegenschaften und bietet massgeschneiderte Lösungen für seine Kunden. Diese Tradition ist die Grundlage für unsere Zukunft – innovativ, nachhaltig und zuverlässig.',
+                text: 'Heute ist die Hans Amonn AG weit mehr als ein Architekturbüro. Das Unternehmen plant, baut, verkauft und vermietet Liegenschaften und bietet massgeschneiderte Lösungen für seine Kunden. Diese Tradition ist die Grundlage für unsere Zukunft: innovativ, nachhaltig und zuverlässig.',
               },
             ].map((item, i) => (
               <motion.div

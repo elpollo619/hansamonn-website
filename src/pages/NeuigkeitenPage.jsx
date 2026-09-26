@@ -141,7 +141,6 @@ export default function NeuigkeitenPage() {
       </Helmet>
 
       <PageHero
-        eyebrow="Hans Amonn AG"
         title="Neuigkeiten"
         subtitle="Aktuelle Beiträge, Projekte und Einblicke aus unserem Unternehmen."
         size="md"

@@ -6,7 +6,7 @@ export const PROJECT_NEWS = [
     href: '/projekte/5',
     category: 'Architektur',
     title: 'Bremgarten: Baugrube am Aarehang',
-    excerpt: 'Absteckung, Aushub und Nagelwand – das Wohnhaus am Hang wächst. Fotos vom Baufortschritt und das 3D-Modell aus den Ausführungsplänen.',
+    excerpt: 'Absteckung, Aushub und Nagelwand: Das Wohnhaus am Hang wächst. Fotos vom Baufortschritt und das 3D-Modell aus den Ausführungsplänen.',
     cover_image: '/images/projekte/bremgarten/baugrube-aare.jpg',
   },
   {
@@ -14,7 +14,7 @@ export const PROJECT_NEWS = [
     href: '/projekte/2',
     category: 'Architektur',
     title: 'Höheweg 8: Fachwerkhaus vorher und heute',
-    excerpt: 'Vom Bauernhaus mit Scheune zu Wohnungen – Fotos von 2000 und die Drohnenaufnahme von heute im direkten Vergleich.',
+    excerpt: 'Vom Bauernhaus mit Scheune zu Wohnungen. Fotos von 2000 und die Drohnenaufnahme von heute im direkten Vergleich.',
     cover_image: '/images/projekte/hoeheweg/drohne-2024-sw.jpg',
   },
   {
@@ -22,7 +22,7 @@ export const PROJECT_NEWS = [
     href: '/ns-hotel',
     category: 'Immobilien',
     title: "N's Hotel Kerzers: Self-Check-in",
-    excerpt: '36 Zimmer an der Allmendstrasse in Kerzers – ankommen, einchecken, wohlfühlen. Online buchen, rund um die Uhr einchecken.',
+    excerpt: '36 Zimmer an der Allmendstrasse in Kerzers: ankommen, einchecken, wohlfühlen. Online buchen, rund um die Uhr einchecken.',
     cover_image: '/images/ns-hotel/aussen.jpg',
   },
   {
@@ -38,7 +38,7 @@ export const PROJECT_NEWS = [
     href: '/projekte/4',
     category: 'Architektur',
     title: 'Bären Kerzers: Umbau mit Hotel und Restaurant',
-    excerpt: 'Das Umbauprojekt für den Bären in Kerzers als 3D-Modell – mit Balkonen, Dachfenstern und Tiefgarage.',
+    excerpt: 'Das Umbauprojekt für den Bären in Kerzers als 3D-Modell, mit Balkonen, Dachfenstern und Tiefgarage.',
     cover_image: '/images/projekte/baeren-3d.jpg',
   },
 ];

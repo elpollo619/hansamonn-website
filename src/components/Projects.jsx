@@ -11,6 +11,13 @@ import PageHero from '@/components/PageHero';
 const HAS_3D_MODEL = new Set(['ns-hotel-kerzers', 'wohnkomplex-allmendstrasse-kerzers', 'baeren-kerzers', 'renovation-hoeheweg-muri', 'neubau-wohnhaus-bremgarten']);
 
 const BRAND = 'var(--brand-color, #1D3D78)';
+const FINISHED = new Set(['Fertiggestellt', 'Abgeschlossen']);
+
+// "Höheweg 8, 3074 Muri bei Bern" -> "Muri bei Bern"
+const townOf = (location = '') => {
+  const parts = location.split(',').map((x) => x.trim()).filter((x) => x && x !== 'Schweiz');
+  return (parts[parts.length - 1] || '').replace(/^\d{4}\s+/, '');
+};
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('alle');
@@ -28,7 +35,6 @@ const Projects = () => {
     <>
       {/* Header */}
       <PageHero
-        eyebrow="Hans Amonn AG"
         title="Unsere Projekte"
         subtitle="Realisierte und geplante Projekte, von Wohnbau bis Hotel, mit Leidenschaft für Architektur und nachhaltige Bauweise."
       />
@@ -74,9 +80,9 @@ const Projects = () => {
                   to={`/projekte/${project.id}`}
                   className="block bg-white border border-gray-100 hover:border-gray-300 transition-colors group"
                 >
-                  <div className="md:flex">
-                    <div className="md:flex-shrink-0 md:w-5/12">
-                      <div className="relative h-64 md:h-full md:min-h-[320px] overflow-hidden bg-gray-100">
+                  <div className={`md:flex ${index % 2 ? 'md:flex-row-reverse' : ''}`}>
+                    <div className="md:flex-shrink-0 md:w-1/2">
+                      <div className="relative h-64 md:h-full md:min-h-[380px] overflow-hidden bg-gray-100">
                         <ProjectCover
                           src={project.coverImage}
                           alt={project.title}
@@ -96,10 +102,14 @@ const Projects = () => {
                         )}
                       </div>
                     </div>
-                    <div className="p-8 md:p-10 md:w-7/12 flex flex-col justify-between">
+                    <div className="p-8 md:p-12 md:w-1/2 flex flex-col justify-between">
                       <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
-                          {project.category.replace('-', ' & ')}
+                        <p className="text-sm text-gray-500 mb-3">
+                          {[
+                            categories.find((c) => c.id === project.category)?.label,
+                            townOf(project.location),
+                            FINISHED.has(project.status) ? project.year : null,
+                          ].filter(Boolean).join(' · ')}
                         </p>
                         <h3 className="font-display uppercase text-2xl md:text-3xl font-semibold text-[#0F1B2D] leading-tight mb-4">
                           {project.title}

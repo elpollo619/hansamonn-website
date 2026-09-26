@@ -34,7 +34,7 @@ const ServiceDetailPage = () => {
         back={{ to: '/leistungen', label: 'Alle Leistungen' }}
         eyebrow={
           <span className="inline-flex items-center gap-2">
-            <Icon size={14} /> Hans Amonn AG · {service.category}
+            <Icon size={14} /> {service.category}
           </span>
         }
         title={<span className="break-words hyphens-auto">{service.title}</span>}

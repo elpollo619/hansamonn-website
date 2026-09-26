@@ -17,7 +17,7 @@ const PreisrechnerPage = () => {
 
       {/* Hero */}
       <PageHero
-        eyebrow="Hans Amonn AG · Preisrechner"
+        eyebrow="Vermietung"
         title="Mietpreis schnell berechnen"
         subtitle={
           <>

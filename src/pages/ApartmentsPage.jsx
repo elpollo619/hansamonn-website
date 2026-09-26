@@ -176,7 +176,7 @@ export default function ApartmentsPage() {
       {/* Hero */}
       <PageHero
         back={{ to: '/immobilien', label: 'Immobilien' }}
-        eyebrow="Hans Amonn AG · Apartments"
+        eyebrow="Vermietung"
         title="Apartments"
         subtitle={
           <>

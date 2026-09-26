@@ -5,7 +5,7 @@ export const projectsData = [
   {
     id: 1,
     slug: 'ns-hotel-kerzers',
-    title: "N's Hotel - Self-Check-in Hotel",
+    title: "N's Hotel · Self-Check-in",
     category: 'hotel',
     location: 'Allmendstrasse 14, Kerzers',
     year: '2024',
@@ -84,7 +84,7 @@ export const projectsData = [
   {
     id: 3,
     slug: 'wohnkomplex-allmendstrasse-kerzers',
-    title: "Wohnkomplex Allmendstrasse 4-4A",
+    title: "Wohnkomplex Allmendstrasse 4–4A",
     category: 'wohnbau',
     location: 'Allmendstrasse 4-4A, Kerzers',
     year: '2024',
@@ -110,7 +110,7 @@ export const projectsData = [
   {
     id: 4,
     slug: 'baeren-kerzers',
-    title: "Bären Kerzers - Hotel & Restaurant",
+    title: "Bären Kerzers · Hotel & Restaurant",
     category: 'gewerbe',
     location: 'Kerzers, Schweiz',
     year: new Date().getFullYear().toString(),

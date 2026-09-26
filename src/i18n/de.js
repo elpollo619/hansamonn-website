@@ -43,12 +43,12 @@ const de = {
     meta: {
       title: 'Mietwohnungen – Hans Amonn AG',
       description:
-        'Moderne Mietwohnungen in Kerzers und Umgebung. Hans Amonn AG – Ihr Partner für Wohnen seit 1968.',
+        'Moderne Mietwohnungen in Kerzers und Umgebung. Hans Amonn AG, Ihr Partner für Wohnen seit 1968.',
     },
     hero: {
       title: 'Wohnen & Übernachten',
       subtitle:
-        'Wohnungen, möblierte Langzeitaufenthalte, Hotel und exklusive Projekte – alles in Kerzers und Umgebung.',
+        'Wohnungen, möblierte Langzeitaufenthalte, Hotel und exklusive Projekte, alles in Kerzers und Umgebung.',
       badge: 'Aktuelle Angebote',
       offeringTypes: 'Wohnungen · Long Stay · Hotel · Projekte',
       serviceApartments: 'Moderne Mietwohnungen in Kerzers',
@@ -91,7 +91,7 @@ const de = {
       contact: {
         title: 'Interesse? Wir beraten Sie gern',
         subtitle:
-          'Rufen Sie uns an oder schreiben Sie uns – wir antworten schnell und unkompliziert.',
+          'Rufen Sie uns an oder schreiben Sie uns, wir antworten schnell und unkompliziert.',
         call: 'Anrufen',
         email: 'E-Mail schreiben',
         form: 'Anfrageformular',
@@ -99,7 +99,7 @@ const de = {
       rented: {
         title: 'Diese Wohnung ist derzeit vermietet.',
         subtitle:
-          'Kontaktieren Sie uns – wir informieren Sie, sobald eine Wohnung frei wird.',
+          'Kontaktieren Sie uns, wir informieren Sie, sobald eine Wohnung frei wird.',
       },
       gallery: 'Galerie',
       backToList: 'Alle Wohnungen ansehen',
@@ -107,7 +107,7 @@ const de = {
     empty: {
       title: 'Keine Wohnungen verfügbar',
       subtitle:
-        'Im Moment sind keine Wohnungen frei. Hinterlassen Sie Ihre Kontaktdaten – wir melden uns, sobald etwas frei wird.',
+        'Im Moment sind keine Wohnungen frei. Hinterlassen Sie Ihre Kontaktdaten, wir melden uns, sobald etwas frei wird.',
     },
     cta: {
       title: 'Nicht gefunden was Sie suchen?',
@@ -215,6 +215,7 @@ const de = {
     contact: {
       title: 'Interesse? Wir beraten Sie gern.',
       cta: 'Mietanfrage stellen',
+      text: 'Sagen Sie uns, was Sie suchen: Zeitraum, Budget, Ort. Wir melden uns innerhalb von 24 Stunden.',
     },
   },
 
@@ -294,7 +295,7 @@ const de = {
     hero: {
       title: 'Hans Amonn AG',
       subtitle: 'Bau & Immobilien',
-      tagline: 'Ihr Partner für Bau und Immobilien seit 1968 – Tradition und Innovation vereint',
+      tagline: 'Ihr Partner für Bau und Immobilien seit 1968, Tradition und Innovation vereint',
       ctaProjects: 'Projekte ansehen',
       ctaContact: 'Beratung anfragen',
     },

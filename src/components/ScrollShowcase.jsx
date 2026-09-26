@@ -15,6 +15,7 @@ export default function ScrollShowcase({
   eyebrow = null,
   title = 'Räume, die bleiben',
   caption = 'Von der ersten Skizze bis zum fertigen Zuhause, seit 1968.',
+  label = "N's Hotel und Allmendstrasse, Kerzers",
 }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -40,20 +41,20 @@ export default function ScrollShowcase({
         <div style={{ perspective: '1200px' }} className="max-w-5xl mx-auto">
           <motion.div
             style={{ rotateX: rotate, scale, opacity, transformStyle: 'preserve-3d' }}
-            className="relative rounded-xl overflow-hidden border border-gray-200 shadow-2xl bg-gray-100"
+            className="relative overflow-hidden border border-gray-200 shadow-2xl bg-gray-100"
           >
-            <div className="aspect-[16/9]">
+            <div className="aspect-[4/3] md:aspect-[16/9]">
               <img
                 src={image}
-                alt={title}
+                alt={label || title}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex items-end justify-between">
-              <span className="font-display uppercase text-white text-xl md:text-2xl font-semibold leading-none">
-                Hans Amonn AG
+            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 flex items-end justify-between gap-4">
+              <span className="hidden sm:block text-white/90 text-sm md:text-base font-semibold">
+                {label}
               </span>
               <Link
                 to="/projekte"

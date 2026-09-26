@@ -15,6 +15,8 @@ const ImmobilienOverviewPage = () => {
     {
       to: '/immobilien/vermietung',
       icon: BedDouble,
+      image: '/images/ns-hotel/doppelzimmer.jpg',
+      alt: "Doppelzimmer im N's Hotel Kerzers",
       tag: t('immobilien.vermietung.tag'),
       title: t('immobilien.vermietung.title'),
       subtitle: t('immobilien.vermietung.subtitle'),
@@ -28,6 +30,8 @@ const ImmobilienOverviewPage = () => {
     {
       to: '/immobilien/verkauf',
       icon: Building2,
+      image: '/images/ns-hotel/drohne-2.jpg',
+      alt: 'Luftbild der Liegenschaften an der Allmendstrasse in Kerzers',
       tag: t('immobilien.verkauf.tag'),
       title: t('immobilien.verkauf.title'),
       subtitle: t('immobilien.verkauf.subtitle'),
@@ -55,7 +59,6 @@ const ImmobilienOverviewPage = () => {
     </Helmet>
 
     <PageHero
-      eyebrow="Hans Amonn AG"
       title={t('immobilien.hero.title')}
       subtitle={t('immobilien.hero.subtitle')}
       image="/images/kerzers/01.jpg"
@@ -66,7 +69,7 @@ const ImmobilienOverviewPage = () => {
       <div className="container mx-auto px-6">
         {/* Two main cards */}
         <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {CARDS.map(({ to, icon: Icon, tag, title, subtitle, description, highlights, cta }, i) => (
+          {CARDS.map(({ to, image, alt, tag, title, subtitle, description, highlights, cta }, i) => (
             <motion.div
               key={to}
               initial={{ opacity: 0, y: 24 }}
@@ -78,18 +81,22 @@ const ImmobilienOverviewPage = () => {
                 to={to}
                 className="group flex flex-col h-full bg-white border border-gray-100 hover:border-gray-300 transition-colors overflow-hidden"
               >
+                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                  <img
+                    src={image}
+                    alt={alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <span className="absolute top-4 left-4 bg-white/95 text-[#0F1B2D] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
+                    {tag}
+                  </span>
+                </div>
                 <div className="flex-1 p-8 md:p-10">
-                  {/* Icon + tag */}
-                  <div className="flex items-start justify-between mb-10">
-                    <Icon size={28} style={{ color: BRAND }} />
-                    <span className="text-[11px] font-semibold tracking-hairline uppercase text-gray-400">{tag}</span>
-                  </div>
-
-                  {/* Title */}
                   <h2 className="display-heading uppercase text-3xl md:text-4xl mb-2 group-hover:text-[#1D3D78] transition-colors">
                     {title}
                   </h2>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-5">{subtitle}</p>
+                  <p className="text-sm text-gray-500 mb-5">{subtitle}</p>
                   <p className="text-gray-600 leading-relaxed mb-8">{description}</p>
 
                   {/* Highlights */}
@@ -129,7 +136,7 @@ const ImmobilienOverviewPage = () => {
         >
           <div className="max-w-2xl">
             <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{t('immobilien.contact.title')}</h2>
-            <p className="text-gray-600 leading-relaxed">{t('immobilien.hero.subtitle')}</p>
+            <p className="text-gray-600 leading-relaxed">{t('immobilien.contact.text')}</p>
           </div>
           <Link
             to="/immobilien/anfrage"

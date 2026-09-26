@@ -110,7 +110,6 @@ const Contact = () => {
   return (
     <>
       <PageHero
-        eyebrow="Hans Amonn AG · Kontakt"
         title={t('contact.title')}
         size="sm"
       />

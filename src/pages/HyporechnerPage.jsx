@@ -36,7 +36,7 @@ const HyporechnerPage = () => {
 
       {/* Hero */}
       <PageHero
-        eyebrow="Hans Amonn AG · Hypothekenrechner"
+        eyebrow="Immobilien · Verkauf"
         title={<>Hypothek & Tragbarkeit<br />berechnen</>}
         subtitle={
           <>

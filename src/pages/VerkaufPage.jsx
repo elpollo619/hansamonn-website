@@ -21,7 +21,7 @@ const VerkaufPage = () => (
 
     <PageHero
       back={{ to: '/immobilien', label: 'Zurück zur Übersicht' }}
-      eyebrow="Hans Amonn AG"
+      eyebrow="Immobilien"
       title={<>Immobilien zum <br />Verkauf</>}
       subtitle={
         <>

@@ -34,7 +34,7 @@ const TeamMemberPage = () => {
       </Helmet>
 
       <PageHero
-        eyebrow={`Hans Amonn AG · ${member.position}`}
+        eyebrow={member.position}
         title={member.name}
         back={{ to: '/team', label: 'Zurück zum Team' }}
         size="sm"

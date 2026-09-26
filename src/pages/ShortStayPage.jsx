@@ -35,7 +35,7 @@ export default function ShortStayPage() {
       {/* Hero */}
       <PageHero
         back={{ to: '/immobilien', label: 'Immobilien' }}
-        eyebrow="Hans Amonn AG · Short Stay"
+        eyebrow="Vermietung"
         title="Short Stay"
         subtitle="Kurzaufenthalte, Business Trips und Ferienunterkünfte. Direkt buchbar oder über Booking.com und Airbnb."
         image="/images/ns-hotel/lounge.jpg"

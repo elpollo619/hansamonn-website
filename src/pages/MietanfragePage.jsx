@@ -15,7 +15,7 @@ export default function MietanfragePage() {
       {/* Header */}
       <PageHero
         back={{ to: '/immobilien', label: 'Immobilien' }}
-        eyebrow="Mietanfrage"
+        eyebrow="Vermietung"
         title="Mietanfrage stellen"
         subtitle="Wir antworten innerhalb von 24 Stunden."
         size="sm"

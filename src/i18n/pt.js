@@ -42,12 +42,12 @@ const pt = {
     meta: {
       title: 'Apartamentos para arrendar – Hans Amonn AG',
       description:
-        'Apartamentos modernos para arrendar em Kerzers e arredores. Hans Amonn AG – o seu parceiro imobiliário desde 1968.',
+        'Apartamentos modernos para arrendar em Kerzers e arredores. Hans Amonn AG, o seu parceiro imobiliário desde 1968.',
     },
     hero: {
       title: 'Alojamento & Estadia',
       subtitle:
-        'Apartamentos, estadias longas mobiladas, hotel e projetos exclusivos – tudo em Kerzers e na região.',
+        'Apartamentos, estadias longas mobiladas, hotel e projetos exclusivos, tudo em Kerzers e na região.',
       badge: 'Ofertas atuais',
       offeringTypes: 'Apartamentos · Long Stay · Hotel · Projetos',
       serviceApartments: 'Apartamentos modernos em Kerzers',
@@ -89,7 +89,7 @@ const pt = {
       availableFrom: 'Disponível a partir de',
       contact: {
         title: 'Interessado? Estamos ao seu dispor',
-        subtitle: 'Ligue-nos ou escreva-nos – respondemos rapidamente.',
+        subtitle: 'Ligue-nos ou escreva-nos, respondemos rapidamente.',
         call: 'Ligar',
         email: 'Enviar e-mail',
         form: 'Formulário de consulta',
@@ -97,7 +97,7 @@ const pt = {
       rented: {
         title: 'Este apartamento está atualmente arrendado.',
         subtitle:
-          'Contacte-nos – iremos notificá-lo assim que um apartamento ficar disponível.',
+          'Contacte-nos, iremos notificá-lo assim que um apartamento ficar disponível.',
       },
       gallery: 'Galeria',
       backToList: 'Ver todos os apartamentos',
@@ -213,6 +213,7 @@ const pt = {
     contact: {
       title: 'Interessado? Aconselhamo-lo com prazer.',
       cta: 'Enviar pedido de arrendamento',
+      text: 'Diga-nos o que procura: período, orçamento, local. Respondemos em 24 horas.',
     },
   },
 
@@ -292,7 +293,7 @@ const pt = {
       title: 'Hans Amonn AG',
       subtitle: 'Construção & Imobiliária',
       tagline:
-        'O seu parceiro em construção e imobiliária desde 1968 – tradição e inovação reunidas',
+        'O seu parceiro em construção e imobiliária desde 1968, tradição e inovação reunidas',
       ctaProjects: 'Ver projetos',
       ctaContact: 'Solicitar consulta',
     },
