@@ -17,7 +17,7 @@ const PILLARS = [
   },
   {
     title: 'Bewährte Partnerschaften',
-    text: 'Martin Brand arbeitet seit fast den Anfängen mit Reto zusammen. Diese langjährige Partnerschaft garantiert Kontinuität und bewährte Qualität in allen Projekten.',
+    text: 'Martin Brand arbeitet seit fast den Anfängen mit Reto zusammen. Diese langjährige Zusammenarbeit steht für Kontinuität in unseren Projekten.',
   },
   {
     title: 'Vielseitige Unterstützung',

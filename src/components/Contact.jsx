@@ -184,10 +184,10 @@ const Contact = () => {
                 <form onSubmit={handleFormSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className={labelCls}>
+                      <label className={labelCls} htmlFor="ct-firstName">
                         {t('contact.form.firstName')} *
                       </label>
-                      <input
+                      <input id="ct-firstName"
                         type="text"
                         name="firstName"
                         required
@@ -196,10 +196,10 @@ const Contact = () => {
                       />
                     </div>
                     <div>
-                      <label className={labelCls}>
+                      <label className={labelCls} htmlFor="ct-lastName">
                         {t('contact.form.lastName')} *
                       </label>
-                      <input
+                      <input id="ct-lastName"
                         type="text"
                         name="lastName"
                         required
@@ -210,10 +210,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label className={labelCls}>
+                    <label className={labelCls} htmlFor="ct-email">
                       {t('contact.form.email')} *
                     </label>
-                    <input
+                    <input id="ct-email"
                       type="email"
                       name="email"
                       required
@@ -223,10 +223,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label className={labelCls}>
+                    <label className={labelCls} htmlFor="ct-telefon">
                       {t('contact.form.phone')}
                     </label>
-                    <input
+                    <input id="ct-telefon"
                       type="tel"
                       name="telefon"
                       className={inputCls}
@@ -235,10 +235,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label className={labelCls}>
+                    <label className={labelCls} htmlFor="ct-betreff">
                       {t('contact.form.projectType')}
                     </label>
-                    <select name="betreff" className={inputCls}>
+                    <select id="ct-betreff" name="betreff" className={inputCls}>
                       <option value="">{t('contact.form.projectPlaceholder')}</option>
                       <option value="architektur">{t('contact.form.optArchitektur')}</option>
                       <option value="neubau">{t('contact.form.optNeubau')}</option>
@@ -249,10 +249,10 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label className={labelCls}>
+                    <label className={labelCls} htmlFor="ct-nachricht">
                       {t('contact.form.message')} *
                     </label>
-                    <textarea
+                    <textarea id="ct-nachricht"
                       required
                       name="nachricht"
                       rows={5}

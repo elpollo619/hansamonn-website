@@ -13,9 +13,9 @@ const fadeUp = {
 
 const About = () => {
   const stats = [
-    { icon: Building, number: '200+', label: 'Projekte realisiert' },
+    { icon: Building, number: '4', label: 'Orte mit eigenen Liegenschaften' },
     { icon: Users, number: '2', label: 'Generationen' },
-    { icon: Award, number: '55+', label: 'Jahre Erfahrung' },
+    { icon: Award, number: String(new Date().getFullYear() - 1968), label: 'Jahre Firmengeschichte' },
     { icon: Calendar, number: '1968', label: 'Gegründet' }
   ];
 

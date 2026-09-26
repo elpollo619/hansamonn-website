@@ -169,7 +169,7 @@ const VergleichPage = () => {
                             />
                           ) : (
                             <div className="w-full max-w-[200px] aspect-[4/3] surface-warm flex items-center justify-center">
-                              <span className="text-gray-300 text-xs">Kein Bild</span>
+                              <span className="text-gray-500 text-xs">Kein Bild</span>
                             </div>
                           )}
                           <span className="font-display uppercase text-lg font-semibold text-[#0F1B2D] text-center leading-tight">

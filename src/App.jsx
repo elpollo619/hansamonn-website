@@ -37,6 +37,9 @@ const ContactPage           = lazy(() => import('@/pages/ContactPage'));
 const AdminPage             = lazy(() => import('@/pages/AdminPage'));
 const ImpressumPage         = lazy(() => import('@/pages/ImpressumPage'));
 const PrivacyPolicyPage     = lazy(() => import('@/pages/PrivacyPolicyPage'));
+const AgbPage               = lazy(() => import('@/pages/AgbPage'));
+const CookiePolicyPage      = lazy(() => import('@/pages/CookiePolicyPage'));
+const StornoPage            = lazy(() => import('@/pages/StornoPage'));
 
 // Immobilien / Rentals
 const ImmobilienOverviewPage = lazy(() => import('@/pages/ImmobilienOverviewPage'));
@@ -110,8 +113,14 @@ function AppRoutes() {
     <>
       <GoogleAnalytics />
       <ScrollToTop />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#0F1B2D] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:shadow-lg"
+      >
+        Zum Inhalt springen
+      </a>
       <Header />
-      <main className="pt-16">
+      <main id="main" tabIndex={-1} className="pt-16 outline-none">
         <Suspense fallback={<PageLoader />}>
         {/* Soft fade between pages (opacity only, so fixed overlays inside pages keep working) */}
         <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
@@ -201,6 +210,9 @@ function AppRoutes() {
           {/* LEGAL */}
           <Route path="/impressum" element={<ImpressumPage />} />
           <Route path="/datenschutz" element={<PrivacyPolicyPage />} />
+          <Route path="/agb" element={<AgbPage />} />
+          <Route path="/cookies" element={<CookiePolicyPage />} />
+          <Route path="/stornierung" element={<StornoPage />} />
 
           {/* CATCH-ALL — show 404 page for unknown URLs */}
           <Route path="*" element={<NotFoundPage />} />

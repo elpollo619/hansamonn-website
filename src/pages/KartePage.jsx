@@ -87,7 +87,7 @@ function LeafletMap({ listings, activeId, onMarkerClick }) {
           iconAnchor: [17, 17],
         });
 
-        const marker = L.marker([item.lat, item.lng], { icon })
+        const marker = L.marker([item.lat, item.lng], { icon, title: item.name || item.title, alt: item.name || item.title })
           .addTo(map)
           .on('click', () => onMarkerClick(item.id));
 

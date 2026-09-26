@@ -18,6 +18,8 @@ module.exports = {
 		extend: {
 			// Override the entire blue scale with AMONN brand navy
 			colors: {
+				// gray-400 darkened so small grey text keeps WCAG AA contrast (4.5:1) on white and warm surfaces
+				gray: { 400: '#656c78' },
 				blue: {
 					50:  '#EFF4FB',
 					100: '#D9E6F5',

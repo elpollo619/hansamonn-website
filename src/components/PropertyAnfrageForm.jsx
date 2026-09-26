@@ -125,39 +125,39 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className={lbl}><User size={11} className="inline mr-1" />Vorname *</label>
-          <input type="text" value={form.vorname} onChange={e => set('vorname', e.target.value)} placeholder="Max" className={inp} />
+          <label className={lbl} htmlFor="pa-vorname"><User size={11} className="inline mr-1" />Vorname *</label>
+          <input id="pa-vorname" type="text" value={form.vorname} onChange={e => set('vorname', e.target.value)} placeholder="Max" className={inp} />
           {errors.vorname && <p className="text-xs text-red-500 mt-1">{errors.vorname}</p>}
         </div>
         <div>
-          <label className={lbl}>Nachname *</label>
-          <input type="text" value={form.nachname} onChange={e => set('nachname', e.target.value)} placeholder="Mustermann" className={inp} />
+          <label className={lbl} htmlFor="pa-nachname">Nachname *</label>
+          <input id="pa-nachname" type="text" value={form.nachname} onChange={e => set('nachname', e.target.value)} placeholder="Mustermann" className={inp} />
           {errors.nachname && <p className="text-xs text-red-500 mt-1">{errors.nachname}</p>}
         </div>
       </div>
 
       <div>
-        <label className={lbl}><Mail size={11} className="inline mr-1" />E-Mail *</label>
-        <input type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="max@beispiel.ch" className={inp} />
+        <label className={lbl} htmlFor="pa-email"><Mail size={11} className="inline mr-1" />E-Mail *</label>
+        <input id="pa-email" type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="max@beispiel.ch" className={inp} />
         {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
       </div>
 
       <div>
-        <label className={lbl}><Phone size={11} className="inline mr-1" />Telefon</label>
-        <input type="tel" value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+41 79 123 45 67" className={inp} />
+        <label className={lbl} htmlFor="pa-telefon"><Phone size={11} className="inline mr-1" />Telefon</label>
+        <input id="pa-telefon" type="tel" value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+41 79 123 45 67" className={inp} />
       </div>
 
       {showDate && (
         <div>
-          <label className={lbl}><Calendar size={11} className="inline mr-1" />Gewünschter Einzug</label>
-          <input type="date" value={form.einzug} onChange={e => set('einzug', e.target.value)}
+          <label className={lbl} htmlFor="pa-einzug"><Calendar size={11} className="inline mr-1" />Gewünschter Einzug</label>
+          <input id="pa-einzug" type="date" value={form.einzug} onChange={e => set('einzug', e.target.value)}
             min={new Date().toISOString().split('T')[0]} className={inp} />
         </div>
       )}
 
       <div>
-        <label className={lbl}><MessageSquare size={11} className="inline mr-1" />Nachricht</label>
-        <textarea rows={3} value={form.nachricht} onChange={e => set('nachricht', e.target.value)}
+        <label className={lbl} htmlFor="pa-nachricht"><MessageSquare size={11} className="inline mr-1" />Nachricht</label>
+        <textarea id="pa-nachricht" rows={3} value={form.nachricht} onChange={e => set('nachricht', e.target.value)}
           placeholder="Ihre Fragen oder besonderen Wünsche…" className={inp + ' resize-none'} />
       </div>
 

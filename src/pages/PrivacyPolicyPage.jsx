@@ -38,6 +38,8 @@ const SECTIONS = [
           Aufruf werden technisch notwendige Daten bearbeitet: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite,
           Referrer, Browser und Betriebssystem. Zweck ist die Auslieferung und Sicherheit der Website. Vercel
           ist unsere Auftragsbearbeiterin und unter dem Swiss-U.S. Data Privacy Framework zertifiziert.
+          Einzelne Inhalte (zum Beispiel Verfügbarkeiten und Neuigkeiten) lädt Ihr Browser direkt von unserem
+          Datenbank-Dienstleister Supabase Inc. (USA); dabei wird Ihre IP-Adresse übermittelt.
         </p>
         <p>
           <strong>Speicherung im Browser.</strong> Ohne Übermittlung an uns speichern wir im Local Storage
@@ -50,10 +52,16 @@ const SECTIONS = [
           zustimmen, nutzen wir Google Analytics 4 (Google Ireland Ltd. und Google LLC, USA). Dabei werden
           Cookies gesetzt und Nutzungsdaten (aufgerufene Seiten, Verweildauer, Geräteinformationen, ungefährer
           Standort aus der IP-Adresse) an Google übermittelt, auch in die USA. Google LLC ist unter dem Data
-          Privacy Framework zertifiziert. Die Daten werden bis zu 14 Monate gespeichert. Sie können Ihre
+          Privacy Framework zertifiziert. Google speichert die Analysedaten höchstens 14 Monate, die
+          Analyse-Cookies laufen nach höchstens 2 Jahren ab. Sie können Ihre
           Einwilligung jederzeit über die{' '}
           <button type="button" onClick={openCookieSettings} className="underline text-gray-800">Cookie-Einstellungen</button>{' '}
           widerrufen; die Analyse-Cookies werden dann gelöscht.
+        </p>
+        <p>
+          <strong>Aufrufzähler.</strong> Öffnen Sie eine Objektseite, speichern wir bei Supabase nur, welches
+          Objekt aufgerufen wurde, ohne Angaben zu Ihrer Person. So sehen wir, welche Angebote gefragt sind.
+          Details zu allen Speicherungen im Browser finden Sie in der <Link to="/cookies">Cookie-Richtlinie</Link>.
         </p>
       </>
     ),

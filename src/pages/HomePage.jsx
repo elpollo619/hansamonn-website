@@ -16,8 +16,17 @@ const organizationSchema = {
   '@type': 'RealEstateAgent',
   name: 'Hans Amonn AG',
   url: 'https://www.hansamonn.ch',
+  legalName: 'Hans Amonn AG',
+  foundingDate: '1968',
+  telephone: '+41 31 951 85 54',
+  email: 'office@reto-amonn.ch',
+  vatID: 'CHE-106.957.227 MWST',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Blümlisalpstrasse 4',
+    postalCode: '3074',
+    addressLocality: 'Muri bei Bern',
+    addressRegion: 'BE',
     addressCountry: 'CH',
   },
 };
@@ -31,7 +40,7 @@ const HomePage = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Hans Amonn AG – Immobilien & Vermietung" />
         <meta property="og:description" content="Immobilien, Ferienwohnungen und Langzeitmiete in der Schweiz. Hans Amonn AG." />
-        <meta property="og:image" content="https://www.hansamonn.ch/og-image.jpg" />
+        <meta property="og:image" content="https://www.hansamonn.ch/images/ns-hotel/aussen.jpg" />
         <meta property="og:url" content="https://www.hansamonn.ch" />
         <meta property="og:site_name" content="Hans Amonn AG" />
         <meta name="twitter:card" content="summary_large_image" />

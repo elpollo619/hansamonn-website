@@ -483,8 +483,10 @@ const VermietungPage = () => {
                 <button
                   key={s.key}
                   onClick={() => s.active && setFilter(s.key)}
+                  aria-disabled={!s.active || undefined}
+                  aria-pressed={s.active ? isActive : undefined}
                   className={`relative text-left px-4 py-6 md:px-7 md:py-8 border-r border-b lg:border-b-0 border-gray-100 transition-colors duration-200 ${
-                    s.active ? 'cursor-pointer' : 'cursor-default opacity-50'
+                    s.active ? 'cursor-pointer' : 'cursor-default'
                   } ${isActive ? 'bg-gray-50' : 'bg-white hover:bg-gray-50'}`}
                 >
                   <span
@@ -513,10 +515,12 @@ const VermietungPage = () => {
               <button
                 key={tab.key}
                 onClick={() => !tab.disabled && setFilter(tab.key)}
+                disabled={tab.disabled}
+                aria-pressed={!tab.disabled ? filter === tab.key : undefined}
                 style={!tab.disabled && filter === tab.key ? { backgroundColor: BRAND } : {}}
                 className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 text-sm font-semibold transition-colors duration-200 whitespace-nowrap border ${
                   tab.disabled
-                    ? 'bg-white text-gray-300 border-gray-100 cursor-not-allowed'
+                    ? 'bg-white text-gray-400 border-gray-100 cursor-not-allowed'
                     : filter === tab.key
                     ? 'text-white border-transparent'
                     : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
@@ -566,6 +570,7 @@ const VermietungPage = () => {
               <div className="relative sm:w-44">
                 <SlidersHorizontal size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                 <select
+                  aria-label="Nach Wohnform filtern"
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
                   className="w-full appearance-none pl-8 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
@@ -585,6 +590,7 @@ const VermietungPage = () => {
               <div className="relative sm:w-52">
                 <MapPin size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                 <select
+                  aria-label="Nach Standort filtern"
                   value={locationFilter}
                   onChange={(e) => setLocationFilter(e.target.value)}
                   className="w-full appearance-none pl-8 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
@@ -605,6 +611,7 @@ const VermietungPage = () => {
               {/* Preis dropdown */}
               <div className="relative sm:w-44">
                 <select
+                  aria-label="Nach Preis filtern"
                   value={priceFilter}
                   onChange={(e) => setPriceFilter(e.target.value)}
                   className="w-full appearance-none pl-4 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"

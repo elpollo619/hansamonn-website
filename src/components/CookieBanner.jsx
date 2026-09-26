@@ -71,6 +71,7 @@ export default function CookieBanner() {
                   Analytics für anonyme Statistiken und laden externe Inhalte wie Google Maps; dabei können Daten
                   an Google (auch in die USA) übermittelt werden. Sie können Ihre Wahl jederzeit unter
                   «Cookie-Einstellungen» im Seitenfuss ändern. Mehr in der{' '}
+                  <Link to="/cookies" className="underline text-gray-800 hover:text-black">Cookie-Richtlinie</Link> und der{' '}
                   <Link to="/datenschutz" className="underline text-gray-800 hover:text-black">Datenschutzerklärung</Link>.
                 </p>
 
@@ -81,7 +82,7 @@ export default function CookieBanner() {
                       <Toggle checked disabled label="Notwendig" />
                     </li>
                     <li className="flex items-center justify-between gap-4 py-3">
-                      <span><strong className="text-gray-900">Statistik</strong><br />Google Analytics (Google Ireland Ltd. / Google LLC, USA), Speicherdauer bis 14 Monate.</span>
+                      <span><strong className="text-gray-900">Statistik</strong><br />Google Analytics (Google Ireland Ltd. / Google LLC, USA), Cookies bis 2 Jahre.</span>
                       <Toggle checked={statistics} onChange={setStatistics} label="Statistik" />
                     </li>
                     <li className="flex items-center justify-between gap-4 py-3">

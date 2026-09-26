@@ -140,7 +140,7 @@ const Footer = () => {
           {/* Link columns */}
           {cols.map((col) => (
             <div key={col.heading}>
-              <p className="text-[10px] font-semibold tracking-[0.22em] text-white/40 uppercase mb-4">
+              <p className="text-[10px] font-semibold tracking-[0.22em] text-white/60 uppercase mb-4">
                 {col.heading}
               </p>
               <ul className="space-y-2.5">
@@ -174,13 +174,16 @@ const Footer = () => {
       {/* ── Bottom bar ── */}
       <div className="container mx-auto px-6">
         <div className="border-t border-white/10 py-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-white/35 text-xs">
-            © {year} Hans Amonn AG · Alle Rechte vorbehalten
+          <p className="text-white/60 text-xs">
+            © {year} Hans Amonn AG · Blümlisalpstrasse 4, 3074 Muri bei Bern · UID CHE-106.957.227
           </p>
-          <div className="flex gap-5 text-xs">
-            <Link to="/impressum" className="text-white/35 hover:text-white/70 transition-colors">Impressum</Link>
-            <Link to="/datenschutz" className="text-white/35 hover:text-white/70 transition-colors">Datenschutz</Link>
-            <button type="button" onClick={openCookieSettings} className="text-white/35 hover:text-white/70 transition-colors">Cookie-Einstellungen</button>
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs">
+            <Link to="/impressum" className="text-white/60 hover:text-white/70 transition-colors">Impressum</Link>
+            <Link to="/datenschutz" className="text-white/60 hover:text-white/70 transition-colors">Datenschutz</Link>
+            <Link to="/agb" className="text-white/60 hover:text-white/70 transition-colors">AGB</Link>
+            <Link to="/stornierung" className="text-white/60 hover:text-white/70 transition-colors">Stornierung</Link>
+            <Link to="/cookies" className="text-white/60 hover:text-white/70 transition-colors">Cookies</Link>
+            <button type="button" onClick={openCookieSettings} className="text-white/60 hover:text-white/70 transition-colors">Cookie-Einstellungen</button>
           </div>
         </div>
       </div>

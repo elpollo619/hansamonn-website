@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { teamMembers } from '@/components/TeamData';
 
 const STATS = [
-  { number: '9', label: 'Teammitglieder' },
-  { number: '133+', label: 'Jahre Gesamterfahrung' },
-  { number: '55+', label: 'Jahre Firmengeschichte' },
-  { number: '100%', label: 'Engagement' },
+  { number: String(teamMembers.filter((m) => m.visible !== false).length), label: 'Teammitglieder' },
+  { number: '1968', label: 'Gegründet' },
+  { number: String(new Date().getFullYear() - 1968), label: 'Jahre Firmengeschichte' },
+  { number: '2', label: 'Generationen Familie Amonn' },
 ];
 
 const TeamStats = () => {

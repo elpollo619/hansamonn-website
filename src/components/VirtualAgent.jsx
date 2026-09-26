@@ -786,14 +786,14 @@ export default function VirtualAgent() {
                 <p className="text-white font-semibold text-sm leading-tight">HANS AMONN AG</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#4ade80' }} />
-                  <p className="text-gray-400 text-xs">Digitaler Assistent · Online</p>
+                  <p className="text-white/70 text-xs">Digitaler Assistent · Online</p>
                 </div>
               </div>
               {/* Language picker */}
               <div className="relative flex-shrink-0">
                 <button
                   onClick={() => setShowLangPicker(p => !p)}
-                  className="flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-xs py-1 px-2 rounded-lg hover:bg-white/10"
+                  className="flex items-center gap-1 text-white/70 hover:text-white transition-colors text-xs py-1 px-2 rounded-lg hover:bg-white/10"
                 >
                   <Globe size={12} />
                   {LANG_LABELS[chatLang]?.label}

@@ -54,7 +54,7 @@ export const rentalData = [
     description: 'Helle 2.5-Zimmer-Wohnung im Erdgeschoss mit direktem Zugang zum gemeinschaftlichen Garten.',
     images: [{ url: '/images/projekte/a4-gesamt.jpg', alt: '2.5-Zimmer-Wohnung – Wohnhaus Allmendstrasse 4/4a, Kerzers (3D-Modell)' }],
     features: ['Einbauküche', 'Gartenanteil', 'Kellerabteil', 'Aussenstellplatz'],
-    details: { heating: 'Zentralheizung (Gas)', parking: 'Aussenstellplatz inklusive', buildYear: '2024', energyClass: 'A' },
+    details: { heating: 'Zentralheizung (Gas)', parking: 'Aussenstellplatz inklusive', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
   {
@@ -80,7 +80,7 @@ export const rentalData = [
     description: 'Geräumige 3.5-Zimmer-Wohnung mit Privatterrasse.',
     images: [{ url: '/images/projekte/a4-gesamt.jpg', alt: '3.5-Zimmer-Wohnung – Wohnhaus Allmendstrasse 4/4a, Kerzers (3D-Modell)' }],
     features: ['Einbauküche', 'Privatterrasse', 'Tiefgaragenplatz'],
-    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024', energyClass: 'A' },
+    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
   {
@@ -106,7 +106,7 @@ export const rentalData = [
     description: 'Moderne 3.5-Zimmer-Wohnung mit grossem Südbalkon.',
     images: [{ url: '/images/projekte/a4-gesamt.jpg', alt: '3.5-Zimmer-Wohnung – Wohnhaus Allmendstrasse 4/4a, Kerzers (3D-Modell)' }],
     features: ['Einbauküche', 'Südbalkon', 'Tiefgaragenplatz'],
-    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024', energyClass: 'A' },
+    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
   {
@@ -132,7 +132,7 @@ export const rentalData = [
     description: 'Grosszügige 4.5-Zimmer-Familienwohnung mit zwei Balkonen.',
     images: [{ url: '/images/projekte/a4-gesamt.jpg', alt: '4.5-Zimmer-Wohnung – Wohnhaus Allmendstrasse 4/4a, Kerzers (3D-Modell)' }],
     features: ['Einbauküche', '2 Balkone', 'Tiefgaragenplatz'],
-    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024', energyClass: 'A' },
+    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
   {
@@ -158,7 +158,7 @@ export const rentalData = [
     description: 'Helle 3.5-Zimmer-Wohnung im zweiten Obergeschoss.',
     images: [{ url: '/images/projekte/a4-gesamt.jpg', alt: '3.5-Zimmer-Wohnung – Wohnhaus Allmendstrasse 4/4a, Kerzers (3D-Modell)' }],
     features: ['Einbauküche', 'Balkon', 'Tiefgaragenplatz'],
-    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024', energyClass: 'A' },
+    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
   {
@@ -184,7 +184,7 @@ export const rentalData = [
     description: 'Exklusive 4.5-Zimmer-Dachwohnung mit Panoramablick.',
     images: [{ url: '/images/projekte/a4-gesamt.jpg', alt: '4.5-Zimmer-Wohnung – Wohnhaus Allmendstrasse 4/4a, Kerzers (3D-Modell)' }],
     features: ['Inselküche', 'Dachterrasse', 'Panoramablick'],
-    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024', energyClass: 'A+' },
+    details: { heating: 'Zentralheizung (Gas)', parking: 'Tiefgaragenplatz inklusive', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
 
@@ -277,7 +277,7 @@ export const rentalData = [
       { url: '/images/ns-hotel/schliessfaecher.jpg', alt: "Schliessfächer" },
     ],
     features: ['Self-Check-in', 'Kostenloses WLAN', 'Kostenloser Parkplatz', 'Garten & Terrasse', 'Kaffeemaschine', 'Flachbild-TV', 'Eigenes Badezimmer', 'Nichtraucher'],
-    details: { heating: 'Zentralheizung', parking: 'Kostenloser Privatparkplatz', buildYear: '2024', energyClass: 'A' },
+    details: { heating: 'Zentralheizung', parking: 'Kostenloser Privatparkplatz', buildYear: '2024' },
     contact: { phone: '+41 (0)31 951 85 54', email: 'office@reto-amonn.ch' },
   },
 

@@ -135,8 +135,9 @@ const Hero = () => {
               <button
                 key={i}
                 onClick={() => { setActiveIdx(i); setPaused(true); }}
-                aria-label={`Bild ${i + 1}`}
-                className="transition-all duration-300"
+                aria-label={`Bild ${i + 1} von ${SECTIONS.length} anzeigen`}
+                aria-current={activeIdx === i || undefined}
+                className="transition-[width,background-color] duration-300"
                 style={{
                   width: activeIdx === i ? 26 : 7,
                   height: 7,

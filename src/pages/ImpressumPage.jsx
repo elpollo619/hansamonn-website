@@ -57,7 +57,7 @@ const SECTIONS = [
           geschützt. Jede Verwendung ausserhalb der gesetzlichen Schranken braucht die schriftliche Zustimmung
           der Hans Amonn AG oder der jeweiligen Rechteinhaber.
         </p>
-        <p>Bildnachweis: eigene Aufnahmen der Hans Amonn AG; einzelne Symbolbilder von Unsplash.</p>
+        <p>Die Rechte an Fotos, Plänen und 3D-Modellen liegen bei der Hans Amonn AG oder bei den jeweiligen Urheberinnen und Urhebern.</p>
       </>
     ),
   },

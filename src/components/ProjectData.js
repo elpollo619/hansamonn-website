@@ -89,7 +89,7 @@ export const projectsData = [
     location: 'Allmendstrasse 4-4A, Kerzers',
     year: '2024',
     description: 'Moderner Wohnkomplex mit hochwertigen Mietwohnungen in Kerzers. Das Projekt bietet grosszügige Grundrisse, moderne Ausstattung und eine hervorragende Anbindung.',
-    fullDescription: 'Der Wohnkomplex an der Allmendstrasse 4-4A in Kerzers umfasst mehrere moderne Mehrfamilienhäuser mit einer Vielzahl von Mietwohnungen. Jede Wohnung ist auf Komfort und Lebensqualität ausgelegt, mit offenen Wohnbereichen, grossen Fenstern und privaten Aussenbereichen wie Balkonen oder Terrassen. Die nachhaltige Bauweise und die zentrale Lage machen es zu einem attraktiven Wohnort.',
+    fullDescription: 'Der Wohnkomplex an der Allmendstrasse 4-4A in Kerzers umfasst mehrere moderne Mehrfamilienhäuser mit einer Vielzahl von Mietwohnungen. Jede Wohnung ist auf Komfort und Lebensqualität ausgelegt, mit offenen Wohnbereichen, grossen Fenstern und privaten Aussenbereichen wie Balkonen oder Terrassen. Die zentrale Lage macht es zu einem attraktiven Wohnort.',
     coverImage: '/images/projekte/a4-gesamt.jpg',
     gallery: [
       { type: 'image', url: '/images/projekte/a4-gesamt.jpg', alt: '3D-Modell aus den Ausführungsplänen, mit Umgebung' },

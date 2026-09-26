@@ -68,7 +68,7 @@ const MortgageCalculator = () => {
               <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Kaufpreis</label>
               <span className="text-sm font-bold text-gray-900">{chf(kaufpreis)}</span>
             </div>
-            <input
+            <input aria-label="Kaufpreis"
               type="range"
               min={100000}
               max={2000000}
@@ -92,7 +92,7 @@ const MortgageCalculator = () => {
                 <span className="text-gray-500 font-normal">({chf(eigenkapital)})</span>
               </span>
             </div>
-            <input
+            <input aria-label="Eigenkapital"
               type="range"
               min={10}
               max={50}
@@ -113,7 +113,7 @@ const MortgageCalculator = () => {
               <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Zinssatz (p.a.)</label>
               <span className="text-sm font-bold text-gray-900">{zinssatz.toFixed(1)}%</span>
             </div>
-            <input
+            <input aria-label="Zinssatz (p.a.)"
               type="number"
               min={0.1}
               max={10}
@@ -150,7 +150,7 @@ const MortgageCalculator = () => {
               <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Brutto-Monatseinkommen</label>
               <span className="text-sm font-bold text-gray-900">{chf(monatseinkommen)}</span>
             </div>
-            <input
+            <input aria-label="Brutto-Monatseinkommen"
               type="number"
               min={1000}
               max={100000}
@@ -174,9 +174,9 @@ const MortgageCalculator = () => {
 
           {/* Monatsrate */}
           <div className="bg-[#0B1220] p-4 text-white">
-            <p className="text-xs text-gray-400 mb-0.5">Monatliche Rate</p>
+            <p className="text-xs text-white/70 mb-0.5">Monatliche Rate</p>
             <p className="font-display text-4xl font-semibold leading-none mt-1">{chf(monatsrate)}</p>
-            <p className="text-xs text-gray-400 mt-1">Annuität · {laufzeit} Jahre · {zinssatz.toFixed(1)}% p.a.</p>
+            <p className="text-xs text-white/70 mt-1">Annuität · {laufzeit} Jahre · {zinssatz.toFixed(1)}% p.a.</p>
           </div>
 
           {/* Jährliche Zinsen Jahr 1 */}

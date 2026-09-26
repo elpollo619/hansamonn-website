@@ -127,22 +127,22 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
       {/* Dates + guests */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className={lbl}><Calendar size={11} className="inline mr-1" />Ankunft *</label>
-          <input type="date" value={form.ankunft} onChange={e => set('ankunft', e.target.value)}
+          <label className={lbl} htmlFor="cr-ankunft"><Calendar size={11} className="inline mr-1" />Ankunft *</label>
+          <input id="cr-ankunft" type="date" value={form.ankunft} onChange={e => set('ankunft', e.target.value)}
             min={new Date().toISOString().split('T')[0]} className={inp} />
           {errors.ankunft && <p className="text-xs text-red-500 mt-1">{errors.ankunft}</p>}
         </div>
         <div>
-          <label className={lbl}><Calendar size={11} className="inline mr-1" />Abreise *</label>
-          <input type="date" value={form.abreise} onChange={e => set('abreise', e.target.value)}
+          <label className={lbl} htmlFor="cr-abreise"><Calendar size={11} className="inline mr-1" />Abreise *</label>
+          <input id="cr-abreise" type="date" value={form.abreise} onChange={e => set('abreise', e.target.value)}
             min={form.ankunft || new Date().toISOString().split('T')[0]} className={inp} />
           {errors.abreise && <p className="text-xs text-red-500 mt-1">{errors.abreise}</p>}
         </div>
       </div>
 
       <div>
-        <label className={lbl}><Users size={11} className="inline mr-1" />Anzahl Gäste</label>
-        <select value={form.gaeste} onChange={e => set('gaeste', e.target.value)} className={inp}>
+        <label className={lbl} htmlFor="cr-gaeste"><Users size={11} className="inline mr-1" />Anzahl Gäste</label>
+        <select id="cr-gaeste" value={form.gaeste} onChange={e => set('gaeste', e.target.value)} className={inp}>
           {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'Person' : 'Personen'}</option>)}
         </select>
       </div>
@@ -150,31 +150,31 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
       {/* Name */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className={lbl}><User size={11} className="inline mr-1" />Vorname *</label>
-          <input type="text" value={form.vorname} onChange={e => set('vorname', e.target.value)} placeholder="Max" className={inp} />
+          <label className={lbl} htmlFor="cr-vorname"><User size={11} className="inline mr-1" />Vorname *</label>
+          <input id="cr-vorname" type="text" value={form.vorname} onChange={e => set('vorname', e.target.value)} placeholder="Max" className={inp} />
           {errors.vorname && <p className="text-xs text-red-500 mt-1">{errors.vorname}</p>}
         </div>
         <div>
-          <label className={lbl}>Nachname *</label>
-          <input type="text" value={form.nachname} onChange={e => set('nachname', e.target.value)} placeholder="Mustermann" className={inp} />
+          <label className={lbl} htmlFor="cr-nachname">Nachname *</label>
+          <input id="cr-nachname" type="text" value={form.nachname} onChange={e => set('nachname', e.target.value)} placeholder="Mustermann" className={inp} />
           {errors.nachname && <p className="text-xs text-red-500 mt-1">{errors.nachname}</p>}
         </div>
       </div>
 
       <div>
-        <label className={lbl}><Mail size={11} className="inline mr-1" />E-Mail *</label>
-        <input type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="max@beispiel.ch" className={inp} />
+        <label className={lbl} htmlFor="cr-email"><Mail size={11} className="inline mr-1" />E-Mail *</label>
+        <input id="cr-email" type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="max@beispiel.ch" className={inp} />
         {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
       </div>
 
       <div>
-        <label className={lbl}><Phone size={11} className="inline mr-1" />Telefon</label>
-        <input type="tel" value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+41 79 123 45 67" className={inp} />
+        <label className={lbl} htmlFor="cr-telefon"><Phone size={11} className="inline mr-1" />Telefon</label>
+        <input id="cr-telefon" type="tel" value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+41 79 123 45 67" className={inp} />
       </div>
 
       <div>
-        <label className={lbl}><MessageSquare size={11} className="inline mr-1" />Nachricht</label>
-        <textarea rows={3} value={form.nachricht} onChange={e => set('nachricht', e.target.value)}
+        <label className={lbl} htmlFor="cr-nachricht"><MessageSquare size={11} className="inline mr-1" />Nachricht</label>
+        <textarea id="cr-nachricht" rows={3} value={form.nachricht} onChange={e => set('nachricht', e.target.value)}
           placeholder="Besondere Wünsche, Fragen…" className={inp + ' resize-none'} />
       </div>
 

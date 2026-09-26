@@ -83,7 +83,7 @@ const RentCalculator = () => {
             Wohnfläche (m²)
           </label>
           <div className="flex items-center gap-3">
-            <input
+            <input aria-label="Wohnfläche (m²)"
               type="range"
               min={20}
               max={200}
@@ -93,6 +93,7 @@ const RentCalculator = () => {
               className="flex-1 accent-[#1D3D78] cursor-pointer"
             />
             <input
+              aria-label="Wohnfläche in m² eingeben"
               type="number"
               min={20}
               max={200}
@@ -109,7 +110,7 @@ const RentCalculator = () => {
         {/* Standort */}
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Standort</label>
-          <select
+          <select aria-label="Standort"
             value={standort}
             onChange={(e) => setStandort(e.target.value)}
             className="w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78] bg-white"

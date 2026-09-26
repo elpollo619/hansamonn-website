@@ -135,7 +135,7 @@ html { scroll-behavior: smooth; }
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #9ca3af;
+  color: #656c78; /* WCAG AA on white and warm surfaces */
 }
 
 /* Condensed architectural display headings */
@@ -170,4 +170,17 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
   .kenburns { animation: none; }
   .marquee-track { animation: none; }
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7); currentColor keeps it visible on dark and light surfaces */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:not([tabindex='-1']):focus-visible,
+input[type='checkbox']:focus-visible,
+input[type='radio']:focus-visible,
+input[type='range']:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
