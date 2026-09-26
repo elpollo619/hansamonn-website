@@ -713,6 +713,19 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
       addTo(d.mat || 'stone', g, d.roof ? null : (d.y0 + d.y1) / 2, d.site);
       return;
     }
+    if (d.kind === 'stair' && d.axis === 'z') {
+      // same stair running along z: from z0 (at y0) to z1 (at y1), between x0 and x1
+      const n = Math.max(2, Math.round(Math.abs(d.y1 - d.y0) / 0.18));
+      const run = (d.z1 - d.z0) / n, rise = (d.y1 - d.y0) / n;
+      for (let i = 0; i < n; i++) {
+        const g = new THREE.BoxGeometry(Math.abs(d.x1 - d.x0) - 0.1, 0.06, Math.abs(run) + 0.03);
+        g.translate((d.x0 + d.x1) / 2, d.y0 + rise * (i + 1) - 0.03 - roofY, d.z0 + run * (i + 0.5));
+        addTo(d.mat || 'wood', g, d.y0 + 0.5, d.site);
+      }
+      [d.x0, d.x1].forEach((x) => addTo(d.mat || 'wood', beamGeo([x, d.y0 + 0.1, d.z0], [x, d.y1 + 0.1, d.z1], 0.28, 0.06, [1, 0]), d.y0 + 0.5, d.site));
+      if (d.rail) addTo('metal', beamGeo([d.x1, d.y0 + 0.95, d.z0], [d.x1, d.y1 + 0.95, d.z1], 0.05, 0.05, [1, 0]), d.y0 + 0.5, d.site);
+      return;
+    }
     if (d.kind === 'stair') {
       // straight timber stair: treads between two stringers, rising from x0 (at y0) to x1 (at y1)
       const n = Math.max(2, Math.round((d.y1 - d.y0) / 0.18));
