@@ -32,8 +32,8 @@ export const CR_RATING = {
 };
 
 /**
- * Virtual tour: one stop per room. `level` + `spot` (percent of the cropped
- * plan image) place the hotspot on the floor plan.
+ * Virtual tour: one stop per room. `level` + `area` ([x0, y0, x1, y1] in percent
+ * of the cropped plan image) make the whole room clickable on the floor plan.
  */
 export const CR_PLANS = {
   eg: { label: 'Erdgeschoss', src: `${IMG}/plan-eg.webp`, w: 1250, h: 670 },
@@ -52,7 +52,7 @@ export const CR_TOUR = [
   {
     id: 'wohnen',
     level: 'eg',
-    spot: [45, 42],
+    area: [34.2, 26.9, 66.0, 90.3],
     title: 'Wohnzimmer',
     meta: '13 m² · Holzofen · Terrassentür',
     text: 'Terracotta-Boden, ein Holzofen mit Holzvorrat für kühle Abende und eine Glastür direkt in den Garten. Sonos-Soundsystem, TV mit Netflix, Bücher und Brettspiele.',
@@ -67,7 +67,8 @@ export const CR_TOUR = [
   {
     id: 'kueche',
     level: 'eg',
-    spot: [83, 43],
+    area: [66.8, 33.6, 95.2, 90.3],
+    short: 'Küche',
     title: 'Küche & Essplatz',
     meta: '9.6 m² · Tisch für 8',
     text: 'Voll ausgestattet mit Backofen, Geschirrspüler, Mikrowelle, Espressomaschine und Gefrierfach. Der lange Holztisch für acht Personen steht direkt an den Fenstern mit Seeblick.',
@@ -83,7 +84,7 @@ export const CR_TOUR = [
   {
     id: 'zimmer1',
     level: 'eg',
-    spot: [18, 51],
+    area: [4.4, 9.0, 32.8, 90.3],
     title: 'Zimmer 1',
     meta: '14 m² · Doppelbett · Erdgeschoss',
     text: 'Das halboffene Schlafzimmer neben dem Wohnraum, mit Doppelbett, Deckenventilator und eigener Tür in den Garten.',
@@ -92,7 +93,8 @@ export const CR_TOUR = [
   {
     id: 'bad-eg',
     level: 'eg',
-    spot: [80, 21],
+    area: [66.8, 9.0, 95.2, 32.1],
+    short: 'Bad',
     title: 'Bad im Erdgeschoss',
     meta: '3.9 m² · Dusche · Waschmaschine',
     text: 'Dusche, WC und Lavabo, dazu Waschmaschine und Tumbler. Handtücher, Shampoo und Duschgel sind vorhanden.',
@@ -101,7 +103,7 @@ export const CR_TOUR = [
   {
     id: 'zimmer2',
     level: 'og',
-    spot: [16, 63],
+    area: [4.4, 9.0, 32.8, 90.3],
     title: 'Zimmer 2',
     meta: '13.7 m² · Doppelbett · Balkon',
     text: 'Das grösste Schlafzimmer oben: Holzdecke, Doppelbett und Flügeltür auf den Balkon mit freiem Blick über den See.',
@@ -116,7 +118,7 @@ export const CR_TOUR = [
   {
     id: 'zimmer3',
     level: 'og',
-    spot: [50, 63],
+    area: [33.6, 26.0, 66.0, 90.3],
     title: 'Zimmer 3',
     meta: '10.5 m² · 2 Einzelbetten · Balkon',
     text: 'Zwei Einzelbetten, ideal für Kinder oder Freunde. Auch dieses Zimmer öffnet sich auf den Balkon.',
@@ -125,7 +127,7 @@ export const CR_TOUR = [
   {
     id: 'zimmer4',
     level: 'og',
-    spot: [80, 69],
+    area: [66.8, 33.6, 95.2, 90.3],
     title: 'Zimmer 4',
     meta: '9.5 m² · Doppelbett · Seeblick',
     text: 'Ruhiges Doppelzimmer mit Holzdecke und Fensterläden, der Blick geht direkt auf den Lago Maggiore.',
@@ -134,7 +136,8 @@ export const CR_TOUR = [
   {
     id: 'bad-og',
     level: 'og',
-    spot: [80, 21],
+    area: [66.8, 9.0, 95.2, 32.1],
+    short: 'Bad',
     title: 'Bad im Obergeschoss',
     meta: '3.9 m² · Dusche · WC',
     text: 'Zweites Duschbad mit WC und Lavabo, direkt bei den drei Schlafzimmern.',
@@ -143,6 +146,8 @@ export const CR_TOUR = [
   {
     id: 'garten',
     level: 'eg',
+    area: [4.4, 91.0, 95.2, 99.5],
+    short: 'Garten',
     title: 'Garten & Pergola',
     meta: 'Granittisch · Grill · Hängematte',
     text: 'Unter der Pergola steht ein Granittisch mit Sitzbänken, daneben Rasen, Liegestühle, Hängematte und ein Holzkohlegrill. Die Terrassentüren von Wohnzimmer und Zimmer 1 führen direkt hinaus.',
@@ -158,6 +163,8 @@ export const CR_TOUR = [
   {
     id: 'aussicht',
     level: 'og',
+    area: [4.4, 91.0, 66.0, 99.5],
+    short: 'Balkon & Aussicht',
     title: 'Aussicht',
     meta: 'Lago Maggiore · Tag und Nacht',
     text: 'Vom Garten und vom Balkon reicht der Blick über die Dächer von Tenero weit über den Lago Maggiore, abends mit den Lichtern am Seeufer.',

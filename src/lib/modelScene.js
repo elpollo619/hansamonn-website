@@ -74,6 +74,7 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
   if (!blueprint && data.woodColor != null) mats.wood.color.setHex(data.woodColor); // painted timber (Laube, cladding)
   if (!blueprint && data.beamColor != null) mats.beam.color.setHex(data.beamColor); // painted half-timbering / verge boards
   if (!blueprint && data.shutterColor != null) mats.shutter.color.setHex(data.shutterColor);
+  if (!blueprint && data.stoneColor != null) mats.stone.color.setHex(data.stoneColor); // e.g. Ticino granite
 
   const shapeOf = (p) => {
     const s = new THREE.Shape(p.o.map(([x, z]) => new THREE.Vector2(x, -z)));

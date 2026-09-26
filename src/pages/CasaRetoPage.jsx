@@ -244,7 +244,7 @@ export default function CasaRetoPage() {
           <SectionHead
             eyebrow="Virtueller Rundgang"
             title="Raum für Raum durchs Haus"
-            text="Elf Stationen von der Ankunft bis zur Aussicht. Tippen Sie auf einen Punkt im Grundriss oder lassen Sie den Rundgang abspielen."
+            text="Elf Stationen von der Ankunft bis zur Aussicht. Tippen Sie im Grundriss auf einen Raum oder lassen Sie den Rundgang abspielen."
           />
           <CasaRetoTour />
         </div>

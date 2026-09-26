@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Expand, Pause, Play } from 'lucide-react';
 import Lightbox from '@/components/Lightbox';
@@ -8,8 +8,8 @@ const BRAND = 'var(--brand-color, #1D3D78)';
 const AUTOPLAY_MS = 6000;
 
 /**
- * CasaRetoTour — virtual walk through the house: floor plan with a hotspot per
- * room (EG / OG), the room's photos, and step-by-step navigation. Can play
+ * CasaRetoTour — virtual walk through the house: floor plan where every room is
+ * clickable (EG / OG), the room's photos, and step-by-step navigation. Can play
  * itself as a slideshow.
  */
 export default function CasaRetoTour() {
@@ -26,7 +26,19 @@ export default function CasaRetoTour() {
     setPhoto(0);
     setLevel(CR_TOUR[n].level);
   };
-  const pick = (i) => { setPlaying(false); go(i); };
+  const photoRef = useRef(null);
+  const pick = (i) => {
+    setPlaying(false);
+    go(i);
+    // on phones the photo sits below the plan: bring it into view
+    const el = photoRef.current;
+    if (el && window.innerWidth < 1024) {
+      const r = el.getBoundingClientRect();
+      const photoH = el.querySelector('.aspect-\\[4\\/3\\]')?.offsetHeight || 0;
+      if (r.top < 60) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else if (r.top + photoH > window.innerHeight) window.scrollBy({ top: r.top + photoH - window.innerHeight + 16, behavior: 'smooth' });
+    }
+  };
 
   // Autoplay: step through the photos of a room, then on to the next room
   useEffect(() => {
@@ -47,15 +59,15 @@ export default function CasaRetoTour() {
 
   const plan = CR_PLANS[level];
   const spots = useMemo(
-    () => CR_TOUR.map((s, i) => ({ ...s, index: i })).filter((s) => s.spot && s.level === level),
+    () => CR_TOUR.map((s, i) => ({ ...s, index: i })).filter((s) => s.area && s.level === level),
     [level],
   );
   const image = current.images[photo];
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10 items-start">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-0 items-start">
       {/* Photo + text */}
-      <div className="min-w-0 lg:col-span-7 lg:order-2">
+      <div ref={photoRef} className="min-w-0 order-2 lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:row-span-2 scroll-mt-24">
         <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden group">
           <AnimatePresence mode="wait">
             <motion.img
@@ -163,7 +175,7 @@ export default function CasaRetoTour() {
       </div>
 
       {/* Floor plan + stops */}
-      <div className="min-w-0 lg:col-span-5 lg:order-1">
+      <div className="min-w-0 order-1 lg:col-span-5 lg:col-start-1 lg:row-start-1">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
           <div className="inline-flex border border-gray-200">
             {Object.entries(CR_PLANS).map(([key, p]) => (
@@ -193,25 +205,22 @@ export default function CasaRetoTour() {
           <img src={plan.src} alt={`Grundriss ${plan.label}`} className="absolute inset-0 w-full h-full object-contain" />
           {spots.map((s) => {
             const on = s.index === stop;
+            const [x0, y0, x1, y1] = s.area;
             return (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => pick(s.index)}
-                className="absolute -translate-x-1/2 -translate-y-1/2 group"
-                style={{ left: `${s.spot[0]}%`, top: `${s.spot[1]}%` }}
+                className={`absolute flex items-center justify-center border-2 transition-colors ${on ? 'border-[#1D3D78] bg-[#1D3D78]/15' : 'border-transparent hover:border-[#1D3D78]/50 hover:bg-[#1D3D78]/10'}`}
+                style={{ left: `${x0}%`, top: `${y0}%`, width: `${x1 - x0}%`, height: `${y1 - y0}%` }}
                 aria-label={s.title}
                 aria-current={on ? 'step' : undefined}
               >
-                {on && <span className="absolute inset-0 rounded-full animate-ping opacity-40" style={{ backgroundColor: BRAND }} />}
                 <span
-                  className={`relative flex items-center justify-center rounded-full border-2 border-white shadow-md text-white text-xs font-bold transition-transform ${on ? 'w-9 h-9 scale-110' : 'w-7 h-7 group-hover:scale-110'}`}
-                  style={{ backgroundColor: on ? BRAND : '#0F1B2D' }}
+                  className={`pointer-events-none whitespace-nowrap px-2 py-1 text-[11px] sm:text-xs font-semibold shadow-sm ${on ? 'text-white' : 'bg-white/95 text-[#0F1B2D]'}`}
+                  style={on ? { backgroundColor: BRAND } : undefined}
                 >
-                  {s.index + 1}
-                </span>
-                <span className="pointer-events-none absolute left-1/2 top-full mt-1.5 -translate-x-1/2 whitespace-nowrap bg-white/95 px-2 py-0.5 text-[11px] font-semibold text-gray-800 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                  {s.title}
+                  {s.short || s.title}
                 </span>
               </button>
             );
@@ -220,27 +229,27 @@ export default function CasaRetoTour() {
         <p className="mt-2 text-xs text-gray-500">
           Grundriss aus den Bauplänen, beschriftet auf Italienisch (Camera = Zimmer, Doccia = Dusche, Cucina = Küche).
         </p>
-
-        <ol className="mt-5 grid grid-cols-2 gap-x-4 border-t border-gray-100">
-          {CR_TOUR.map((s, i) => (
-            <li key={s.id}>
-              <button
-                type="button"
-                onClick={() => pick(i)}
-                className={`w-full flex items-center gap-2.5 py-2.5 border-b border-gray-100 text-left text-sm transition-colors ${i === stop ? 'font-semibold text-[#0F1B2D]' : 'text-gray-600 hover:text-gray-900'}`}
-              >
-                <span
-                  className="w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-[11px] font-bold"
-                  style={i === stop ? { backgroundColor: BRAND, color: '#fff' } : { backgroundColor: '#eef0f4', color: '#0F1B2D' }}
-                >
-                  {i + 1}
-                </span>
-                {s.title}
-              </button>
-            </li>
-          ))}
-        </ol>
       </div>
+
+      <ol className="min-w-0 order-3 lg:col-span-5 lg:col-start-1 lg:row-start-2 lg:mt-5 grid grid-cols-2 gap-x-4 border-t border-gray-100">
+        {CR_TOUR.map((s, i) => (
+          <li key={s.id}>
+            <button
+              type="button"
+              onClick={() => pick(i)}
+              className={`w-full flex items-center gap-2.5 py-2.5 border-b border-gray-100 text-left text-sm transition-colors ${i === stop ? 'font-semibold text-[#0F1B2D]' : 'text-gray-600 hover:text-gray-900'}`}
+            >
+              <span
+                className="w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-[11px] font-bold"
+                style={i === stop ? { backgroundColor: BRAND, color: '#fff' } : { backgroundColor: '#eef0f4', color: '#0F1B2D' }}
+              >
+                {i + 1}
+              </span>
+              {s.title}
+            </button>
+          </li>
+        ))}
+      </ol>
 
       {lightbox !== null && (
         <Lightbox images={current.images} initialIndex={lightbox} onClose={() => setLightbox(null)} />
