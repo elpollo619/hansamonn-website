@@ -11,14 +11,15 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 import FavoriteButton from '@/components/FavoriteButton';
 import OccupancyBadge from '@/components/OccupancyBadge';
+import PageHero from '@/components/PageHero';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
 const TYPE_CFG = {
-  apartment:   { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Home },
-  'long-stay': { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Coffee },
-  hotel:       { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Building2 },
-  project:     { badge: 'bg-gray-100 text-gray-600 border-gray-200', icon: Sun },
+  apartment:   { badge: 'bg-white/95 text-gray-700 border-transparent', icon: Home },
+  'long-stay': { badge: 'bg-white/95 text-gray-700 border-transparent', icon: Coffee },
+  hotel:       { badge: 'bg-white/95 text-gray-700 border-transparent', icon: Building2 },
+  project:     { badge: 'bg-white/95 text-gray-700 border-transparent', icon: Sun },
 };
 
 const TypeBadge = ({ type, t }) => {
@@ -31,7 +32,7 @@ const TypeBadge = ({ type, t }) => {
     project:     t('vermietung.types.project'),
   };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold border ${cfg.badge}`}>
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider border ${cfg.badge}`}>
       <Icon size={11} />
       {labels[type] || type}
     </span>
@@ -43,7 +44,7 @@ const TypeBadge = ({ type, t }) => {
 const RentalImage = ({ src, alt, className }) => {
   const [errored, setErrored] = React.useState(false);
   return errored ? (
-    <div className={`${className} bg-gray-100 flex items-center justify-center`}>
+    <div className={`${className} surface-warm flex items-center justify-center`}>
       <Home size={32} className="text-gray-300" />
     </div>
   ) : (
@@ -76,17 +77,17 @@ const FavoriteCard = ({ item, index, t }) => {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.35, delay: index * 0.06 }}
-      className="bg-white overflow-hidden border border-gray-100 flex flex-col transition-colors duration-300 hover:border-gray-300"
+      transition={{ duration: 0.5, delay: index * 0.06 }}
+      className="group bg-white overflow-hidden border border-gray-100 flex flex-col transition-colors duration-300 hover:border-gray-300"
     >
       {/* Image */}
-      <Link to={getDetailUrl(item)} className={`relative overflow-hidden block ${isProject ? 'h-56' : 'h-52'}`}>
+      <Link to={getDetailUrl(item)} className={`relative overflow-hidden block bg-gray-100 ${isProject ? 'h-60' : 'h-56'}`}>
         <RentalImage
           src={image.url}
           alt={image.alt}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/50 via-transparent to-transparent pointer-events-none" />
 
         {/* Top-left type badge */}
         <div className="absolute top-3 left-3">
@@ -102,7 +103,7 @@ const FavoriteCard = ({ item, index, t }) => {
         <div className="absolute bottom-3 right-3">
           <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5">
             {item.price ? (
-              <span className="font-bold text-sm text-gray-900">
+              <span className="font-semibold text-sm text-[#0F1B2D]">
                 CHF {item.price.toLocaleString('de-CH')}
                 <span className="text-gray-400 font-normal text-xs">
                   {isHotel ? t('vermietung.card.nightPrice') : `${t('vermietung.longStay.from')}${t('common.perMonth')}`}
@@ -118,16 +119,16 @@ const FavoriteCard = ({ item, index, t }) => {
       </Link>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-start justify-between gap-2 mb-0.5">
+      <div className="p-6 flex flex-col flex-1">
+        <div className="flex items-start justify-between gap-3 mb-1">
           <Link to={getDetailUrl(item)} className="hover:text-[#1D3D78] transition-colors">
-            <h3 className="text-base font-semibold text-gray-900 leading-snug">{item.title}</h3>
+            <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] leading-tight">{item.title}</h3>
           </Link>
           <OccupancyBadge status={item.occupancy || 'frei'} />
         </div>
-        <p className="text-xs text-gray-500 mb-2.5 leading-snug">{item.subtitle}</p>
+        <p className="text-sm text-gray-600 mb-3 leading-relaxed">{item.subtitle}</p>
 
-        <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-6">
           <MapPin size={11} className="flex-shrink-0" />
           <span>{item.location}</span>
         </div>
@@ -136,7 +137,7 @@ const FavoriteCard = ({ item, index, t }) => {
         <div className="mt-auto">
           <Link
             to={getDetailUrl(item)}
-            className="w-full flex items-center justify-center gap-2 font-semibold py-3 px-4 transition-colors text-sm text-white"
+            className="w-full flex items-center justify-center gap-2 font-semibold py-3 px-6 transition-colors text-sm text-white"
             style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
             onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
             onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
@@ -154,17 +155,18 @@ const FavoriteCard = ({ item, index, t }) => {
 
 const EmptyState = () => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 24 }}
     animate={{ opacity: 1, y: 0 }}
-    className="text-center py-24 px-4"
+    transition={{ duration: 0.6 }}
+    className="text-center py-12 md:py-16 px-4"
   >
-    <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6">
-      <Heart size={36} className="text-gray-300" />
+    <div className="w-20 h-20 surface-warm flex items-center justify-center mx-auto mb-6">
+      <Heart size={32} style={{ color: 'var(--brand-color, #1D3D78)' }} />
     </div>
-    <h2 className="text-xl font-semibold text-gray-900 mb-3">
+    <h2 className="font-display uppercase text-3xl md:text-4xl font-semibold text-[#0F1B2D] leading-tight mb-4">
       Noch keine Favoriten gespeichert
     </h2>
-    <p className="text-gray-500 text-sm mb-8 max-w-sm mx-auto">
+    <p className="text-gray-600 leading-relaxed mb-8 max-w-md mx-auto">
       Klicken Sie auf das Herz-Symbol bei einer Immobilie, um sie hier zu speichern.
     </p>
     <Link
@@ -196,46 +198,34 @@ const FavoritenPage = () => {
         <meta name="description" content="Ihre gespeicherten Favoriten bei Hans Amonn AG Immobilien." />
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="container mx-auto px-4 sm:px-6 py-10">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-3 mb-1">
-                  <div className="w-9 h-9 bg-gray-100 flex items-center justify-center">
-                    <Heart size={18} className="text-gray-500" />
-                  </div>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                    Meine Favoriten
-                  </h1>
-                </div>
-                <p className="text-gray-500 text-sm mt-1 ml-12">
-                  {favoritedItems.length === 0
-                    ? 'Keine gespeicherten Objekte'
-                    : `${favoritedItems.length} gespeicherte${favoritedItems.length === 1 ? 's Objekt' : ' Objekte'}`}
-                </p>
-              </div>
+      <PageHero
+        eyebrow="Immobilien"
+        title="Meine Favoriten"
+        subtitle={
+          favoritedItems.length === 0
+            ? 'Keine gespeicherten Objekte'
+            : `${favoritedItems.length} gespeicherte${favoritedItems.length === 1 ? 's Objekt' : ' Objekte'}`
+        }
+        size="sm"
+      >
+        {favoritedItems.length > 0 && (
+          <button
+            onClick={clearFavorites}
+            className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-6 py-3 text-sm font-semibold transition-colors"
+          >
+            <Trash2 size={14} />
+            Alle entfernen
+          </button>
+        )}
+      </PageHero>
 
-              {favoritedItems.length > 0 && (
-                <button
-                  onClick={clearFavorites}
-                  className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 border border-gray-200 hover:border-gray-400 px-4 py-2 transition-colors"
-                >
-                  <Trash2 size={14} />
-                  Alle entfernen
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-
+      <div className="bg-white">
         {/* Content */}
-        <div className="container mx-auto px-4 sm:px-6 py-10">
+        <div className="container mx-auto px-4 sm:px-6 py-16 md:py-20 min-h-[40vh]">
           {favoritedItems.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {favoritedItems.map((item, index) => (
                 <FavoriteCard key={item.id} item={item} index={index} t={t} />
               ))}

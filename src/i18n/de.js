@@ -43,12 +43,12 @@ const de = {
     meta: {
       title: 'Mietwohnungen – Hans Amonn AG',
       description:
-        'Moderne Mietwohnungen in Kerzers und Umgebung. Hans Amonn AG – Ihr Partner für Wohnen seit 1968.',
+        'Moderne Mietwohnungen in Kerzers und Umgebung. Hans Amonn AG, Ihr Partner für Wohnen seit 1968.',
     },
     hero: {
       title: 'Wohnen & Übernachten',
       subtitle:
-        'Wohnungen, möblierte Langzeitaufenthalte, Hotel und exklusive Projekte – alles in Kerzers und Umgebung.',
+        'Wohnungen, möblierte Langzeitaufenthalte, Hotel und exklusive Projekte, alles in Kerzers und Umgebung.',
       badge: 'Aktuelle Angebote',
       offeringTypes: 'Wohnungen · Long Stay · Hotel · Projekte',
       serviceApartments: 'Moderne Mietwohnungen in Kerzers',
@@ -91,7 +91,7 @@ const de = {
       contact: {
         title: 'Interesse? Wir beraten Sie gern',
         subtitle:
-          'Rufen Sie uns an oder schreiben Sie uns – wir antworten schnell und unkompliziert.',
+          'Rufen Sie uns an oder schreiben Sie uns, wir antworten schnell und unkompliziert.',
         call: 'Anrufen',
         email: 'E-Mail schreiben',
         form: 'Anfrageformular',
@@ -99,7 +99,7 @@ const de = {
       rented: {
         title: 'Diese Wohnung ist derzeit vermietet.',
         subtitle:
-          'Kontaktieren Sie uns – wir informieren Sie, sobald eine Wohnung frei wird.',
+          'Kontaktieren Sie uns, wir informieren Sie, sobald eine Wohnung frei wird.',
       },
       gallery: 'Galerie',
       backToList: 'Alle Wohnungen ansehen',
@@ -107,7 +107,7 @@ const de = {
     empty: {
       title: 'Keine Wohnungen verfügbar',
       subtitle:
-        'Im Moment sind keine Wohnungen frei. Hinterlassen Sie Ihre Kontaktdaten – wir melden uns, sobald etwas frei wird.',
+        'Im Moment sind keine Wohnungen frei. Hinterlassen Sie Ihre Kontaktdaten, wir melden uns, sobald etwas frei wird.',
     },
     cta: {
       title: 'Nicht gefunden was Sie suchen?',
@@ -194,13 +194,13 @@ const de = {
   immobilien: {
     hero: {
       title: 'Unsere Immobilien',
-      subtitle: 'Mieten oder kaufen — wir haben das passende Angebot für Sie',
+      subtitle: 'Mieten oder kaufen, wir haben das passende Angebot für Sie',
     },
     vermietung: {
       tag: 'Vermietung',
       title: 'Wohnen & Übernachten',
       subtitle: 'Möblierte Zimmer, Apartments & Hotel',
-      desc: 'Von kurzfristigen Übernachtungen bis zum langfristigen Wohnen — flexible Lösungen für jeden Bedarf.',
+      desc: 'Von kurzfristigen Übernachtungen bis zum langfristigen Wohnen, flexible Lösungen für jeden Bedarf.',
       cta: 'Angebote ansehen',
       highlights: ['Long Stay ab 1 Monat', 'Preise inkl. Nebenkosten', 'Self Check-in Hotel', 'Ferienhaus Tessin'],
     },
@@ -215,6 +215,7 @@ const de = {
     contact: {
       title: 'Interesse? Wir beraten Sie gern.',
       cta: 'Mietanfrage stellen',
+      text: 'Sagen Sie uns, was Sie suchen: Zeitraum, Budget, Ort. Wir melden uns innerhalb von 24 Stunden.',
     },
   },
 
@@ -227,7 +228,7 @@ const de = {
     sectionFirma: 'Angaben Firma (optional)',
     sectionFirmaHint: 'Nur ausfüllen, wenn die Miete über eine Firma läuft.',
     sectionFahrzeug: 'Angaben Fahrzeug',
-    sectionNotfall: 'Angaben Notfallkontakt',
+    sectionNotfall: "Angaben Notfallkontakt (freiwillig)",
     sectionBemerkungen: 'Bemerkungen (optional)',
     sectionEinwilligung: 'Einwilligung',
     mietbeginn: 'Mietbeginn',
@@ -239,14 +240,14 @@ const de = {
     plz: 'PLZ',
     ort: 'Ort',
     geburtsdatum: 'Geburtsdatum',
-    nationalitaet: 'Nationalität',
+    nationalitaet: "Aufenthaltsstatus",
     sprache: 'Sprache',
     beruf: 'Beruf',
     handynummer: 'Handynummer',
     email: 'E-Mail',
     whatsapp: 'WhatsApp verfügbar?',
-    idUpload: 'Passkopie / Ausweis',
-    idHint: 'Pass, ID-Karte oder Aufenthaltstitel (JPG, PNG oder PDF)',
+    idUpload: "Ausweis (freiwillig)",
+    idHint: "Pass, ID-Karte oder Aufenthaltstitel. Freiwillig, wir benötigen ihn erst bei einer Zusage (JPG, PNG oder PDF)",
     extraDocs: 'Weitere Dokumente (optional)',
     extraDocsHint: 'Lohnausweis, Arbeitsvertrag, Referenzschreiben o.ä.',
     fahrzeugVorhanden: 'Fahrzeug vorhanden?',
@@ -266,7 +267,7 @@ const de = {
     notfallEmail: 'E-Mail',
     bemerkungen: 'Zusätzliche Informationen oder besondere Wünsche...',
     consent1: 'Ich habe sämtliche Informationen dieses Gesuchs wahrheitsgetreu und richtig angegeben.',
-    consent2: 'Ich habe die Hausordnung gelesen und akzeptiere diese.',
+    consent2: "Ich nehme zur Kenntnis, dass die Hausordnung Bestandteil des Mietvertrags ist.",
     consent3: 'Ich habe die Allgemeinen Geschäftsbedingungen gelesen und akzeptiere diese.',
     pdfNote: 'Nach dem Absenden wird automatisch eine PDF-Kopie Ihrer Anfrage heruntergeladen.',
     uploadArea: 'Dateien hier ablegen oder klicken',
@@ -294,7 +295,7 @@ const de = {
     hero: {
       title: 'Hans Amonn AG',
       subtitle: 'Bau & Immobilien',
-      tagline: 'Ihr Partner für Bau und Immobilien seit 1968 – Tradition und Innovation vereint',
+      tagline: 'Ihr Partner für Bau und Immobilien seit 1968, Tradition und Innovation vereint',
       ctaProjects: 'Projekte ansehen',
       ctaContact: 'Beratung anfragen',
     },
@@ -370,7 +371,7 @@ const de = {
     ],
     sendMessage: 'Nachricht senden',
     ctaTitle: 'Bereit für Ihr nächstes Projekt?',
-    ctaDesc: 'Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung — wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.',
+    ctaDesc: 'Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung, wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.',
     ctaCall: 'Jetzt anrufen',
     ctaEmail: 'E-Mail senden',
     form: {

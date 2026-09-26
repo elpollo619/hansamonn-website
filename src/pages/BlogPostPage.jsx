@@ -5,16 +5,17 @@ import { motion } from 'framer-motion';
 import { Calendar, User, ArrowLeft, Tag } from 'lucide-react';
 import { getBlogPostBySlug, getBlogPosts } from '@/data/blogStore';
 import { useTranslation } from '@/i18n';
+import PageHero from '@/components/PageHero';
 
 const CATEGORY_COLORS = {
-  Immobilien: 'bg-gray-100 text-gray-600',
-  Architektur: 'bg-gray-100 text-gray-600',
-  Unternehmen: 'bg-gray-100 text-gray-600',
-  Allgemein:   'bg-gray-100 text-gray-600',
+  Immobilien: 'text-gray-500',
+  Architektur: 'text-gray-500',
+  Unternehmen: 'text-gray-500',
+  Allgemein:   'text-gray-500',
 };
 
 function categoryColor(cat) {
-  return CATEGORY_COLORS[cat] ?? 'bg-gray-100 text-gray-600';
+  return CATEGORY_COLORS[cat] ?? 'text-gray-500';
 }
 
 function formatDate(dateStr) {
@@ -40,8 +41,8 @@ export default function BlogPostPage() {
   // Still loading
   if (post === undefined) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-gray-200 border-t-gray-900 rounded-full animate-spin" />
+      <div className="min-h-screen surface-warm flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-gray-200 border-t-[#1D3D78] rounded-full animate-spin" />
       </div>
     );
   }
@@ -72,58 +73,41 @@ export default function BlogPostPage() {
         {post.cover_image && <meta name="twitter:image" content={post.cover_image} />}
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50">
-        {/* Cover image hero */}
-        {post.cover_image && (
-          <div className="w-full h-64 sm:h-80 lg:h-96 bg-gray-200 overflow-hidden">
-            <img
-              src={post.cover_image}
-              alt={post.title}
-              className="w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
-        )}
+      {/* Hero (cover image → dark photo hero; otherwise light) */}
+      <PageHero
+        eyebrow={post.category}
+        title={displayTitle}
+        image={post.cover_image || undefined}
+        size="sm"
+      >
+        {/* Meta */}
+        <div className={`flex flex-wrap items-center gap-x-5 gap-y-2 text-sm ${post.cover_image ? 'text-white/70' : 'text-gray-500'}`}>
+          <span className="flex items-center gap-1.5">
+            <Calendar size={14} />
+            {formatDate(post.published_at)}
+          </span>
+          {post.author && (
+            <span className="flex items-center gap-1.5">
+              <User size={14} />
+              {post.author}
+            </span>
+          )}
+        </div>
+      </PageHero>
 
-        <div className="max-w-6xl mx-auto px-6 py-10">
-          <div className="flex flex-col lg:flex-row gap-10">
+      <div className="bg-white">
+        <div className="container mx-auto px-6 py-16 md:py-20">
+          <div className="flex flex-col lg:flex-row lg:justify-between gap-12 lg:gap-16">
             {/* ── Main content ── */}
             <motion.article
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex-1 min-w-0"
+              transition={{ duration: 0.6 }}
+              className="flex-1 min-w-0 max-w-3xl"
             >
-              {/* Category badge */}
-              <div className="flex items-center gap-3 mb-4">
-                <span className={`inline-block text-xs font-semibold px-2.5 py-1 ${categoryColor(post.category)}`}>
-                  {post.category}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h1 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight mb-5">
-                {displayTitle}
-              </h1>
-
-              {/* Meta */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 mb-8 pb-8 border-b border-gray-200">
-                <span className="flex items-center gap-1.5">
-                  <Calendar size={14} />
-                  {formatDate(post.published_at)}
-                </span>
-                {post.author && (
-                  <span className="flex items-center gap-1.5">
-                    <User size={14} />
-                    {post.author}
-                  </span>
-                )}
-              </div>
-
               {/* Excerpt */}
               {displayExcerpt && (
-                <p className="text-lg text-gray-600 leading-relaxed mb-6 font-medium">
+                <p className="text-xl text-[#0F1B2D] leading-relaxed mb-8 pb-8 border-b border-gray-100">
                   {displayExcerpt}
                 </p>
               )}
@@ -131,14 +115,14 @@ export default function BlogPostPage() {
               {/* Content (HTML) */}
               {displayContent ? (
                 <div
-                  className="prose prose-gray max-w-none text-gray-700 leading-relaxed
-                    [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-gray-900 [&_h2]:mt-8 [&_h2]:mb-4
-                    [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-gray-900 [&_h3]:mt-6 [&_h3]:mb-3
+                  className="prose prose-gray max-w-none text-gray-600 text-[17px] leading-relaxed
+                    [&_h2]:font-display [&_h2]:uppercase [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-[#0F1B2D] [&_h2]:mt-10 [&_h2]:mb-4
+                    [&_h3]:font-display [&_h3]:uppercase [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#0F1B2D] [&_h3]:mt-8 [&_h3]:mb-3
                     [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4
                     [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4
                     [&_li]:mb-1 [&_a]:text-[#1D3D78] [&_a]:underline
                     [&_strong]:font-bold [&_em]:italic
-                    [&_blockquote]:border-l-4 [&_blockquote]:border-gray-200 [&_blockquote]:pl-4 [&_blockquote]:text-gray-500 [&_blockquote]:italic"
+                    [&_blockquote]:border-l-2 [&_blockquote]:border-[#1D3D78] [&_blockquote]:pl-5 [&_blockquote]:text-gray-500 [&_blockquote]:italic [&_img]:my-8"
                   dangerouslySetInnerHTML={{ __html: displayContent }}
                 />
               ) : (
@@ -147,11 +131,11 @@ export default function BlogPostPage() {
             </motion.article>
 
             {/* ── Sidebar ── */}
-            <aside className="lg:w-64 flex-shrink-0 space-y-6">
+            <aside className="lg:w-72 flex-shrink-0 space-y-8">
               {/* Back link */}
               <Link
                 to="/neuigkeiten"
-                className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors"
               >
                 <ArrowLeft size={15} />
                 Zurück zu Neuigkeiten
@@ -159,11 +143,11 @@ export default function BlogPostPage() {
 
               {/* Recent posts */}
               {recentPosts.length > 1 && (
-                <div className="bg-white border border-gray-100 p-5">
-                  <h3 className="text-xs font-black tracking-widest text-gray-400 uppercase mb-4">
+                <div className="surface-warm border border-gray-100 p-6">
+                  <h3 className="eyebrow mb-5">
                     Weitere Beiträge
                   </h3>
-                  <ul className="space-y-4">
+                  <ul className="space-y-5">
                     {recentPosts
                       .filter((p) => p.slug !== slug)
                       .slice(0, 4)
@@ -174,20 +158,20 @@ export default function BlogPostPage() {
                             className="block group"
                           >
                             {p.cover_image && (
-                              <div className="w-full h-24 overflow-hidden bg-gray-100 mb-2">
+                              <div className="w-full aspect-[16/9] overflow-hidden bg-gray-100 mb-3">
                                 <img
                                   src={p.cover_image}
                                   alt={p.title}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                                   loading="lazy"
                                   decoding="async"
                                 />
                               </div>
                             )}
-                            <p className="text-sm font-semibold text-gray-800 group-hover:text-[#1D3D78] transition-colors line-clamp-2 leading-snug">
+                            <p className="font-display uppercase text-lg font-semibold text-[#0F1B2D] group-hover:text-[#1D3D78] transition-colors line-clamp-2 leading-tight">
                               {(lang === 'it' && p.title_it) || p.title}
                             </p>
-                            <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1.5 flex items-center gap-1">
                               <Tag size={11} />
                               {p.category}
                             </p>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { loadLeaflet } from '@/lib/leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, BedDouble, Hotel, Sun, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -33,15 +34,8 @@ function LeafletMap({ locations, activeId, onPinClick }) {
   useEffect(() => {
     if (typeof window === 'undefined' || mapInstanceRef.current) return;
 
-    import('leaflet').then((L) => {
+    loadLeaflet().then((L) => {
       leafletRef.current = L;
-
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
 
       const map = L.map(mapRef.current, {
         center: [47.0, 7.9],
@@ -98,7 +92,7 @@ function LeafletMap({ locations, activeId, onPinClick }) {
         iconAnchor: [18, 18],
       });
 
-      const marker = L.marker([loc.lat, loc.lng], { icon })
+      const marker = L.marker([loc.lat, loc.lng], { icon, title: loc.name, alt: loc.name })
         .addTo(map)
         .on('click', () => clickHandler(loc.id));
 
@@ -155,13 +149,7 @@ export default function InteractiveMapSection() {
   const activeLocation = locations.find((l) => l.id === active);
 
   useEffect(() => {
-    if (document.getElementById('leaflet-css')) { setLeafletCssLoaded(true); return; }
-    const link = document.createElement('link');
-    link.id   = 'leaflet-css';
-    link.rel  = 'stylesheet';
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    link.onload = () => setLeafletCssLoaded(true);
-    document.head.appendChild(link);
+    loadLeaflet().then(() => setLeafletCssLoaded(true));
   }, []);
 
   const legendItems = [
@@ -177,7 +165,7 @@ export default function InteractiveMapSection() {
         <div className="text-center mb-10">
           <h2 className="text-3xl font-light text-gray-900 mb-3">Unsere Standorte</h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Alle Objekte auf einem Blick — von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
+            Alle Objekte auf einem Blick, von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
           </p>
         </div>
 

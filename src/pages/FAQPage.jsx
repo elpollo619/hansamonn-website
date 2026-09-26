@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { getFaqs } from '@/data/faqStore';
+import PageHero from '@/components/PageHero';
 
 const SAMPLE_FAQS = [
   {
@@ -39,21 +40,24 @@ const SAMPLE_FAQS = [
 
 function FAQItem({ faq, isOpen, onToggle }) {
   return (
-    <div className="border border-gray-200 overflow-hidden bg-white">
+    <div className="border-b border-gray-200">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gray-50 transition-colors"
+        className="group w-full flex items-center justify-between gap-6 py-6 text-left"
         aria-expanded={isOpen}
       >
-        <span className="font-semibold text-gray-900 pr-4 text-base leading-snug">
+        <span className="font-semibold text-[#0F1B2D] text-base md:text-lg leading-snug group-hover:text-[#1D3D78] transition-colors">
           {faq.question}
         </span>
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.25, ease: 'easeInOut' }}
-          className="flex-shrink-0 text-gray-400"
+          className={`flex-shrink-0 w-9 h-9 flex items-center justify-center border transition-colors ${
+            isOpen ? 'text-white border-transparent' : 'text-gray-500 border-gray-200 group-hover:border-gray-400'
+          }`}
+          style={isOpen ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : undefined}
         >
-          <ChevronDown size={20} />
+          <ChevronDown size={18} />
         </motion.span>
       </button>
       <AnimatePresence initial={false}>
@@ -66,10 +70,8 @@ function FAQItem({ faq, isOpen, onToggle }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-5 pt-0">
-              <div className="border-t border-gray-100 pt-4">
-                <p className="text-gray-600 leading-relaxed text-sm">{faq.answer}</p>
-              </div>
+            <div className="pb-6 pr-12">
+              <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
             </div>
           </motion.div>
         )}
@@ -112,30 +114,16 @@ export default function FAQPage() {
       </Helmet>
 
       {/* Hero */}
-      <section className="bg-gray-50 border-b border-gray-100 py-16 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-light text-gray-900 mb-4"
-          >
-            Häufig gestellte Fragen
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-gray-500 text-lg leading-relaxed"
-          >
-            Hier finden Sie Antworten auf die wichtigsten Fragen rund um Vermietung und Immobilien.
-          </motion.p>
-        </div>
-      </section>
+      <PageHero
+        title="Häufig gestellte Fragen"
+        subtitle="Hier finden Sie Antworten auf die wichtigsten Fragen rund um Vermietung und Immobilien."
+        size="sm"
+      />
 
       {/* Content */}
-      <section className="py-16 px-6">
-        <div className="max-w-3xl mx-auto">
+      <section className="bg-white py-16 md:py-20">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl">
 
           {/* Category filter tabs */}
           {!loading && showCategoryTabs && (
@@ -145,7 +133,7 @@ export default function FAQPage() {
                   key={cat}
                   onClick={() => { setActiveCategory(cat); setOpenId(null); }}
                   style={activeCategory === cat ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
-                  className={`px-4 py-2 text-sm font-medium transition-colors border ${
+                  className={`px-4 py-2 text-sm font-semibold transition-colors border ${
                     activeCategory === cat
                       ? 'text-white border-transparent'
                       : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
@@ -161,7 +149,7 @@ export default function FAQPage() {
           {loading && (
             <div className="space-y-3">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="h-16 bg-gray-100 animate-pulse" />
+                <div key={i} className="h-16 surface-warm animate-pulse" />
               ))}
             </div>
           )}
@@ -172,7 +160,7 @@ export default function FAQPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
-              className="space-y-3"
+              className="border-t border-gray-200"
             >
               {filtered.map((faq) => (
                 <FAQItem
@@ -185,22 +173,26 @@ export default function FAQPage() {
             </motion.div>
           )}
 
+          </div>
+
           {/* Still have questions CTA */}
           {!loading && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-14 text-white p-8 text-center" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              className="mt-16 bg-[#0B1220] text-white p-8 md:p-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
             >
-              <h2 className="text-xl font-bold mb-2">Noch Fragen?</h2>
-              <p className="text-gray-400 text-sm mb-6">
-                Unser Team hilft Ihnen gerne persönlich weiter.
-              </p>
+              <div>
+                <h2 className="font-display uppercase font-semibold text-3xl md:text-4xl leading-none mb-3">Noch Fragen?</h2>
+                <p className="text-white/70">
+                  Unser Team hilft Ihnen gerne persönlich weiter.
+                </p>
+              </div>
               <a
                 href="/kontakt"
-                className="inline-block bg-white text-gray-900 px-6 py-3 font-semibold text-sm hover:bg-gray-100 transition-colors"
+                className="self-start md:self-auto shrink-0 inline-block bg-white text-gray-900 px-6 py-3 font-semibold text-sm hover:bg-gray-100 transition-colors"
               >
                 Jetzt kontaktieren
               </a>

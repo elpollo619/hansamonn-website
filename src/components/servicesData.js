@@ -20,7 +20,7 @@ export const servicesData = [
       'Koordination zwischen Architektur und Fachplanern',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80',
+      '/images/projekte/a4-explosion.jpg',
   },
   {
     slug: 'neubauten',
@@ -28,7 +28,7 @@ export const servicesData = [
     icon: Building2,
     title: 'Neubauten',
     shortDescription:
-      'Ob Wohnhäuser, Gewerbeimmobilien oder öffentliche Bauten – wir realisieren Projekte, die höchsten architektonischen und baulichen Ansprüchen genügen.',
+      'Ob Wohnhäuser, Gewerbeimmobilien oder öffentliche Bauten: Wir planen und realisieren Projekte mit hohem gestalterischem und baulichem Anspruch.',
     fullDescription:
       'Der Neubau eines Gebäudes ist ein komplexer Prozess, der höchste Präzision in Planung und Ausführung erfordert. Die Hans Amonn AG begleitet Sie von der ersten Idee bis zur Schlüsselübergabe. Wir koordinieren alle Beteiligten, überwachen die Qualität und sorgen für die Einhaltung von Terminen und Budget.',
     features: ['Wohnhäuser', 'Gewerbeimmobilien', 'Öffentliche Bauten'],
@@ -40,7 +40,7 @@ export const servicesData = [
       'Abnahme und Übergabe',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80',
+      '/images/ns-hotel/aussen.jpg',
   },
   {
     slug: 'sanierungen-umbauten',
@@ -50,7 +50,7 @@ export const servicesData = [
     shortDescription:
       'Bestehende Gebäude erhalten durch uns eine neue Perspektive. Wir schaffen moderne Lösungen, die den Charakter des Bestands bewahren und gleichzeitig zeitgemäße Standards erfüllen.',
     fullDescription:
-      'Sanierungen und Umbauten stellen besondere Anforderungen an Planung und Ausführung. Wir analysieren den Bestand sorgfältig, erarbeiten massgeschneiderte Lösungen und setzen die Massnahmen fachgerecht um – ob denkmalgeschütztes Fachwerkhaus oder Nachkriegsblock. Das Ergebnis: mehr Komfort, höhere Energieeffizienz und ein stimmiges Erscheinungsbild.',
+      'Sanierungen und Umbauten stellen besondere Anforderungen an Planung und Ausführung. Wir analysieren den Bestand sorgfältig, erarbeiten massgeschneiderte Lösungen und setzen die Massnahmen fachgerecht um, ob denkmalgeschütztes Fachwerkhaus oder Nachkriegsblock. Das Ergebnis: mehr Komfort, höhere Energieeffizienz und ein stimmiges Erscheinungsbild.',
     features: ['Modernisierung', 'Energetische Sanierung', 'Umbauten'],
     bullets: [
       'Zustandsanalyse und Schadensdiagnose',
@@ -59,8 +59,7 @@ export const servicesData = [
       'Modernisierung der Haustechnik',
       'Innenraumgestaltung und Ausbau',
     ],
-    coverImage:
-      'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/40ccd8d190aeb0a543c3ff4ab8cdf19d.jpg',
+    coverImage: '/images/muenchenbuchsee/titel.jpg',
   },
   {
     slug: 'projektbegleitung',
@@ -68,9 +67,9 @@ export const servicesData = [
     icon: Users,
     title: 'Projektbegleitung & Bauleitung',
     shortDescription:
-      'Von der ersten Idee bis zur Fertigstellung – wir stehen Ihnen in jeder Phase Ihres Bauvorhabens zur Seite und sorgen für eine termingerechte, wirtschaftliche und hochwertige Umsetzung.',
+      'Von der ersten Idee bis zur Fertigstellung: Wir stehen Ihnen in jeder Phase Ihres Bauvorhabens zur Seite und sorgen für eine termingerechte, wirtschaftliche und hochwertige Umsetzung.',
     fullDescription:
-      'Als Ihr Gesamtleiter und Bauleiter übernehmen wir die vollständige Koordination Ihres Projekts. Wir schreiben Unternehmerleistungen aus, vergleichen Offerten, vergeben Aufträge und überwachen die Ausführung lückenlos. Sie erhalten regelmässige Berichte und behalten stets den Überblick – ohne selbst in operative Details eingebunden zu sein.',
+      'Als Ihr Gesamtleiter und Bauleiter übernehmen wir die vollständige Koordination Ihres Projekts. Wir schreiben Unternehmerleistungen aus, vergleichen Offerten, vergeben Aufträge und überwachen die Ausführung lückenlos. Sie erhalten regelmässige Berichte und behalten stets den Überblick, ohne selbst in operative Details eingebunden zu sein.',
     features: ['Bauüberwachung', 'Qualitätskontrolle', 'Terminplanung'],
     bullets: [
       'Ausschreibung und Vergabe aller Gewerke',
@@ -80,7 +79,7 @@ export const servicesData = [
       'Schlussabrechnung und Gewährleistungsüberwachung',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80',
+      '/images/projekte/bremgarten/kran.jpg',
   },
 
   // ── Real Estate ─────────────────────────────────────────────────
@@ -102,7 +101,7 @@ export const servicesData = [
       'Verhandlung und Vertragsabwicklung',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80',
+      '/images/ns-hotel/drohne-2.jpg',
   },
   {
     slug: 'vermietung',
@@ -110,7 +109,7 @@ export const servicesData = [
     icon: Home,
     title: 'Vermietung',
     shortDescription:
-      'Ob Wohn- oder Gewerbeimmobilien – wir finden den passenden Mieter für Ihre Liegenschaft und kümmern uns um alle Details, von der Inseration bis zur Vertragsabwicklung.',
+      'Ob Wohn- oder Gewerbeimmobilien: Wir finden den passenden Mieter für Ihre Liegenschaft und kümmern uns um alle Details, von der Inseration bis zur Vertragsabwicklung.',
     fullDescription:
       'Eine leerstehende Wohnung kostet Geld. Wir vermarkten Ihre Mietobjekte zielgruppengerecht, prüfen Bewerber sorgfältig und erstellen rechtssichere Mietverträge. Damit minimieren Sie Leerstand und rechtliche Risiken.',
     features: ['Mietersuche', 'Vertragsabwicklung', 'Objektpräsentation'],
@@ -122,7 +121,7 @@ export const servicesData = [
       'Wohnungsübergabe mit Protokoll',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80',
+      '/images/ns-hotel/doppelzimmer.jpg',
   },
   {
     slug: 'projektentwicklung',
@@ -142,7 +141,7 @@ export const servicesData = [
       'Vermarktung noch vor Baubeginn',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1590496793929-36417d3117de?w=1200&q=80',
+      '/images/projekte/baeren-3d.jpg',
   },
   {
     slug: 'immobilienbewirtschaftung',
@@ -150,7 +149,7 @@ export const servicesData = [
     icon: Shield,
     title: 'Immobilienbewirtschaftung',
     shortDescription:
-      'Wir übernehmen die Verwaltung Ihrer Liegenschaften und sorgen für einen reibungslosen Ablauf – von der Mieterbetreuung bis zur Instandhaltung.',
+      'Wir übernehmen die Verwaltung Ihrer Liegenschaften und sorgen für einen reibungslosen Ablauf, von der Mieterbetreuung bis zur Instandhaltung.',
     fullDescription:
       'Die professionelle Bewirtschaftung Ihrer Liegenschaft schützt den Wert Ihrer Investition und entlastet Sie als Eigentümer. Wir kümmern uns um alle administrativen, technischen und kaufmännischen Belange und berichten Ihnen regelmässig transparent über den Zustand Ihrer Immobilien.',
     features: ['Mieterbetreuung', 'Instandhaltung', 'Finanzmanagement'],
@@ -162,7 +161,7 @@ export const servicesData = [
       'Heiz- und Nebenkostenabrechnung',
     ],
     coverImage:
-      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80',
+      '/images/kerzers/titel.jpg',
   },
 ];
 

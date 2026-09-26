@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Tag } from 'lucide-react';
 import { getBlogPosts } from '@/data/blogStore';
+import { PROJECT_NEWS } from '@/data/newsFallback';
 import { useTranslation } from '@/i18n';
+import PageHero from '@/components/PageHero';
 
 const CATEGORY_COLORS = {
-  Immobilien: 'bg-gray-100 text-gray-600',
-  Architektur: 'bg-gray-100 text-gray-600',
-  Unternehmen: 'bg-gray-100 text-gray-600',
-  Allgemein:   'bg-gray-100 text-gray-600',
+  Immobilien: 'text-gray-500',
+  Architektur: 'text-gray-500',
+  Unternehmen: 'text-gray-500',
+  Allgemein:   'text-gray-500',
 };
 
 function categoryColor(cat) {
-  return CATEGORY_COLORS[cat] ?? 'bg-gray-100 text-gray-600';
+  return CATEGORY_COLORS[cat] ?? 'text-gray-500';
 }
 
 function formatDate(dateStr) {
@@ -30,13 +32,13 @@ function formatDate(dateStr) {
 function SkeletonCard() {
   return (
     <div className="bg-white overflow-hidden border border-gray-100 animate-pulse">
-      <div className="h-48 bg-gray-200" />
+      <div className="aspect-[4/3] bg-gray-200" />
       <div className="p-6 space-y-3">
-        <div className="h-4 bg-gray-200 rounded w-1/4" />
-        <div className="h-5 bg-gray-200 rounded w-3/4" />
-        <div className="h-4 bg-gray-200 rounded w-full" />
-        <div className="h-4 bg-gray-200 rounded w-5/6" />
-        <div className="h-4 bg-gray-200 rounded w-1/3 mt-4" />
+        <div className="h-4 bg-gray-200 w-1/4" />
+        <div className="h-5 bg-gray-200 w-3/4" />
+        <div className="h-4 bg-gray-200 w-full" />
+        <div className="h-4 bg-gray-200 w-5/6" />
+        <div className="h-4 bg-gray-200 w-1/3 mt-4" />
       </div>
     </div>
   );
@@ -44,62 +46,65 @@ function SkeletonCard() {
 
 // ── Single blog card ─────────────────────────────────────────────────────────
 function BlogCard({ post, index, lang }) {
+  const to = post.href || `/neuigkeiten/${post.slug}`;
   const displayTitle   = (lang === 'it' && post.title_it)   || post.title;
   const displayExcerpt = (lang === 'it' && post.excerpt_it) || post.excerpt;
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
-      className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors group"
+      transition={{ duration: 0.6, delay: index * 0.08 }}
+      className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors group flex flex-col"
     >
       {/* Cover image */}
-      <Link to={`/neuigkeiten/${post.slug}`} className="block overflow-hidden h-48 bg-gray-100">
+      <Link to={to} className="block overflow-hidden aspect-[4/3] bg-gray-100">
         {post.cover_image ? (
           <img
             src={post.cover_image}
             alt={post.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             loading="lazy"
             decoding="async"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+          <div className="w-full h-full flex items-center justify-center surface-warm">
             <Tag size={32} className="text-gray-300" />
           </div>
         )}
       </Link>
 
-      <div className="p-6">
+      <div className="p-6 md:p-7 flex flex-col flex-1">
         {/* Category + date */}
-        <div className="flex items-center gap-3 mb-3">
-          <span className={`inline-block text-xs font-semibold px-2.5 py-1 ${categoryColor(post.category)}`}>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-4">
+          <span className={`inline-block text-xs font-semibold uppercase tracking-wider ${categoryColor(post.category)}`}>
             {post.category}
           </span>
-          <span className="flex items-center gap-1 text-xs text-gray-400">
-            <Calendar size={12} />
-            {formatDate(post.published_at)}
-          </span>
+          {post.published_at && (
+            <span className="flex items-center gap-1 text-xs text-gray-400">
+              <Calendar size={12} />
+              {formatDate(post.published_at)}
+            </span>
+          )}
         </div>
 
         {/* Title */}
-        <Link to={`/neuigkeiten/${post.slug}`}>
-          <h2 className="text-gray-900 font-bold text-lg leading-snug mb-2 group-hover:text-[#1D3D78] transition-colors line-clamp-2">
+        <Link to={to}>
+          <h2 className="font-display uppercase text-2xl font-semibold leading-tight text-[#0F1B2D] mb-3 group-hover:text-[#1D3D78] transition-colors line-clamp-2">
             {displayTitle}
           </h2>
         </Link>
 
         {/* Excerpt */}
         {displayExcerpt && (
-          <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 mb-4">
+          <p className="text-sm text-gray-600 leading-relaxed line-clamp-3 mb-6">
             {displayExcerpt}
           </p>
         )}
 
         {/* Weiterlesen */}
         <Link
-          to={`/neuigkeiten/${post.slug}`}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors" style={{ color: 'var(--brand-color, #1D3D78)' }}
+          to={to}
+          className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all" style={{ color: 'var(--brand-color, #1D3D78)' }}
         >
           Weiterlesen <ArrowRight size={14} />
         </Link>
@@ -135,54 +140,36 @@ export default function NeuigkeitenPage() {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero */}
-        <div className="bg-white border-b border-gray-100">
-          <div className="max-w-6xl mx-auto px-6 py-14">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <p className="text-xs font-black tracking-widest text-gray-400 uppercase mb-3">
-                Hans Amonn AG
-              </p>
-              <h1 className="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-4">
-                Neuigkeiten
-              </h1>
-              <p className="text-lg text-gray-500 max-w-xl">
-                Aktuelle Beiträge, Projekte und Einblicke aus unserem Unternehmen.
-              </p>
-            </motion.div>
-          </div>
-        </div>
+      <PageHero
+        title="Neuigkeiten"
+        subtitle="Aktuelle Beiträge, Projekte und Einblicke aus unserem Unternehmen."
+        size="md"
+      />
 
+      <div className="bg-white">
         {/* Grid */}
-        <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="container mx-auto px-6 py-20 md:py-24 min-h-[40vh]">
           {loading && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
             </div>
           )}
 
-          {!loading && error && (
-            <div className="text-center py-20">
-              <p className="text-gray-400 text-sm">Beiträge konnten nicht geladen werden.</p>
-            </div>
-          )}
-
-          {!loading && !error && posts.length === 0 && (
-            <div className="text-center py-20">
-              <Tag size={40} className="text-gray-200 mx-auto mb-4" />
-              <p className="text-gray-400 font-medium">Noch keine Beiträge vorhanden.</p>
-              <p className="text-gray-300 text-sm mt-1">Schauen Sie bald wieder vorbei.</p>
-            </div>
+          {!loading && (error || posts.length === 0) && (
+            <>
+              <p className="eyebrow mb-6">Aus unseren Projekten</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {PROJECT_NEWS.map((post, i) => (
+                  <BlogCard key={post.id} post={post} index={i} lang={lang} />
+                ))}
+              </div>
+            </>
           )}
 
           {!loading && !error && posts.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {posts.map((post, i) => (
                 <BlogCard key={post.id} post={post} index={i} lang={lang} />
               ))}

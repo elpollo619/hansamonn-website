@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+// Only figures the site itself backs up: founding year (company history),
+// the places with our own properties and the projects documented on /projekte.
 const STATS = [
-  { value: 25,  suffix: '+', label: 'Jahre Erfahrung' },
-  { value: 200, suffix: '+', label: 'Objekte verwaltet' },
-  { value: 500, suffix: '+', label: 'Zufriedene Kunden' },
-  { value: 4,   suffix: '',  label: 'Standorte Schweiz' },
+  { value: new Date().getFullYear() - 1968, suffix: '', label: 'Jahre seit der Gründung 1968' },
+  { value: 4, suffix: '', label: 'Orte mit eigenen Liegenschaften' },
+  { value: 3, suffix: '', label: 'Wohnformen: Long Stay, Hotel, Ferienhaus' },
+  { value: 5, suffix: '', label: 'Projekte mit 3D-Modell' },
 ];
 
 function useCountUp(target, duration = 1500, started = false) {
@@ -29,10 +31,10 @@ function StatCard({ value, suffix, label, started, last }) {
   const count = useCountUp(value, 1500, started);
   return (
     <div className={`flex flex-col items-center text-center px-8 py-10 ${!last ? 'border-r border-white/10' : ''}`}>
-      <span className="text-5xl md:text-6xl font-black text-white tabular-nums leading-none">
+      <span className="font-display text-6xl md:text-7xl font-semibold text-white tabular-nums leading-none">
         {count}{suffix}
       </span>
-      <span className="mt-3 text-white/40 text-[10px] font-medium uppercase tracking-[0.2em]">
+      <span className="mt-3 text-white/75 text-[10px] font-semibold uppercase tracking-[0.22em]">
         {label}
       </span>
     </div>

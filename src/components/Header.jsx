@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Menu, X, ChevronDown,
-  BedDouble, Building2, Map, Calculator,
-  ClipboardList, Briefcase, Layers, Newspaper,
-  Users, Info, Phone, Heart, Search,
-} from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { Menu, X, ChevronDown, Heart, Search, ArrowRight, ArrowUpRight, Phone, Mail } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useTranslation } from '@/i18n';
@@ -13,164 +9,85 @@ import { useFavorites } from '@/context/FavoritesContext';
 import GlobalSearch from '@/components/GlobalSearch';
 import AmonnLogo from '@/components/AmonnLogo';
 
-/* ─── Dropdown: Immobilien ─────────────────────────────────────────────── */
-const ImmobilienDropdown = ({ onClose }) => (
-  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-72">
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.15 }}
-      className="bg-white shadow-lg border border-gray-100 p-3"
-    >
-      {/* Section label */}
-      <p className="px-4 pt-1 pb-1 text-[10px] font-semibold tracking-widest text-gray-400 uppercase">
-        Wohnen &amp; Übernachten
-      </p>
+const BRAND = 'var(--brand-color, #1D3D78)';
+const PHONE = { href: 'tel:+41319518554', label: '+41 (0)31 951 85 54' };
+const EMAIL = { href: 'mailto:office@reto-amonn.ch', label: 'office@reto-amonn.ch' };
 
-      <Link to="/immobilien/long-stay" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <BedDouble size={14} className="text-[#1D3D78]" />
-        </div>
-        <span className="text-sm font-medium">Long Stay</span>
-      </Link>
-
-      <Link to="/immobilien/short-stay" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <BedDouble size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Short Stay</span>
-      </Link>
-
-      <Link to="/immobilien/apartments" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Building2 size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Apartments</span>
-      </Link>
-
-      <div className="my-2 border-t border-gray-100" />
-
-      <p className="px-4 pb-1 text-[10px] font-semibold tracking-widest text-gray-400 uppercase">
-        Kaufen &amp; Mehr
-      </p>
-
-      <Link to="/immobilien/verkauf" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Building2 size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Verkauf</span>
-      </Link>
-
-      <Link to="/karte" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Map size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Karte</span>
-      </Link>
-
-      <Link to="/hyporechner" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors group">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Calculator size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Hypothekenrechner</span>
-      </Link>
-
-      <div className="my-2 border-t border-gray-100" />
-
-      <Link to="/immobilien/anfrage" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#1D3D78] hover:bg-[#162E5A] transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
-          <ClipboardList size={14} className="text-white" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-white">Mietanfrage stellen</p>
-          <p className="text-xs text-blue-100">Zimmer oder Wohnung anfragen</p>
-        </div>
-      </Link>
-    </motion.div>
-  </div>
-);
-
-/* ─── Dropdown: Architektur ────────────────────────────────────────────── */
-const ArchitekturDropdown = ({ onClose }) => (
-  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-60">
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.15 }}
-      className="bg-white shadow-lg border border-gray-100 p-3"
-    >
-      <Link to="/projekte" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Layers size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Projekte</span>
-      </Link>
-
-      <Link to="/leistungen" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Briefcase size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Leistungen</span>
-      </Link>
-
-      <Link to="/neuigkeiten" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 hover:text-[#1D3D78] transition-colors">
-        <div className="w-7 h-7 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Newspaper size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
-        </div>
-        <span className="text-sm font-medium">Neuigkeiten</span>
-      </Link>
-    </motion.div>
-  </div>
-);
-
-/* ─── Dropdown: Über uns ───────────────────────────────────────────────── */
-const UberUnsDropdown = ({ onClose }) => (
-  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50 w-56">
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.15 }}
-      className="bg-white shadow-lg border border-gray-100 p-3"
-    >
-      <Link to="/uber-uns" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Info size={14} className="text-gray-600" />
-        </div>
-        <span className="text-sm font-medium">Über uns</span>
-      </Link>
-
-      <Link to="/team" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Users size={14} className="text-gray-600" />
-        </div>
-        <span className="text-sm font-medium">Team</span>
-      </Link>
-
-      <Link to="/kontakt" onClick={onClose}
-        className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-        <div className="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Phone size={14} className="text-gray-600" />
-        </div>
-        <span className="text-sm font-medium">Kontakt</span>
-      </Link>
-    </motion.div>
-  </div>
-);
+/* ─── Menu structure ───────────────────────────────────────────────────── */
+const useMenus = (t) => [
+  {
+    key: 'immobilien',
+    label: t('nav.immobilien'),
+    to: '/immobilien',
+    active: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/hyporechner'],
+    groups: [
+      {
+        title: 'Wohnen & Übernachten',
+        links: [
+          { to: '/immobilien/long-stay', label: 'Long Stay', sub: 'Möbliert wohnen ab einem Monat' },
+          { to: '/immobilien/short-stay', label: 'Short Stay', sub: "N's Hotel & Casa Reto" },
+          { to: '/immobilien/apartments', label: 'Apartments', sub: 'Mietwohnungen' },
+        ],
+      },
+      {
+        title: 'Kaufen & Mehr',
+        links: [
+          { to: '/immobilien/verkauf', label: 'Verkauf', sub: 'Objekte zum Kauf' },
+          { to: '/karte', label: 'Karte', sub: 'Alle Objekte auf einen Blick' },
+          { to: '/hyporechner', label: 'Hypothekenrechner', sub: 'Tragbarkeit berechnen' },
+        ],
+      },
+    ],
+    feature: {
+      to: '/immobilien/anfrage',
+      image: '/images/kerzers/01.jpg',
+      eyebrow: 'Mietanfrage',
+      title: 'Mietanfrage stellen',
+      sub: 'Zimmer oder Wohnung anfragen',
+    },
+  },
+  {
+    key: 'architektur',
+    label: 'Architektur',
+    to: '/architektur',
+    active: ['/architektur', '/projekte', '/leistungen', '/neuigkeiten'],
+    groups: [
+      {
+        title: 'Architektur',
+        links: [
+          { to: '/architektur', label: 'Übersicht', sub: 'Vom Plan zum Gebäude' },
+          { to: '/projekte', label: 'Projekte', sub: 'Realisierte Bauten' },
+          { to: '/leistungen', label: 'Leistungen', sub: 'Planung bis Bauleitung' },
+          { to: '/neuigkeiten', label: 'Neuigkeiten', sub: 'Aktuelles aus dem Büro' },
+        ],
+      },
+    ],
+    feature: {
+      to: '/architektur',
+      image: '/images/ns-hotel/drohne-2.jpg',
+      eyebrow: 'Amonn Architektur',
+      title: 'Architektur entdecken',
+      sub: 'Planung, Neubauten und Sanierungen',
+    },
+  },
+  {
+    key: 'uberUns',
+    label: 'Über uns',
+    to: '/uber-uns',
+    active: ['/uber-uns', '/team', '/kontakt'],
+    groups: [
+      {
+        title: 'Hans Amonn AG',
+        links: [
+          { to: '/uber-uns', label: 'Über uns', sub: 'Familienunternehmen seit 1968' },
+          { to: '/team', label: 'Team', sub: 'Die Menschen hinter den Projekten' },
+          { to: '/kontakt', label: 'Kontakt', sub: 'Wir freuen uns auf Ihre Anfrage' },
+        ],
+      },
+    ],
+    contact: true,
+  },
+];
 
 /* ─── Section logo logic ───────────────────────────────────────────────── */
 const SECTION_VARIANTS = [
@@ -189,74 +106,269 @@ function useSectionVariant(pathname) {
   return 'main';
 }
 
-/* ─── NavDropdown wrapper (desktop) ───────────────────────────────────── */
-const NavDropdown = ({ label, to, isActive, children }) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <div
-      className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <Link
-        to={to}
-        className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-          isActive
-            ? 'text-[#1D3D78] bg-[#EFF4FB] font-semibold'
-            : 'text-gray-700 hover:text-[#1D3D78] hover:bg-gray-50'
-        }`}
-      >
-        {label}
-        <ChevronDown size={14} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
-      </Link>
-      <AnimatePresence>
-        {open && React.cloneElement(children, { onClose: () => setOpen(false) })}
-      </AnimatePresence>
+/* ─── Favorites link (shared desktop/mobile) ──────────────────────────── */
+const FavoritesLink = ({ count, className = '' }) => (
+  <Link
+    to="/favoriten"
+    className={`relative p-2 text-gray-500 hover:text-[#0F1B2D] transition-colors ${className}`}
+    aria-label="Meine Favoriten"
+  >
+    <Heart size={18} className={count > 0 ? 'fill-red-500 text-red-500' : ''} />
+    {count > 0 && (
+      <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
+        {count > 9 ? '9+' : count}
+      </span>
+    )}
+  </Link>
+);
+
+/* ─── Desktop mega panel ──────────────────────────────────────────────── */
+const MegaPanel = ({ menu, onClose }) => (
+  <motion.div
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ duration: 0.2, ease: 'easeOut' }}
+    className="absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-[0_24px_48px_-24px_rgba(15,27,45,0.25)]"
+  >
+    <div className="container mx-auto px-6 py-10 grid grid-cols-12 gap-10">
+      <div className={`col-span-8 grid gap-10 ${menu.groups.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        {menu.groups.map((g) => (
+          <div key={g.title}>
+            <p className="eyebrow mb-4">{g.title}</p>
+            <ul className={menu.groups.length > 1 ? 'space-y-1' : 'grid grid-cols-2 gap-x-10 gap-y-1'}>
+              {g.links.map((l, i) => (
+                <motion.li
+                  key={l.to}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25, delay: 0.03 * i }}
+                >
+                  <Link
+                    to={l.to}
+                    onClick={onClose}
+                    className="group flex items-start justify-between gap-4 py-3 border-b border-gray-100 hover:border-[#0F1B2D] transition-colors"
+                  >
+                    <span>
+                      <span className="block font-display uppercase text-xl font-semibold text-[#0F1B2D] leading-tight">
+                        {l.label}
+                      </span>
+                      <span className="block text-sm text-gray-500 mt-0.5">{l.sub}</span>
+                    </span>
+                    <ArrowUpRight
+                      size={18}
+                      className="mt-1 text-gray-300 group-hover:text-[#0F1B2D] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+                    />
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="col-span-4">
+        {menu.feature && (
+          <Link to={menu.feature.to} onClick={onClose} className="group relative block aspect-[4/3] overflow-hidden bg-[#0B1220]">
+            <img
+              src={menu.feature.image}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220] via-[#0B1220]/30 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+              <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/70 mb-2">{menu.feature.eyebrow}</p>
+              <p className="font-display uppercase text-2xl font-semibold leading-none flex items-center gap-2">
+                {menu.feature.title}
+                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </p>
+              <p className="text-sm text-white/70 mt-2">{menu.feature.sub}</p>
+            </div>
+          </Link>
+        )}
+        {menu.contact && (
+          <div className="h-full bg-[#0B1220] text-white p-7 flex flex-col">
+            <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/60 mb-4">Direkt erreichbar</p>
+            <a href={PHONE.href} className="flex items-center gap-3 py-3 border-b border-white/10 hover:text-white/80">
+              <Phone size={16} /> <span className="font-semibold">{PHONE.label}</span>
+            </a>
+            <a href={EMAIL.href} className="flex items-center gap-3 py-3 border-b border-white/10 hover:text-white/80">
+              <Mail size={16} /> <span className="font-semibold">{EMAIL.label}</span>
+            </a>
+            <p className="text-sm text-white/60 mt-4 leading-relaxed">Blümlisalpstrasse 4<br />3074 Muri bei Bern</p>
+            <Link
+              to="/termin"
+              onClick={onClose}
+              className="mt-auto inline-flex items-center justify-center gap-2 bg-white text-gray-900 px-5 py-3 text-sm font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Termin buchen <ArrowRight size={15} />
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
+  </motion.div>
+);
+
+/* ─── Mobile fullscreen menu ──────────────────────────────────────────── */
+const MobileMenu = ({ menus, isActive, onClose, top }) => {
+  const [open, setOpen] = useState(null);
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      style={{ top }}
+      className="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#0B1220] text-white overflow-y-auto"
+    >
+      <div className="px-6 pt-6 pb-10 min-h-full flex flex-col">
+        <nav className="flex-1">
+          {menus.map((m, i) => {
+            const expanded = open === m.key;
+            return (
+              <motion.div
+                key={m.key}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: 0.05 + i * 0.06 }}
+                className="border-b border-white/10"
+              >
+                <button
+                  onClick={() => setOpen(expanded ? null : m.key)}
+                  className="w-full flex items-center justify-between py-5 text-left"
+                  aria-expanded={expanded}
+                >
+                  <span className={`font-display uppercase text-4xl font-semibold leading-none ${isActive(m.active) ? 'text-white' : 'text-white/80'}`}>
+                    {m.label}
+                  </span>
+                  <ChevronDown size={22} className={`text-white/60 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence initial={false}>
+                  {expanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-5 space-y-1">
+                        {m.groups.flatMap((g) => g.links).map((l) => (
+                          <Link
+                            key={l.to}
+                            to={l.to}
+                            onClick={onClose}
+                            className="flex items-center justify-between py-2.5 text-white/75 hover:text-white"
+                          >
+                            <span className="text-base font-medium">{l.label}</span>
+                            <ArrowUpRight size={16} className="text-white/40" />
+                          </Link>
+                        ))}
+                        {m.feature && (
+                          <Link to={m.feature.to} onClick={onClose} className="flex items-center gap-2 pt-2 text-sm font-semibold text-white">
+                            {m.feature.title} <ArrowRight size={14} />
+                          </Link>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </nav>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.3 }}
+          className="pt-10 space-y-3"
+        >
+          <a href={PHONE.href} className="flex items-center gap-3 text-white/80"><Phone size={16} /> {PHONE.label}</a>
+          <a href={EMAIL.href} className="flex items-center gap-3 text-white/80"><Mail size={16} /> {EMAIL.label}</a>
+          <Link
+            to="/kontakt"
+            onClick={onClose}
+            className="mt-4 flex items-center justify-center gap-2 bg-white text-gray-900 px-6 py-4 text-sm font-semibold"
+          >
+            Kontakt aufnehmen <ArrowRight size={15} />
+          </Link>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
 
 /* ─── Header ───────────────────────────────────────────────────────────── */
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState({ immobilien: false, architektur: false, uberUns: false });
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
   const { t } = useTranslation();
   const sectionVariant = useSectionVariant(location.pathname);
   const { favorites } = useFavorites();
+  const menus = useMenus(t);
+  const closeTimer = useRef(null);
+  const lastY = useRef(0);
 
+  // Reading progress line along the bottom edge of the header
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 30, restDelta: 0.001 });
+
+  // Shrink after 50px; hide while scrolling down, reveal when scrolling up
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 50);
+      if (y > 240 && y > lastY.current + 4) setHidden(true);
+      else if (y < lastY.current - 4 || y < 240) setHidden(false);
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setMobileOpen({ immobilien: false, architektur: false, uberUns: false });
+    setOpenMenu(null);
   }, [location.pathname]);
+
+  // Lock page scroll behind the mobile menu
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [isMobileMenuOpen]);
 
   const isActive = (paths) =>
     paths.some((p) => location.pathname === p || location.pathname.startsWith(p + '/'));
 
-  const toggleMobile = (key) =>
-    setMobileOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+  const openNow = (key) => { clearTimeout(closeTimer.current); setOpenMenu(key); };
+  const closeSoon = () => { clearTimeout(closeTimer.current); closeTimer.current = setTimeout(() => setOpenMenu(null), 120); };
+
+  const pinned = openMenu || isMobileMenuOpen;
+  const activeMenu = menus.find((m) => m.key === openMenu);
 
   return (
     <motion.header
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100' : 'bg-white/90 backdrop-blur-sm'
+      animate={{ y: hidden && !pinned ? '-100%' : 0 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300 ${
+        isScrolled || pinned ? 'bg-white shadow-[0_1px_0_rgba(15,27,45,0.08)]' : 'bg-white/90 backdrop-blur-md'
       }`}
+      onMouseLeave={closeSoon}
     >
-      <nav className="container mx-auto px-4 sm:px-6 py-3">
-        <div className="flex items-center justify-between gap-4">
+      <nav className="container mx-auto px-4 sm:px-6">
+        <div className={`flex items-center justify-between gap-4 transition-[height] duration-300 ${isScrolled ? 'h-14' : 'h-16'}`}>
 
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="flex-shrink-0" aria-label="Hans Amonn AG – Startseite">
             <AnimatePresence mode="wait">
               <motion.div
                 key={sectionVariant}
@@ -264,209 +376,109 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 4 }}
                 transition={{ duration: 0.18 }}
-                whileHover={{ scale: 1.01 }}
               >
                 <AmonnLogo variant={sectionVariant} size="sm" />
               </motion.div>
             </AnimatePresence>
           </Link>
 
-          {/* Desktop nav — 3 items */}
-          <div className="hidden lg:flex items-center gap-1">
-            <NavDropdown
-              label={t('nav.immobilien')}
-              to="/immobilien"
-              isActive={isActive(['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/hyporechner'])}
-            >
-              <ImmobilienDropdown />
-            </NavDropdown>
-
-            <NavDropdown
-              label="Architektur"
-              to="/architektur"
-              isActive={isActive(['/architektur', '/projekte', '/leistungen', '/neuigkeiten'])}
-            >
-              <ArchitekturDropdown />
-            </NavDropdown>
-
-            <NavDropdown
-              label="Über uns"
-              to="/uber-uns"
-              isActive={isActive(['/uber-uns', '/team', '/kontakt'])}
-            >
-              <UberUnsDropdown />
-            </NavDropdown>
+          {/* Desktop nav */}
+          <div className="hidden lg:flex items-center gap-2 h-full">
+            {menus.map((m) => {
+              const active = isActive(m.active);
+              const open = openMenu === m.key;
+              return (
+                <div key={m.key} className="relative h-full flex items-center" onMouseEnter={() => openNow(m.key)}>
+                  <Link
+                    to={m.to}
+                    onFocus={() => openNow(m.key)}
+                    className={`flex items-center gap-1.5 px-3 h-full text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors ${
+                      active || open ? 'text-[#0F1B2D]' : 'text-gray-500 hover:text-[#0F1B2D]'
+                    }`}
+                    aria-expanded={open}
+                  >
+                    {m.label}
+                    <ChevronDown size={13} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+                  </Link>
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute left-3 right-3 bottom-0 h-[2px]"
+                      style={{ backgroundColor: BRAND }}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          {/* Right controls */}
-          <div className="hidden lg:flex items-center gap-2">
+          {/* Right controls (desktop) */}
+          <div className="hidden lg:flex items-center gap-1" onMouseEnter={closeSoon}>
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 rounded-lg text-gray-500 hover:text-[#1D3D78] hover:bg-gray-50 transition-colors"
+              className="p-2 text-gray-500 hover:text-[#0F1B2D] transition-colors"
               aria-label="Suche öffnen"
             >
               <Search size={18} />
             </button>
-
-            <Link
-              to="/favoriten"
-              className="relative p-2 rounded-lg text-gray-500 hover:text-red-500 hover:bg-red-50 transition-colors"
-              aria-label="Meine Favoriten"
-            >
-              <Heart size={18} className={favorites.length > 0 ? 'fill-red-500 text-red-500' : ''} />
-              {favorites.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
-                  {favorites.length > 9 ? '9+' : favorites.length}
-                </span>
-              )}
-            </Link>
-
+            <FavoritesLink count={favorites.length} />
             <LanguageSwitcher variant="light" />
+            <Link
+              to="/kontakt"
+              className="ml-2 inline-flex items-center gap-2 px-5 py-2.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-white transition-colors hover:brightness-110"
+              style={{ backgroundColor: BRAND }}
+            >
+              Kontakt <ArrowRight size={14} />
+            </Link>
           </div>
 
-          {/* Mobile: search + favorites + language + hamburger */}
-          <div className="lg:hidden flex items-center gap-1">
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
-              aria-label="Suche"
-            >
+          {/* Mobile controls */}
+          <div className="lg:hidden flex items-center">
+            <button onClick={() => setSearchOpen(true)} className="p-2 text-gray-500" aria-label="Suche">
               <Search size={18} />
             </button>
-            <Link
-              to="/favoriten"
-              className="relative p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
-              aria-label="Favoriten"
-            >
-              <Heart size={18} className={favorites.length > 0 ? 'fill-red-500 text-red-500' : ''} />
-              {favorites.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
-                  {favorites.length > 9 ? '9+' : favorites.length}
-                </span>
-              )}
-            </Link>
+            <FavoritesLink count={favorites.length} />
             <LanguageSwitcher variant="light" />
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Menü"
+              onClick={() => setIsMobileMenuOpen((v) => !v)}
+              className="p-2 -mr-2 text-[#0F1B2D]"
+              aria-label={isMobileMenuOpen ? 'Menü schliessen' : 'Menü öffnen'}
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile menu */}
+      {/* Desktop mega panel */}
+      <div className="hidden lg:block" onMouseEnter={() => openMenu && openNow(openMenu)}>
+        <AnimatePresence>
+          {activeMenu && <MegaPanel key={activeMenu.key} menu={activeMenu} onClose={() => setOpenMenu(null)} />}
+        </AnimatePresence>
+      </div>
+
+      {/* Reading progress */}
+      <motion.div
+        className="absolute left-0 right-0 bottom-0 h-[2px] origin-left"
+        style={{ scaleX: progress, backgroundColor: BRAND }}
+        aria-hidden="true"
+      />
+
+      {/* Mobile menu – portalled so the header's transform can't offset it */}
+      {createPortal(
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="lg:hidden overflow-hidden"
-            >
-              <div className="mt-3 pb-3 border-t border-gray-100 pt-3 flex flex-col gap-1">
-
-                {/* Immobilien */}
-                <div>
-                  <button
-                    onClick={() => toggleMobile('immobilien')}
-                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/hyporechner'])
-                        ? 'text-[#1D3D78] bg-blue-50'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {t('nav.immobilien')}
-                    <ChevronDown size={14} className={`transition-transform ${mobileOpen.immobilien ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {mobileOpen.immobilien && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden pl-4 mt-1 space-y-0.5"
-                      >
-                        <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold tracking-widest text-gray-400 uppercase">Wohnen &amp; Übernachten</p>
-                        <Link to="/immobilien/long-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Long Stay</Link>
-                        <Link to="/immobilien/short-stay" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><BedDouble size={13} className="text-gray-400" /> Short Stay</Link>
-                        <Link to="/immobilien/apartments" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] rounded-lg hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Apartments</Link>
-                        <div className="mx-3 my-1 border-t border-gray-100" />
-                        <Link to="/immobilien/verkauf" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Building2 size={13} className="text-gray-400" /> Verkauf</Link>
-                        <Link to="/karte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Map size={13} className="text-gray-400" /> Karte</Link>
-                        <Link to="/hyporechner" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Calculator size={13} className="text-gray-400" /> Hypothekenrechner</Link>
-                        <div className="mx-3 my-1 border-t border-gray-100" />
-                        <Link to="/immobilien/anfrage" className="block px-3 py-2 text-sm text-[#1D3D78] font-medium hover:bg-gray-50">Mietanfrage stellen</Link>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Architektur */}
-                <div>
-                  <button
-                    onClick={() => toggleMobile('architektur')}
-                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(['/projekte', '/leistungen', '/neuigkeiten'])
-                        ? 'text-[#1D3D78] bg-blue-50'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    Architektur
-                    <ChevronDown size={14} className={`transition-transform ${mobileOpen.architektur ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {mobileOpen.architektur && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden pl-4 mt-1 space-y-0.5"
-                      >
-                        <Link to="/projekte" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Layers size={13} className="text-gray-400" /> Projekte</Link>
-                        <Link to="/leistungen" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Briefcase size={13} className="text-gray-400" /> Leistungen</Link>
-                        <Link to="/neuigkeiten" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-[#1D3D78] hover:bg-gray-50"><Newspaper size={13} className="text-gray-400" /> Neuigkeiten</Link>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Über uns */}
-                <div>
-                  <button
-                    onClick={() => toggleMobile('uberUns')}
-                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      isActive(['/uber-uns', '/team', '/kontakt'])
-                        ? 'text-[#1D3D78] bg-blue-50'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    Über uns
-                    <ChevronDown size={14} className={`transition-transform ${mobileOpen.uberUns ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {mobileOpen.uberUns && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden pl-4 mt-1 space-y-0.5"
-                      >
-                        <Link to="/uber-uns" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50"><Info size={13} className="text-gray-400" /> Über uns</Link>
-                        <Link to="/team" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50"><Users size={13} className="text-gray-400" /> Team</Link>
-                        <Link to="/kontakt" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-50"><Phone size={13} className="text-gray-400" /> Kontakt</Link>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-              </div>
-            </motion.div>
+            <MobileMenu
+              menus={menus}
+              isActive={isActive}
+              top={isScrolled ? 56 : 64}
+              onClose={() => setIsMobileMenuOpen(false)}
+            />
           )}
-        </AnimatePresence>
-      </nav>
+        </AnimatePresence>,
+        document.body,
+      )}
 
       {/* Global Search overlay */}
       <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BedDouble, Building2, ArrowRight, MapPin, Clock, Tag } from 'lucide-react';
 import { useTranslation } from '@/i18n';
+import PageHero from '@/components/PageHero';
+
+const BRAND = 'var(--brand-color, #1D3D78)';
 
 const ImmobilienOverviewPage = () => {
   const { t } = useTranslation();
@@ -12,6 +15,8 @@ const ImmobilienOverviewPage = () => {
     {
       to: '/immobilien/vermietung',
       icon: BedDouble,
+      image: '/images/ns-hotel/doppelzimmer.jpg',
+      alt: "Doppelzimmer im N's Hotel Kerzers",
       tag: t('immobilien.vermietung.tag'),
       title: t('immobilien.vermietung.title'),
       subtitle: t('immobilien.vermietung.subtitle'),
@@ -25,6 +30,8 @@ const ImmobilienOverviewPage = () => {
     {
       to: '/immobilien/verkauf',
       icon: Building2,
+      image: '/images/ns-hotel/drohne-2.jpg',
+      alt: 'Luftbild der Liegenschaften an der Allmendstrasse in Kerzers',
       tag: t('immobilien.verkauf.tag'),
       title: t('immobilien.verkauf.title'),
       subtitle: t('immobilien.verkauf.subtitle'),
@@ -51,58 +58,52 @@ const ImmobilienOverviewPage = () => {
       <meta name="twitter:card" content="summary_large_image" />
     </Helmet>
 
-    <section className="min-h-screen bg-white py-16 border-t border-gray-100">
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
-        >
-          <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">Hans Amonn AG</p>
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
-            {t('immobilien.hero.title')}
-          </h1>
-          <p className="text-lg text-gray-500 max-w-xl mx-auto">
-            {t('immobilien.hero.subtitle')}
-          </p>
-        </motion.div>
+    <PageHero
+      title={t('immobilien.hero.title')}
+      subtitle={t('immobilien.hero.subtitle')}
+      image="/images/kerzers/01.jpg"
+      size="lg"
+    />
 
+    <section className="surface-warm py-20 md:py-24">
+      <div className="container mx-auto px-6">
         {/* Two main cards */}
-        <div className="grid md:grid-cols-2 gap-px bg-gray-100 border border-gray-100 max-w-5xl mx-auto">
-          {CARDS.map(({ to, icon: Icon, tag, title, subtitle, description, highlights, cta }, i) => (
+        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          {CARDS.map(({ to, image, alt, tag, title, subtitle, description, highlights, cta }, i) => (
             <motion.div
               key={to}
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.12 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.12 }}
             >
               <Link
                 to={to}
-                className="group flex flex-col h-full bg-white hover:bg-gray-50 transition-colors overflow-hidden"
+                className="group flex flex-col h-full bg-white border border-gray-100 hover:border-gray-300 transition-colors overflow-hidden"
               >
-                <div className="flex-1 p-8">
-                  {/* Icon + tag */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="w-12 h-12 bg-gray-100 flex items-center justify-center">
-                      <Icon size={22} className="text-gray-500" />
-                    </div>
-                    <span className="text-[10px] font-semibold tracking-widest uppercase text-gray-400">{tag}</span>
-                  </div>
-
-                  {/* Title */}
-                  <h2 className="text-2xl font-light text-gray-900 mb-1 group-hover:text-[#1D3D78] transition-colors">
+                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                  <img
+                    src={image}
+                    alt={alt}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <span className="absolute top-4 left-4 bg-white/95 text-[#0F1B2D] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
+                    {tag}
+                  </span>
+                </div>
+                <div className="flex-1 p-8 md:p-10">
+                  <h2 className="display-heading uppercase text-3xl md:text-4xl mb-2 group-hover:text-[#1D3D78] transition-colors">
                     {title}
                   </h2>
-                  <p className="text-sm text-gray-400 mb-4">{subtitle}</p>
-                  <p className="text-gray-500 leading-relaxed mb-6 text-sm">{description}</p>
+                  <p className="text-sm text-gray-500 mb-5">{subtitle}</p>
+                  <p className="text-gray-600 leading-relaxed mb-8">{description}</p>
 
                   {/* Highlights */}
-                  <ul className="space-y-2 mb-8">
+                  <ul className="border-t border-gray-100 mb-2">
                     {highlights.map(({ icon: HIcon, text }) => (
-                      <li key={text} className="flex items-center gap-2.5 text-sm text-gray-500">
-                        <HIcon size={14} className="text-gray-300 flex-shrink-0" />
+                      <li key={text} className="flex items-center gap-3 text-sm text-gray-600 py-3 border-b border-gray-100">
+                        <HIcon size={15} className="flex-shrink-0" style={{ color: BRAND }} />
                         {text}
                       </li>
                     ))}
@@ -110,35 +111,40 @@ const ImmobilienOverviewPage = () => {
                 </div>
 
                 {/* CTA */}
-                <div className="px-8 pb-8">
-                  <span className="inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2.5 transition-colors" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+                <div className="px-8 md:px-10 pb-8 md:pb-10">
+                  <span className="inline-flex items-center gap-2 text-white text-sm font-semibold px-6 py-3 transition-colors" style={{ backgroundColor: BRAND }}>
                     {cta}
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
               </Link>
             </motion.div>
           ))}
         </div>
+      </div>
+    </section>
 
-        {/* Bottom contact strip */}
+    {/* Bottom contact strip */}
+    <section className="bg-white border-t border-gray-100 py-20 md:py-24">
+      <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 max-w-5xl mx-auto bg-white border border-gray-100 p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
-          <div>
-            <p className="text-sm font-semibold text-gray-900">{t('immobilien.contact.title')}</p>
-            <p className="text-sm text-gray-500">{t('immobilien.hero.subtitle')}</p>
+          <div className="max-w-2xl">
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{t('immobilien.contact.title')}</h2>
+            <p className="text-gray-600 leading-relaxed">{t('immobilien.contact.text')}</p>
           </div>
           <Link
             to="/immobilien/anfrage"
-            className="inline-flex items-center gap-2 text-white px-5 py-2.5 text-sm font-semibold transition-colors flex-shrink-0"
-            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            className="inline-flex items-center gap-2 text-white px-6 py-3 text-sm font-semibold transition-colors flex-shrink-0 self-start md:self-auto"
+            style={{ backgroundColor: BRAND }}
           >
             {t('immobilien.contact.cta')}
-            <ArrowRight size={14} />
+            <ArrowRight size={15} />
           </Link>
         </motion.div>
       </div>

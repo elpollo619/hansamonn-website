@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { jsPDF } from "jspdf";
@@ -11,32 +12,10 @@ import {
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
-const NATIONALITIES = [
-  "Schweiz", "Deutschland", "Österreich", "Frankreich", "Italien",
-  "Spanien", "Portugal", "Polen", "Rumänien", "Türkei", "Kosovo",
-  "Albanien", "Nordmazedonien", "Bosnien und Herzegowina", "Serbien",
-  "Kroatien", "Slowenien", "Ungarn", "Slowakei", "Tschechien",
-  "Belgien", "Niederlande", "Schweden", "Norwegen", "Dänemark",
-  "Finnland", "Irland", "Vereinigtes Königreich", "USA", "Kanada",
-  "Australien", "Neuseeland", "Indien", "China", "Japan",
-  "Brasilien", "Argentinien", "Kolumbien", "Mexiko", "Afghanistan",
-  "Albanien", "Algerien", "Andorra", "Angola", "Armenien",
-  "Aserbaidschan", "Bahamas", "Bahrain", "Bangladesch", "Barbados",
-  "Belize", "Benin", "Bhutan", "Bolivien", "Botswana", "Brunei",
-  "Bulgarien", "Burkina Faso", "Burundi", "Kambodscha", "Kamerun",
-  "Chile", "Dominikanische Republik", "Ecuador", "Ägypten",
-  "El Salvador", "Estland", "Äthiopien", "Georgien", "Ghana",
-  "Griechenland", "Guatemala", "Honduras", "Island", "Indonesien",
-  "Iran", "Irak", "Israel", "Jordanien", "Kenia", "Kuwait",
-  "Laos", "Lettland", "Libanon", "Liechtenstein", "Litauen",
-  "Luxemburg", "Malaysia", "Malta", "Monaco", "Mongolei",
-  "Marokko", "Namibia", "Nepal", "Nigeria", "Pakistan",
-  "Panama", "Paraguay", "Peru", "Philippinen",
-  "Russland", "Saudi-Arabien", "Singapur", "Südafrika",
-  "Südkorea", "Sri Lanka", "Syrien", "Taiwan", "Tansania",
-  "Thailand", "Tunesien", "Uganda", "Ukraine",
-  "Vereinigte Arabische Emirate", "Uruguay", "Usbekistan",
-  "Venezuela", "Vietnam", "Sambia", "Simbabwe",
+// Residence status instead of nationality (EDÖB guidance on rental application forms)
+const RESIDENCE_STATUS = [
+  "Schweizer/in", "Niederlassungsbewilligung C", "Aufenthaltsbewilligung B",
+  "Kurzaufenthaltsbewilligung L", "Grenzgängerbewilligung G", "Zuzug aus dem Ausland (Bewilligung folgt)", "Andere",
 ];
 
 const LANGUAGES = ["Deutsch", "Französisch", "Englisch", "Spanisch", "Italienisch", "Portugiesisch", "Arabisch", "Türkisch", "Andere"];
@@ -184,7 +163,7 @@ function generatePDF(data, docFiles) {
   sectionTitle("Angaben Bewerber");
   twoFields("Vorname", data.vorname, "Nachname", data.nachname);
   field("Adresse", [data.strasse, `${data.plz} ${data.ort}`.trim()].filter(Boolean).join(", "));
-  twoFields("Geburtsdatum", data.geburtsdatum ? new Date(data.geburtsdatum).toLocaleDateString("de-CH") : "", "Nationalität", data.nationalitaet);
+  twoFields("Geburtsdatum", data.geburtsdatum ? new Date(data.geburtsdatum).toLocaleDateString("de-CH") : "", "Aufenthaltsstatus", data.nationalitaet);
   twoFields("Sprache", data.sprache, "Beruf", data.beruf);
   twoFields("Handynummer", data.handynummer, "E-Mail", data.email);
   twoFields("WhatsApp", data.whatsapp, "", "");
@@ -296,13 +275,30 @@ const inp = "w-full border border-gray-200 px-4 py-2.5 text-sm outline-none focu
 const sel = inp + " cursor-pointer";
 const lbl = "block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide";
 
+// Ties the label to its control (id / htmlFor); groups of controls get a labelled group instead.
 function Field({ label, required, children, className = "" }) {
+  const id = React.useId();
+  let linked = false;
+  const kids = React.Children.map(children, (c) => {
+    if (!linked && React.isValidElement(c) && ["input", "select", "textarea"].includes(c.type)) {
+      linked = true;
+      return React.cloneElement(c, { id: c.props.id || id, "aria-required": required || undefined });
+    }
+    return c;
+  });
+  const mark = required && <span className="text-red-500" aria-hidden="true">*</span>;
+  if (linked) {
+    return (
+      <div className={className}>
+        <label htmlFor={id} className={lbl}>{label} {mark}</label>
+        {kids}
+      </div>
+    );
+  }
   return (
-    <div className={className}>
-      <label className={lbl}>
-        {label} {required && <span className="text-red-500">*</span>}
-      </label>
-      {children}
+    <div className={className} role="group" aria-labelledby={`${id}-l`}>
+      <p id={`${id}-l`} className={lbl}>{label} {mark}</p>
+      {kids}
     </div>
   );
 }
@@ -439,14 +435,9 @@ export default function MietanfrageForm() {
     if (!form.ort.trim()) e.ort = required;
     if (!form.geburtsdatum) e.geburtsdatum = required;
     if (!form.nationalitaet) e.nationalitaet = required;
-    if (!form.sprache) e.sprache = required;
     if (!form.beruf.trim()) e.beruf = required;
     if (!form.handynummer.trim()) e.handynummer = required;
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = t('mietanfrage.errEmail') || 'Gültige E-Mail erforderlich';
-    if (idFiles.length === 0) e.idFiles = t('mietanfrage.errId') || required;
-    if (!form.notfallVorname.trim() || !form.notfallNachname.trim()) e.notfall = required;
-    if (!form.notfallHandynummer.trim()) e.notfallHandynummer = required;
-    if (!form.notfallEmail.trim()) e.notfallEmail = required;
     if (!form.akzept1 || !form.akzept2 || !form.akzept3) e.akzept = t('mietanfrage.errConsent') || 'Bitte alle Punkte bestätigen';
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -563,7 +554,7 @@ export default function MietanfrageForm() {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">{t('mietanfrage.title')}</h1>
+        <h2 className="display-heading uppercase text-3xl md:text-4xl mb-3">{t('mietanfrage.title')}</h2>
         <p className="text-gray-500 text-base leading-relaxed max-w-2xl">
           {t('mietanfrage.subtitle')}
         </p>
@@ -641,14 +632,14 @@ export default function MietanfrageForm() {
             <Field label={t('mietanfrage.nationalitaet')} required>
               <select name="nationalitaet" value={form.nationalitaet} onChange={handleChange} className={sel}>
                 <option value="">{t('common.selectOption') || 'Bitte wählen...'}</option>
-                {NATIONALITIES.map((n) => <option key={n}>{n}</option>)}
+                {RESIDENCE_STATUS.map((n) => <option key={n}>{n}</option>)}
               </select>
               {errMsg("nationalitaet")}
             </Field>
           </Grid>
 
           <Grid>
-            <Field label={t('mietanfrage.sprache')} required>
+            <Field label={t('mietanfrage.sprache')}>
               <select name="sprache" value={form.sprache} onChange={handleChange} className={sel}>
                 <option value="">{t('common.selectOption') || 'Bitte wählen...'}</option>
                 {LANGUAGES.map((l) => <option key={l}>{l}</option>)}
@@ -678,7 +669,6 @@ export default function MietanfrageForm() {
 
           <FileUploadArea
             label={t('mietanfrage.idUpload')}
-            required
             files={idFiles}
             onAdd={(f) => setIdFiles((prev) => [...prev, f])}
             onRemove={(i) => setIdFiles((prev) => prev.filter((_, idx) => idx !== i))}
@@ -755,20 +745,20 @@ export default function MietanfrageForm() {
         {/* ── 5. Notfallkontakt ── */}
         <Section icon={PhoneCall} title={t('mietanfrage.sectionNotfall')}>
           <Grid>
-            <Field label={t('mietanfrage.notfallVorname')} required>
+            <Field label={t('mietanfrage.notfallVorname')}>
               <input name="notfallVorname" value={form.notfallVorname} onChange={handleChange} placeholder={t('mietanfrage.vorname')} className={inp} />
             </Field>
-            <Field label={t('mietanfrage.notfallNachname')} required>
+            <Field label={t('mietanfrage.notfallNachname')}>
               <input name="notfallNachname" value={form.notfallNachname} onChange={handleChange} placeholder={t('mietanfrage.nachname')} className={inp} />
             </Field>
           </Grid>
           {errMsg("notfall")}
           <Grid>
-            <Field label={t('mietanfrage.notfallHandynummer')} required>
+            <Field label={t('mietanfrage.notfallHandynummer')}>
               <input name="notfallHandynummer" value={form.notfallHandynummer} onChange={handleChange} placeholder="+41 79 000 00 00" className={inp} />
               {errMsg("notfallHandynummer")}
             </Field>
-            <Field label={t('mietanfrage.notfallEmail')} required>
+            <Field label={t('mietanfrage.notfallEmail')}>
               <input name="notfallEmail" value={form.notfallEmail} onChange={handleChange} placeholder="beispiel@gmail.com" className={inp} />
               {errMsg("notfallEmail")}
             </Field>
@@ -795,13 +785,18 @@ export default function MietanfrageForm() {
             { key: "akzept3", text: t('mietanfrage.consent3') },
           ].map(({ key, text }) => (
             <label key={key} className="flex items-start gap-3 cursor-pointer group">
-              <div className={`mt-0.5 w-5 h-5 border-2 flex items-center justify-center flex-shrink-0 transition ${form[key] ? "border-[#1D3D78] bg-[#1D3D78]" : "border-gray-300 group-hover:border-[#1D3D78]"}`}>
+              <input type="checkbox" name={key} checked={form[key]} onChange={handleChange} className="sr-only peer" />
+              <div aria-hidden="true" className={`mt-0.5 w-5 h-5 border-2 flex items-center justify-center flex-shrink-0 transition peer-focus-visible:ring-2 peer-focus-visible:ring-[#1D3D78] peer-focus-visible:ring-offset-2 ${form[key] ? "border-[#1D3D78] bg-[#1D3D78]" : "border-gray-300 group-hover:border-[#1D3D78]"}`}>
                 {form[key] && <CheckCircle2 size={12} className="text-white" />}
               </div>
-              <input type="checkbox" name={key} checked={form[key]} onChange={handleChange} className="sr-only" />
               <span className="text-sm text-gray-700 leading-relaxed">{text}</span>
             </label>
           ))}
+          <p className="text-xs text-gray-500">
+            <Link to="/agb" target="_blank" className="underline hover:text-gray-800">AGB lesen</Link>
+            {' · '}
+            <Link to="/datenschutz" target="_blank" className="underline hover:text-gray-800">Datenschutzerklärung</Link>
+          </p>
           {errMsg("akzept")}
 
           <div className="bg-gray-50 border border-gray-200 p-4 mt-2">
@@ -813,6 +808,7 @@ export default function MietanfrageForm() {
         </Section>
 
         {/* Submit */}
+        <FormPrivacyNote className="mb-3" />
         <button
           type="submit"
           disabled={loading}

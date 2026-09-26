@@ -2,14 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AMONN Brand fonts */
-/* Barlow Semi Condensed — primary logo font (closest match to AMONN logo) */
-/* Jost — body/UI font (clean geometric) */
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700;800&family=Jost:wght@300;400;500;600;700;800;900&display=swap');
+/* AMONN brand typeface: Open Sans — the face of the HANS AMONN AG logo (bold HANS, regular AMONN AG).
+   Self-hosted via @fontsource (imported in main.jsx), no request to Google. Display headings use the
+   same family at a semi-condensed width for an architectural feel. */
 
 :root {
   --background: 0 0% 100%;
-  --foreground: 220 30% 10%;
+  --foreground: 218 44% 11%;
+  /* Warm off-white surface for alternating sections */
+  --surface: 40 33% 98%;
   --card: 0 0% 100%;
   --card-foreground: 220 30% 10%;
   --popover: 0 0% 100%;
@@ -41,7 +42,8 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: 'Jost', 'Inter', sans-serif;
+  font-family: 'Open Sans Variable', 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-optical-sizing: auto;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -114,4 +116,71 @@ body {
 .section-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+}
+
+/* ── New global look (site-wide refresh) ─────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+::selection {
+  background: #1D3D78;
+  color: #fff;
+}
+
+/* Warm off-white surface helper for alternating sections */
+.surface-warm { background-color: hsl(var(--surface)); }
+
+/* Small uppercase kicker used above headings */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #656c78; /* WCAG AA on white and warm surfaces */
+}
+
+/* Condensed architectural display headings */
+.display-heading,
+.font-display {
+  font-stretch: 87.5%;
+}
+.display-heading {
+  font-family: 'Open Sans Variable', 'Open Sans', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 1;
+  color: #0F1B2D;
+}
+
+/* Ken Burns slow zoom for cinematic imagery */
+@keyframes kenburns {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.12); }
+}
+.kenburns { animation: kenburns 12s ease-out forwards; }
+
+/* Infinite marquee (content is duplicated once, so -50% loops seamlessly) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .kenburns { animation: none; }
+  .marquee-track { animation: none; }
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7); currentColor keeps it visible on dark and light surfaces */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:not([tabindex='-1']):focus-visible,
+input[type='checkbox']:focus-visible,
+input[type='radio']:focus-visible,
+input[type='range']:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }

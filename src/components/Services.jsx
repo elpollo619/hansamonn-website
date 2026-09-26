@@ -3,39 +3,41 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '@/components/servicesData';
+import PageHero from '@/components/PageHero';
 
 const archServices = servicesData.filter((s) => s.category === 'architektur');
 const immServices  = servicesData.filter((s) => s.category === 'immobilien');
 
 /* ─── Reusable service card grid ───────────────────────────────────────── */
 const ServiceGrid = ({ services, indexOffset = 0 }) => (
-  <div className="grid md:grid-cols-2 gap-px bg-gray-100 border border-gray-100">
+  <div className="grid md:grid-cols-2 gap-3">
     {services.map((s, i) => (
       <motion.div
         key={s.slug}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: i * 0.07 }}
+        transition={{ duration: 0.6, delay: i * 0.07 }}
+        className="min-w-0"
       >
         <Link
           to={`/leistungen/${s.slug}`}
-          className="group block bg-white p-8 hover:bg-gray-50 transition-colors h-full"
+          className="group flex flex-col bg-white border border-gray-100 hover:border-gray-300 p-8 transition-colors h-full"
         >
-          <div className="flex items-start justify-between mb-4">
-            <span className="text-[10px] font-semibold tracking-widest text-gray-300 uppercase">
+          <div className="flex items-start justify-between mb-6">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
               {String(indexOffset + i + 1).padStart(2, '0')}
             </span>
             <ArrowRight
-              size={14}
-              className="text-gray-300 group-hover:text-gray-600 group-hover:translate-x-0.5 transition-all"
+              size={16}
+              className="text-gray-300 group-hover:text-gray-700 group-hover:translate-x-1 transition-all"
             />
           </div>
-          <h3 className="text-xl font-light text-gray-900 mb-3">{s.title}</h3>
-          <p className="text-sm text-gray-400 leading-relaxed">{s.shortDescription}</p>
-          <div className="flex flex-wrap gap-2 mt-5">
+          <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3 break-words hyphens-auto">{s.title}</h3>
+          <p className="text-gray-600 leading-relaxed">{s.shortDescription}</p>
+          <div className="flex flex-wrap gap-2 mt-6">
             {s.features.map((f) => (
-              <span key={f} className="text-[11px] text-gray-400 border border-gray-200 px-2.5 py-1 rounded-full">
+              <span key={f} className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 border border-gray-200 px-2.5 py-1">
                 {f}
               </span>
             ))}
@@ -49,92 +51,47 @@ const ServiceGrid = ({ services, indexOffset = 0 }) => (
 /* ─── Section header ────────────────────────────────────────────────────── */
 const SectionHeader = ({ label, title, bold }) => (
   <motion.div
-    initial={{ opacity: 0, y: 12 }}
+    initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
-    className="mb-8"
+    transition={{ duration: 0.6 }}
+    className="mb-10"
   >
-    <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-2">
-      {label}
-    </p>
-    <h2 className="text-3xl font-light text-gray-900">
-      {title} <span className="font-black">{bold}</span>
+    <p className="eyebrow mb-3">{label}</p>
+    <h2 className="display-heading uppercase text-3xl md:text-4xl">
+      {title} {bold}
     </h2>
   </motion.div>
 );
 
 /* ─── Main ───────────────────────────────────────────────────────────────── */
 const Services = () => (
-  <div className="bg-white">
+  <div className="bg-white text-gray-900">
 
     {/* ── Header ── */}
-    <section className="pt-16 pb-12 border-b border-gray-100">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4"
-        >
-          <div>
-            <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">
-              Leistungen
-            </p>
-            <h1 className="text-4xl md:text-5xl font-light text-gray-900 leading-none">
-              Was wir <span className="font-black">anbieten.</span>
-            </h1>
-          </div>
-          <p className="text-gray-400 text-sm leading-relaxed max-w-xs md:text-right">
-            Architektur und Immobilien aus einer Hand —
-            seit über 55 Jahren in der Region Bern.
-          </p>
-        </motion.div>
-      </div>
-    </section>
+    <PageHero
+      eyebrow="Leistungen"
+      title="Was wir anbieten."
+      subtitle={<>Architektur und Immobilien aus einer Hand, seit über 55 Jahren in der Region Bern.</>}
+    />
 
     {/* ── Architektur ── */}
-    <section className="py-16">
-      <div className="container mx-auto px-6 max-w-5xl">
+    <section className="py-20 md:py-24">
+      <div className="container mx-auto px-6">
         <SectionHeader label="Architektur" title="Von der Planung" bold="zum Bau." />
         <ServiceGrid services={archServices} indexOffset={0} />
       </div>
     </section>
 
-    {/* ── Divider ── */}
-    <div className="container mx-auto px-6 max-w-5xl">
-      <div className="h-px bg-gray-100" />
-    </div>
-
     {/* ── Immobilien ── */}
-    <section className="py-16">
-      <div className="container mx-auto px-6 max-w-5xl">
+    <section className="surface-warm py-20 md:py-24">
+      <div className="container mx-auto px-6">
         <SectionHeader label="Immobilien" title="Wohnen, Mieten" bold="& Investieren." />
         <ServiceGrid services={immServices} indexOffset={4} />
       </div>
     </section>
 
     {/* ── CTA ── */}
-    <section className="py-20 px-6" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
-      <div className="container mx-auto max-w-3xl text-center">
-        <p className="text-[10px] font-semibold tracking-[0.25em] text-white/40 uppercase mb-5">
-          Kontakt
-        </p>
-        <h2 className="text-3xl font-light text-white mb-4">
-          Haben Sie ein <span className="font-black">Projekt?</span>
-        </h2>
-        <p className="text-white/60 mb-10 max-w-xl mx-auto">
-          Egal ob Neubau, Sanierung oder Immobiliensuche — sprechen Sie uns an.
-          Die erste Beratung ist kostenlos.
-        </p>
-        <Link
-          to="/kontakt"
-          className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-3.5 text-sm font-semibold hover:bg-gray-100 transition-colors"
-        >
-          Kostenlose Beratung <ArrowRight size={15} />
-        </Link>
-      </div>
-    </section>
 
   </div>
 );

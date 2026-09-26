@@ -97,7 +97,7 @@ export default function PriceCalculatorWidget({ seasons = [], priceClean = 0, cu
               <span className="font-bold text-gray-900">Geschätzter Gesamtpreis</span>
               <span className="text-xl font-bold" style={{ color: 'var(--brand-color, #1D3D78)' }}>{currency} {result.total}</span>
             </div>
-            <p className="text-xs text-gray-400">Richtwert · Endpreis auf Anfrage bestätigt.</p>
+            <p className="text-xs text-gray-400">Richtwert, zuzüglich Kurtaxe. Den Endpreis bestätigen wir mit der Offerte.</p>
             {onInquire && (
               <button
                 onClick={() => onInquire({ ankunft, abreise, nights: result.nights, total: result.total })}

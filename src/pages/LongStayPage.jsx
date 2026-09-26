@@ -1,8 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Building2, ArrowRight, MapPin, Users, Briefcase, Clock, ChevronRight, CheckCircle2, Mail } from 'lucide-react';
+import { Building2, ArrowRight, MapPin, Users, Briefcase, Clock, CheckCircle2, Mail } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import PageHero from '@/components/PageHero';
+
+const BRAND = 'var(--brand-color, #1D3D78)';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.6 },
+};
 
 const RentalImage = ({ src, alt, className }) => {
   const [err, setErr] = React.useState(false);
@@ -68,93 +78,87 @@ export default function LongStayPage() {
         <meta name="description" content="Möblierte Langzeitaufenthalte in Kerzers, Münchenbuchsee und Muri. Ab 1 Monat, Nebenkosten inklusive." />
       </Helmet>
       {/* Hero */}
-      <section className="relative text-white overflow-hidden" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
-        <div />
-        <div className="relative container mx-auto px-6 py-16 md:py-24">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Link to="/immobilien" className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm mb-6 transition-colors">
-              <ChevronRight size={14} className="rotate-180" /> Immobilien
-            </Link>
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/80 text-xs font-semibold tracking-wider uppercase px-3 py-1.5 mb-5">
-              <Building2 size={12} /> Long Stay
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight mb-5">
-              Long Stay
-            </h1>
-            <p className="text-white/70 text-lg max-w-2xl leading-relaxed">
-              Möblierte Zimmer für Aufenthalte ab einem Monat — voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten.
-            </p>
-            <div className="flex flex-wrap gap-4 mt-8">
-              {idealFor.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="flex items-start gap-3 bg-white/5 border border-white/10 px-4 py-3 max-w-xs">
-                    <Icon size={18} className="text-white/60 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-semibold text-white">{item.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed mt-0.5">{item.desc}</p>
-                    </div>
+      <PageHero
+        back={{ to: '/immobilien', label: 'Immobilien' }}
+        eyebrow="Vermietung"
+        title="Long Stay"
+        subtitle="Möblierte Zimmer für Aufenthalte ab einem Monat, voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten."
+        image="/images/kerzers/titel.jpg"
+      />
+
+      {/* Ideal for */}
+      <section className="border-b border-gray-100">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+            {idealFor.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="flex items-start gap-4 py-7 md:px-8 md:first:pl-0">
+                  <Icon size={22} className="mt-0.5 flex-shrink-0" style={{ color: BRAND }} />
+                  <div>
+                    <p className="font-display uppercase text-lg font-semibold leading-none text-[#0F1B2D]">{item.title}</p>
+                    <p className="text-sm text-gray-500 leading-relaxed mt-1.5">{item.desc}</p>
                   </div>
-                );
-              })}
-            </div>
-          </motion.div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Locations grid */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-20 md:py-24 surface-warm">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-gray-900 mb-3">Unsere Standorte</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Drei Standorte in der Region Bern — wählen Sie den passenden für Ihre Bedürfnisse.</p>
-          </div>
+          <motion.div {...fadeUp} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div>
+              <p className="eyebrow mb-3">Long Stay</p>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl">Unsere Standorte</h2>
+            </div>
+            <p className="text-gray-600 leading-relaxed max-w-md">Drei Standorte in der Region Bern, wählen Sie den passenden für Ihre Bedürfnisse.</p>
+          </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
             {locations.map((loc, idx) => (
               <motion.div
                 key={loc.title}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: idx * 0.1 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors flex flex-col"
+                className="group bg-white overflow-hidden border border-gray-100 hover:border-gray-300 transition-colors flex flex-col"
               >
-                <div className="relative h-52 overflow-hidden">
-                  <RentalImage src={loc.image} alt={loc.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-3 left-4 right-4">
-                    <h3 className="text-xl font-bold text-white">{loc.title}</h3>
-                    <p className="text-white/70 text-xs mt-0.5">{loc.subtitle}</p>
-                  </div>
+                <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                  <RentalImage src={loc.image} alt={loc.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
-                    <MapPin size={11} /> {loc.address}
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="font-display uppercase text-2xl font-semibold leading-none text-[#0F1B2D]">{loc.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed mt-2">{loc.subtitle}</p>
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-3 mb-5">
+                    <MapPin size={12} /> {loc.address}
                   </div>
-                  <div className="space-y-2 mb-4">
+                  <div className="border-t border-gray-100 mb-5">
                     {loc.rooms.map((room) => (
-                      <div key={room.label} className="flex items-center justify-between bg-gray-50 px-3 py-2">
-                        <span className="text-xs text-gray-600">{room.label}{room.detail ? ` · ${room.detail}` : ''}</span>
-                        <span className="text-xs font-semibold text-gray-900">{room.price}</span>
+                      <div key={room.label} className="flex items-center justify-between py-3 border-b border-gray-100">
+                        <span className="text-sm text-gray-600">{room.label}{room.detail ? ` · ${room.detail}` : ''}</span>
+                        <span className="text-sm font-semibold" style={{ color: BRAND }}>{room.price}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-2 mb-6">
                     {loc.features.map((f) => (
-                      <span key={f} className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 border border-gray-100">
-                        <CheckCircle2 size={9} /> {f}
+                      <span key={f} className="flex items-center gap-1.5 text-xs text-gray-500">
+                        <CheckCircle2 size={12} className="flex-shrink-0" style={{ color: BRAND }} /> {f}
                       </span>
                     ))}
                   </div>
                   <div className="mt-auto">
                     <Link
                       to={loc.link}
-                      className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-4 transition-colors text-sm"
-                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                      className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-6 transition-colors text-sm"
+                      style={{ backgroundColor: BRAND }}
                       onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
                       onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
                     >
-                      Details ansehen <ArrowRight size={14} />
+                      Details ansehen <ArrowRight size={15} />
                     </Link>
                   </div>
                 </div>
@@ -165,33 +169,30 @@ export default function LongStayPage() {
       </section>
 
       {/* General inquiry CTA */}
-      <section className="py-16 bg-white">
+      <section className="py-20 md:py-24 bg-white border-t border-gray-100">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto p-8 md:p-12 text-center text-white"
-            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            {...fadeUp}
+            className="grid lg:grid-cols-12 gap-10 items-end"
           >
-            <div className="w-14 h-14 bg-white/10 flex items-center justify-center mx-auto mb-5">
-              <Mail size={24} className="text-white" />
+            <div className="lg:col-span-7">
+              <Mail size={28} className="mb-5" style={{ color: BRAND }} />
+              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
+              <p className="text-gray-600 leading-relaxed max-w-xl">
+                Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation, wir finden gemeinsam die beste Lösung.
+              </p>
             </div>
-            <h2 className="text-2xl md:text-3xl font-light mb-3">Allgemeine Mietanfrage für Long Stay</h2>
-            <p className="text-white/60 mb-8 leading-relaxed">
-              Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation — wir finden gemeinsam die beste Lösung.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">
               <Link
                 to="/immobilien/anfrage"
-                className="inline-flex items-center justify-center gap-2 bg-white text-gray-900 font-semibold px-7 py-3.5 hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center gap-2 text-white font-semibold text-sm px-6 py-3 transition-colors"
+                style={{ backgroundColor: BRAND }}
               >
                 Zur Mietanfrage <ArrowRight size={15} />
               </Link>
               <a
                 href="tel:+41319518554"
-                className="inline-flex items-center justify-center gap-2 border border-white/20 text-white font-medium px-7 py-3.5 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center gap-2 border border-gray-200 text-gray-700 font-semibold text-sm px-6 py-3 hover:bg-gray-50 transition-colors"
               >
                 +41 (0)31 951 85 54
               </a>

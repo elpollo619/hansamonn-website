@@ -2,8 +2,9 @@
 <html lang="de">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-		<meta name="generator" content="Hostinger Horizons" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/icon-192.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Hans Amonn AG</title>
 		<link rel="manifest" href="/manifest.json" />
@@ -16,22 +17,30 @@
 		<meta property="og:site_name" content="Hans Amonn AG" />
 		<meta property="og:type" content="website" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<!-- Google Analytics (replace G-PLACEHOLDER with real ID via VITE_GA_ID env variable) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
-		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-		  // Actual tracking ID is configured via the GoogleAnalytics React component using VITE_GA_ID
-		</script>
 	</head>
 	<body>
 		<div id="root"></div>
 		<script type="module" src="/src/main.jsx"></script>
 		<script>
-		  if ('serviceWorker' in navigator) {
-		    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
-		  }
+		  (function () {
+		    if (!('serviceWorker' in navigator)) return;
+		    var host = location.hostname;
+		    var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host === '';
+		    if (isLocal) {
+		      // Dev: never cache. Remove any stale service worker (e.g. from a
+		      // different app previously served on this port) and clear caches so
+		      // the local dev site always loads fresh.
+		      navigator.serviceWorker.getRegistrations().then(function (regs) {
+		        regs.forEach(function (r) { r.unregister(); });
+		      });
+		      if (window.caches && caches.keys) {
+		        caches.keys().then(function (keys) { keys.forEach(function (k) { caches.delete(k); }); });
+		      }
+		    } else {
+		      // Production only: register the PWA service worker.
+		      window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js'); });
+		    }
+		  })();
 		</script>
 	</body>
 </html>

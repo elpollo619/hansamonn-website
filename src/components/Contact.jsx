@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import FormPrivacyNote from '@/components/FormPrivacyNote';
+import ConsentEmbed from '@/components/ConsentEmbed';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -6,6 +8,18 @@ import { toast } from '@/components/ui/use-toast';
 import { useTranslation } from '@/i18n';
 import { supabase } from '@/lib/supabase';
 import { getSetting } from '@/data/settingsStore';
+import PageHero from '@/components/PageHero';
+
+const BRAND = 'var(--brand-color, #1D3D78)';
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.6 },
+};
+const inputCls =
+  'w-full px-4 py-3 bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#1D3D78] transition-colors';
+const labelCls = 'block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -94,234 +108,223 @@ const Contact = () => {
     }
   };
 
+
   return (
-    <section id="contact" className="py-20 bg-white border-t border-gray-100">
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="mb-14"
-        >
-          <p className="text-[10px] font-semibold tracking-[0.25em] text-gray-400 uppercase mb-3">Kontakt</p>
-          <h2 className="text-4xl font-light text-gray-900">
-            {t('contact.title')}
-          </h2>
-        </motion.div>
+    <>
+      <PageHero
+        title={t('contact.title')}
+        size="sm"
+      />
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-2xl font-light text-gray-900 mb-8">
-              {t('contact.infoTitle')}
-            </h3>
-            
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-start space-x-4"
-                >
-                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center flex-shrink-0">
-                    <info.icon className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-1">
-                      {info.title}
-                    </h4>
-                    {info.details.map((detail, detailIndex) => (
-                      <p key={detailIndex} className="text-gray-600">
-                        {info.href ? (
-                          <a href={info.href} className="hover:text-[#1D3D78] transition-colors">{detail}</a>
-                        ) : (
-                          detail
-                        )}
-                      </p>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+      <section id="contact" className="bg-white py-20 md:py-24">
+        <div className="container mx-auto px-6">
+          <div className="grid gap-14 lg:grid-cols-12">
+            {/* Contact Information */}
+            <motion.div {...fadeUp} className="lg:col-span-5 min-w-0">
+              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-10 hyphens-auto break-words">
+                {t('contact.infoTitle')}
+              </h2>
 
-            {/* Why Choose Us */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="mt-8 bg-gray-50 p-6 border border-gray-100"
-            >
-              <h4 className="font-semibold text-gray-900 mb-4">{t('contact.whyUs')}</h4>
-              <ul className="space-y-2 text-gray-600">
-                {(t('contact.whyUsItems') || []).map((item, i) => (
-                  <li key={i}>• {item}</li>
+              <div className="border-t border-gray-100">
+                {contactInfo.map((info, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-5 py-6 border-b border-gray-100"
+                  >
+                    <div className="w-11 h-11 surface-warm flex items-center justify-center flex-shrink-0">
+                      <info.icon className="w-5 h-5" style={{ color: BRAND }} />
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1.5">
+                        {info.title}
+                      </h3>
+                      {info.details.map((detail, detailIndex) => (
+                        <p key={detailIndex} className="text-gray-900 leading-relaxed">
+                          {info.href ? (
+                            <a href={info.href} className="hover:text-[#1D3D78] transition-colors">{detail}</a>
+                          ) : (
+                            detail
+                          )}
+                        </p>
+                      ))}
+                    </div>
+                  </motion.div>
                 ))}
-              </ul>
-            </motion.div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-2xl font-light text-gray-900 mb-8">
-              {t('contact.sendMessage')}
-            </h3>
-
-            <form onSubmit={handleFormSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('contact.form.firstName')} *
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    required
-                    className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
-                    placeholder={t('contact.form.firstNamePlaceholder')}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('contact.form.lastName')} *
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    required
-                    className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
-                    placeholder={t('contact.form.lastNamePlaceholder')}
-                  />
-                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.form.email')} *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
-                  placeholder={t('contact.form.emailPlaceholder')}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.form.phone')}
-                </label>
-                <input
-                  type="tel"
-                  name="telefon"
-                  className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all"
-                  placeholder={t('contact.form.phonePlaceholder')}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.form.projectType')}
-                </label>
-                <select name="betreff" className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all">
-                  <option value="">{t('contact.form.projectPlaceholder')}</option>
-                  <option value="architektur">{t('contact.form.optArchitektur')}</option>
-                  <option value="neubau">{t('contact.form.optNeubau')}</option>
-                  <option value="sanierung">{t('contact.form.optSanierung')}</option>
-                  <option value="immobilien">{t('contact.form.optImmobilien')}</option>
-                  <option value="beratung">{t('contact.form.optBeratung')}</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('contact.form.message')} *
-                </label>
-                <textarea
-                  required
-                  name="nachricht"
-                  rows={5}
-                  className="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-[#1D3D78] transition-all resize-none"
-                  placeholder={t('contact.form.messagePlaceholder')}
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full text-white py-3.5 text-sm font-semibold transition-colors disabled:opacity-60"
-                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                onMouseOver={e => !e.currentTarget.disabled && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              {/* Why Choose Us */}
+              <motion.div
+                {...fadeUp}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-10 surface-warm p-8"
               >
-                {submitting ? 'Wird gesendet…' : t('contact.form.submit')}
-              </button>
-            </form>
-          </motion.div>
-        </div>
+                <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-5">{t('contact.whyUs')}</h3>
+                <ul className="space-y-3 text-gray-600 leading-relaxed">
+                  {(t('contact.whyUsItems') || []).map((item, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="mt-2.5 h-px w-4 shrink-0" style={{ backgroundColor: BRAND }} aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </motion.div>
 
-        {/* Google Maps Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-light text-gray-900 mb-4">
-              Unser <span className="font-black">Standort</span>
-            </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Besuchen Sie uns in unserem Büro in Muri bei Bern. Wir freuen uns auf ein persönliches Gespräch 
+            {/* Contact Form */}
+            <motion.div {...fadeUp} className="lg:col-span-7 min-w-0">
+              <div className="border border-gray-100 p-6 md:p-10">
+                <h2 className="display-heading uppercase text-3xl md:text-4xl mb-8 hyphens-auto break-words">
+                  {t('contact.sendMessage')}
+                </h2>
+
+                <form onSubmit={handleFormSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className={labelCls} htmlFor="ct-firstName">
+                        {t('contact.form.firstName')} *
+                      </label>
+                      <input id="ct-firstName"
+                        type="text"
+                        name="firstName"
+                        required
+                        className={inputCls}
+                        placeholder={t('contact.form.firstNamePlaceholder')}
+                      />
+                    </div>
+                    <div>
+                      <label className={labelCls} htmlFor="ct-lastName">
+                        {t('contact.form.lastName')} *
+                      </label>
+                      <input id="ct-lastName"
+                        type="text"
+                        name="lastName"
+                        required
+                        className={inputCls}
+                        placeholder={t('contact.form.lastNamePlaceholder')}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className={labelCls} htmlFor="ct-email">
+                      {t('contact.form.email')} *
+                    </label>
+                    <input id="ct-email"
+                      type="email"
+                      name="email"
+                      required
+                      className={inputCls}
+                      placeholder={t('contact.form.emailPlaceholder')}
+                    />
+                  </div>
+
+                  <div>
+                    <label className={labelCls} htmlFor="ct-telefon">
+                      {t('contact.form.phone')}
+                    </label>
+                    <input id="ct-telefon"
+                      type="tel"
+                      name="telefon"
+                      className={inputCls}
+                      placeholder={t('contact.form.phonePlaceholder')}
+                    />
+                  </div>
+
+                  <div>
+                    <label className={labelCls} htmlFor="ct-betreff">
+                      {t('contact.form.projectType')}
+                    </label>
+                    <select id="ct-betreff" name="betreff" className={inputCls}>
+                      <option value="">{t('contact.form.projectPlaceholder')}</option>
+                      <option value="architektur">{t('contact.form.optArchitektur')}</option>
+                      <option value="neubau">{t('contact.form.optNeubau')}</option>
+                      <option value="sanierung">{t('contact.form.optSanierung')}</option>
+                      <option value="immobilien">{t('contact.form.optImmobilien')}</option>
+                      <option value="beratung">{t('contact.form.optBeratung')}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className={labelCls} htmlFor="ct-nachricht">
+                      {t('contact.form.message')} *
+                    </label>
+                    <textarea id="ct-nachricht"
+                      required
+                      name="nachricht"
+                      rows={5}
+                      className={`${inputCls} resize-none`}
+                      placeholder={t('contact.form.messagePlaceholder')}
+                    ></textarea>
+                  </div>
+
+                  <FormPrivacyNote className="mb-3" />
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full text-white px-6 py-3.5 text-sm font-semibold transition-colors disabled:opacity-60"
+                    style={{ backgroundColor: BRAND }}
+                    onMouseOver={e => !e.currentTarget.disabled && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                  >
+                    {submitting ? 'Wird gesendet…' : t('contact.form.submit')}
+                  </button>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps Section */}
+      <section className="surface-warm py-20 md:py-24">
+        <div className="container mx-auto px-6">
+          <motion.div {...fadeUp} className="grid gap-6 lg:grid-cols-12 lg:items-end mb-12">
+            <div className="lg:col-span-5">
+              <p className="eyebrow mb-3">Muri bei Bern</p>
+              <h2 className="display-heading uppercase text-3xl md:text-4xl">
+                Unser Standort
+              </h2>
+            </div>
+            <p className="lg:col-span-7 text-lg text-gray-600 leading-relaxed">
+              Besuchen Sie uns in unserem Büro in Muri bei Bern. Wir freuen uns auf ein persönliches Gespräch
               über Ihr Bau- oder Immobilienprojekt.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="bg-white border border-gray-100 overflow-hidden">
+          <motion.div {...fadeUp} className="bg-white border border-gray-100 overflow-hidden">
             {/* Map Container */}
-            <div className="relative h-96 md:h-[500px]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2723.8234567890123!2d7.4916667!3d46.9333333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e39c0d43a9b91%3A0x12345678!2sBl%C3%BCmlisalpstrasse%204%2C%203074%20Muri%20bei%20Bern%2C%20Switzerland!5e0!3m2!1sen!2sch!4v1234567890123!5m2!1sen!2sch"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Hans Amonn AG Standort - Blümlisalpstrasse 4, 3074 Muri bei Bern"
-                className="w-full h-full"
-              ></iframe>
-              
+            <div className="relative h-96 md:h-[500px] bg-gray-100">
+              <ConsentEmbed className="absolute inset-0 pt-40 sm:pt-6">
+                <iframe
+                  src="https://www.google.com/maps?q=Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern&z=16&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Hans Amonn AG Standort - Blümlisalpstrasse 4, 3074 Muri bei Bern"
+                  className="w-full h-full"
+                ></iframe>
+              </ConsentEmbed>
+
               {/* Map Overlay with Company Info */}
-              <div className="absolute top-4 left-4 bg-white/95 p-4 border border-gray-100 max-w-xs">
-                <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+              <div className="absolute top-4 left-4 right-4 sm:right-auto bg-white p-5 border border-gray-100 max-w-xs">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: BRAND }}>
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 text-sm">Hans Amonn AG</h4>
-                    <p className="text-xs text-gray-600 mt-1">
+                    <h3 className="font-display uppercase font-semibold text-[#0F1B2D] text-lg leading-none">Hans Amonn AG</h3>
+                    <p className="text-xs text-gray-600 mt-2">
                       Blümlisalpstrasse 4<br />
                       3074 Muri bei Bern
                     </p>
-                    <a href="tel:+41319518554" className="text-xs mt-2 font-medium hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}>
+                    <a href="tel:+41319518554" className="inline-block text-xs mt-2 font-semibold hover:underline" style={{ color: BRAND }}>
                       +41 (0)31 951 85 54
                     </a>
                   </div>
@@ -330,103 +333,73 @@ const Contact = () => {
             </div>
 
             {/* Map Footer with Directions */}
-            <div className="p-6 bg-gray-50">
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                    <MapPin className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} />
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Adresse</h4>
-                  <p className="text-sm text-gray-600">
-                    Blümlisalpstrasse 4<br />
-                    3074 Muri bei Bern
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Öffnungszeiten</h4>
-                  <p className="text-sm text-gray-600">
-                    Mo-Fr: 08:00 - 18:00<br />
-                    Sa: Nach Vereinbarung
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                    <svg className="w-6 h-6" style={{ color: 'var(--brand-color, #1D3D78)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Anfahrt</h4>
-                  <p className="text-sm text-gray-600">
-                    Parkplätze vorhanden<br />
-                    ÖV: Bus Linie 21
-                  </p>
-                </div>
-              </div>
-              
-              {/* Directions Button */}
-              <div className="text-center mt-6">
-                <a
-                  href="https://www.google.com/maps/dir//Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern,+Switzerland"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 text-white font-medium transition-colors duration-300"
-                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
-                >
-                  <MapPin className="w-5 h-5 mr-2" />
-                  Route planen
-                </a>
+            <div className="border-t border-gray-100">
+              <div className="p-6 md:p-8">
+                <svg className="w-5 h-5 mb-4" style={{ color: BRAND }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Anfahrt</h3>
+                <p className="text-gray-900 leading-relaxed">
+                  Parkplätze vorhanden<br />
+                  ÖV: Bus Linie 21
+                </p>
               </div>
             </div>
-          </div>
-        </motion.div>
 
-        {/* Additional Contact CTA */}
+            {/* Directions Button */}
+            <div className="border-t border-gray-100 p-6 md:px-8 flex justify-start md:justify-end">
+              <a
+                href="https://www.google.com/maps/dir//Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern,+Switzerland"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 text-sm text-white font-semibold transition-colors"
+                style={{ backgroundColor: BRAND }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              >
+                <MapPin className="w-4 h-4" />
+                Route planen
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Additional Contact CTA */}
+      <section className="bg-[#0B1220] text-white py-20 md:py-24">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-16 bg-gray-50 border border-gray-100 p-8 text-center"
+          {...fadeUp}
+          className="container mx-auto px-6 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10"
         >
-          <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-            Bereit für Ihr nächstes Projekt?
-          </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung - 
-            wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="max-w-2xl">
+            <h2 className="font-display uppercase font-semibold text-3xl md:text-4xl leading-none mb-5">
+              Bereit für Ihr nächstes Projekt?
+            </h2>
+            <p className="text-white/70 leading-relaxed text-lg">
+              Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung -
+              wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
             <a
               href="tel:+41319518554"
-              className="inline-flex items-center px-6 py-3 text-white font-medium transition-colors duration-300"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-gray-900 text-sm font-semibold hover:bg-gray-100 transition-colors"
             >
-              <Phone className="w-5 h-5 mr-2" />
+              <Phone className="w-4 h-4" />
               Jetzt anrufen
             </a>
             <a
               href="mailto:office@reto-amonn.ch"
-              className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium transition-colors duration-300"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/40 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
             >
-              <Mail className="w-5 h-5 mr-2" />
+              <Mail className="w-4 h-4" />
               E-Mail senden
             </a>
           </div>
         </motion.div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

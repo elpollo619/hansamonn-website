@@ -7,6 +7,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 
+import { motion } from 'framer-motion';
 import { Toaster } from '@/components/ui/toaster';
 import { LanguageProvider } from '@/i18n';
 import { ComparisonProvider } from '@/context/ComparisonContext';
@@ -36,6 +37,9 @@ const ContactPage           = lazy(() => import('@/pages/ContactPage'));
 const AdminPage             = lazy(() => import('@/pages/AdminPage'));
 const ImpressumPage         = lazy(() => import('@/pages/ImpressumPage'));
 const PrivacyPolicyPage     = lazy(() => import('@/pages/PrivacyPolicyPage'));
+const AgbPage               = lazy(() => import('@/pages/AgbPage'));
+const CookiePolicyPage      = lazy(() => import('@/pages/CookiePolicyPage'));
+const StornoPage            = lazy(() => import('@/pages/StornoPage'));
 
 // Immobilien / Rentals
 const ImmobilienOverviewPage = lazy(() => import('@/pages/ImmobilienOverviewPage'));
@@ -46,6 +50,7 @@ const LongStayPage           = lazy(() => import('@/pages/LongStayPage'));
 const ShortStayPage          = lazy(() => import('@/pages/ShortStayPage'));
 const ApartmentsPage         = lazy(() => import('@/pages/ApartmentsPage'));
 const NsHotelPage            = lazy(() => import('@/pages/NsHotelPage'));
+const CasaRetoPage           = lazy(() => import('@/pages/CasaRetoPage'));
 const MietanfragePage        = lazy(() => import('@/pages/MietanfragePage'));
 const TerminbuchungPage      = lazy(() => import('@/pages/TerminbuchungPage'));
 const NotFoundPage           = lazy(() => import('@/pages/NotFoundPage'));
@@ -103,13 +108,22 @@ const ScrollToTop = () => {
 };
 
 function AppRoutes() {
+  const { pathname } = useLocation();
   return (
     <>
       <GoogleAnalytics />
       <ScrollToTop />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#0F1B2D] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:shadow-lg"
+      >
+        Zum Inhalt springen
+      </a>
       <Header />
-      <main className="pt-20">
+      <main id="main" tabIndex={-1} className="pt-16 outline-none">
         <Suspense fallback={<PageLoader />}>
+        {/* Soft fade between pages (opacity only, so fixed overlays inside pages keep working) */}
+        <motion.div key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
         <Routes>
           {/* HOME */}
           <Route path="/" element={<HomePage />} />
@@ -144,6 +158,9 @@ function AppRoutes() {
 
           {/* IMMOBILIEN — Verkauf */}
           <Route path="/immobilien/verkauf" element={<VerkaufPage />} />
+
+          {/* CASA RETO — dedicated holiday-home page (must precede :slug) */}
+          <Route path="/immobilien/casa-reto" element={<CasaRetoPage />} />
 
           {/* IMMOBILIEN — detail pages */}
           <Route path="/immobilien/:slug" element={<ApartmentDetailPage />} />
@@ -193,10 +210,14 @@ function AppRoutes() {
           {/* LEGAL */}
           <Route path="/impressum" element={<ImpressumPage />} />
           <Route path="/datenschutz" element={<PrivacyPolicyPage />} />
+          <Route path="/agb" element={<AgbPage />} />
+          <Route path="/cookies" element={<CookiePolicyPage />} />
+          <Route path="/stornierung" element={<StornoPage />} />
 
           {/* CATCH-ALL — show 404 page for unknown URLs */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </motion.div>
         </Suspense>
       </main>
       <Footer />

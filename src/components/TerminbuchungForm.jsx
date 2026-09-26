@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { Calendar, Clock, User, Mail, Phone, MessageSquare, CheckCircle2, Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -98,10 +99,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
       {/* Name + Email */}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>
+          <label className={labelCls} htmlFor="tb-name">
             <span className="flex items-center gap-1.5"><User size={12} />Name *</span>
           </label>
-          <input
+          <input id="tb-name"
             className={inputCls}
             required
             value={form.name}
@@ -110,10 +111,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
           />
         </div>
         <div>
-          <label className={labelCls}>
+          <label className={labelCls} htmlFor="tb-email">
             <span className="flex items-center gap-1.5"><Mail size={12} />E-Mail *</span>
           </label>
-          <input
+          <input id="tb-email"
             className={inputCls}
             type="email"
             required
@@ -127,10 +128,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
       {/* Telefon + Art */}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>
+          <label className={labelCls} htmlFor="tb-telefon">
             <span className="flex items-center gap-1.5"><Phone size={12} />Telefon</span>
           </label>
-          <input
+          <input id="tb-telefon"
             className={inputCls}
             type="tel"
             value={form.telefon}
@@ -139,8 +140,8 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
           />
         </div>
         <div>
-          <label className={labelCls}>Art der Besichtigung</label>
-          <select
+          <label className={labelCls} htmlFor="tb-art">Art der Besichtigung</label>
+          <select id="tb-art"
             className={inputCls}
             value={form.art}
             onChange={(e) => set('art', e.target.value)}
@@ -155,10 +156,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
       {/* Datum + Uhrzeit */}
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelCls}>
+          <label className={labelCls} htmlFor="tb-wunschtermin">
             <span className="flex items-center gap-1.5"><Calendar size={12} />Wunschdatum *</span>
           </label>
-          <input
+          <input id="tb-wunschtermin"
             className={inputCls}
             type="date"
             required
@@ -168,10 +169,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
           />
         </div>
         <div>
-          <label className={labelCls}>
+          <label className={labelCls} htmlFor="tb-uhrzeit">
             <span className="flex items-center gap-1.5"><Clock size={12} />Wunschzeit</span>
           </label>
-          <select
+          <select id="tb-uhrzeit"
             className={inputCls}
             value={form.uhrzeit}
             onChange={(e) => set('uhrzeit', e.target.value)}
@@ -185,10 +186,10 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
 
       {/* Nachricht */}
       <div>
-        <label className={labelCls}>
+        <label className={labelCls} htmlFor="tb-nachricht">
           <span className="flex items-center gap-1.5"><MessageSquare size={12} />Nachricht (optional)</span>
         </label>
-        <textarea
+        <textarea id="tb-nachricht"
           className={`${inputCls} resize-none`}
           rows={3}
           value={form.nachricht}
@@ -203,6 +204,7 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
         </p>
       )}
 
+      <FormPrivacyNote className="mb-3" />
       <button
         type="submit"
         disabled={submitting}

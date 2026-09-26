@@ -10,10 +10,10 @@ import { Link } from 'react-router-dom';
 
 const KB = {
   de: {
-    welcome: 'Guten Tag! Ich bin der digitale Assistent von Hans Amonn AG — Architektur & Immobilien. Womit kann ich Ihnen helfen?',
+    welcome: 'Guten Tag! Ich bin der digitale Assistent von Hans Amonn AG, Architektur & Immobilien. Womit kann ich Ihnen helfen?',
     placeholder: 'Ihre Frage…',
     suggestionsLabel: 'Häufige Fragen',
-    fallback: 'Zu dieser Frage helfe ich Ihnen am besten persönlich weiter. Schreiben Sie uns an office@reto-amonn.ch oder rufen Sie +41 (0)31 951 85 54 an — Mo–Fr 08:00–17:00 Uhr. Sie können auch eine Mietanfrage direkt online stellen.',
+    fallback: 'Zu dieser Frage helfe ich Ihnen am besten persönlich weiter. Schreiben Sie uns an office@reto-amonn.ch oder rufen Sie +41 (0)31 951 85 54 an, Mo–Fr 08:00–17:00 Uhr. Sie können auch eine Mietanfrage direkt online stellen.',
     fallbackLink: '/kontakt',
     suggestions: [
       { label: 'Long Stay', q: 'Was ist Long Stay?' },
@@ -29,7 +29,7 @@ const KB = {
       {
         id: 'what-is-long-stay',
         triggers: ['long stay', 'was ist long stay', 'länger wohnen', 'longer', 'mehrere monate', 'monatelang', 'temporär', 'mitarbeitende', 'firmenkunden', 'möbliert', 'aufenthalt'],
-        answer: 'Long Stay bietet möblierte Zimmer für Aufenthalte ab einem Monat — ideal für Mitarbeitende, Firmenkunden oder temporäres Wohnen. Wir haben Standorte in Kerzers, Münchenbuchsee und Muri bei Bern.',
+        answer: 'Long Stay bietet möblierte Zimmer für Aufenthalte ab einem Monat, ideal für Mitarbeitende, Firmenkunden oder temporäres Wohnen. Wir haben Standorte in Kerzers, Münchenbuchsee und Muri bei Bern.',
         link: '/immobilien/long-stay',
         linkLabel: 'Long Stay ansehen',
       },
@@ -57,21 +57,21 @@ const KB = {
       {
         id: 'ns-hotel-book',
         triggers: ['buchen', 'reservieren', 'booking', 'airbnb', 'direkt buchen', 'wie buche'],
-        answer: "Direkt auf ns-hotel.ch buchen — schnell und einfach. Alternativ über Booking.com oder Airbnb. Oder kontaktieren Sie uns direkt.",
+        answer: "Direkt auf ns-hotel.ch buchen, schnell und einfach. Alternativ über Booking.com oder Airbnb. Oder kontaktieren Sie uns direkt.",
         link: '/ns-hotel',
         linkLabel: 'Zur Buchung',
       },
       {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessin', 'ferienhaus', 'ferien', 'ferienwohnung', 'lago maggiore', 'gordemo', 'urlaub', 'erholung', 'natur', 'süd', 'sommer', 'escapada'],
-        answer: 'Casa Reto ist unser privates Ferienhaus am Lago Maggiore im Tessin — in einer traumhaften Naturlage direkt am See. Perfekt für Ferien, Erholung und Auszeit vom Alltag.',
+        answer: 'Casa Reto ist unser privates Ferienhaus am Lago Maggiore im Tessin, in einer traumhaften Naturlage direkt am See. Perfekt für Ferien, Erholung und Auszeit vom Alltag.',
         link: '/immobilien/casa-reto',
         linkLabel: 'Casa Reto entdecken',
       },
       {
         id: 'apartments',
         triggers: ['wohnung', 'apartment', 'mietwohnung', 'wohnungen', 'mieten', 'verfügbar', 'frei', 'apartments'],
-        answer: 'Aktuell haben wir keine freien Mietwohnungen. Sie können sich auf unsere Warteliste setzen — wir informieren Sie sofort bei Verfügbarkeit.',
+        answer: 'Aktuell haben wir keine freien Mietwohnungen. Sie können sich auf unsere Warteliste setzen, wir informieren Sie sofort bei Verfügbarkeit.',
         link: '/immobilien/apartments',
         linkLabel: 'Auf Warteliste',
       },
@@ -99,21 +99,21 @@ const KB = {
       {
         id: 'short-stay',
         triggers: ['short stay', 'kurzaufenthalt', 'wenige tage', 'wochen', 'tourist', 'tourismus'],
-        answer: "Short Stay umfasst N's Hotel (Kerzers) für Geschäftsreisen und Kurzaufenthalte sowie Casa Reto (Tessin) als privates Ferienhaus — beide buchbar über bekannte Plattformen.",
+        answer: "Short Stay umfasst N's Hotel (Kerzers) für Geschäftsreisen und Kurzaufenthalte sowie Casa Reto (Tessin) als privates Ferienhaus, beide buchbar über bekannte Plattformen.",
         link: '/immobilien/short-stay',
         linkLabel: 'Short Stay ansehen',
       },
       {
         id: 'availability',
         triggers: ['wann', 'ab wann', 'verfügbarkeit', 'frei ab', 'sofort', 'kurzfristig', 'noch frei', 'zimmer frei', 'verfügbar'],
-        answer: 'Long Stay Zimmer sind teilweise kurzfristig verfügbar. Für aktuelle Verfügbarkeit kontaktieren Sie uns direkt oder stellen Sie eine Anfrage — wir antworten innerhalb von 1–2 Werktagen.',
+        answer: 'Long Stay Zimmer sind teilweise kurzfristig verfügbar. Für aktuelle Verfügbarkeit kontaktieren Sie uns direkt oder stellen Sie eine Anfrage, wir antworten innerhalb von 1–2 Werktagen.',
         link: '/immobilien/anfrage',
         linkLabel: 'Verfügbarkeit anfragen',
       },
       {
         id: 'viewing',
         triggers: ['besichtigung', 'besichtigen', 'anschauen', 'zeigen', 'termin', 'vorbeikommen', 'ansehen'],
-        answer: 'Besichtigungen sind nach Voranmeldung möglich. Schreiben Sie an office@reto-amonn.ch oder rufen Sie +41 31 951 85 54 an — wir vereinbaren gerne einen Termin.',
+        answer: 'Besichtigungen sind nach Voranmeldung möglich. Schreiben Sie an office@reto-amonn.ch oder rufen Sie +41 31 951 85 54 an, wir vereinbaren gerne einen Termin.',
         link: '/kontakt',
         linkLabel: 'Besichtigung anfragen',
       },
@@ -141,14 +141,14 @@ const KB = {
       {
         id: 'nebenkosten',
         triggers: ['nebenkosten', 'strom', 'wasser', 'internet', 'wifi', 'heizung', 'was ist inkl', 'inbegriffen', 'inklusive'],
-        answer: 'Bei Long Stay sind Strom, Wasser, Heizung und Internet im Mietpreis inbegriffen — keine versteckten Zusatzkosten. Parkplatz auf Anfrage verfügbar.',
+        answer: 'Bei Long Stay sind Strom, Wasser, Heizung und Internet im Mietpreis inbegriffen, keine versteckten Zusatzkosten. Parkplatz auf Anfrage verfügbar.',
         link: '/immobilien/long-stay',
         linkLabel: 'Long Stay Details',
       },
       {
         id: 'parking',
         triggers: ['parkplatz', 'parken', 'auto', 'garage', 'fahrzeug', 'motorrad'],
-        answer: 'Parkplätze sind an einigen Standorten auf Anfrage verfügbar. Bitte erwähnen Sie Ihr Fahrzeug im Anfrageformular — wir klären die Verfügbarkeit und Kosten.',
+        answer: 'Parkplätze sind an einigen Standorten auf Anfrage verfügbar. Bitte erwähnen Sie Ihr Fahrzeug im Anfrageformular, wir klären die Verfügbarkeit und Kosten.',
         link: '/immobilien/anfrage',
         linkLabel: 'Anfrage inkl. Fahrzeug',
       },
@@ -162,21 +162,21 @@ const KB = {
       {
         id: 'corporate',
         triggers: ['firma', 'unternehmen', 'corporate', 'mitarbeitende', 'firmenwohnen', 'entsandte', 'geschäftsreise'],
-        answer: 'Firmenkunden: Wir bieten massgeschneiderte Lösungen für die Unterbringung von Mitarbeitenden — von Einzelzimmern bis zu Mehrzimmerbuchungen, mit Rechnungsstellung direkt an die Firma möglich.',
+        answer: 'Firmenkunden: Wir bieten massgeschneiderte Lösungen für die Unterbringung von Mitarbeitenden, von Einzelzimmern bis zu Mehrzimmerbuchungen, mit Rechnungsstellung direkt an die Firma möglich.',
         link: '/immobilien/anfrage',
         linkLabel: 'Firmenanfrage stellen',
       },
       {
         id: 'architektur',
         triggers: ['architektur', 'architekt', 'bauen', 'bauprojekt', 'bau', 'leistungen', 'was bieten sie', 'was machen sie', 'dienstleistungen', 'architekturleistungen', 'was ist hans amonn'],
-        answer: 'Hans Amonn AG bietet umfassende Architekturleistungen: Planung & Entwurf, Neubauten, Sanierungen & Umbauten sowie Projektbegleitung & Bauleitung — in der Region Muri bei Bern und darüber hinaus.',
+        answer: 'Hans Amonn AG bietet umfassende Architekturleistungen: Planung & Entwurf, Neubauten, Sanierungen & Umbauten sowie Projektbegleitung & Bauleitung, in der Region Muri bei Bern und darüber hinaus.',
         link: '/leistungen',
         linkLabel: 'Alle Leistungen ansehen',
       },
       {
         id: 'neubauten',
         triggers: ['neubau', 'neubauten', 'haus bauen', 'neues haus', 'einfamilienhaus', 'mehrfamilienhaus', 'wohnhaus', 'gewerbe bauen', 'neues gebäude', 'bauen lassen'],
-        answer: 'Für Neubauten — ob Einfamilienhaus, Mehrfamilienhaus oder Gewerbeimmobilie — begleiten wir Sie von der ersten Idee bis zur Schlüsselübergabe. Termin- und Kostenkontrolle inklusive.',
+        answer: 'Für Neubauten, ob Einfamilienhaus, Mehrfamilienhaus oder Gewerbeimmobilie, begleiten wir Sie von der ersten Idee bis zur Schlüsselübergabe. Termin- und Kostenkontrolle inklusive.',
         link: '/leistungen/neubauten',
         linkLabel: 'Neubauten ansehen',
       },
@@ -190,14 +190,14 @@ const KB = {
       {
         id: 'projektbegleitung',
         triggers: ['projektbegleitung', 'bauleitung', 'bauüberwachung', 'koordination', 'gesamtleitung', 'bauherr', 'begleitung', 'projektmanagement', 'qualitätskontrolle'],
-        answer: 'Als Gesamtleiter übernehmen wir Ausschreibung, Vergabe, Bauleitung und Qualitätskontrolle für Ihr Projekt — Sie behalten den Überblick, ohne in operative Details eingebunden zu sein.',
+        answer: 'Als Gesamtleiter übernehmen wir Ausschreibung, Vergabe, Bauleitung und Qualitätskontrolle für Ihr Projekt. Sie behalten den Überblick, ohne in operative Details eingebunden zu sein.',
         link: '/leistungen/projektbegleitung',
         linkLabel: 'Projektbegleitung & Bauleitung',
       },
       {
         id: 'planung',
         triggers: ['planung', 'entwurf', 'plan', 'konzept', 'grundriss', 'skizze', 'baugenehmigung', 'baugesuch', 'ausführungsplanung', 'entwurfsplanung'],
-        answer: 'Von der ersten Skizze bis zur baureifen Ausführungsplanung: Wir entwickeln Konzepte, die Ästhetik, Funktion und Wirtschaftlichkeit verbinden — immer in enger Abstimmung mit Ihnen.',
+        answer: 'Von der ersten Skizze bis zur baureifen Ausführungsplanung: Wir entwickeln Konzepte, die Ästhetik, Funktion und Wirtschaftlichkeit verbinden, immer in enger Abstimmung mit Ihnen.',
         link: '/leistungen/planung-entwurf',
         linkLabel: 'Planung & Entwurf',
       },
@@ -219,7 +219,7 @@ const KB = {
   },
 
   en: {
-    welcome: "Hello! I'm the digital assistant for Hans Amonn AG — Architecture & Real Estate. How can I help you?",
+    welcome: "Hello! I'm the digital assistant for Hans Amonn AG, Architecture & Real Estate. How can I help you?",
     placeholder: 'Your question…',
     suggestionsLabel: 'Popular questions',
     fallback: "For this question, it's best to contact us directly at office@reto-amonn.ch or +41 (0)31 951 85 54.",
@@ -236,7 +236,7 @@ const KB = {
       {
         id: 'what-is-long-stay',
         triggers: ['long stay', 'what is long stay', 'longer stay', 'several months', 'temporary', 'furnished', 'employees', 'corporate'],
-        answer: 'Long Stay offers furnished rooms for stays of one month or more — ideal for employees, corporate clients, or temporary housing. We have locations in Kerzers, Münchenbuchsee and Muri bei Bern.',
+        answer: 'Long Stay offers furnished rooms for stays of one month or more, ideal for employees, corporate clients, or temporary housing. We have locations in Kerzers, Münchenbuchsee and Muri bei Bern.',
         link: '/immobilien/long-stay',
         linkLabel: 'View Long Stay',
       },
@@ -264,7 +264,7 @@ const KB = {
       {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessin', 'ticino', 'holiday', 'vacation', 'lago maggiore', 'nature', 'summer', 'relax'],
-        answer: 'Casa Reto is our private holiday house at Lake Maggiore in Ticino — a dream location surrounded by nature. Perfect for holidays and a relaxing getaway.',
+        answer: 'Casa Reto is our private holiday house at Lake Maggiore in Ticino, a dream location surrounded by nature. Perfect for holidays and a relaxing getaway.',
         link: '/immobilien/casa-reto',
         linkLabel: 'Discover Casa Reto',
       },
@@ -299,14 +299,14 @@ const KB = {
       {
         id: 'architektur',
         triggers: ['architecture', 'architect', 'build', 'construction', 'services', 'what do you do', 'what is hans amonn', 'architectural services'],
-        answer: 'Hans Amonn AG offers full architectural services: Planning & Design, New Buildings, Renovations & Conversions, and Project Management & Site Supervision — based in Muri bei Bern, Switzerland.',
+        answer: 'Hans Amonn AG offers full architectural services: Planning & Design, New Buildings, Renovations & Conversions, and Project Management & Site Supervision, based in Muri bei Bern, Switzerland.',
         link: '/leistungen',
         linkLabel: 'View all services',
       },
       {
         id: 'neubauten',
         triggers: ['new building', 'new house', 'build a house', 'construction project', 'residential', 'commercial building'],
-        answer: 'For new buildings — single-family homes, apartment blocks or commercial properties — we accompany you from the first idea to key handover, with full cost and schedule control.',
+        answer: 'For new buildings, single-family homes, apartment blocks or commercial properties, we accompany you from the first idea to key handover, with full cost and schedule control.',
         link: '/leistungen/neubauten',
         linkLabel: 'New Buildings',
       },
@@ -335,7 +335,7 @@ const KB = {
   },
 
   fr: {
-    welcome: "Bonjour ! Je suis l'assistant digital de Hans Amonn AG — Architecture & Immobilier. Comment puis-je vous aider ?",
+    welcome: "Bonjour ! Je suis l'assistant digital de Hans Amonn AG, Architecture & Immobilier. Comment puis-je vous aider ?",
     placeholder: 'Votre question…',
     suggestionsLabel: 'Questions fréquentes',
     fallback: 'Pour cette question, il vaut mieux nous contacter directement à office@reto-amonn.ch ou +41 (0)31 951 85 54.',
@@ -352,7 +352,7 @@ const KB = {
       {
         id: 'what-is-long-stay',
         triggers: ['long stay', "qu'est-ce que", 'séjour long', 'plusieurs mois', 'temporaire', 'meublé', 'employés', 'entreprise'],
-        answer: "Long Stay propose des chambres meublées pour des séjours d'un mois ou plus — idéal pour les employés, clients entreprises ou logement temporaire. Nos sites sont à Kerzers, Münchenbuchsee et Muri bei Bern.",
+        answer: "Long Stay propose des chambres meublées pour des séjours d'un mois ou plus, idéal pour les employés, clients entreprises ou logement temporaire. Nos sites sont à Kerzers, Münchenbuchsee et Muri bei Bern.",
         link: '/immobilien/long-stay',
         linkLabel: 'Voir Long Stay',
       },
@@ -373,7 +373,7 @@ const KB = {
       {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessin', 'vacances', 'maison', 'lago maggiore', 'nature', 'repos'],
-        answer: "Casa Reto est notre maison de vacances privée au Lac Majeur, dans le Tessin — un cadre naturel magnifique. Parfait pour les vacances et un séjour ressourçant.",
+        answer: "Casa Reto est notre maison de vacances privée au Lac Majeur, dans le Tessin, un cadre naturel magnifique. Parfait pour les vacances et un séjour ressourçant.",
         link: '/immobilien/casa-reto',
         linkLabel: 'Découvrir Casa Reto',
       },
@@ -408,7 +408,7 @@ const KB = {
       {
         id: 'neubauten',
         triggers: ['construction neuve', 'maison neuve', 'faire construire', 'bâtiment', 'villa', 'immeuble'],
-        answer: "Pour les constructions neuves, nous vous accompagnons de la première esquisse à la remise des clés — maisons individuelles, immeubles ou bâtiments commerciaux.",
+        answer: "Pour les constructions neuves, nous vous accompagnons de la première esquisse à la remise des clés, maisons individuelles, immeubles ou bâtiments commerciaux.",
         link: '/leistungen/neubauten',
         linkLabel: 'Constructions neuves',
       },
@@ -423,7 +423,7 @@ const KB = {
   },
 
   it: {
-    welcome: 'Buongiorno! Sono l\'assistente digitale di Hans Amonn AG — Architettura & Immobili. Come posso aiutarvi?',
+    welcome: 'Buongiorno! Sono l\'assistente digitale di Hans Amonn AG, Architettura & Immobili. Come posso aiutarvi?',
     placeholder: 'La vostra domanda…',
     suggestionsLabel: 'Domande frequenti',
     fallback: 'Per questa domanda è meglio contattarci direttamente: office@reto-amonn.ch o +41 (0)31 951 85 54.',
@@ -440,7 +440,7 @@ const KB = {
       {
         id: 'what-is-long-stay',
         triggers: ['long stay', "cos'è", 'soggiorno lungo', 'mesi', 'temporaneo', 'arredato', 'dipendenti', 'azienda'],
-        answer: 'Long Stay offre camere arredate per soggiorni di un mese o più — ideale per dipendenti, clienti aziendali o alloggio temporaneo. Abbiamo sedi a Kerzers, Münchenbuchsee e Muri bei Bern.',
+        answer: 'Long Stay offre camere arredate per soggiorni di un mese o più, ideale per dipendenti, clienti aziendali o alloggio temporaneo. Abbiamo sedi a Kerzers, Münchenbuchsee e Muri bei Bern.',
         link: '/immobilien/long-stay',
         linkLabel: 'Vedi Long Stay',
       },
@@ -454,7 +454,7 @@ const KB = {
       {
         id: 'casa-reto',
         triggers: ['casa reto', 'ticino', 'vacanze', 'lago maggiore', 'natura', 'riposo'],
-        answer: "Casa Reto è la nostra casa vacanze privata sul Lago Maggiore in Ticino — una location da sogno immersa nella natura.",
+        answer: "Casa Reto è la nostra casa vacanze privata sul Lago Maggiore in Ticino, una location da sogno immersa nella natura.",
         link: '/immobilien/casa-reto',
         linkLabel: 'Scopri Casa Reto',
       },
@@ -482,7 +482,7 @@ const KB = {
       {
         id: 'neubauten',
         triggers: ['nuova costruzione', 'casa nuova', 'far costruire', 'edificio', 'villa'],
-        answer: 'Per le nuove costruzioni vi accompagniamo dalla prima idea alla consegna delle chiavi — case unifamiliari, palazzi o edifici commerciali.',
+        answer: 'Per le nuove costruzioni vi accompagniamo dalla prima idea alla consegna delle chiavi, case unifamiliari, palazzi o edifici commerciali.',
         link: '/leistungen/neubauten',
         linkLabel: 'Nuove costruzioni',
       },
@@ -490,7 +490,7 @@ const KB = {
   },
 
   es: {
-    welcome: '¡Hola! Soy el asistente digital de Hans Amonn AG — Arquitectura e Inmobiliaria. ¿En qué puedo ayudarle?',
+    welcome: '¡Hola! Soy el asistente digital de Hans Amonn AG, Arquitectura e Inmobiliaria. ¿En qué puedo ayudarle?',
     placeholder: 'Su pregunta…',
     suggestionsLabel: 'Preguntas frecuentes',
     fallback: 'Para esta pregunta es mejor contactarnos directamente: office@reto-amonn.ch o +41 (0)31 951 85 54.',
@@ -507,7 +507,7 @@ const KB = {
       {
         id: 'what-is-long-stay',
         triggers: ['long stay', 'qué es', 'estancia larga', 'meses', 'temporal', 'amueblado', 'empleados', 'empresa'],
-        answer: 'Long Stay ofrece habitaciones amuebladas para estancias de un mes o más — ideal para empleados, clientes corporativos o alojamiento temporal. Tenemos sedes en Kerzers, Münchenbuchsee y Muri bei Bern.',
+        answer: 'Long Stay ofrece habitaciones amuebladas para estancias de un mes o más, ideal para empleados, clientes corporativos o alojamiento temporal. Tenemos sedes en Kerzers, Münchenbuchsee y Muri bei Bern.',
         link: '/immobilien/long-stay',
         linkLabel: 'Ver Long Stay',
       },
@@ -521,7 +521,7 @@ const KB = {
       {
         id: 'casa-reto',
         triggers: ['casa reto', 'tesino', 'vacaciones', 'lago maggiore', 'naturaleza', 'descanso', 'escapada'],
-        answer: 'Casa Reto es nuestra casa de vacaciones privada en el Lago Maggiore, en el Tesino — un lugar de ensueño rodeado de naturaleza. Perfecto para vacaciones y escapadas.',
+        answer: 'Casa Reto es nuestra casa de vacaciones privada en el Lago Maggiore, en el Tesino, un lugar de ensueño rodeado de naturaleza. Perfecto para vacaciones y escapadas.',
         link: '/immobilien/casa-reto',
         linkLabel: 'Descubrir Casa Reto',
       },
@@ -549,7 +549,7 @@ const KB = {
       {
         id: 'neubauten',
         triggers: ['obra nueva', 'casa nueva', 'construir casa', 'edificio', 'vivienda nueva', 'promoción'],
-        answer: 'Para obras nuevas — viviendas unifamiliares, bloques de pisos o edificios comerciales — le acompañamos desde la primera idea hasta la entrega de llaves.',
+        answer: 'Para obras nuevas, viviendas unifamiliares, bloques de pisos o edificios comerciales, le acompañamos desde la primera idea hasta la entrega de llaves.',
         link: '/leistungen/neubauten',
         linkLabel: 'Obra nueva',
       },
@@ -564,7 +564,7 @@ const KB = {
   },
 
   pt: {
-    welcome: 'Olá! Sou o assistente digital da Hans Amonn AG — Arquitetura & Imobiliário. Em que posso ajudá-lo?',
+    welcome: 'Olá! Sou o assistente digital da Hans Amonn AG, Arquitetura & Imobiliário. Em que posso ajudá-lo?',
     placeholder: 'A sua pergunta…',
     suggestionsLabel: 'Perguntas frequentes',
     fallback: 'Para esta questão é melhor contactar-nos diretamente: office@reto-amonn.ch ou +41 (0)31 951 85 54.',
@@ -581,7 +581,7 @@ const KB = {
       {
         id: 'what-is-long-stay',
         triggers: ['long stay', 'o que é', 'estadia longa', 'meses', 'temporário', 'mobilado', 'funcionários', 'empresa'],
-        answer: 'Long Stay oferece quartos mobilados para estadias de um mês ou mais — ideal para funcionários, clientes empresariais ou alojamento temporário. Temos localizações em Kerzers, Münchenbuchsee e Muri bei Bern.',
+        answer: 'Long Stay oferece quartos mobilados para estadias de um mês ou mais, ideal para funcionários, clientes empresariais ou alojamento temporário. Temos localizações em Kerzers, Münchenbuchsee e Muri bei Bern.',
         link: '/immobilien/long-stay',
         linkLabel: 'Ver Long Stay',
       },
@@ -595,7 +595,7 @@ const KB = {
       {
         id: 'casa-reto',
         triggers: ['casa reto', 'tessino', 'férias', 'lago maggiore', 'natureza', 'descanso'],
-        answer: 'Casa Reto é a nossa casa de férias privada no Lago Maggiore, no Tessino — uma localização de sonho rodeada de natureza.',
+        answer: 'Casa Reto é a nossa casa de férias privada no Lago Maggiore, no Tessino, uma localização de sonho rodeada de natureza.',
         link: '/immobilien/casa-reto',
         linkLabel: 'Descobrir Casa Reto',
       },
@@ -623,7 +623,7 @@ const KB = {
       {
         id: 'neubauten',
         triggers: ['obra nova', 'casa nova', 'construir casa', 'edifício', 'moradia', 'prédio'],
-        answer: 'Para obras novas — moradias unifamiliares, edifícios de apartamentos ou imóveis comerciais — acompanhamo-lo desde a primeira ideia até à entrega de chaves.',
+        answer: 'Para obras novas, moradias unifamiliares, edifícios de apartamentos ou imóveis comerciais, acompanhamo-lo desde a primeira ideia até à entrega de chaves.',
         link: '/leistungen/neubauten',
         linkLabel: 'Obras novas',
       },
@@ -786,14 +786,14 @@ export default function VirtualAgent() {
                 <p className="text-white font-semibold text-sm leading-tight">HANS AMONN AG</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#4ade80' }} />
-                  <p className="text-gray-400 text-xs">Digitaler Assistent · Online</p>
+                  <p className="text-white/70 text-xs">Digitaler Assistent · Online</p>
                 </div>
               </div>
               {/* Language picker */}
               <div className="relative flex-shrink-0">
                 <button
                   onClick={() => setShowLangPicker(p => !p)}
-                  className="flex items-center gap-1 text-gray-400 hover:text-white transition-colors text-xs py-1 px-2 rounded-lg hover:bg-white/10"
+                  className="flex items-center gap-1 text-white/70 hover:text-white transition-colors text-xs py-1 px-2 rounded-lg hover:bg-white/10"
                 >
                   <Globe size={12} />
                   {LANG_LABELS[chatLang]?.label}

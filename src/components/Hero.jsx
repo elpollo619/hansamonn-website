@@ -1,146 +1,189 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import AmonnLogo from '@/components/AmonnLogo';
 import { getSettings } from '@/data/settingsStore';
 
 const SECTIONS = [
   {
     to: '/immobilien',
-    logoVariant: 'immobilien',
+    index: '01',
+    eyebrow: 'Immobilien',
     title: 'Wohnen & Mieten',
     sub: 'Long Stay · Short Stay · Apartments · Verkauf',
-    image: '/images/kerzers/titel.jpg',
+    image: '/images/ns-hotel/aussen.jpg',
   },
   {
     to: '/architektur',
-    logoVariant: 'architektur',
+    index: '02',
+    eyebrow: 'Architektur',
     title: 'Bauen & Gestalten',
-    sub: 'Planung · Neubauten · Sanierungen · Projektbegleitung',
-    image: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/3d1fb89de8fe0a9a5680ca4ecc5b8897.jpg',
+    sub: 'Planung · Neubauten · Sanierungen',
+    image: '/images/projekte/hoeheweg/drohne-2024.jpg',
   },
   {
     to: '/uber-uns',
-    logoVariant: 'main',
-    title: 'Über uns',
-    sub: 'Team · Geschichte · Kontakt — seit 1968 in Muri bei Bern',
-    image: 'https://storage.googleapis.com/hostinger-horizons-assets-prod/a0cb55ad-c0d2-4ee6-b587-996da266f297/40ccd8d190aeb0a543c3ff4ab8cdf19d.jpg',
+    index: '03',
+    eyebrow: 'Über uns',
+    title: 'Menschen & Geschichte',
+    sub: 'Team · Geschichte · Kontakt',
+    image: '/images/ns-hotel/drohne-1.jpg',
   },
 ];
 
+const ROTATE_MS = 6000;
+
 const Hero = () => {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
   const settings = getSettings();
-  const stripText = settings.heroSubtitle || 'Architektur & Immobilien in der Region Bern.';
+  const subline = settings.heroSubtitle || 'Architektur, Immobilien und Gastfreundschaft in der Region Bern und im Tessin.';
+
+  const reduceMotion = useRef(false);
+  useEffect(() => {
+    reduceMotion.current =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
+
+  // Auto-rotate the background through the sections
+  useEffect(() => {
+    if (paused || reduceMotion.current) return;
+    const id = setInterval(() => {
+      setActiveIdx((i) => (i + 1) % SECTIONS.length);
+    }, ROTATE_MS);
+    return () => clearInterval(id);
+  }, [paused]);
+
+  const active = SECTIONS[activeIdx];
 
   return (
-    <section className="min-h-screen flex flex-col bg-white">
-
-      {/* ── Minimal header strip ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="container mx-auto px-6 pt-8 pb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-2"
-      >
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] font-semibold tracking-[0.28em] text-gray-300 uppercase">
-            Seit 1968
-          </span>
-          <span className="h-px w-8 bg-gray-200" />
-          <span className="text-[10px] font-semibold tracking-[0.28em] text-gray-300 uppercase">
-            Muri bei Bern
-          </span>
-        </div>
-        <p className="text-gray-400 text-sm max-w-xs md:text-right">
-          {stripText}
-        </p>
-      </motion.div>
-
-      {/* ── Split panel ── */}
-      <div className="flex-1 flex flex-col md:flex-row border-t border-gray-100" style={{ minHeight: 520 }}>
-
-        {/* Left: stacked nav */}
-        <div className="flex flex-col md:w-[38%] divide-y divide-gray-100 border-r border-gray-100">
-          {SECTIONS.map((s, i) => (
-            <motion.div
-              key={s.to}
-              className="flex-1"
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.1 }}
-            >
-              <Link
-                to={s.to}
-                className={`h-full flex flex-col justify-center px-8 py-9 transition-colors block ${
-                  activeIdx === i ? 'bg-gray-50' : 'bg-white hover:bg-gray-50/60'
-                }`}
-                onMouseEnter={() => setActiveIdx(i)}
-              >
-                <div className="mb-3">
-                  <AmonnLogo variant={s.logoVariant} size="sm" />
-                </div>
-                <h2
-                  className="text-2xl md:text-3xl font-light leading-tight transition-colors duration-300"
-                  style={{ color: activeIdx === i ? '#111' : '#9ca3af' }}
-                >
-                  {s.title}
-                </h2>
-                <p
-                  className="text-sm mt-1.5 leading-relaxed transition-colors duration-300"
-                  style={{ color: activeIdx === i ? '#6b7280' : '#d1d5db' }}
-                >
-                  {s.sub}
-                </p>
-                <motion.div
-                  className="flex items-center gap-2 text-sm font-medium mt-4"
-                  style={{ color: activeIdx === i ? 'var(--brand-color, #1D3D78)' : '#d1d5db' }}
-                  animate={{ x: activeIdx === i ? 4 : 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Mehr erfahren
-                  <ArrowRight size={13} />
-                </motion.div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Right: changing image */}
-        <div className="flex-1 relative overflow-hidden bg-gray-100 min-h-[320px] md:min-h-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIdx}
-              initial={{ opacity: 0, scale: 1.03 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.55, ease: 'easeOut' }}
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${SECTIONS[activeIdx].image})` }}
+    <section
+      className="relative w-full overflow-hidden bg-[#0B1220] text-white"
+      style={{ height: 'calc(100vh - 5rem)', minHeight: 560 }}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* ── Cinematic background ── */}
+      <div className="absolute inset-0">
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={activeIdx}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.1, ease: 'easeInOut' }}
+            className="absolute inset-0"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center kenburns"
+              style={{ backgroundImage: `url(${active.image})` }}
             />
-          </AnimatePresence>
-          {/* Vignette */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/20 pointer-events-none" />
+          </motion.div>
+        </AnimatePresence>
 
-          {/* Section indicator dots */}
-          <div className="absolute bottom-6 right-6 flex gap-2">
+        {/* Cinematic gradients for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+      </div>
+
+      {/* ── Content ── */}
+      <div className="relative h-full container mx-auto px-6 flex flex-col">
+
+        {/* Top eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="pt-10 flex items-center gap-4"
+        >
+          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/90 whitespace-nowrap">
+            Hans Amonn AG
+          </span>
+          <span className="h-px w-10 bg-white/40 hidden sm:block" />
+          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/60 whitespace-nowrap hidden sm:inline">
+            Seit 1968 · Muri bei Bern
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <div className="flex-1 flex flex-col justify-center max-w-3xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display uppercase font-semibold leading-[0.92] tracking-tight text-white"
+            style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)' }}
+          >
+            Bauen. Wohnen.<br />Bleiben.
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="mt-6 text-lg md:text-xl text-white/85 leading-relaxed max-w-xl"
+          >
+            {subline}
+          </motion.p>
+        </div>
+
+        {/* Destination band */}
+        <div className="pb-20 md:pb-14">
+          {/* Indicator dots (kept clear of the floating buttons) */}
+          <div className="flex items-center justify-center gap-2 mb-4">
             {SECTIONS.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setActiveIdx(i)}
-                className="transition-all duration-300"
+                onClick={() => { setActiveIdx(i); setPaused(true); }}
+                aria-label={`Bild ${i + 1} von ${SECTIONS.length} anzeigen`}
+                aria-current={activeIdx === i || undefined}
+                className="transition-[width,background-color] duration-300"
                 style={{
-                  width: activeIdx === i ? 24 : 6,
-                  height: 6,
-                  borderRadius: 3,
+                  width: activeIdx === i ? 26 : 7,
+                  height: 7,
+                  borderRadius: 4,
                   backgroundColor: activeIdx === i ? '#fff' : 'rgba(255,255,255,0.4)',
                 }}
               />
             ))}
           </div>
-        </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/15 border-t border-white/15">
+            {SECTIONS.map((s, i) => {
+              const isActive = activeIdx === i;
+              return (
+                <Link
+                  key={s.to}
+                  to={s.to}
+                  onMouseEnter={() => { setActiveIdx(i); setPaused(true); }}
+                  className="group relative flex items-center gap-4 px-5 py-5 transition-colors"
+                  style={{ backgroundColor: isActive ? 'rgba(255,255,255,0.10)' : 'rgba(11,18,32,0.55)' }}
+                >
+                  {/* top active bar */}
+                  <span
+                    className="absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-300"
+                    style={{ backgroundColor: '#fff', opacity: isActive ? 1 : 0 }}
+                  />
+                  <span className="font-display text-xl font-semibold tabular-nums text-white/60 group-hover:text-white transition-colors">
+                    {s.index}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <span className="block text-[10px] font-semibold tracking-widest uppercase text-white/50 mb-0.5">
+                      {s.eyebrow}
+                    </span>
+                    <span className="font-display uppercase text-lg md:text-xl font-semibold text-white leading-none truncate block">
+                      {s.title}
+                    </span>
+                  </div>
+                  <ArrowRight
+                    size={16}
+                    className="text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all shrink-0"
+                  />
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
