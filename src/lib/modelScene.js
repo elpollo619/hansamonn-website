@@ -63,6 +63,9 @@ export function buildModel(THREE, mergeGeometries, data, { style = 'model', scal
         // dark oak of the half-timbering / verge boards, sandstone of quoins and plinth
         beam: keep(new THREE.MeshStandardMaterial({ color: 0x5e4533, roughness: 0.85, metalness: 0 })),
         stone: keep(new THREE.MeshStandardMaterial({ color: 0xd4cbb8, roughness: 0.95, metalness: 0 })),
+        // vine canopy (pergola) and translucent roof sheets (skylight strips in corrugated roofs)
+        leaf: keep(new THREE.MeshStandardMaterial({ color: 0x7ea552, roughness: 1, metalness: 0, flatShading: true })),
+        sheet: keep(new THREE.MeshStandardMaterial({ color: 0xeceae3, roughness: 0.4, metalness: 0, transparent: true, opacity: 0.92 })),
         line: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.28 })),
         lineSoft: keep(new THREE.LineBasicMaterial({ color: 0x2b3440, transparent: true, opacity: 0.16 })),
       };
