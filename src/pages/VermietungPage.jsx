@@ -193,7 +193,7 @@ const ListingCard = ({ item, index, t }) => {
           <div className="flex flex-wrap gap-1.5 mb-4">
             {item.longStayRooms.filter(r => !r.isAddon).slice(0, 2).map((room, i) => (
               <span key={i} className="bg-gray-50 text-gray-500 text-xs px-2.5 py-1 border border-gray-100">
-                {room.label}{room.size ? ` ${room.size}m²` : ''} — CHF {room.price}
+                {room.label}{room.size ? ` ${room.size}m²` : ''} · CHF {room.price}
               </span>
             ))}
           </div>

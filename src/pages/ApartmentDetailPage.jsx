@@ -1223,7 +1223,7 @@ const ApartmentDetailPage = () => {
                     </h2>
                     <p className="text-gray-500 text-sm mb-6 leading-relaxed">
                       {apt.type === 'long-stay'
-                        ? 'Interesse an einer Unterkunft? Füllen Sie das Formular aus — wir melden uns innerhalb von 24 Stunden.'
+                        ? 'Interesse an einer Unterkunft? Füllen Sie das Formular aus, wir melden uns innerhalb von 24 Stunden.'
                         : 'Fragen oder Buchungswunsch? Wir melden uns innerhalb von 24 Stunden.'}
                     </p>
                     <div className="space-y-3">

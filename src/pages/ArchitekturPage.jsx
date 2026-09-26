@@ -31,7 +31,7 @@ const ArchitekturPage = () => {
     <div className="bg-white text-gray-900">
       <Helmet>
         <title>Architektur – Hans Amonn AG</title>
-        <meta name="description" content="AMONN ARCHITEKTUR — Planung, Neubauten, Sanierungen und Projektbegleitung in der Region Bern. Seit über 55 Jahren." />
+        <meta name="description" content="AMONN ARCHITEKTUR: Planung, Neubauten, Sanierungen und Projektbegleitung in der Region Bern. Seit über 55 Jahren." />
       </Helmet>
 
       {/* ── Hero ────────────────────────────────────────────────── */}
@@ -40,7 +40,7 @@ const ArchitekturPage = () => {
         size="lg"
         eyebrow={<AmonnLogo variant="architektur" size="md" color="#fff" lightColor="rgba(255,255,255,0.75)" />}
         title={<>Architektur mit <br />Verantwortung.</>}
-        subtitle="Von der ersten Skizze bis zur Schlüsselübergabe — wir begleiten Bauvorhaben mit Erfahrung, Präzision und gestalterischem Anspruch. Seit über 55 Jahren in Muri bei Bern."
+        subtitle="Von der ersten Skizze bis zur Schlüsselübergabe, wir begleiten Bauvorhaben mit Erfahrung, Präzision und gestalterischem Anspruch. Seit über 55 Jahren in Muri bei Bern."
         overlay={
           <BlueprintLines className="pointer-events-none absolute right-[-10%] top-20 w-[90%] opacity-25 text-blue-100 md:right-[2%] md:top-1/2 md:-translate-y-1/2 md:w-[46%] md:opacity-60" />
         }

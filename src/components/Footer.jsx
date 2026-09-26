@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import AmonnLogo from '@/components/AmonnLogo';
 import { getSetting } from '@/data/settingsStore';
 
 // Pages that already end in their own contact block skip the footer CTA band
@@ -96,11 +97,10 @@ const Footer = () => {
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link to="/" className="block mb-5">
-              <span className="text-[13px] font-black uppercase tracking-[0.18em] text-white">HANS</span>
-              <span className="text-[13px] font-extralight uppercase tracking-[0.18em] text-white/70">{' '}AMONN AG</span>
+              <AmonnLogo variant="main" size="md" color="#fff" lightColor="rgba(255,255,255,0.8)" />
             </Link>
             <p className="text-white/55 text-sm leading-relaxed mb-6 max-w-xs">
-              {t('footer.tagline') || 'Ihr Partner für Architektur und Immobilien in der Region Bern — seit über 55 Jahren.'}
+              {t('footer.tagline') || 'Ihr Partner für Architektur und Immobilien in der Region Bern, seit über 55 Jahren.'}
             </p>
             <div className="space-y-2.5 mb-6">
               <div className="flex items-start gap-2.5">

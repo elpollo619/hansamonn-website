@@ -11,7 +11,7 @@ const SECTIONS = [
     eyebrow: 'Immobilien',
     title: 'Wohnen & Mieten',
     sub: 'Long Stay · Short Stay · Apartments · Verkauf',
-    image: '/images/kerzers/titel.jpg',
+    image: '/images/ns-hotel/aussen.jpg',
   },
   {
     to: '/architektur',
@@ -19,7 +19,7 @@ const SECTIONS = [
     eyebrow: 'Architektur',
     title: 'Bauen & Gestalten',
     sub: 'Planung · Neubauten · Sanierungen',
-    image: '/images/ns-hotel/drohne-1.jpg',
+    image: '/images/projekte/hoeheweg/drohne-2024.jpg',
   },
   {
     to: '/uber-uns',
@@ -27,7 +27,7 @@ const SECTIONS = [
     eyebrow: 'Über uns',
     title: 'Menschen & Geschichte',
     sub: 'Team · Geschichte · Kontakt',
-    image: '/images/muenchenbuchsee/titel.jpg',
+    image: '/images/ns-hotel/drohne-1.jpg',
   },
 ];
 
@@ -37,7 +37,7 @@ const Hero = () => {
   const [activeIdx, setActiveIdx] = useState(0);
   const [paused, setPaused] = useState(false);
   const settings = getSettings();
-  const subline = settings.heroSubtitle || 'Architektur, Immobilien und Gastfreundschaft in der Region Bern — und im Tessin.';
+  const subline = settings.heroSubtitle || 'Architektur, Immobilien und Gastfreundschaft in der Region Bern und im Tessin.';
 
   const reduceMotion = useRef(false);
   useEffect(() => {

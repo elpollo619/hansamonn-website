@@ -30,7 +30,7 @@ const Projects = () => {
       <PageHero
         eyebrow="Hans Amonn AG"
         title="Unsere Projekte"
-        subtitle="Realisierte und geplante Projekte — von Wohnbau bis Hotel, mit Leidenschaft für Architektur und nachhaltige Bauweise."
+        subtitle="Realisierte und geplante Projekte, von Wohnbau bis Hotel, mit Leidenschaft für Architektur und nachhaltige Bauweise."
       />
 
       <section id="projects" className="py-20 md:py-24 bg-white">

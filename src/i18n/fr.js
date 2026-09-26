@@ -193,13 +193,13 @@ const fr = {
   immobilien: {
     hero: {
       title: 'Nos biens immobiliers',
-      subtitle: "Louer ou acheter — nous avons l'offre qui vous convient",
+      subtitle: "Louer ou acheter, nous avons l'offre qui vous convient",
     },
     vermietung: {
       tag: 'Location',
       title: 'Séjour & Logement',
       subtitle: 'Chambres meublées, Appartements & Hôtel',
-      desc: 'Des séjours courts aux locations longue durée — des solutions flexibles pour chaque besoin.',
+      desc: 'Des séjours courts aux locations longue durée, des solutions flexibles pour chaque besoin.',
       cta: 'Voir les offres',
       highlights: ['Long Stay dès 1 mois', 'Charges comprises', 'Self Check-in Hôtel', 'Maison de vacances Tessin'],
     },
@@ -366,7 +366,7 @@ const fr = {
     ],
     sendMessage: 'Envoyer le message',
     ctaTitle: 'Prêt pour votre prochain projet ?',
-    ctaDesc: 'Planification architecturale, construction neuve, rénovation ou gestion immobilière — nous sommes votre partenaire compétent pour tous les projets dans la région de Berne.',
+    ctaDesc: 'Planification architecturale, construction neuve, rénovation ou gestion immobilière, nous sommes votre partenaire compétent pour tous les projets dans la région de Berne.',
     ctaCall: 'Appeler maintenant',
     ctaEmail: 'Envoyer un e-mail',
     form: {

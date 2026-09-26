@@ -2,7 +2,7 @@
 // Firebase-ready architecture: replace localStorage.getItem/setItem calls
 // with Firestore reads/writes (getDoc, setDoc, collection) to migrate to Firebase.
 
-const STORAGE_KEY = 'ha_properties';
+const STORAGE_KEY = 'ha_properties_v2';
 
 // Known coordinates for default properties (used for migration when lat/lng is missing)
 const COORDS_DEFAULTS = {
@@ -16,7 +16,7 @@ const COORDS_DEFAULTS = {
 const DEFAULT_PROPERTIES = [
   {
     id: 'kerzers-ls',
-    name: 'Kerzers — Long Stay',
+    name: 'Kerzers · Long Stay',
     type: 'long-stay',
     address: 'Kerzers, 3210',
     location: 'Kerzers, 3210',
@@ -49,7 +49,7 @@ const DEFAULT_PROPERTIES = [
   },
   {
     id: 'munchenbuchsee-ls',
-    name: 'Münchenbuchsee — Long Stay',
+    name: 'Münchenbuchsee · Long Stay',
     type: 'long-stay',
     address: 'Münchenbuchsee, 3053',
     location: 'Münchenbuchsee, 3053',
@@ -77,7 +77,7 @@ const DEFAULT_PROPERTIES = [
   },
   {
     id: 'muri-ls',
-    name: 'Muri bei Bern — Long Stay',
+    name: 'Muri bei Bern · Long Stay',
     type: 'long-stay',
     address: 'Blümlisalpstrasse 4, 3074 Muri bei Bern',
     location: 'Blümlisalpstrasse 4, 3074 Muri bei Bern',

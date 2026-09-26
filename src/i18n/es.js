@@ -192,13 +192,13 @@ const es = {
   immobilien: {
     hero: {
       title: 'Nuestros inmuebles',
-      subtitle: 'Alquilar o comprar — tenemos la oferta adecuada para usted',
+      subtitle: 'Alquilar o comprar, tenemos la oferta adecuada para usted',
     },
     vermietung: {
       tag: 'Alquiler',
       title: 'Estancia & Vivienda',
       subtitle: 'Habitaciones amuebladas, Apartamentos & Hotel',
-      desc: 'Desde estancias cortas hasta alquileres a largo plazo — soluciones flexibles para cada necesidad.',
+      desc: 'Desde estancias cortas hasta alquileres a largo plazo, soluciones flexibles para cada necesidad.',
       cta: 'Ver ofertas',
       highlights: ['Long Stay desde 1 mes', 'Gastos incluidos', 'Self Check-in Hotel', 'Casa de vacaciones Tesino'],
     },
@@ -365,7 +365,7 @@ const es = {
     ],
     sendMessage: 'Enviar mensaje',
     ctaTitle: '¿Listo para su próximo proyecto?',
-    ctaDesc: 'Planificación arquitectónica, obra nueva, reforma o gestión inmobiliaria — somos su socio competente para todos los proyectos en la región de Berna.',
+    ctaDesc: 'Planificación arquitectónica, obra nueva, reforma o gestión inmobiliaria, somos su socio competente para todos los proyectos en la región de Berna.',
     ctaCall: 'Llamar ahora',
     ctaEmail: 'Enviar correo',
     form: {

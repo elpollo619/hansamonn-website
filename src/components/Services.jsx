@@ -72,7 +72,7 @@ const Services = () => (
     <PageHero
       eyebrow="Leistungen"
       title="Was wir anbieten."
-      subtitle={<>Architektur und Immobilien aus einer Hand — seit über 55 Jahren in der Region Bern.</>}
+      subtitle={<>Architektur und Immobilien aus einer Hand, seit über 55 Jahren in der Region Bern.</>}
     />
 
     {/* ── Architektur ── */}

@@ -193,13 +193,13 @@ const en = {
   immobilien: {
     hero: {
       title: 'Our Properties',
-      subtitle: 'Rent or buy — we have the right offer for you',
+      subtitle: 'Rent or buy, we have the right offer for you',
     },
     vermietung: {
       tag: 'Rentals',
       title: 'Stay & Live',
       subtitle: 'Furnished Rooms, Apartments & Hotel',
-      desc: 'From short overnight stays to long-term living — flexible solutions for every need.',
+      desc: 'From short overnight stays to long-term living, flexible solutions for every need.',
       cta: 'View listings',
       highlights: ['Long Stay from 1 month', 'Utilities included', 'Self Check-in Hotel', 'Holiday house Ticino'],
     },
@@ -366,7 +366,7 @@ const en = {
     ],
     sendMessage: 'Send message',
     ctaTitle: 'Ready for your next project?',
-    ctaDesc: 'Whether architecture planning, new build, renovation or property management — we are your competent partner for all construction and real estate projects in the Bern region.',
+    ctaDesc: 'Whether architecture planning, new build, renovation or property management, we are your competent partner for all construction and real estate projects in the Bern region.',
     ctaCall: 'Call now',
     ctaEmail: 'Send email',
     form: {

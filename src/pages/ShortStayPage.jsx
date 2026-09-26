@@ -63,7 +63,7 @@ export default function ShortStayPage() {
               </div>
               <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">N's Hotel</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Ein modernes Boutique-Hotel im Herzen von Kerzers — mit Self Check-in, durchdachtem Design und allem, was Sie für einen entspannten oder produktiven Aufenthalt brauchen.
+                Ein modernes Boutique-Hotel im Herzen von Kerzers, mit Self Check-in, durchdachtem Design und allem, was Sie für einen entspannten oder produktiven Aufenthalt brauchen.
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
                 Ideal für Geschäftsreisen, Zwischenstopps und Kurzbesuche in der Region Bern-Seeland. Einfach buchen, unkompliziert einchecken.
@@ -126,7 +126,7 @@ export default function ShortStayPage() {
               </div>
               <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Casa Reto</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Stellen Sie sich vor: Aufwachen mit dem Rauschen des Lago Maggiore, Zitronenbäume im Garten, keine Verpflichtungen. Casa Reto ist unser privates Ferienhaus in Gordemo, Tessin — ein stiller Ort zum Atmen, Geniessen und Loslassen.
+                Stellen Sie sich vor: Aufwachen mit dem Rauschen des Lago Maggiore, Zitronenbäume im Garten, keine Verpflichtungen. Casa Reto ist unser privates Ferienhaus in Gordemo, Tessin, ein stiller Ort zum Atmen, Geniessen und Loslassen.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
                 {['Lago Maggiore', 'Privater Garten', 'Naturlage', 'Ruhige Umgebung', 'Tessin'].map(tag => (

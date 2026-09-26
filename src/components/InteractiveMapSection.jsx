@@ -177,7 +177,7 @@ export default function InteractiveMapSection() {
         <div className="text-center mb-10">
           <h2 className="text-3xl font-light text-gray-900 mb-3">Unsere Standorte</h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Alle Objekte auf einem Blick — von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
+            Alle Objekte auf einem Blick, von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
           </p>
         </div>
 

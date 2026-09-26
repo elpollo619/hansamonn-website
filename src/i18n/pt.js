@@ -192,13 +192,13 @@ const pt = {
   immobilien: {
     hero: {
       title: 'Os nossos imóveis',
-      subtitle: 'Arrendar ou comprar — temos a oferta certa para si',
+      subtitle: 'Arrendar ou comprar, temos a oferta certa para si',
     },
     vermietung: {
       tag: 'Arrendamento',
       title: 'Estadia & Habitação',
       subtitle: 'Quartos mobilados, Apartamentos & Hotel',
-      desc: 'De estadias curtas a arrendamentos de longa duração — soluções flexíveis para cada necessidade.',
+      desc: 'De estadias curtas a arrendamentos de longa duração, soluções flexíveis para cada necessidade.',
       cta: 'Ver ofertas',
       highlights: ['Long Stay a partir de 1 mês', 'Despesas incluídas', 'Self Check-in Hotel', 'Casa de férias Ticino'],
     },
@@ -365,7 +365,7 @@ const pt = {
     ],
     sendMessage: 'Enviar mensagem',
     ctaTitle: 'Pronto para o seu próximo projeto?',
-    ctaDesc: 'Planeamento arquitetónico, construção nova, renovação ou gestão imobiliária — somos o seu parceiro competente para todos os projetos na região de Berna.',
+    ctaDesc: 'Planeamento arquitetónico, construção nova, renovação ou gestão imobiliária, somos o seu parceiro competente para todos os projetos na região de Berna.',
     ctaCall: 'Ligar agora',
     ctaEmail: 'Enviar e-mail',
     form: {

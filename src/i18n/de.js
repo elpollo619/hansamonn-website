@@ -194,13 +194,13 @@ const de = {
   immobilien: {
     hero: {
       title: 'Unsere Immobilien',
-      subtitle: 'Mieten oder kaufen — wir haben das passende Angebot für Sie',
+      subtitle: 'Mieten oder kaufen, wir haben das passende Angebot für Sie',
     },
     vermietung: {
       tag: 'Vermietung',
       title: 'Wohnen & Übernachten',
       subtitle: 'Möblierte Zimmer, Apartments & Hotel',
-      desc: 'Von kurzfristigen Übernachtungen bis zum langfristigen Wohnen — flexible Lösungen für jeden Bedarf.',
+      desc: 'Von kurzfristigen Übernachtungen bis zum langfristigen Wohnen, flexible Lösungen für jeden Bedarf.',
       cta: 'Angebote ansehen',
       highlights: ['Long Stay ab 1 Monat', 'Preise inkl. Nebenkosten', 'Self Check-in Hotel', 'Ferienhaus Tessin'],
     },
@@ -370,7 +370,7 @@ const de = {
     ],
     sendMessage: 'Nachricht senden',
     ctaTitle: 'Bereit für Ihr nächstes Projekt?',
-    ctaDesc: 'Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung — wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.',
+    ctaDesc: 'Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung, wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.',
     ctaCall: 'Jetzt anrufen',
     ctaEmail: 'E-Mail senden',
     form: {

@@ -21,7 +21,7 @@ const PreisrechnerPage = () => {
         title="Mietpreis schnell berechnen"
         subtitle={
           <>
-            Wählen Sie Wohnfläche, Standort und Miettyp — Sie erhalten sofort eine unverbindliche
+            Wählen Sie Wohnfläche, Standort und Miettyp, Sie erhalten sofort eine unverbindliche
             Preisorientierung für unsere Angebote in der Region Bern.
           </>
         }

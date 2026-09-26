@@ -3,7 +3,7 @@
  * Stored in localStorage. Read by WhatsAppButton, Footer, Contact, etc.
  */
 
-const KEY = 'ha_settings_v1';
+const KEY = 'ha_settings_v2';
 
 export const DEFAULT_SETTINGS = {
   // ── Contact ─────────────────────────────────────────────────────────────────
@@ -20,7 +20,7 @@ export const DEFAULT_SETTINGS = {
 
   // ── Hero content (Homepage) ─────────────────────────────────────────────────
   heroHeadline:    'Ihr Zuhause in der Region Bern',
-  heroSubtitle:    'Vom möblierten Long Stay bis zum Ferienhaus am Lago Maggiore — Hans Amonn AG bietet Ihnen passende Wohnlösungen.',
+  heroSubtitle:    'Vom möblierten Long Stay bis zum Ferienhaus am Lago Maggiore: Hans Amonn AG bietet Ihnen passende Wohnlösungen.',
   heroCtaLabel:    'Alle Angebote entdecken',
   heroCtaLink:     '/immobilien',
 

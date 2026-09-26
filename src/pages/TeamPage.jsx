@@ -14,7 +14,7 @@ const TeamPage = () => {
       <PageHero
         eyebrow="Hans Amonn AG"
         title="Unser Team"
-        subtitle="Lernen Sie die Fachkräfte der Hans Amonn AG kennen — mit Erfahrung und Engagement für Ihre Projekte."
+        subtitle="Lernen Sie die Fachkräfte der Hans Amonn AG kennen, mit Erfahrung und Engagement für Ihre Projekte."
         size="md"
       />
 

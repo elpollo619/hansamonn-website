@@ -41,7 +41,7 @@ const ROOMS = [
   {
     key: 'familie',
     name: 'Familienzimmer',
-    text: 'Zwei Zimmer mit Verbindungstür — genug Platz und Privatsphäre für Familien oder kleine Teams, die zusammen reisen.',
+    text: 'Zwei Zimmer mit Verbindungstür, genug Platz und Privatsphäre für Familien oder kleine Teams, die zusammen reisen.',
     images: [
       { url: `${IMG}/familienzimmer.jpg`, alt: 'Familienzimmer mit Verbindungstür' },
       { url: `${IMG}/zimmer-hell.jpg`,    alt: 'Zimmer mit Sitzecke' },
@@ -60,7 +60,7 @@ const ROOMS = [
   {
     key: 'gemeinschaft',
     name: 'Gemeinschaft',
-    text: 'Lounge, voll ausgestattete Gemeinschaftsküche und Schliessfächer — Treffpunkt für Gäste, die länger bleiben oder selbst kochen möchten.',
+    text: 'Lounge, voll ausgestattete Gemeinschaftsküche und Schliessfächer, Treffpunkt für Gäste, die länger bleiben oder selbst kochen möchten.',
     images: [
       { url: `${IMG}/lounge.jpg`,          alt: 'Lounge' },
       { url: `${IMG}/kueche.jpg`,          alt: 'Gemeinschaftsküche' },
@@ -136,7 +136,7 @@ export default function NsHotelPage() {
               N&apos;s Hotel
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed mb-9">
-              Modernes Boutique-Hotel mit Self Check-in — für Geschäftsreisen,
+              Modernes Boutique-Hotel mit Self Check-in, für Geschäftsreisen,
               Kurzaufenthalte und alle, die unkompliziert übernachten möchten.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -353,7 +353,7 @@ export default function NsHotelPage() {
             <p className="eyebrow mb-3">Von oben</p>
             <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Allmendstrasse 12 + 14</h2>
             <p className="text-gray-600 leading-relaxed">
-              Ruhig gelegen in Kerzers, direkt an der Bahnlinie Bern–Neuchâtel —
+              Ruhig gelegen in Kerzers, direkt an der Bahnlinie Bern–Neuchâtel,
               mit begrünten Dächern, Garten und eigenen Parkplätzen.
             </p>
           </motion.div>
@@ -387,7 +387,7 @@ export default function NsHotelPage() {
                 Fragen oder Probleme?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Kontaktiere uns — wir helfen gerne weiter, auch kurzfristig.
+                Kontaktiere uns, wir helfen gerne weiter, auch kurzfristig.
               </p>
             </div>
             <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">

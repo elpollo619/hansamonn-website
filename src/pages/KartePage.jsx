@@ -177,7 +177,7 @@ export default function KartePage() {
         title="Alle Immobilien auf der Karte"
         subtitle={
           <>
-            Von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore — alle
+            Von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore, alle
             Objekte von Hans Amonn AG auf einen Blick.
           </>
         }

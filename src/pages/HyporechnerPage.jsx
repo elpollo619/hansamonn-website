@@ -41,7 +41,7 @@ const HyporechnerPage = () => {
         subtitle={
           <>
             Ermitteln Sie Ihre monatliche Rate, jährliche Zinslast und Tragbarkeit nach
-            Schweizer Standard — in Echtzeit und vollständig kostenlos.
+            Schweizer Standard, in Echtzeit und vollständig kostenlos.
           </>
         }
         size="sm"

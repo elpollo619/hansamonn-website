@@ -192,13 +192,13 @@ const it = {
   immobilien: {
     hero: {
       title: 'I nostri immobili',
-      subtitle: "Affittare o acquistare — abbiamo l'offerta giusta per lei",
+      subtitle: "Affittare o acquistare, abbiamo l'offerta giusta per lei",
     },
     vermietung: {
       tag: 'Affitto',
       title: 'Soggiorno & Abitare',
       subtitle: 'Camere arredate, Appartamenti & Hotel',
-      desc: 'Dai soggiorni brevi alle locazioni a lungo termine — soluzioni flessibili per ogni esigenza.',
+      desc: 'Dai soggiorni brevi alle locazioni a lungo termine, soluzioni flessibili per ogni esigenza.',
       cta: 'Vedi offerte',
       highlights: ['Long Stay da 1 mese', 'Spese incluse', 'Self Check-in Hotel', 'Casa vacanze Ticino'],
     },
@@ -365,7 +365,7 @@ const it = {
     ],
     sendMessage: 'Invia messaggio',
     ctaTitle: 'Pronto per il prossimo progetto?',
-    ctaDesc: 'Pianificazione architettonica, nuova costruzione, risanamento o gestione immobiliare — siamo il suo partner competente per tutti i progetti nella regione di Berna.',
+    ctaDesc: 'Pianificazione architettonica, nuova costruzione, risanamento o gestione immobiliare, siamo il suo partner competente per tutti i progetti nella regione di Berna.',
     ctaCall: 'Chiama ora',
     ctaEmail: 'Invia e-mail',
     form: {

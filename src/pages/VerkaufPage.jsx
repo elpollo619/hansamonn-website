@@ -25,7 +25,7 @@ const VerkaufPage = () => (
       title={<>Immobilien zum <br />Verkauf</>}
       subtitle={
         <>
-          Hochwertige Immobilien zum Erwerb — von Eigentumswohnungen bis zu Renditeobjekten
+          Hochwertige Immobilien zum Erwerb, von Eigentumswohnungen bis zu Renditeobjekten
           in attraktiven Lagen der Region.
         </>
       }

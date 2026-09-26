@@ -29,7 +29,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
             <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Eigentümer: {project.owner}</p>
             <p className="text-gray-600 leading-relaxed">
               {project.category === 'hotel'
-                ? 'Stolz präsentieren wir unser eigenes Hotel-Projekt — ein modernes Self-Check-in Hotel in Kerzers.'
+                ? 'Stolz präsentieren wir unser eigenes Hotel-Projekt, ein modernes Self-Check-in Hotel in Kerzers.'
                 : 'Ein spannendes Projekt, das Tradition und Moderne vereint.'}
             </p>
           </div>

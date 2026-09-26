@@ -82,7 +82,7 @@ export default function LongStayPage() {
         back={{ to: '/immobilien', label: 'Immobilien' }}
         eyebrow="Hans Amonn AG · Long Stay"
         title="Long Stay"
-        subtitle="Möblierte Zimmer für Aufenthalte ab einem Monat — voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten."
+        subtitle="Möblierte Zimmer für Aufenthalte ab einem Monat, voll ausgestattet, klar bepreist, ohne versteckte Kosten. Für Mitarbeitende, Projekteinsätze und alle, die flexibel wohnen möchten."
         image="/images/kerzers/titel.jpg"
       />
 
@@ -114,7 +114,7 @@ export default function LongStayPage() {
               <p className="eyebrow mb-3">Long Stay</p>
               <h2 className="display-heading uppercase text-3xl md:text-4xl">Unsere Standorte</h2>
             </div>
-            <p className="text-gray-600 leading-relaxed max-w-md">Drei Standorte in der Region Bern — wählen Sie den passenden für Ihre Bedürfnisse.</p>
+            <p className="text-gray-600 leading-relaxed max-w-md">Drei Standorte in der Region Bern, wählen Sie den passenden für Ihre Bedürfnisse.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
             {locations.map((loc, idx) => (
@@ -179,7 +179,7 @@ export default function LongStayPage() {
               <Mail size={28} className="mb-5" style={{ color: BRAND }} />
               <h2 className="display-heading uppercase text-3xl md:text-4xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
               <p className="text-gray-600 leading-relaxed max-w-xl">
-                Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation — wir finden gemeinsam die beste Lösung.
+                Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation, wir finden gemeinsam die beste Lösung.
               </p>
             </div>
             <div className="lg:col-span-5 flex flex-col sm:flex-row lg:justify-end gap-3">

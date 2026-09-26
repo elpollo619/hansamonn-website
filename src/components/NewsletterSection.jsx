@@ -37,9 +37,6 @@ export default function NewsletterSection() {
   return (
     <section className="text-white py-20 px-4" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
       <div className="container mx-auto max-w-2xl text-center">
-        <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/60 mb-4">
-          Newsletter
-        </p>
         <h2 className="font-display uppercase text-4xl sm:text-5xl font-semibold tracking-tight mb-5">
           Neue Immobilien als Erster erfahren
         </h2>

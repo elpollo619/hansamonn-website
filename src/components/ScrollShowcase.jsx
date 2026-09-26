@@ -12,9 +12,9 @@ const BRAND = 'var(--brand-color, #1D3D78)';
  */
 export default function ScrollShowcase({
   image = '/images/ns-hotel/drohne-2.jpg',
-  eyebrow = 'Ausgewählte Arbeit',
+  eyebrow = null,
   title = 'Räume, die bleiben',
-  caption = 'Von der ersten Skizze bis zum fertigen Zuhause — seit 1968.',
+  caption = 'Von der ersten Skizze bis zum fertigen Zuhause, seit 1968.',
 }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -31,7 +31,7 @@ export default function ScrollShowcase({
       <div className="container mx-auto px-6">
         {/* Heading */}
         <div className="max-w-2xl mx-auto text-center mb-14">
-          <p className="eyebrow mb-3">{eyebrow}</p>
+          {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
           <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{title}</h2>
           <p className="text-gray-500 leading-relaxed">{caption}</p>
         </div>

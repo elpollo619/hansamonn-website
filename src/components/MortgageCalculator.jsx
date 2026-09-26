@@ -220,7 +220,7 @@ const MortgageCalculator = () => {
             <TrendingUp size={15} className="flex-shrink-0" />
             <span>
               Belehnungsgrad: <strong>{ltvPct.toFixed(0)}%</strong>
-              {ltvOk ? ' — innerhalb der 80%-Grenze' : ' — über der 80%-Grenze'}
+              {ltvOk ? ', innerhalb der 80%-Grenze' : ', über der 80%-Grenze'}
             </span>
           </div>
         </div>

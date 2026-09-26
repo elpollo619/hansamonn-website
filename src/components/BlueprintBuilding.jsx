@@ -16,19 +16,19 @@ const STEPS = [
     no: '01',
     title: 'Grundriss',
     sheet: 'Grundriss EG',
-    text: 'Jedes Projekt beginnt mit einem klaren Plan: Raumprogramm, Lichtführung und Wege — präzise gezeichnet, bevor der erste Stein gesetzt wird.',
+    text: 'Jedes Projekt beginnt mit einem klaren Plan: Raumprogramm, Lichtführung und Wege, präzise gezeichnet, bevor der erste Stein gesetzt wird.',
   },
   {
     no: '02',
     title: '3D-Modell',
     sheet: 'Modell',
-    text: 'Aus dem Plan entsteht ein räumliches Modell. So sehen Bauherren früh, wie Räume wirken — und Entscheidungen fallen sicherer.',
+    text: 'Aus dem Plan entsteht ein räumliches Modell. So sehen Bauherren früh, wie Räume wirken, und Entscheidungen fallen sicherer.',
   },
   {
     no: '03',
     title: 'Realisierung',
     sheet: 'Ansicht',
-    text: 'Wir begleiten den Bau bis zur Schlüsselübergabe — mit Kosten, Terminen und Qualität im Blick.',
+    text: 'Wir begleiten den Bau bis zur Schlüsselübergabe, mit Kosten, Terminen und Qualität im Blick.',
   },
 ];
 

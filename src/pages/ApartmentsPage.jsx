@@ -127,7 +127,7 @@ const EmptyState = () => (
     <Home size={34} className="mx-auto mb-6" style={{ color: BRAND }} />
     <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Aktuell keine Wohnungen verfügbar</h2>
     <p className="text-gray-600 leading-relaxed mb-8">
-      Wir haben derzeit keine freien Mietwohnungen. Lassen Sie sich auf unsere Warteliste setzen — wir informieren Sie sobald etwas verfügbar wird.
+      Wir haben derzeit keine freien Mietwohnungen. Lassen Sie sich auf unsere Warteliste setzen, wir informieren Sie sobald etwas verfügbar wird.
     </p>
     <div className="space-y-3">
       <a

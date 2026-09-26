@@ -35,7 +35,7 @@ export default function Model3DSection({
             <h2 className="display-heading uppercase text-3xl md:text-4xl">{title}</h2>
           </div>
           <p className="lg:col-span-5 text-gray-600 leading-relaxed">
-            Diese Modelle entstehen direkt aus unseren Ausführungsplänen im Massstab 1:50 —
+            Diese Modelle entstehen direkt aus unseren Ausführungsplänen im Massstab 1:50:
             Wände, Fenster und Geschosse wie gezeichnet. Drehen Sie das Gebäude, blenden Sie
             Geschosse ein oder öffnen Sie die Explosionsansicht.
           </p>
