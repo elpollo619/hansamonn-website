@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'duplicate' | 'error'
+  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'success' | 'invalid' | 'consent' | 'error'
+  const [consent, setConsent] = useState(false);
 
   const isValidEmail = (value) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -11,7 +13,11 @@ export default function NewsletterSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidEmail(email)) {
-      setStatus('error');
+      setStatus('invalid');
+      return;
+    }
+    if (!consent) {
+      setStatus('consent');
       return;
     }
 
@@ -21,14 +27,10 @@ export default function NewsletterSection() {
       .from('newsletter_subscribers')
       .insert({ email: email.trim().toLowerCase() });
 
-    if (!error) {
+    // Same answer for new and already registered addresses, so nobody can probe who is subscribed
+    if (!error || error.code === '23505' || (error.message && error.message.includes('unique'))) {
       setStatus('success');
       setEmail('');
-    } else if (
-      error.code === '23505' ||
-      (error.message && error.message.includes('unique'))
-    ) {
-      setStatus('duplicate');
     } else {
       setStatus('error');
     }
@@ -47,14 +49,11 @@ export default function NewsletterSection() {
 
         {status === 'success' ? (
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white px-6 py-4 text-sm font-medium">
-            ✓ Vielen Dank! Sie erhalten bald eine Bestätigung.
+            ✓ Vielen Dank! Wir informieren Sie über neue Objekte. Abmelden können Sie sich jederzeit.
           </div>
         ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row gap-3 justify-center"
-            noValidate
-          >
+          <form onSubmit={handleSubmit} noValidate>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <input
               type="email"
               value={email}
@@ -73,18 +72,31 @@ export default function NewsletterSection() {
             >
               {status === 'loading' ? 'Wird gesendet…' : 'Anmelden'}
             </button>
+          </div>
+          <label className="mt-4 flex items-start justify-center gap-2.5 text-left text-xs text-white/75 leading-relaxed max-w-lg mx-auto">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => { setConsent(e.target.checked); if (status === 'consent') setStatus('idle'); }}
+              className="mt-0.5 shrink-0 accent-white"
+            />
+            <span>
+              Ich möchte per E-Mail über neue Objekte der Hans Amonn AG informiert werden. Die Einwilligung kann
+              ich jederzeit widerrufen. Mehr in der{' '}
+              <Link to="/datenschutz" className="underline hover:text-white">Datenschutzerklärung</Link>.
+            </span>
+          </label>
           </form>
         )}
 
-        {status === 'duplicate' && (
-          <p className="mt-3 text-sm text-white/70">
-            Diese E-Mail-Adresse ist bereits registriert.
-          </p>
+        {status === 'invalid' && (
+          <p className="mt-3 text-sm text-red-300">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
+        )}
+        {status === 'consent' && (
+          <p className="mt-3 text-sm text-red-300">Bitte bestätigen Sie die Einwilligung.</p>
         )}
         {status === 'error' && (
-          <p className="mt-3 text-sm text-red-400">
-            Bitte geben Sie eine gültige E-Mail-Adresse ein.
-          </p>
+          <p className="mt-3 text-sm text-red-300">Die Anmeldung ist gerade nicht möglich. Bitte versuchen Sie es später erneut.</p>
         )}
       </div>
     </section>

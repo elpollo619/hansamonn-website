@@ -225,6 +225,7 @@ export const CR_RULES = [
   { label: 'Partys', value: 'keine Partys oder Veranstaltungen' },
   { label: 'Treppen', value: 'die Schlafzimmer 2 bis 4 liegen im Obergeschoss' },
   { label: 'Sicherheit', value: 'Rauchmelder vorhanden' },
+  { label: 'Kurtaxe', value: 'CHF 2.00 pro Person ab 14 Jahren und Nacht, wird zusätzlich erhoben' },
 ];
 
 /** Tourism registration number of the canton of Ticino (shown on Airbnb). */

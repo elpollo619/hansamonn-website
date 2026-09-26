@@ -241,7 +241,7 @@ export const rentalData = [
     title: "N's Hotel · Self-Check-in",
     lat: 47.002,
     lng: 7.199,
-    subtitle: 'Modernes Boutique-Hotel · Kerzers · ab CHF 89 / Nacht',
+    subtitle: 'Modernes Boutique-Hotel · Kerzers · ab CHF 89 pro Zimmer und Nacht',
     location: 'Allmendstrasse 14, 3210 Kerzers',
     floor: null,
     floorNumber: null,

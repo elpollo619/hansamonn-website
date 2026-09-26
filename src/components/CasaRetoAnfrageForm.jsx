@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { Calendar, Users, User, Mail, Phone, MessageSquare, Check, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -183,6 +184,7 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
         </div>
       )}
 
+      <FormPrivacyNote className="mb-3" />
       <button
         type="submit"
         disabled={loading}

@@ -1,54 +1,84 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { motion } from 'framer-motion';
-import PageHero from '@/components/PageHero';
+import { Link } from 'react-router-dom';
+import LegalPage from '@/components/LegalPage';
 
-const ImpressumPage = () => {
-  return (
-    <>
-      <Helmet>
-        <title>Impressum - Hans Amonn AG</title>
-        <meta name="description" content="Impressum und rechtliche Hinweise der Hans Amonn AG. Kontaktinformationen und Unternehmensangaben." />
-      </Helmet>
+const SECTIONS = [
+  {
+    title: 'Betreiberin der Website',
+    body: (
+      <>
+        <p>
+          <strong>Hans Amonn AG</strong><br />
+          Blümlisalpstrasse 4<br />
+          3074 Muri bei Bern<br />
+          Schweiz
+        </p>
+        <p>
+          Telefon <a href="tel:+41319518554">+41 31 951 85 54</a><br />
+          E-Mail <a href="mailto:office@reto-amonn.ch">office@reto-amonn.ch</a>
+        </p>
+        <p>Vertretungsberechtigte Person: Reto Amonn</p>
+      </>
+    ),
+  },
+  {
+    title: 'Handelsregister und Mehrwertsteuer',
+    body: (
+      <p>
+        Eingetragen im Handelsregister des Kantons Bern<br />
+        Firmennummer (CH-ID): CH-035.3.003.627-0<br />
+        UID: CHE-106.957.227<br />
+        MWST-Nummer: CHE-106.957.227 MWST
+      </p>
+    ),
+  },
+  {
+    title: 'Haftungsausschluss',
+    body: (
+      <>
+        <p>
+          Wir prüfen die Inhalte dieser Website sorgfältig, übernehmen aber keine Gewähr für Richtigkeit,
+          Vollständigkeit und Aktualität. Preise und Verfügbarkeiten sind unverbindlich; massgebend ist die
+          schriftliche Offerte oder der Vertrag.
+        </p>
+        <p>
+          Für die Inhalte verlinkter Websites sind ausschliesslich deren Betreiber verantwortlich.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: 'Urheberrechte',
+    body: (
+      <>
+        <p>
+          Texte, Pläne, 3D-Modelle, Visualisierungen und Fotos auf dieser Website sind urheberrechtlich
+          geschützt. Jede Verwendung ausserhalb der gesetzlichen Schranken braucht die schriftliche Zustimmung
+          der Hans Amonn AG oder der jeweiligen Rechteinhaber.
+        </p>
+        <p>Bildnachweis: eigene Aufnahmen der Hans Amonn AG; einzelne Symbolbilder von Unsplash.</p>
+      </>
+    ),
+  },
+  {
+    title: 'Datenschutz',
+    body: (
+      <p>
+        Wie wir Personendaten bearbeiten, lesen Sie in unserer <Link to="/datenschutz">Datenschutzerklärung</Link>.
+      </p>
+    ),
+  },
+];
 
-      <PageHero eyebrow="Rechtliches" title="Impressum" size="sm" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="container mx-auto px-6 py-16 md:py-20"
-      >
-        <div className="max-w-3xl divide-y divide-gray-100 border-y border-gray-100">
-          <section className="py-8">
-            <h2 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-4">Angaben gemäß § 5 TMG</h2>
-            <p className="text-gray-600 leading-relaxed">Hans Amonn AG</p>
-            <p className="text-gray-600 leading-relaxed">Blümlisalpstrasse 4</p>
-            <p className="text-gray-600 leading-relaxed">3074 Muri bei Bern</p>
-          </section>
-
-          <section className="py-8">
-            <h2 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-4">Vertreten durch:</h2>
-            <p className="text-gray-600 leading-relaxed">Reto Amonn</p>
-          </section>
-
-          <section className="py-8">
-            <h2 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-4">Kontakt</h2>
-            <p className="text-gray-600 leading-relaxed">Telefon: +41 (0)31 951 85 54</p>
-            <p className="text-gray-600 leading-relaxed">E-Mail: office@reto-amonn.ch</p>
-          </section>
-
-          <section className="py-8">
-            <h2 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-4">Haftungsausschluss</h2>
-            <p className="text-gray-600 leading-relaxed">
-              Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links.
-              Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.
-            </p>
-          </section>
-        </div>
-      </motion.div>
-    </>
-  );
-};
+const ImpressumPage = () => (
+  <>
+    <Helmet>
+      <title>Impressum | Hans Amonn AG</title>
+      <meta name="description" content="Impressum der Hans Amonn AG, Muri bei Bern: Kontakt, Handelsregister, UID und MWST-Nummer." />
+    </Helmet>
+    <LegalPage title="Impressum" sections={SECTIONS} />
+  </>
+);
 
 export default ImpressumPage;

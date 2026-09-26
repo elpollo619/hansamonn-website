@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { Calendar, Clock, User, Mail, Phone, MessageSquare, CheckCircle2, Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -203,6 +204,7 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
         </p>
       )}
 
+      <FormPrivacyNote className="mb-3" />
       <button
         type="submit"
         disabled={submitting}

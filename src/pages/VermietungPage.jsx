@@ -415,7 +415,7 @@ const VermietungPage = () => {
       icon: Building2,
       label: "N's Hotel",
       tagline: t('vermietung.hero.serviceHotel'),
-      price: 'ab CHF 89 / Nacht',
+      price: 'ab CHF 89 / Zimmer und Nacht',
       active: true,
     },
     {

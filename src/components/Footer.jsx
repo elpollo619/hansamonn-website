@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { openCookieSettings } from '@/lib/consent';
 import AmonnLogo from '@/components/AmonnLogo';
 import { getSetting } from '@/data/settingsStore';
 
@@ -179,6 +180,7 @@ const Footer = () => {
           <div className="flex gap-5 text-xs">
             <Link to="/impressum" className="text-white/35 hover:text-white/70 transition-colors">Impressum</Link>
             <Link to="/datenschutz" className="text-white/35 hover:text-white/70 transition-colors">Datenschutz</Link>
+            <button type="button" onClick={openCookieSettings} className="text-white/35 hover:text-white/70 transition-colors">Cookie-Einstellungen</button>
           </div>
         </div>
       </div>

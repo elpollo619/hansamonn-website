@@ -6,13 +6,23 @@
  */
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { getConsent, onConsentChange } from '@/lib/consent';
 
 const GA_ID = import.meta.env.VITE_GA_ID || '';
-const CONSENT_KEY = 'ha_cookie_consent';
 
-const hasConsent = () => {
-  try { return localStorage.getItem(CONSENT_KEY) === 'accepted'; } catch { return false; }
-};
+const hasConsent = () => !!getConsent()?.statistics;
+
+// Revocation: stop gtag and remove its cookies on this domain.
+function disableGtag() {
+  window[`ga-disable-${GA_ID}`] = true;
+  const host = window.location.hostname;
+  document.cookie.split(';').map((c) => c.split('=')[0].trim()).filter((n) => n.startsWith('_ga')).forEach((n) => {
+    [host, `.${host}`, `.${host.split('.').slice(-2).join('.')}`].forEach((d) => {
+      document.cookie = `${n}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${d}`;
+    });
+    document.cookie = `${n}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+  });
+}
 
 function loadGtag() {
   if (window.gtag) return;
@@ -29,14 +39,12 @@ export default function GoogleAnalytics() {
   const location = useLocation();
   const [consent, setConsent] = useState(hasConsent);
 
-  useEffect(() => {
-    const onConsent = () => setConsent(hasConsent());
-    window.addEventListener('ha:cookie-consent', onConsent);
-    return () => window.removeEventListener('ha:cookie-consent', onConsent);
-  }, []);
+  useEffect(() => onConsentChange(() => setConsent(hasConsent())), []);
 
   useEffect(() => {
-    if (!GA_ID || !consent) return;
+    if (!GA_ID) return;
+    if (!consent) { if (window.gtag) disableGtag(); return; }
+    window[`ga-disable-${GA_ID}`] = false;
     loadGtag();
     window.gtag('config', GA_ID, { page_path: location.pathname });
   }, [location, consent]);

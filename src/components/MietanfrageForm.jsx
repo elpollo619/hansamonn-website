@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { jsPDF } from "jspdf";
@@ -11,32 +12,10 @@ import {
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
-const NATIONALITIES = [
-  "Schweiz", "Deutschland", "Österreich", "Frankreich", "Italien",
-  "Spanien", "Portugal", "Polen", "Rumänien", "Türkei", "Kosovo",
-  "Albanien", "Nordmazedonien", "Bosnien und Herzegowina", "Serbien",
-  "Kroatien", "Slowenien", "Ungarn", "Slowakei", "Tschechien",
-  "Belgien", "Niederlande", "Schweden", "Norwegen", "Dänemark",
-  "Finnland", "Irland", "Vereinigtes Königreich", "USA", "Kanada",
-  "Australien", "Neuseeland", "Indien", "China", "Japan",
-  "Brasilien", "Argentinien", "Kolumbien", "Mexiko", "Afghanistan",
-  "Albanien", "Algerien", "Andorra", "Angola", "Armenien",
-  "Aserbaidschan", "Bahamas", "Bahrain", "Bangladesch", "Barbados",
-  "Belize", "Benin", "Bhutan", "Bolivien", "Botswana", "Brunei",
-  "Bulgarien", "Burkina Faso", "Burundi", "Kambodscha", "Kamerun",
-  "Chile", "Dominikanische Republik", "Ecuador", "Ägypten",
-  "El Salvador", "Estland", "Äthiopien", "Georgien", "Ghana",
-  "Griechenland", "Guatemala", "Honduras", "Island", "Indonesien",
-  "Iran", "Irak", "Israel", "Jordanien", "Kenia", "Kuwait",
-  "Laos", "Lettland", "Libanon", "Liechtenstein", "Litauen",
-  "Luxemburg", "Malaysia", "Malta", "Monaco", "Mongolei",
-  "Marokko", "Namibia", "Nepal", "Nigeria", "Pakistan",
-  "Panama", "Paraguay", "Peru", "Philippinen",
-  "Russland", "Saudi-Arabien", "Singapur", "Südafrika",
-  "Südkorea", "Sri Lanka", "Syrien", "Taiwan", "Tansania",
-  "Thailand", "Tunesien", "Uganda", "Ukraine",
-  "Vereinigte Arabische Emirate", "Uruguay", "Usbekistan",
-  "Venezuela", "Vietnam", "Sambia", "Simbabwe",
+// Residence status instead of nationality (EDÖB guidance on rental application forms)
+const RESIDENCE_STATUS = [
+  "Schweizer/in", "Niederlassungsbewilligung C", "Aufenthaltsbewilligung B",
+  "Kurzaufenthaltsbewilligung L", "Grenzgängerbewilligung G", "Zuzug aus dem Ausland (Bewilligung folgt)", "Andere",
 ];
 
 const LANGUAGES = ["Deutsch", "Französisch", "Englisch", "Spanisch", "Italienisch", "Portugiesisch", "Arabisch", "Türkisch", "Andere"];
@@ -184,7 +163,7 @@ function generatePDF(data, docFiles) {
   sectionTitle("Angaben Bewerber");
   twoFields("Vorname", data.vorname, "Nachname", data.nachname);
   field("Adresse", [data.strasse, `${data.plz} ${data.ort}`.trim()].filter(Boolean).join(", "));
-  twoFields("Geburtsdatum", data.geburtsdatum ? new Date(data.geburtsdatum).toLocaleDateString("de-CH") : "", "Nationalität", data.nationalitaet);
+  twoFields("Geburtsdatum", data.geburtsdatum ? new Date(data.geburtsdatum).toLocaleDateString("de-CH") : "", "Aufenthaltsstatus", data.nationalitaet);
   twoFields("Sprache", data.sprache, "Beruf", data.beruf);
   twoFields("Handynummer", data.handynummer, "E-Mail", data.email);
   twoFields("WhatsApp", data.whatsapp, "", "");
@@ -443,7 +422,6 @@ export default function MietanfrageForm() {
     if (!form.beruf.trim()) e.beruf = required;
     if (!form.handynummer.trim()) e.handynummer = required;
     if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = t('mietanfrage.errEmail') || 'Gültige E-Mail erforderlich';
-    if (idFiles.length === 0) e.idFiles = t('mietanfrage.errId') || required;
     if (!form.notfallVorname.trim() || !form.notfallNachname.trim()) e.notfall = required;
     if (!form.notfallHandynummer.trim()) e.notfallHandynummer = required;
     if (!form.notfallEmail.trim()) e.notfallEmail = required;
@@ -641,7 +619,7 @@ export default function MietanfrageForm() {
             <Field label={t('mietanfrage.nationalitaet')} required>
               <select name="nationalitaet" value={form.nationalitaet} onChange={handleChange} className={sel}>
                 <option value="">{t('common.selectOption') || 'Bitte wählen...'}</option>
-                {NATIONALITIES.map((n) => <option key={n}>{n}</option>)}
+                {RESIDENCE_STATUS.map((n) => <option key={n}>{n}</option>)}
               </select>
               {errMsg("nationalitaet")}
             </Field>
@@ -678,7 +656,6 @@ export default function MietanfrageForm() {
 
           <FileUploadArea
             label={t('mietanfrage.idUpload')}
-            required
             files={idFiles}
             onAdd={(f) => setIdFiles((prev) => [...prev, f])}
             onRemove={(i) => setIdFiles((prev) => prev.filter((_, idx) => idx !== i))}
@@ -813,6 +790,7 @@ export default function MietanfrageForm() {
         </Section>
 
         {/* Submit */}
+        <FormPrivacyNote className="mb-3" />
         <button
           type="submit"
           disabled={loading}

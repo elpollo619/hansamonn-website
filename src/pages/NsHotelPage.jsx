@@ -157,6 +157,9 @@ export default function NsHotelPage() {
                 Airbnb
               </a>
             </div>
+            <p className="mt-4 text-xs text-white/60">
+              Preise pro Zimmer und Nacht in CHF, zuzüglich Aufenthaltstaxe des Kantons Freiburg.
+            </p>
           </motion.div>
         </div>
       </section>

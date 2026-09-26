@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import FormPrivacyNote from '@/components/FormPrivacyNote';
+import ConsentEmbed from '@/components/ConsentEmbed';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -259,6 +261,7 @@ const Contact = () => {
                     ></textarea>
                   </div>
 
+                  <FormPrivacyNote className="mb-3" />
                   <button
                     type="submit"
                     disabled={submitting}
@@ -295,17 +298,19 @@ const Contact = () => {
           <motion.div {...fadeUp} className="bg-white border border-gray-100 overflow-hidden">
             {/* Map Container */}
             <div className="relative h-96 md:h-[500px] bg-gray-100">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2723.8234567890123!2d7.4916667!3d46.9333333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e39c0d43a9b91%3A0x12345678!2sBl%C3%BCmlisalpstrasse%204%2C%203074%20Muri%20bei%20Bern%2C%20Switzerland!5e0!3m2!1sen!2sch!4v1234567890123!5m2!1sen!2sch"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Hans Amonn AG Standort - Blümlisalpstrasse 4, 3074 Muri bei Bern"
-                className="w-full h-full"
-              ></iframe>
+              <ConsentEmbed className="absolute inset-0 pt-40 sm:pt-6">
+                <iframe
+                  src="https://www.google.com/maps?q=Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern&z=16&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Hans Amonn AG Standort - Blümlisalpstrasse 4, 3074 Muri bei Bern"
+                  className="w-full h-full"
+                ></iframe>
+              </ConsentEmbed>
 
               {/* Map Overlay with Company Info */}
               <div className="absolute top-4 left-4 right-4 sm:right-auto bg-white p-5 border border-gray-100 max-w-xs">
