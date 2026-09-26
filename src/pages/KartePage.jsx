@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { loadLeaflet } from '@/lib/leaflet';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
@@ -44,14 +45,7 @@ function LeafletMap({ listings, activeId, onMarkerClick }) {
   useEffect(() => {
     if (typeof window === 'undefined' || mapInstanceRef.current) return;
 
-    import('leaflet').then((L) => {
-      // Fix default icon paths when bundled
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
+    loadLeaflet().then((L) => {
 
       const map = L.map(mapDivRef.current, {
         center: [46.9, 7.8],
@@ -149,14 +143,7 @@ export default function KartePage() {
 
   // Load Leaflet CSS once
   useEffect(() => {
-    if (document.getElementById('leaflet-css')) { setCssLoaded(true); return; }
-    const link    = document.createElement('link');
-    link.id       = 'leaflet-css';
-    link.rel      = 'stylesheet';
-    link.href     = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    link.onload   = () => setCssLoaded(true);
-    link.onerror  = () => setCssLoaded(true); // still render even if CDN fails
-    document.head.appendChild(link);
+    loadLeaflet().then(() => setCssLoaded(true));
   }, []);
 
   const activeListing = LISTINGS.find((l) => l.id === activeId) ?? null;

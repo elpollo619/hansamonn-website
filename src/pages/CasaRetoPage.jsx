@@ -3,19 +3,22 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import {
-  MapPin, Users, BedDouble, Bath, Trees, Flame, Utensils, Car, PawPrint,
-  Mountain, Waves, Sun, CalendarDays, ArrowRight, Phone, Mail, MessageCircle,
-  ChevronRight, Star,
+  MapPin, Users, BedDouble, Bath, CalendarDays, ArrowRight, Phone, Mail,
+  MessageCircle, Star, Check, Footprints, Clock, ChevronDown,
 } from 'lucide-react';
 
 import { getListingBySlug } from '@/data/rentalData';
+import { loadLeaflet } from '@/lib/leaflet';
+import {
+  CR_FACTS, CR_RATING, CR_AMENITIES, CR_DISTANCES, CR_ACTIVITIES, CR_RULES,
+  CR_REGISTRATION, CR_FAQ,
+} from '@/data/casaReto';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 import CasaRetoAnfrageForm from '@/components/CasaRetoAnfrageForm';
-import Lightbox from '@/components/Lightbox';
+import CasaRetoTour from '@/components/CasaRetoTour';
 import Model3DSection from '@/components/Model3DSection';
 
 const BRAND = 'var(--brand-color, #1D3D78)';
-const BRAND_DARK = 'var(--brand-color-dark, #162E5A)';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -24,53 +27,22 @@ const fadeUp = {
   transition: { duration: 0.5, ease: 'easeOut' },
 };
 
-/* Quick facts shown in the hero and the sticky summary */
-const QUICK_FACTS = [
-  { Icon: BedDouble, label: '4 Schlafzimmer' },
-  { Icon: Users,     label: 'Bis 8 Gäste' },
-  { Icon: Bath,      label: '2 Badezimmer' },
-  { Icon: Trees,     label: 'Garten mit Seeblick' },
-];
+const fmt = (n) => (Number.isInteger(Math.round(n * 100) / 10) ? n.toFixed(1) : n.toFixed(2)).replace('.', ',');
 
-/* Feature grid — what defines the house */
-const FEATURES = [
-  { Icon: Waves,     title: 'Blick auf den Lago Maggiore', text: 'Unverbaute Aussicht auf den See vom Garten und der Pergola aus.' },
-  { Icon: Trees,     title: 'Grosser Garten mit Pergola', text: 'Granittisch im Schatten, ideal für lange Sommerabende im Freien.' },
-  { Icon: Flame,     title: 'Offener Wohnraum mit Cheminée', text: 'Küche und Wohnbereich fliessen ineinander, gemütlich auch im Herbst.' },
-  { Icon: Utensils,  title: 'Voll ausgestattete Küche', text: 'Geschirrspüler, Backofen, Mikrowelle und Kühlschrank mit Gefrierfach.' },
-  { Icon: BedDouble, title: '4 Schlafzimmer für 8 Gäste', text: 'Doppelbett im Erdgeschoss, drei weitere Zimmer im Obergeschoss.' },
-  { Icon: Mountain,  title: 'Am Eingang zum Verzascatal', text: 'Wandern, Baden und Natur direkt vor der Haustür.' },
-];
-
-/* Nearby & activities */
-const SURROUNDINGS = [
-  { Icon: Car,      title: 'Ascona & Locarno', text: '10 Autominuten bis an die Seepromenade und ins Zentrum.' },
-  { Icon: Waves,    title: 'Verzasca & Lago Maggiore', text: 'Kristallklares Flusswasser und Seebäder in wenigen Minuten.' },
-  { Icon: Mountain, title: 'Wandern im Tessin', text: 'Zahlreiche Wege und Aussichtspunkte rund um Gordola und das Verzascatal.' },
-  { Icon: Sun,      title: 'Mediterranes Klima', text: 'Palmen, Sonne und südliches Lebensgefühl auf der Schweizer Alpensüdseite.' },
-];
-
-/* Small self-contained Leaflet map with a single marker (repo pattern: dynamic
-   import + CARTO tiles + dynamically injected Leaflet CSS). */
+/* Small self-contained Leaflet map with a single marker (bundled Leaflet + CARTO tiles). */
 function LocationMap({ lat, lng, label }) {
   const mapRef = useRef(null);
   const instanceRef = useRef(null);
   const [cssReady, setCssReady] = useState(false);
 
   useEffect(() => {
-    if (document.getElementById('leaflet-css')) { setCssReady(true); return; }
-    const link = document.createElement('link');
-    link.id = 'leaflet-css';
-    link.rel = 'stylesheet';
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    link.onload = () => setCssReady(true);
-    document.head.appendChild(link);
+    loadLeaflet().then(() => setCssReady(true));
   }, []);
 
   useEffect(() => {
     if (!cssReady || instanceRef.current || !mapRef.current) return;
     let cancelled = false;
-    import('leaflet').then((L) => {
+    loadLeaflet().then((L) => {
       if (cancelled || instanceRef.current || !mapRef.current) return;
       const map = L.map(mapRef.current, {
         center: [lat, lng],
@@ -116,355 +88,339 @@ function LocationMap({ lat, lng, label }) {
   );
 }
 
+function SectionHead({ eyebrow, title, text, className = '' }) {
+  return (
+    <motion.div {...fadeUp} className={`max-w-2xl mb-10 ${className}`}>
+      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+      <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{title}</h2>
+      {text && <p className="text-gray-600 leading-relaxed">{text}</p>}
+    </motion.div>
+  );
+}
+
 export default function CasaRetoPage() {
   const listing = getListingBySlug('casa-reto');
-  const images = listing?.images ?? [];
-  const [lightboxIndex, setLightboxIndex] = useState(null);
-
   const bookingUrl = listing?.bookingUrls?.booking;
   const airbnbUrl = listing?.bookingUrls?.airbnb;
+  const email = listing?.contact?.email || 'office@reto-amonn.ch';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'House',
+        name: 'Casa Reto',
+        description: listing?.description,
+        url: 'https://www.hansamonn.ch/immobilien/casa-reto',
+        image: 'https://www.hansamonn.ch/images/casa-reto/titel.jpg',
+        numberOfRooms: 4,
+        numberOfBedrooms: 4,
+        numberOfBathroomsTotal: 2,
+        occupancy: { '@type': 'QuantitativeValue', maxValue: 8 },
+        petsAllowed: true,
+        address: { '@type': 'PostalAddress', addressLocality: 'Gordola', addressRegion: 'TI', addressCountry: 'CH' },
+        amenityFeature: CR_AMENITIES.flatMap((g) => g.items.slice(0, 3)).map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: CR_FAQ.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+      },
+    ],
+  };
 
   return (
     <div className="bg-white text-gray-900">
       <Helmet>
-        <title>Casa Reto – Ferienhaus im Tessin am Lago Maggiore | Hans Amonn AG</title>
-        <meta name="description" content="Casa Reto: gemütliches Ferienhaus in Gordemo am Lago Maggiore. 4 Schlafzimmer für bis zu 8 Gäste, grosser Garten mit Pergola und Seeblick, ruhige Lage am Verzascatal. Jetzt Verfügbarkeit anfragen." />
+        <title>Casa Reto | Ferienhaus mit Seeblick im Tessin | Hans Amonn AG</title>
+        <meta name="description" content="Casa Reto in Gordemo oberhalb von Tenero: Ferienhaus für bis zu 8 Gäste, 4 Schlafzimmer, Garten mit Pergola und Blick auf den Lago Maggiore. Virtueller Rundgang, Verfügbarkeit und Anfrage." />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Casa Reto – Ferienhaus im Tessin am Lago Maggiore" />
-        <meta property="og:description" content="Ferienhaus in Gordemo am Lago Maggiore. 4 Schlafzimmer, Garten mit Seeblick, ruhige Lage am Verzascatal." />
+        <meta property="og:title" content="Casa Reto, Ferienhaus mit Seeblick im Tessin" />
+        <meta property="og:description" content="4 Schlafzimmer, Garten mit Pergola, Holzofen und Blick auf den Lago Maggiore. Für bis zu 8 Gäste." />
         <meta property="og:image" content="https://www.hansamonn.ch/images/casa-reto/titel.jpg" />
         <meta property="og:url" content="https://www.hansamonn.ch/immobilien/casa-reto" />
         <meta property="og:site_name" content="Hans Amonn AG" />
         <meta name="twitter:card" content="summary_large_image" />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[78vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[88vh] flex items-end overflow-hidden bg-[#0B1220]">
         <img
-          src={images[0]?.url || '/images/casa-reto/titel.jpg'}
-          alt={images[0]?.alt || 'Casa Reto – Ferienhaus im Tessin'}
-          className="absolute inset-0 w-full h-full object-cover"
+          src="/images/casa-reto/titel.jpg"
+          alt="Blick von der Casa Reto über den Lago Maggiore"
+          className="absolute inset-0 w-full h-full object-cover kenburns"
           loading="eager"
+          fetchpriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/90 via-[#0B1220]/35 to-[#0B1220]/10" />
 
-        <div className="relative container mx-auto px-6 pb-14 pt-28">
+        <div className="relative container mx-auto px-6 pb-14 pt-32">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="max-w-3xl text-white"
           >
-            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-white/70 mb-4">
-              Hans Amonn AG · Ferienhaus im Tessin
+            <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/70 mb-4">
+              Ferienhaus im Tessin
             </p>
-            <h1 className="font-display uppercase text-4xl md:text-6xl font-semibold leading-[0.92] mb-6">
+            <h1 className="font-display uppercase text-5xl md:text-7xl font-semibold leading-[0.9] mb-6">
               Casa Reto
             </h1>
-            <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mb-8">
-              Ein gemütliches Ferienhaus in Gordemo, hoch über dem Lago Maggiore.
-              Tessiner Charme, ein grosser Garten mit Pergola und Seeblick, Ruhe
-              am Eingang zum Verzascatal.
+            <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mb-7">
+              Ferienhaus in Gordemo oberhalb von Tenero: Garten mit Pergola, Holzofen und
+              ein weiter Blick über den Lago Maggiore.
             </p>
 
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-9">
-              <span className="inline-flex items-center gap-2 text-sm text-white/80">
-                <MapPin size={16} /> Gordemo · Lago Maggiore, Tessin
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mb-9 text-sm text-white/85">
+              <span className="inline-flex items-center gap-2">
+                <Star size={16} className="fill-current text-amber-300" />
+                <strong className="text-white">{fmt(CR_RATING.score)}</strong> · {CR_RATING.count} Bewertungen auf {CR_RATING.source}
               </span>
-              {QUICK_FACTS.map(({ Icon, label }) => (
-                <span key={label} className="inline-flex items-center gap-2 text-sm text-white/80">
-                  <Icon size={16} /> {label}
-                </span>
-              ))}
+              <span className="inline-flex items-center gap-2"><Users size={16} /> Bis 8 Gäste</span>
+              <span className="inline-flex items-center gap-2"><BedDouble size={16} /> 4 Schlafzimmer</span>
+              <span className="inline-flex items-center gap-2"><Bath size={16} /> 2 Duschbäder</span>
             </div>
 
             <div className="flex flex-wrap gap-3">
               <a
                 href="#anfrage"
-                className="inline-flex items-center gap-2 px-7 py-3.5 text-white font-semibold text-sm transition-colors"
+                className="inline-flex items-center gap-2 px-7 py-3.5 text-white font-semibold text-sm transition-colors hover:brightness-110"
                 style={{ backgroundColor: BRAND }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', BRAND_DARK)}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', BRAND)}
               >
-                <CalendarDays size={16} /> Verfügbarkeit anfragen
+                <CalendarDays size={16} /> Verfügbarkeit prüfen
               </a>
-              {airbnbUrl && (
-                <a href={airbnbUrl} target="_blank" rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 font-semibold text-sm text-white border border-white/40 hover:bg-white/10 transition-colors">
-                  Auf Airbnb ansehen <ArrowRight size={15} />
-                </a>
-              )}
+              <a
+                href="#rundgang"
+                className="inline-flex items-center gap-2 px-7 py-3.5 font-semibold text-sm text-white border border-white/40 hover:bg-white/10 transition-colors"
+              >
+                <Footprints size={16} /> Virtueller Rundgang
+              </a>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ── Intro ────────────────────────────────────────────────────────── */}
-      <section className="container mx-auto px-6 py-20">
+      {/* ── Facts + intro ────────────────────────────────────────────────── */}
+      <section className="container mx-auto px-6 pt-14 pb-20">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 border-b border-gray-100 pb-10 mb-14">
+          {CR_FACTS.map((f) => (
+            <div key={f.label} className="border-t-2 pt-3" style={{ borderColor: BRAND }}>
+              <div className="font-display uppercase text-3xl md:text-4xl font-semibold text-[#0F1B2D] leading-none">{f.value}</div>
+              <div className="text-sm text-gray-500 mt-1.5">{f.label}</div>
+            </div>
+          ))}
+        </div>
+
         <div className="grid gap-12 lg:grid-cols-2 items-center">
           <motion.div {...fadeUp}>
-            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">
-              Willkommen
-            </p>
-            <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
-              Ankommen und <span className="font-black">durchatmen</span>
-            </h2>
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Ankommen und durchatmen</h2>
             <p className="text-gray-600 leading-relaxed mb-5">
-              Casa Reto liegt in Gordemo bei Gordola, am Eingang zum Verzascatal.
-              Im Erdgeschoss öffnet sich die Küche zum Wohnbereich mit Cheminée,
-              dazu ein halboffenes Schlafzimmer mit Doppelbett. Im Obergeschoss
-              warten drei weitere Zimmer mit je zwei Betten, ideal für Familien
-              und Gruppen bis acht Personen.
+              Casa Reto steht im Dorfkern von Gordemo, am Hang oberhalb von Tenero und am Eingang
+              zum Verzascatal. Im Erdgeschoss liegen Wohnzimmer mit Holzofen, Küche mit Essplatz
+              für acht Personen, ein halboffenes Schlafzimmer und ein Duschbad. Oben warten drei
+              weitere Schlafzimmer, ein zweites Duschbad und ein Balkon.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              Das Herzstück ist der Garten: eine Pergola mit Granittisch, viel
-              Grün und ein unverbauter Blick über den Lago Maggiore. Ascona und
-              Locarno sind in zehn Autominuten erreichbar.
+              Draussen gehört ein eigener Garten dazu: Rasen, Hängematte, Grill und eine Pergola
+              mit Granittisch, von dem aus man über den ganzen See schaut. Das Auto steht direkt
+              beim Haus.
             </p>
           </motion.div>
-
-          <motion.button
-            {...fadeUp}
-            type="button"
-            onClick={() => setLightboxIndex(1)}
-            className="group relative overflow-hidden aspect-[4/3] w-full"
-            aria-label="Galerie öffnen"
-          >
+          <motion.div {...fadeUp} className="relative aspect-[4/3] overflow-hidden bg-gray-100">
             <img
-              src={images[1]?.url || images[0]?.url}
-              alt={images[1]?.alt || 'Casa Reto'}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              src="/images/casa-reto/wohnzimmer-ausblick.jpg"
+              alt="Blick vom Wohnzimmer durch die Terrassentür auf den Lago Maggiore"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
-          </motion.button>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── Features ─────────────────────────────────────────────────────── */}
-      <section className="bg-gray-50 border-y border-gray-100">
+      {/* ── Virtual tour ─────────────────────────────────────────────────── */}
+      <section id="rundgang" className="surface-warm border-y border-gray-100 scroll-mt-20">
         <div className="container mx-auto px-6 py-20">
-          <motion.div {...fadeUp} className="max-w-2xl mb-12">
-            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">
-              Das Haus
-            </p>
-            <h2 className="text-3xl md:text-4xl font-light text-gray-900">
-              Was Casa Reto <span className="font-black">besonders macht</span>
-            </h2>
-          </motion.div>
+          <SectionHead
+            eyebrow="Virtueller Rundgang"
+            title="Raum für Raum durchs Haus"
+            text="Elf Stationen von der Ankunft bis zur Aussicht. Tippen Sie auf einen Punkt im Grundriss oder lassen Sie den Rundgang abspielen."
+          />
+          <CasaRetoTour />
+        </div>
+      </section>
 
-          <div className="grid gap-px bg-gray-100 sm:grid-cols-2 lg:grid-cols-3 border border-gray-100">
-            {FEATURES.map(({ Icon, title, text }) => (
-              <motion.div {...fadeUp} key={title} className="bg-white p-8">
-                <Icon size={26} style={{ color: BRAND }} className="mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+      {/* ── View, day and night ─────────────────────────────────────────── */}
+      <section className="grid md:grid-cols-2">
+        {[
+          { src: '/images/casa-reto/aussicht-garten.jpg', label: 'Am Tag', alt: 'Aussicht vom Garten über den Lago Maggiore am Tag' },
+          { src: '/images/casa-reto/aussicht-nacht.jpg', label: 'Am Abend', alt: 'Lichter am Lago Maggiore am Abend' },
+        ].map((v) => (
+          <figure key={v.label} className="relative aspect-[4/3] md:aspect-auto md:h-[70vh] overflow-hidden bg-gray-900">
+            <img src={v.src} alt={v.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+            <figcaption className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+              <span className="font-display uppercase text-white text-2xl md:text-3xl font-semibold">{v.label}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </section>
+
+      {/* ── 3D model ─────────────────────────────────────────────────────── */}
+      <Model3DSection ids={['cr']} eyebrow="Das Haus in 3D" title="Aus den Bauplänen" className="bg-white" />
+
+      {/* ── Amenities ────────────────────────────────────────────────────── */}
+      <section className="surface-warm border-y border-gray-100">
+        <div className="container mx-auto px-6 py-20">
+          <SectionHead title="Ausstattung" text="Alles, was Sie für eine Ferienwoche brauchen, ist schon da." />
+          <div className="grid gap-px bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-3">
+            {CR_AMENITIES.map((g) => (
+              <motion.div {...fadeUp} key={g.group} className="bg-white p-7">
+                <h3 className="font-semibold text-[#0F1B2D] mb-4">{g.group}</h3>
+                <ul className="space-y-2.5">
+                  {g.items.map((it) => (
+                    <li key={it} className="flex items-start gap-2.5 text-sm text-gray-600">
+                      <Check size={16} className="mt-0.5 shrink-0" style={{ color: BRAND }} />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Gallery ──────────────────────────────────────────────────────── */}
+      {/* ── Reviews ──────────────────────────────────────────────────────── */}
       <section className="container mx-auto px-6 py-20">
-        <motion.div {...fadeUp} className="flex items-end justify-between mb-10">
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">
-              Galerie
+        <div className="grid gap-12 lg:grid-cols-12 items-start">
+          <motion.div {...fadeUp} className="lg:col-span-5">
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Was Gäste sagen</h2>
+            <div className="flex items-end gap-4 mb-4">
+              <span className="font-display text-7xl font-semibold leading-none text-[#0F1B2D]">{fmt(CR_RATING.score)}</span>
+              <span className="pb-2 text-gray-500 text-sm leading-snug">
+                von 5 Sternen<br />{CR_RATING.count} Bewertungen auf {CR_RATING.source}
+              </span>
+            </div>
+            <p className="text-gray-600 leading-relaxed mb-5">
+              Am häufigsten loben Gäste die {CR_RATING.mentions.slice(0, 3).join(', ').replace(/, ([^,]*)$/, ' und $1')}.
             </p>
-            <h2 className="text-3xl md:text-4xl font-light text-gray-900">
-              Ein Blick <span className="font-black">ins Haus</span>
-            </h2>
-          </div>
-        </motion.div>
-
-        <div className="grid gap-3 md:grid-cols-4 md:grid-rows-2 md:h-[520px]">
-          {images.map((img, i) => (
-            <motion.button
-              {...fadeUp}
-              key={img.url}
-              type="button"
-              onClick={() => setLightboxIndex(i)}
-              className={[
-                'group relative overflow-hidden bg-gray-100',
-                i === 0 ? 'md:col-span-2 md:row-span-2 aspect-[4/3] md:aspect-auto' : 'aspect-[4/3] md:aspect-auto',
-              ].join(' ')}
-              aria-label={`Bild ${i + 1} öffnen`}
-            >
-              <img
-                src={img.url}
-                alt={img.alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
-              <span className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-            </motion.button>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Rooms / layout ───────────────────────────────────────────────── */}
-      <Model3DSection ids={['cr']} eyebrow="Das Haus in 3D" title="Aus unseren Plänen" className="bg-white" />
-
-      <section className="bg-gray-50 border-y border-gray-100">
-        <div className="container mx-auto px-6 py-20">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <motion.div {...fadeUp}>
-              <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">
-                Raumaufteilung
-              </p>
-              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-8">
-                Platz für <span className="font-black">die ganze Familie</span>
-              </h2>
-
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="shrink-0 w-11 h-11 flex items-center justify-center bg-white border border-gray-200">
-                    <BedDouble size={20} style={{ color: BRAND }} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Erdgeschoss</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      Offene Küche mit Wohnbereich und Cheminée, halboffenes
-                      Schlafzimmer mit Doppelbett. Badezimmer mit Dusche, WC und
-                      Waschmaschine.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="shrink-0 w-11 h-11 flex items-center justify-center bg-white border border-gray-200">
-                    <BedDouble size={20} style={{ color: BRAND }} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Obergeschoss</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      Drei Schlafzimmer mit je zwei Betten sowie ein weiteres
-                      Badezimmer. Insgesamt Platz für bis zu acht Gäste.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="shrink-0 w-11 h-11 flex items-center justify-center bg-white border border-gray-200">
-                    <Trees size={20} style={{ color: BRAND }} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Aussenbereich</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      Grosser Garten mit Pergola, Granittisch und Blick auf den
-                      Lago Maggiore. Parkplatz vorhanden, Haustiere nach Absprache.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div {...fadeUp} className="space-y-3">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Ausstattung
-              </h3>
-              <div className="grid grid-cols-2 gap-3">
-                {(listing?.features ?? []).map((f) => (
-                  <div key={f} className="flex items-center gap-2 bg-white border border-gray-100 px-4 py-3">
-                    <ChevronRight size={14} style={{ color: BRAND }} className="shrink-0" />
-                    <span className="text-sm text-gray-700">{f}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-3 pt-3 text-sm text-gray-500">
-                <PawPrint size={16} /> Haustiere nach Absprache
-                <span className="text-gray-300">·</span>
-                <Car size={16} /> Parkplatz vorhanden
-              </div>
-            </motion.div>
-          </div>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {CR_RATING.mentions.map((m) => (
+                <span key={m} className="border border-gray-200 px-3 py-1.5 text-sm text-gray-700">{m}</span>
+              ))}
+            </div>
+            {airbnbUrl && (
+              <a href={`${airbnbUrl}/reviews`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: BRAND }}>
+                Alle Bewertungen auf Airbnb lesen <ArrowRight size={15} />
+              </a>
+            )}
+          </motion.div>
+          <motion.div {...fadeUp} className="lg:col-span-7 lg:pt-16">
+            <ul className="space-y-4">
+              {CR_RATING.categories.map((c) => (
+                <li key={c.label} className="grid grid-cols-[9rem_1fr_2.5rem] items-center gap-4 text-sm">
+                  <span className="text-gray-700">{c.label}</span>
+                  <span className="h-1.5 bg-gray-100 relative overflow-hidden">
+                    <span className="absolute inset-y-0 left-0" style={{ width: `${(c.value / 5) * 100}%`, backgroundColor: BRAND }} />
+                  </span>
+                  <span className="font-semibold text-[#0F1B2D] text-right">{fmt(c.value)}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-xs text-gray-400">Stand {CR_RATING.asOf}, Durchschnitt der Bewertungen auf {CR_RATING.source}.</p>
+          </motion.div>
         </div>
       </section>
 
       {/* ── Location & surroundings ──────────────────────────────────────── */}
-      <section className="container mx-auto px-6 py-20">
-        <motion.div {...fadeUp} className="max-w-2xl mb-12">
-          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">
-            Lage & Umgebung
-          </p>
-          <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4">
-            Mitten im <span className="font-black">Tessin</span>
-          </h2>
-          <p className="text-gray-600 leading-relaxed">
-            Gordemo liegt am Eingang zum Verzascatal, oberhalb von Gordola. See,
-            Fluss, Berge und die Seepromenaden von Ascona und Locarno sind alle
-            in kurzer Zeit erreichbar.
-          </p>
-        </motion.div>
-
-        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] items-stretch mb-8">
-          <motion.div {...fadeUp}>
-            <LocationMap
-              lat={listing?.lat ?? 46.12}
-              lng={listing?.lng ?? 8.73}
-              label="Casa Reto · Gordemo"
-            />
-          </motion.div>
-
-          <div className="grid gap-px bg-gray-100 sm:grid-cols-2 border border-gray-100">
-            {SURROUNDINGS.map(({ Icon, title, text }) => (
-              <motion.div {...fadeUp} key={title} className="bg-white p-6">
-                <Icon size={22} style={{ color: BRAND }} className="mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-1.5 text-sm">{title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+      <section className="surface-warm border-y border-gray-100">
+        <div className="container mx-auto px-6 py-20">
+          <SectionHead
+            title="Lage & Umgebung"
+            text="Gordemo liegt am Hang über Gordola und Tenero, am Eingang zum Verzascatal. See, Fluss und die Städte am Lago Maggiore erreichen Sie in wenigen Minuten."
+          />
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_1fr] items-start mb-12">
+            <motion.div {...fadeUp} className="min-w-0">
+              <LocationMap lat={listing?.lat ?? 46.18} lng={listing?.lng ?? 8.86} label="Casa Reto · Gordemo" />
+              <p className="mt-2 text-xs text-gray-500">Ungefähre Lage. Die genaue Adresse erhalten Sie mit der Buchungsbestätigung.</p>
+            </motion.div>
+            <motion.div {...fadeUp} className="bg-white border border-gray-100">
+              <h3 className="flex items-center gap-2 font-semibold text-[#0F1B2D] px-6 pt-6 pb-3">
+                <Clock size={17} style={{ color: BRAND }} /> Fahrzeiten mit dem Auto
+              </h3>
+              <ul>
+                {CR_DISTANCES.map((d) => (
+                  <li key={d.place} className="flex items-center justify-between gap-4 px-6 py-3 border-t border-gray-100 text-sm">
+                    <span className="text-gray-700">{d.place}</span>
+                    <span className="font-semibold text-[#0F1B2D] whitespace-nowrap">{d.time}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="px-6 py-3 border-t border-gray-100 text-xs text-gray-400">Richtwerte, je nach Verkehr.</p>
+            </motion.div>
+          </div>
+          <div className="grid gap-px bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-4">
+            {CR_ACTIVITIES.map((a) => (
+              <motion.div {...fadeUp} key={a.title} className="bg-white p-6">
+                <h3 className="font-semibold text-[#0F1B2D] mb-2">{a.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{a.text}</p>
               </motion.div>
             ))}
           </div>
         </div>
+      </section>
 
-        <a
-          href="https://www.google.com/maps/search/?api=1&query=Gordemo+Gordola+Ticino"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors"
-        >
-          <MapPin size={16} style={{ color: BRAND }} /> Auf Google Maps ansehen
-          <ArrowRight size={15} />
-        </a>
+      {/* ── Good to know ─────────────────────────────────────────────────── */}
+      <section className="container mx-auto px-6 py-20">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <motion.div {...fadeUp} className="lg:col-span-4">
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Gut zu wissen</h2>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              Hausregeln und Details zur Anreise. Bei Fragen melden Sie sich einfach bei uns.
+            </p>
+            <p className="text-sm text-gray-500">
+              Registriert beim Kanton Tessin<br />
+              <span className="font-semibold text-gray-700">Nr. {CR_REGISTRATION}</span>
+            </p>
+          </motion.div>
+          <motion.dl {...fadeUp} className="lg:col-span-8 grid sm:grid-cols-2 gap-x-10">
+            {CR_RULES.map((r) => (
+              <div key={r.label} className="py-4 border-b border-gray-100">
+                <dt className="text-sm font-semibold text-[#0F1B2D]">{r.label}</dt>
+                <dd className="text-sm text-gray-600 mt-0.5">{r.value}</dd>
+              </div>
+            ))}
+          </motion.dl>
+        </div>
       </section>
 
       {/* ── Availability + booking + enquiry ─────────────────────────────── */}
-      <section id="anfrage" className="bg-gray-50 border-y border-gray-100 scroll-mt-24">
+      <section id="anfrage" className="surface-warm border-y border-gray-100 scroll-mt-24">
         <div className="container mx-auto px-6 py-20">
-          <motion.div {...fadeUp} className="max-w-2xl mb-12">
-            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-gray-400 mb-3">
-              Buchung
-            </p>
-            <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-4">
-              Verfügbarkeit & <span className="font-black">Anfrage</span>
-            </h2>
-            <p className="text-gray-600 leading-relaxed">
-              Vermietung wochenweise (Samstag bis Samstag), mit speziellen
-              Familientarifen. Prüfen Sie die Verfügbarkeit und senden Sie uns
-              unverbindlich Ihre Anfrage, oder buchen Sie direkt über Airbnb und
-              Booking.
-            </p>
-          </motion.div>
+          <SectionHead
+            eyebrow="Buchung"
+            title="Verfügbarkeit & Anfrage"
+            text="Vermietung bevorzugt wochenweise, auf Anfrage auch kürzer oder ab 28 Tagen. Prüfen Sie den Kalender und senden Sie uns unverbindlich Ihre Anfrage, oder buchen Sie direkt über Airbnb oder Booking.com."
+          />
 
           <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] items-start">
-            {/* Left: calendar + external platforms */}
             <div className="space-y-6">
               {listing?.icalUrl && <AvailabilityCalendar icalUrl={listing.icalUrl} />}
 
               <div className="bg-white border border-gray-100 p-5">
-                <h4 className="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <Star size={14} style={{ color: BRAND }} /> Direkt buchen
-                </h4>
+                <h3 className="text-sm font-semibold text-gray-800 mb-4">Auf einer Plattform buchen</h3>
                 <div className="space-y-3">
                   {airbnbUrl && (
                     <a href={airbnbUrl} target="_blank" rel="noreferrer"
                       className="flex items-center justify-between border border-gray-200 px-5 py-3.5 hover:bg-gray-50 transition-colors">
-                      <span className="text-sm font-semibold text-gray-700">Auf Airbnb buchen</span>
+                      <span className="text-sm font-semibold text-gray-700">Airbnb</span>
                       <ArrowRight size={15} className="text-gray-400" />
                     </a>
                   )}
                   {bookingUrl && (
                     <a href={bookingUrl} target="_blank" rel="noreferrer"
                       className="flex items-center justify-between border border-gray-200 px-5 py-3.5 hover:bg-gray-50 transition-colors">
-                      <span className="text-sm font-semibold text-gray-700">Auf Booking.com buchen</span>
+                      <span className="text-sm font-semibold text-gray-700">Booking.com</span>
                       <ArrowRight size={15} className="text-gray-400" />
                     </a>
                   )}
@@ -472,9 +428,8 @@ export default function CasaRetoPage() {
               </div>
             </div>
 
-            {/* Right: enquiry form */}
             <div className="bg-white border border-gray-100 p-7 md:p-9">
-              <h3 className="text-xl font-bold text-gray-900 mb-1">Unverbindlich anfragen</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-1">Unverbindlich anfragen</h3>
               <p className="text-sm text-gray-500 mb-6">
                 Wir prüfen die Verfügbarkeit und melden uns innerhalb von 24 Stunden.
               </p>
@@ -484,18 +439,37 @@ export default function CasaRetoPage() {
         </div>
       </section>
 
-      {/* ── Contact ──────────────────────────────────────────────────────── */}
+      {/* ── FAQ ──────────────────────────────────────────────────────────── */}
       <section className="container mx-auto px-6 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-light text-gray-900 mb-3">
-            Noch <span className="font-black">Fragen?</span>
-          </h2>
-          <p className="text-gray-600 mb-10">Wir helfen Ihnen gerne persönlich weiter.</p>
-          <div className="grid gap-4 sm:grid-cols-3 text-left">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <motion.div {...fadeUp} className="lg:col-span-4">
+            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Häufige Fragen</h2>
+            <p className="text-gray-600 leading-relaxed">Ihre Frage ist nicht dabei? Rufen Sie uns an oder schreiben Sie uns.</p>
+          </motion.div>
+          <motion.div {...fadeUp} className="lg:col-span-8">
+            <div className="border-t border-gray-100">
+              {CR_FAQ.map(({ q, a }) => (
+                <details key={q} className="group border-b border-gray-100">
+                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none font-semibold text-[#0F1B2D] [&::-webkit-details-marker]:hidden">
+                    {q}
+                    <ChevronDown size={18} className="shrink-0 text-gray-400 transition-transform group-open:rotate-180" />
+                  </summary>
+                  <p className="pb-5 -mt-1 text-gray-600 leading-relaxed">{a}</p>
+                </details>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Contact ──────────────────────────────────────────────────────── */}
+      <section className="border-t border-gray-100">
+        <div className="container mx-auto px-6 py-16">
+          <div className="grid gap-4 sm:grid-cols-3">
             {[
               { href: 'tel:+41319518554', Icon: Phone, label: 'Telefon', value: '+41 31 951 85 54' },
               { href: 'https://wa.me/41319518553', Icon: MessageCircle, label: 'WhatsApp', value: '+41 31 951 85 53', external: true },
-              { href: `mailto:${listing?.contact?.email || 'office@reto-amonn.ch'}`, Icon: Mail, label: 'E-Mail', value: listing?.contact?.email || 'office@reto-amonn.ch' },
+              { href: `mailto:${email}`, Icon: Mail, label: 'E-Mail', value: email },
             ].map(({ href, Icon, label, value, external }) => (
               <a
                 key={label}
@@ -511,22 +485,13 @@ export default function CasaRetoPage() {
               </a>
             ))}
           </div>
-
-          <div className="mt-10">
+          <div className="mt-10 text-center">
             <Link to="/immobilien" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">
-              Weitere Immobilien & Ferienobjekte <ArrowRight size={15} />
+              <MapPin size={15} /> Weitere Immobilien & Ferienobjekte <ArrowRight size={15} />
             </Link>
           </div>
         </div>
       </section>
-
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={images}
-          initialIndex={lightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-        />
-      )}
     </div>
   );
 }

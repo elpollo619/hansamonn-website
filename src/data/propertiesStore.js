@@ -2,7 +2,7 @@
 // Firebase-ready architecture: replace localStorage.getItem/setItem calls
 // with Firestore reads/writes (getDoc, setDoc, collection) to migrate to Firebase.
 
-const STORAGE_KEY = 'ha_properties_v2';
+const STORAGE_KEY = 'ha_properties_v3';
 
 // Known coordinates for default properties (used for migration when lat/lng is missing)
 const COORDS_DEFAULTS = {
@@ -147,35 +147,35 @@ const DEFAULT_PROPERTIES = [
     id: 'casa-reto',
     name: 'Casa Reto',
     type: 'ferienhaus',
-    address: 'Gordemo / Lago Maggiore, Tessin',
-    location: 'Gordemo / Lago Maggiore, Tessin',
-    description: 'Privates Ferienhaus am Lago Maggiore in Gordemo, Tessin. Das Casa Reto ist ein vollmöbliertes Ferienhaus in idyllischer Lage direkt am Ufer des Lago Maggiore. Ideal für Familien und Gruppen, die Natur, Ruhe und Sonne suchen. Mit eigenem Garten, Terrasse und direktem Seezugang. Buchungen sind direkt, über Airbnb oder Booking.com möglich.',
+    address: 'Gordemo (Gordola), Tessin',
+    location: 'Gordemo (Gordola), Tessin',
+    description: 'Ferienhaus in Gordemo oberhalb von Tenero, am Eingang zum Verzascatal. Vier Schlafzimmer für bis zu acht Gäste, Wohnzimmer mit Holzofen, Garten mit Pergola und weiter Blick über den Lago Maggiore. Buchung direkt, über Airbnb oder Booking.com.',
     status: 'verfügbar',
     priceFrom: null,
     priceCurrency: 'CHF',
     pricePeriod: 'Woche',
     images: [
       '/images/casa-reto/titel.jpg',
-      '/images/casa-reto/01.jpg',
-      '/images/casa-reto/02.jpg',
-      '/images/casa-reto/03.jpg',
-      '/images/casa-reto/04.jpg',
+      '/images/casa-reto/garten-pergola.jpg',
+      '/images/casa-reto/wohnzimmer-1.jpg',
+      '/images/casa-reto/essen-1.jpg',
+      '/images/casa-reto/zimmer2-1.jpg',
     ],
     link: '/immobilien/casa-reto',
     bookingUrl: '',
-    airbnbUrl: 'https://www.airbnb.com',
+    airbnbUrl: 'https://www.airbnb.ch/rooms/625660996936132774',
     icalUrl: 'https://www.airbnb.ch/calendar/ical/625660996936132774.ics?t=82a02050ce864c73b599648976548358',
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
-    features: ['Lago Maggiore', 'Privater Garten', 'Naturlage'],
+    features: ['Seeblick', 'Garten mit Pergola', 'Bis 8 Gäste'],
     seasons: [
       { name: 'Sommer', icon: 'sun', months: [5, 6, 7, 8], priceNight: 180, priceWeek: 1100, minNights: 3 },
       { name: 'Winter', icon: 'snowflake', months: [0, 1, 2, 3, 9, 10, 11], priceNight: 130, priceWeek: 800, minNights: 2 },
       { name: 'Ostern', icon: 'flower', months: [2, 3], priceNight: 160, priceWeek: 950, minNights: 3 },
     ],
     priceClean: 80,
-    lat: 46.0503,
-    lng: 8.7026,
+    lat: 46.18,
+    lng: 8.86,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
