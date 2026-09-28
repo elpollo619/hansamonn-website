@@ -22,7 +22,7 @@ export default function NotFoundPage() {
           HANS AMONN AG
         </p>
         <h1
-          className="font-display font-semibold leading-[0.85] text-[9rem] md:text-[14rem] tracking-tight"
+          className="font-display font-semibold leading-[0.85] text-7xl md:text-8xl tracking-tight"
           style={{ color: BRAND }}
         >
           404

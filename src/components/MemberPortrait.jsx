@@ -47,7 +47,7 @@ export default function MemberPortrait({ member, className = '', imgClassName = 
       />
       <div aria-hidden="true" className="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-[var(--brand-color,#1D3D78)] opacity-40 blur-2xl" />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={`font-display font-semibold text-white/90 leading-none tracking-tight text-7xl md:text-8xl ${imgClassName}`}>
+        <span className={`font-display font-semibold text-white/90 leading-none tracking-tight text-5xl md:text-6xl ${imgClassName}`}>
           {initialsOf(member.name)}
         </span>
       </div>

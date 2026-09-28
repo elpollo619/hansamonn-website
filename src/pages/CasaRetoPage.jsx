@@ -164,7 +164,7 @@ export default function CasaRetoPage() {
             <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/70 mb-4">
               Ferienhaus im Tessin
             </p>
-            <h1 className="font-display uppercase text-5xl md:text-7xl font-semibold leading-[0.9] mb-6">
+            <h1 className="font-display uppercase text-4xl md:text-6xl font-semibold leading-[0.95] mb-6">
               Casa Reto
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mb-7">
@@ -296,7 +296,7 @@ export default function CasaRetoPage() {
           <motion.div {...fadeUp} className="lg:col-span-5">
             <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Was Gäste sagen</h2>
             <div className="flex items-end gap-4 mb-4">
-              <span className="font-display text-7xl font-semibold leading-none text-[#0F1B2D]">{fmt(CR_RATING.score)}</span>
+              <span className="font-display text-5xl font-semibold leading-none text-[#0F1B2D]">{fmt(CR_RATING.score)}</span>
               <span className="pb-2 text-gray-500 text-sm leading-snug">
                 von 5 Sternen<br />{CR_RATING.count} Bewertungen auf {CR_RATING.source}
               </span>

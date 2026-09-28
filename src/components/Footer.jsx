@@ -67,9 +67,9 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-display uppercase font-semibold leading-[0.95] tracking-tight text-3xl md:text-5xl">
+            <h2 className="font-display uppercase font-semibold leading-tight tracking-tight text-2xl md:text-3xl">
               Haben Sie ein Projekt?<br />
-              <span className="text-white/40">Sprechen wir darüber.</span>
+              <span className="text-white/60">Sprechen wir darüber.</span>
             </h2>
           </motion.div>
           <div className="flex flex-wrap gap-3">
@@ -155,20 +155,6 @@ const Footer = () => {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* ── Giant wordmark (decorative) ── */}
-      <div className="container mx-auto px-6" aria-hidden="true">
-        <motion.p
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display uppercase font-semibold leading-[0.8] tracking-tight text-white/[0.07] select-none whitespace-nowrap"
-          style={{ fontSize: 'clamp(3.5rem, 15vw, 15rem)' }}
-        >
-          Hans Amonn
-        </motion.p>
       </div>
 
       {/* ── Bottom bar ── */}

@@ -31,7 +31,7 @@ function StatCard({ value, suffix, label, started, last }) {
   const count = useCountUp(value, 1500, started);
   return (
     <div className={`flex flex-col items-center text-center px-8 py-10 ${!last ? 'border-r border-white/10' : ''}`}>
-      <span className="font-display text-6xl md:text-7xl font-semibold text-white tabular-nums leading-none">
+      <span className="font-display text-4xl md:text-5xl font-semibold text-white tabular-nums leading-none">
         {count}{suffix}
       </span>
       <span className="mt-3 text-white/75 text-[10px] font-semibold uppercase tracking-[0.22em]">
