@@ -6,7 +6,7 @@ import { BedDouble, Building2, ArrowRight, MapPin, Clock, Tag } from 'lucide-rea
 import { useTranslation } from '@/i18n';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 const ImmobilienOverviewPage = () => {
   const { t } = useTranslation();
@@ -88,12 +88,12 @@ const ImmobilienOverviewPage = () => {
                     loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <span className="absolute top-4 left-4 bg-white/95 text-[#0F1B2D] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
+                  <span className="absolute top-4 left-4 bg-white/95 text-[#121D2B] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
                     {tag}
                   </span>
                 </div>
                 <div className="flex-1 p-8 md:p-10">
-                  <h2 className="display-heading uppercase text-3xl md:text-4xl mb-2 group-hover:text-[#1D3D78] transition-colors">
+                  <h2 className="display-heading text-3xl md:text-4xl mb-2 group-hover:text-[#1F497D] transition-colors">
                     {title}
                   </h2>
                   <p className="text-sm text-gray-500 mb-5">{subtitle}</p>
@@ -135,7 +135,7 @@ const ImmobilienOverviewPage = () => {
           className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
           <div className="max-w-2xl">
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{t('immobilien.contact.title')}</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-4">{t('immobilien.contact.title')}</h2>
             <p className="text-gray-600 leading-relaxed">{t('immobilien.contact.text')}</p>
           </div>
           <Link

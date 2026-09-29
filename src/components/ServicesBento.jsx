@@ -44,34 +44,34 @@ function BentoCard({ service, index }) {
       <Link
         to={`/leistungen/${service.slug}`}
         className={`group relative flex h-full min-h-[180px] flex-col justify-between border p-6 md:p-7 transition-colors ${toneClass}`}
-        style={isNavy ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : undefined}
+        style={isNavy ? { backgroundColor: 'var(--brand-color, #1F497D)' } : undefined}
       >
         <div className="flex items-start justify-between gap-4">
           <div
             className={`flex h-11 w-11 items-center justify-center ${isNavy ? 'bg-white/10' : 'bg-gray-100'}`}
           >
-            <Icon size={20} className={isNavy ? 'text-white' : 'text-[#1D3D78]'} />
+            <Icon size={20} className={isNavy ? 'text-white' : 'text-[#1F497D]'} />
           </div>
           <ArrowUpRight
             size={20}
             className={`transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${
-              isNavy ? 'text-white/60 group-hover:text-white' : 'text-gray-300 group-hover:text-[#1D3D78]'
+              isNavy ? 'text-white/60 group-hover:text-white' : 'text-gray-300 group-hover:text-[#1F497D]'
             }`}
           />
         </div>
 
         <div className="mt-8">
           <span
-            className={`block text-[10px] font-semibold uppercase tracking-hairline mb-2 ${
-              isNavy ? 'text-white/60' : 'text-gray-400'
+            className={`block text-[11px] font-semibold uppercase tracking-hairline mb-2 ${
+              isNavy ? 'text-white/75' : 'text-gray-400'
             }`}
           >
             {CATEGORY_LABEL[service.category]}
           </span>
           <h3
-            className={`font-display uppercase font-semibold leading-none tracking-tight ${
-              index === 0 ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
-            }`}
+            className={`font-display font-semibold leading-none tracking-tight ${
+ index === 0 ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
+ }`}
           >
             {service.title}
           </h3>
@@ -104,7 +104,7 @@ export default function ServicesBento() {
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="eyebrow mb-3">Leistungen</p>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl">Alles aus einer Hand</h2>
+            <h2 className="display-heading text-3xl md:text-4xl">Alles aus einer Hand</h2>
           </div>
           <p className="text-gray-500 max-w-sm leading-relaxed md:text-right">
             Von der ersten Skizze über den Bau bis zur Vermietung und Bewirtschaftung.
@@ -127,8 +127,8 @@ export default function ServicesBento() {
               to="/leistungen"
               className="group flex h-full min-h-[180px] flex-col justify-end border border-gray-900 bg-gray-900 p-6 md:p-7 text-white hover:bg-black transition-colors"
             >
-              <span className="text-[10px] font-semibold uppercase tracking-hairline text-white/50 mb-2">Übersicht</span>
-              <span className="flex items-center gap-2 font-display uppercase text-xl md:text-2xl font-semibold leading-none">
+              <span className="text-[11px] font-semibold uppercase tracking-hairline text-white/50 mb-2">Übersicht</span>
+              <span className="flex items-center gap-2 font-display text-xl md:text-2xl font-semibold leading-none">
                 Alle Leistungen
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </span>

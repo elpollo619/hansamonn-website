@@ -13,7 +13,7 @@ import TiltCard from '@/components/TiltCard';
 import Model3DSection from '@/components/Model3DSection';
 import ProjectCover from '@/components/ProjectCover';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 const HERO_IMAGE = '/images/ns-hotel/drohne-1.jpg';
 
 const archServices = servicesData.filter((s) => s.category === 'architektur');
@@ -58,7 +58,7 @@ const ArchitekturPage = () => {
           >
             <div>
               <p className="eyebrow mb-3">Leistungen</p>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl">
+              <h2 className="display-heading text-3xl md:text-4xl">
                 Was wir anbieten
               </h2>
             </div>
@@ -95,7 +95,7 @@ const ArchitekturPage = () => {
                       className="text-gray-300 group-hover:translate-x-1 transition-transform"
                     />
                   </div>
-                  <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3 break-words hyphens-auto">{s.title}</h3>
+                  <h3 className="font-display text-2xl font-semibold text-[#121D2B] mb-3 break-words hyphens-auto">{s.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{s.shortDescription}</p>
                   <div className="flex flex-wrap gap-2 mt-6">
                     {s.features.map((f) => (
@@ -130,7 +130,7 @@ const ArchitekturPage = () => {
           >
             <div>
               <p className="eyebrow mb-3">Referenzen</p>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl">
+              <h2 className="display-heading text-3xl md:text-4xl">
                 Ausgewählte Projekte
               </h2>
             </div>
@@ -168,7 +168,7 @@ const ArchitekturPage = () => {
                     <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
                       {p.year} · {p.category}
                     </p>
-                    <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D]">
+                    <h3 className="font-display text-xl font-semibold text-[#121D2B]">
                       {p.title}
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">{p.location}</p>

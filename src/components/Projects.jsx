@@ -10,7 +10,7 @@ import PageHero from '@/components/PageHero';
 // Projects with an interactive 3D model built from their plans
 const HAS_3D_MODEL = new Set(['ns-hotel-kerzers', 'wohnkomplex-allmendstrasse-kerzers', 'baeren-kerzers', 'renovation-hoeheweg-muri', 'neubau-wohnhaus-bremgarten']);
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 const FINISHED = new Set(['Fertiggestellt', 'Abgeschlossen']);
 
 // "Höheweg 8, 3074 Muri bei Bern" -> "Muri bei Bern"
@@ -96,7 +96,7 @@ const Projects = () => {
                           {project.status}
                         </span>
                         {HAS_3D_MODEL.has(project.slug) && (
-                          <span className="absolute top-4 right-4 bg-white/95 text-[#0F1B2D] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
+                          <span className="absolute top-4 right-4 bg-white/95 text-[#121D2B] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider">
                             3D-Modell
                           </span>
                         )}
@@ -111,7 +111,7 @@ const Projects = () => {
                             FINISHED.has(project.status) ? project.year : null,
                           ].filter(Boolean).join(' · ')}
                         </p>
-                        <h3 className="font-display uppercase text-2xl md:text-3xl font-semibold text-[#0F1B2D] leading-tight mb-4">
+                        <h3 className="font-display text-2xl md:text-3xl font-semibold text-[#121D2B] leading-tight mb-4">
                           {project.title}
                         </h3>
                         <p className="text-gray-600 leading-relaxed">{project.description}</p>

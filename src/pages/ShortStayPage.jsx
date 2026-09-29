@@ -5,7 +5,7 @@ import { Hotel, ArrowRight, ExternalLink, Star, MapPin, Mail, Sun } from 'lucide
 import { Helmet } from 'react-helmet';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -59,9 +59,9 @@ export default function ShortStayPage() {
             <div className="lg:col-span-5 flex flex-col justify-center">
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">
                 <MapPin size={13} /> Kerzers, 3210
-                <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-[#1D3D78] text-[#1D3D78]" />)}</span>
+                <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-[#1F497D] text-[#1F497D]" />)}</span>
               </div>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">N's Hotel</h2>
+              <h2 className="display-heading text-3xl md:text-4xl mb-6">N's Hotel</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
                 Ein modernes Boutique-Hotel im Herzen von Kerzers, mit Self Check-in, durchdachtem Design und allem, was Sie für einen entspannten oder produktiven Aufenthalt brauchen.
               </p>
@@ -75,8 +75,8 @@ export default function ShortStayPage() {
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 text-white font-semibold text-sm py-3 px-6 transition-colors"
                   style={{ backgroundColor: BRAND }}
-                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                 >
                   <ExternalLink size={15} /> Direkt buchen
                 </a>
@@ -124,7 +124,7 @@ export default function ShortStayPage() {
               <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 mb-5 w-fit">
                 <Sun size={13} /> Ferienhaus
               </div>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Casa Reto</h2>
+              <h2 className="display-heading text-3xl md:text-4xl mb-6">Casa Reto</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
                 Stellen Sie sich vor: Aufwachen mit dem Rauschen des Lago Maggiore, Zitronenbäume im Garten, keine Verpflichtungen. Casa Reto ist unser privates Ferienhaus in Gordemo, Tessin, ein stiller Ort zum Atmen, Geniessen und Loslassen.
               </p>
@@ -138,8 +138,8 @@ export default function ShortStayPage() {
                   to="/casa-reto"
                   className="w-full flex items-center justify-center gap-2 text-white font-semibold text-sm py-3 px-6 transition-colors"
                   style={{ backgroundColor: BRAND }}
-                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                 >
                   Alle Details ansehen <ArrowRight size={15} />
                 </Link>
@@ -191,7 +191,7 @@ export default function ShortStayPage() {
             {...fadeUp}
             className="max-w-2xl mx-auto text-center"
           >
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-5">Allgemeine Anfrage für Short Stay</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-5">Allgemeine Anfrage für Short Stay</h2>
             <p className="text-gray-600 leading-relaxed mb-8">Nicht sicher, was Sie brauchen? Wir helfen Ihnen gerne dabei, die richtige Option zu finden.</p>
             <Link
               to="/immobilien/anfrage"

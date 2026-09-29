@@ -5,7 +5,7 @@ import { Building2, ArrowRight, MapPin, Users, Briefcase, Clock, CheckCircle2, M
 import { Helmet } from 'react-helmet';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -96,7 +96,7 @@ export default function LongStayPage() {
                 <div key={item.title} className="flex items-start gap-4 py-7 md:px-8 md:first:pl-0">
                   <Icon size={22} className="mt-0.5 flex-shrink-0" style={{ color: BRAND }} />
                   <div>
-                    <p className="font-display uppercase text-lg font-semibold leading-none text-[#0F1B2D]">{item.title}</p>
+                    <p className="font-display text-lg font-semibold leading-none text-[#121D2B]">{item.title}</p>
                     <p className="text-sm text-gray-500 leading-relaxed mt-1.5">{item.desc}</p>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ export default function LongStayPage() {
           <motion.div {...fadeUp} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
             <div>
               <p className="eyebrow mb-3">Long Stay</p>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl">Unsere Standorte</h2>
+              <h2 className="display-heading text-3xl md:text-4xl">Unsere Standorte</h2>
             </div>
             <p className="text-gray-600 leading-relaxed max-w-md">Drei Standorte in der Region Bern, wählen Sie den passenden für Ihre Bedürfnisse.</p>
           </motion.div>
@@ -130,7 +130,7 @@ export default function LongStayPage() {
                   <RentalImage src={loc.image} alt={loc.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-display uppercase text-2xl font-semibold leading-none text-[#0F1B2D]">{loc.title}</h3>
+                  <h3 className="font-display text-2xl font-semibold leading-none text-[#121D2B]">{loc.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed mt-2">{loc.subtitle}</p>
                   <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-3 mb-5">
                     <MapPin size={12} /> {loc.address}
@@ -155,8 +155,8 @@ export default function LongStayPage() {
                       to={loc.link}
                       className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-6 transition-colors text-sm"
                       style={{ backgroundColor: BRAND }}
-                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                     >
                       Details ansehen <ArrowRight size={15} />
                     </Link>
@@ -177,7 +177,7 @@ export default function LongStayPage() {
           >
             <div className="lg:col-span-7">
               <Mail size={28} className="mb-5" style={{ color: BRAND }} />
-              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
+              <h2 className="display-heading text-3xl md:text-4xl mb-5">Allgemeine Mietanfrage für Long Stay</h2>
               <p className="text-gray-600 leading-relaxed max-w-xl">
                 Noch nicht sicher, welcher Standort passt? Schildern Sie uns Ihre Situation, wir finden gemeinsam die beste Lösung.
               </p>

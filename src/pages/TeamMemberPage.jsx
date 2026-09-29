@@ -55,13 +55,13 @@ const TeamMemberPage = () => {
                   <MemberPortrait member={member} />
                   {Icon && (
                   <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 flex items-center justify-center">
-                    <Icon size={20} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                    <Icon size={20} style={{ color: 'var(--brand-color, #1F497D)' }} />
                   </div>
                 )}
                 </div>
 
                 <div className="p-6">
-                  <p className="text-xs font-semibold uppercase tracking-wider mb-5" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider mb-5" style={{ color: 'var(--brand-color, #1F497D)' }}>{member.position}</p>
 
                   <div className="space-y-3 text-sm text-gray-600 mb-6">
                     {member.education && (
@@ -87,9 +87,9 @@ const TeamMemberPage = () => {
                   <a
                     href={`mailto:${member.email || 'office@reto-amonn.ch'}`}
                     className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-colors"
-                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                    style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                   >
                     <Mail size={16} />
                     E-Mail senden
@@ -107,7 +107,7 @@ const TeamMemberPage = () => {
             >
               <div className="mb-12">
                 <p className="eyebrow mb-3">Profil</p>
-                <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">
+                <h2 className="display-heading text-3xl md:text-4xl mb-6">
                   Über {member.name.split(' ')[0]}
                 </h2>
                 <p className="text-gray-600 leading-relaxed text-lg max-w-3xl">
@@ -117,7 +117,7 @@ const TeamMemberPage = () => {
 
               {member.specialization && (
                 <div className="border-t border-gray-100 pt-10">
-                  <h2 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-5">
+                  <h2 className="font-display text-2xl font-semibold text-[#121D2B] mb-5">
                     Spezialisierung
                   </h2>
                   <div className="flex flex-wrap gap-2">

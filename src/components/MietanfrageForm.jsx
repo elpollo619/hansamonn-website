@@ -260,7 +260,7 @@ function Section({ icon: Icon, title, children, className = "" }) {
     <div className={`bg-white border border-gray-200 overflow-hidden ${className}`}>
       <div className="flex items-center gap-3 px-6 py-4 bg-gray-50 border-b border-gray-200">
         <div className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <Icon size={16} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+          <Icon size={16} style={{ color: 'var(--brand-color, #1F497D)' }} />
         </div>
         <h3 className="text-base font-semibold text-gray-800">{title}</h3>
       </div>
@@ -271,7 +271,7 @@ function Section({ icon: Icon, title, children, className = "" }) {
 
 // ─── Field helpers ────────────────────────────────────────────────────────────
 
-const inp = "w-full border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#1D3D78] transition bg-white";
+const inp = "w-full border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#1F497D] transition bg-white";
 const sel = inp + " cursor-pointer";
 const lbl = "block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide";
 
@@ -324,7 +324,7 @@ function RadioGroup({ name, value, onChange, options }) {
             value={opt}
             checked={value === opt}
             onChange={onChange}
-            className="accent-[#1D3D78]"
+            className="accent-[#1F497D]"
           />
           <span className="text-sm text-gray-700">{opt}</span>
         </label>
@@ -344,7 +344,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
       </label>
       <div
         onClick={() => ref.current?.click()}
-        className="relative border-2 border-dashed border-gray-200 hover:border-[#1D3D78] p-5 cursor-pointer transition group bg-gray-50 hover:bg-gray-100"
+        className="relative border-2 border-dashed border-gray-200 hover:border-[#1F497D] p-5 cursor-pointer transition group bg-gray-50 hover:bg-gray-100"
       >
         <input
           ref={ref}
@@ -357,7 +357,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
             e.target.value = "";
           }}
         />
-        <div className="flex flex-col items-center gap-2 text-gray-400 group-hover:text-[#1D3D78] transition">
+        <div className="flex flex-col items-center gap-2 text-gray-400 group-hover:text-[#1F497D] transition">
           <Upload size={24} />
           <span className="text-sm font-medium">{uploadText || 'Dateien hier ablegen oder klicken'}</span>
           {hint && <span className="text-xs">{hint}</span>}
@@ -368,7 +368,7 @@ function FileUploadArea({ label, required, files, onAdd, onRemove, accept = "*",
           {files.map((f, i) => (
             <div key={i} className="flex items-center justify-between bg-white border border-gray-200 px-3 py-2">
               <div className="flex items-center gap-2 min-w-0">
-                <FileText size={14} className="flex-shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                <FileText size={14} className="flex-shrink-0" style={{ color: 'var(--brand-color, #1F497D)' }} />
                 <span className="text-xs text-gray-700 truncate">{f.name}</span>
                 <span className="text-xs text-gray-400 flex-shrink-0">({(f.size / 1024).toFixed(0)} KB)</span>
               </div>
@@ -516,7 +516,7 @@ export default function MietanfrageForm() {
     return (
       <div className="max-w-2xl mx-auto py-16 text-center">
         <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 size={40} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+          <CheckCircle2 size={40} style={{ color: 'var(--brand-color, #1F497D)' }} />
         </div>
         <h2 className="text-3xl font-bold text-gray-900 mb-3">{t('mietanfrage.successTitle')}</h2>
         <p className="text-gray-600 mb-4 leading-relaxed" dangerouslySetInnerHTML={{ __html: successText.replace('\n', '<br />') }} />
@@ -531,9 +531,9 @@ export default function MietanfrageForm() {
         <button
           onClick={() => { setDone(false); setForm(INITIAL); setIdFiles([]); setExtraFiles([]); }}
           className="px-6 py-3 text-white font-semibold transition text-sm"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           {t('mietanfrage.newRequest')}
         </button>
@@ -554,7 +554,7 @@ export default function MietanfrageForm() {
     <div className="max-w-4xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h2 className="display-heading uppercase text-3xl md:text-4xl mb-3">{t('mietanfrage.title')}</h2>
+        <h2 className="display-heading text-3xl md:text-4xl mb-3">{t('mietanfrage.title')}</h2>
         <p className="text-gray-500 text-base leading-relaxed max-w-2xl">
           {t('mietanfrage.subtitle')}
         </p>
@@ -583,8 +583,8 @@ export default function MietanfrageForm() {
                   onClick={() => toggleMietort(ort)}
                   className={`flex items-center gap-2 px-4 py-2 text-sm font-medium border-2 transition ${
                     form.mietort.includes(ort)
-                      ? "border-[#1D3D78] bg-gray-50 text-[#1D3D78]"
-                      : "border-gray-200 bg-white text-gray-600 hover:border-[#1D3D78]"
+                      ? "border-[#1F497D] bg-gray-50 text-[#1F497D]"
+                      : "border-gray-200 bg-white text-gray-600 hover:border-[#1F497D]"
                   }`}
                 >
                   <MapPin size={13} />
@@ -786,7 +786,7 @@ export default function MietanfrageForm() {
           ].map(({ key, text }) => (
             <label key={key} className="flex items-start gap-3 cursor-pointer group">
               <input type="checkbox" name={key} checked={form[key]} onChange={handleChange} className="sr-only peer" />
-              <div aria-hidden="true" className={`mt-0.5 w-5 h-5 border-2 flex items-center justify-center flex-shrink-0 transition peer-focus-visible:ring-2 peer-focus-visible:ring-[#1D3D78] peer-focus-visible:ring-offset-2 ${form[key] ? "border-[#1D3D78] bg-[#1D3D78]" : "border-gray-300 group-hover:border-[#1D3D78]"}`}>
+              <div aria-hidden="true" className={`mt-0.5 w-5 h-5 border-2 flex items-center justify-center flex-shrink-0 transition peer-focus-visible:ring-2 peer-focus-visible:ring-[#1F497D] peer-focus-visible:ring-offset-2 ${form[key] ? "border-[#1F497D] bg-[#1F497D]" : "border-gray-300 group-hover:border-[#1F497D]"}`}>
                 {form[key] && <CheckCircle2 size={12} className="text-white" />}
               </div>
               <span className="text-sm text-gray-700 leading-relaxed">{text}</span>
@@ -813,9 +813,9 @@ export default function MietanfrageForm() {
           type="submit"
           disabled={loading}
           className="w-full flex items-center justify-center gap-3 disabled:opacity-60 text-white font-bold py-4 px-8 text-base transition"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           {loading ? (
             <>

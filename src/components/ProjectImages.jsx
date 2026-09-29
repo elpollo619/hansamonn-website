@@ -5,7 +5,7 @@ const ProjectImages = ({ project, onImageClick }) => {
   return (
     <section className="surface-warm border-t border-gray-100 py-20 md:py-24">
       <div className="container mx-auto px-6">
-        <h4 className="display-heading uppercase text-3xl md:text-4xl mb-10">
+        <h4 className="display-heading text-3xl md:text-4xl mb-10">
           Weitere Impressionen
         </h4>
 
@@ -14,7 +14,7 @@ const ProjectImages = ({ project, onImageClick }) => {
             if (item.type === 'header') {
               return (
                 <div key={index} className="col-span-full mt-8 mb-1">
-                  <h5 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D]">
+                  <h5 className="font-display text-2xl font-semibold text-[#121D2B]">
                     {item.title}
                   </h5>
                 </div>
@@ -30,7 +30,7 @@ const ProjectImages = ({ project, onImageClick }) => {
                     loading="lazy"
                     decoding="async"
                   />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0B1220]/70 to-transparent px-4 pt-10 pb-3">
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0D1B2B]/70 to-transparent px-4 pt-10 pb-3">
                     <p className="text-[11px] font-semibold uppercase tracking-wider text-white">{item.alt}</p>
                   </div>
                 </div>

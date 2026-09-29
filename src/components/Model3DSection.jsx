@@ -32,7 +32,7 @@ export default function Model3DSection({
         >
           <div className="lg:col-span-7">
             <p className="eyebrow mb-3">{eyebrow}</p>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl">{title}</h2>
+            <h2 className="display-heading text-3xl md:text-4xl">{title}</h2>
           </div>
           <p className="lg:col-span-5 text-gray-600 leading-relaxed">
             Diese Modelle entstehen direkt aus unseren Ausführungsplänen im Massstab 1:50:
@@ -41,7 +41,7 @@ export default function Model3DSection({
           </p>
         </motion.div>
 
-        <div className="relative h-[66vh] min-h-[440px] md:h-[76vh] bg-gradient-to-b from-white to-[#f3efe7] border border-gray-100 overflow-hidden">
+        <div className="relative h-[66vh] min-h-[440px] md:h-[76vh] bg-gradient-to-b from-white to-[#E9EDF2] border border-gray-100 overflow-hidden">
           <ModelViewer3D ids={ids} className="h-full" />
         </div>
 
@@ -49,7 +49,7 @@ export default function Model3DSection({
           <div className="mt-4 grid grid-cols-3 gap-3">
             {single.facts.map((f) => (
               <div key={f.label} className="border-t border-gray-200 pt-3">
-                <div className="font-display uppercase text-2xl md:text-3xl font-semibold text-[#0F1B2D] leading-none">{f.value}</div>
+                <div className="font-display text-2xl md:text-3xl font-semibold text-[#121D2B] leading-none">{f.value}</div>
                 <div className="text-xs text-gray-500 mt-1">{f.label}</div>
               </div>
             ))}

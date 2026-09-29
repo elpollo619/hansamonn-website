@@ -21,7 +21,7 @@ export default function ProjectCover({ src, alt = '', label, className = '' }) {
   }
 
   return (
-    <div role="img" aria-label={alt} className="relative w-full h-full min-h-[inherit] overflow-hidden bg-[#10244a]">
+    <div role="img" aria-label={alt} className="relative w-full h-full min-h-[inherit] overflow-hidden bg-[#122944]">
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-25"
@@ -58,7 +58,7 @@ export default function ProjectCover({ src, alt = '', label, className = '' }) {
         <path d="M20 232 H380 M20 228 V236 M380 228 V236" strokeOpacity=".45" />
       </svg>
       <div className="absolute left-4 right-4 bottom-4 flex items-end justify-between gap-3">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#cfe0ff]/70">
+        <span className="font-mono text-[11px] uppercase tracking-hairline text-[#cfe0ff]/70">
           {label || 'Bilder folgen'}
         </span>
         <span className="font-mono text-[10px] text-[#cfe0ff]/50">M 1:100</span>

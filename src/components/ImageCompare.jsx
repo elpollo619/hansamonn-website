@@ -3,7 +3,7 @@ import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slide
 
 const Chip = ({ children, side }) => (
   <span
-    className={`pointer-events-none absolute top-3 ${side === 'left' ? 'left-3' : 'right-3'} bg-[#0B1220]/75 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white`}
+    className={`pointer-events-none absolute top-3 ${side === 'left' ? 'left-3' : 'right-3'} bg-[#0D1B2B]/75 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white`}
   >
     {children}
   </span>

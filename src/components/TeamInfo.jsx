@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -35,7 +35,7 @@ const TeamInfo = () => {
           <motion.div {...fadeUp} className="grid gap-8 lg:grid-cols-12 lg:items-end mb-14">
             <div className="lg:col-span-6 min-w-0">
               <p className="eyebrow mb-3">Hans Amonn AG</p>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl hyphens-auto break-words">
+              <h2 className="display-heading text-3xl md:text-4xl hyphens-auto break-words">
                 Familienunternehmen mit Herz
               </h2>
             </div>
@@ -62,7 +62,7 @@ const TeamInfo = () => {
                 >
                   {String(i + 1).padStart(2, '0')}
                 </div>
-                <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-3">
+                <h3 className="font-display text-xl font-semibold text-[#121D2B] mb-3">
                   {p.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">{p.text}</p>
@@ -77,7 +77,7 @@ const TeamInfo = () => {
         <motion.div {...fadeUp} className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-t border-gray-200 pt-12">
             <div className="max-w-2xl">
-              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">
+              <h2 className="display-heading text-3xl md:text-4xl mb-4">
                 Möchten Sie unser Team kennenlernen?
               </h2>
               <p className="text-gray-600 leading-relaxed">
@@ -89,8 +89,8 @@ const TeamInfo = () => {
               href="mailto:office@reto-amonn.ch"
               className="shrink-0 self-start md:self-auto inline-block text-white px-6 py-3 text-sm font-semibold transition-colors"
               style={{ backgroundColor: BRAND }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               Termin vereinbaren
             </a>

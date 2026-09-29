@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getConsent, setConsent, onOpenCookieSettings } from '@/lib/consent';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 function Toggle({ checked, onChange, disabled, label }) {
   return (
@@ -15,7 +15,7 @@ function Toggle({ checked, onChange, disabled, label }) {
       disabled={disabled}
       onClick={() => onChange?.(!checked)}
       className={`relative w-10 h-6 rounded-full transition-colors shrink-0 ${disabled ? 'opacity-60' : ''}`}
-      style={{ backgroundColor: checked ? BRAND : '#d1d5db' }}
+      style={{ backgroundColor: checked ? BRAND : '#C7CED6' }}
     >
       <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform ${checked ? 'translate-x-4' : ''}`} />
     </button>
@@ -118,7 +118,7 @@ export default function CookieBanner() {
                 </button>
                 <button
                   onClick={() => save({ statistics: true, external: true })}
-                  className="px-4 py-2.5 text-sm font-semibold text-white bg-[#0F1B2D] hover:bg-black transition-colors"
+                  className="px-4 py-2.5 text-sm font-semibold text-white bg-[#121D2B] hover:bg-black transition-colors"
                 >
                   Alle akzeptieren
                 </button>

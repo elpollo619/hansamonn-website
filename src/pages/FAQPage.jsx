@@ -46,7 +46,7 @@ function FAQItem({ faq, isOpen, onToggle }) {
         className="group w-full flex items-center justify-between gap-6 py-6 text-left"
         aria-expanded={isOpen}
       >
-        <span className="font-semibold text-[#0F1B2D] text-base md:text-lg leading-snug group-hover:text-[#1D3D78] transition-colors">
+        <span className="font-semibold text-[#121D2B] text-base md:text-lg leading-snug group-hover:text-[#1F497D] transition-colors">
           {faq.question}
         </span>
         <motion.span
@@ -55,7 +55,7 @@ function FAQItem({ faq, isOpen, onToggle }) {
           className={`flex-shrink-0 w-9 h-9 flex items-center justify-center border transition-colors ${
             isOpen ? 'text-white border-transparent' : 'text-gray-500 border-gray-200 group-hover:border-gray-400'
           }`}
-          style={isOpen ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : undefined}
+          style={isOpen ? { backgroundColor: 'var(--brand-color, #1F497D)' } : undefined}
         >
           <ChevronDown size={18} />
         </motion.span>
@@ -132,7 +132,7 @@ export default function FAQPage() {
                 <button
                   key={cat}
                   onClick={() => { setActiveCategory(cat); setOpenId(null); }}
-                  style={activeCategory === cat ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+                  style={activeCategory === cat ? { backgroundColor: 'var(--brand-color, #1F497D)' } : {}}
                   className={`px-4 py-2 text-sm font-semibold transition-colors border ${
                     activeCategory === cat
                       ? 'text-white border-transparent'
@@ -182,10 +182,10 @@ export default function FAQPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-16 bg-[#0B1220] text-white p-8 md:p-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+              className="mt-16 bg-[#0D1B2B] text-white p-8 md:p-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
             >
               <div>
-                <h2 className="font-display uppercase font-semibold text-3xl md:text-4xl leading-none mb-3">Noch Fragen?</h2>
+                <h2 className="font-display font-semibold text-3xl md:text-4xl leading-none mb-3">Noch Fragen?</h2>
                 <p className="text-white/70">
                   Unser Team hilft Ihnen gerne persönlich weiter.
                 </p>

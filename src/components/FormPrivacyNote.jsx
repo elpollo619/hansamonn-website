@@ -47,7 +47,7 @@ export default function FormPrivacyNote({ className = '', checkbox = true }) {
           aria-describedby={`${id}-info`}
           aria-invalid={missing || undefined}
           onChange={(e) => e.target.checked && setMissing(false)}
-          className="mt-0.5 h-4 w-4 shrink-0 accent-[#1D3D78] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D3D78]"
+          className="mt-0.5 h-4 w-4 shrink-0 accent-[#1F497D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1F497D]"
         />
         <label htmlFor={id} className="text-sm text-gray-700 leading-snug cursor-pointer">
           Ich habe die Datenschutzerklärung gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung

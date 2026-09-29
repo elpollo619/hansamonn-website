@@ -61,7 +61,7 @@ function FeatureCell({ hasFeature }) {
       {hasFeature ? (
         <div className="flex justify-center">
           <div className="w-6 h-6 surface-warm flex items-center justify-center">
-            <Check size={12} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+            <Check size={12} style={{ color: 'var(--brand-color, #1F497D)' }} />
           </div>
         </div>
       ) : (
@@ -118,9 +118,9 @@ const VergleichPage = () => {
             className="max-w-lg mx-auto text-center py-12 md:py-16"
           >
             <div className="w-16 h-16 surface-warm flex items-center justify-center mx-auto mb-6">
-              <GitCompare size={28} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+              <GitCompare size={28} style={{ color: 'var(--brand-color, #1F497D)' }} />
             </div>
-            <h2 className="font-display uppercase text-2xl md:text-3xl font-semibold text-[#0F1B2D] leading-tight mb-4">
+            <h2 className="font-display text-2xl md:text-3xl font-semibold text-[#121D2B] leading-tight mb-4">
               Bitte wählen Sie mindestens 2 Objekte zum Vergleichen aus
             </h2>
             <p className="text-gray-600 mb-8 leading-relaxed">
@@ -130,9 +130,9 @@ const VergleichPage = () => {
             <Link
               to="/immobilien/vermietung"
               className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               <ArrowLeft size={14} />
               Zur Übersicht
@@ -172,7 +172,7 @@ const VergleichPage = () => {
                               <span className="text-gray-500 text-xs">Kein Bild</span>
                             </div>
                           )}
-                          <span className="font-display uppercase text-lg font-semibold text-[#0F1B2D] text-center leading-tight">
+                          <span className="font-display text-lg font-semibold text-[#121D2B] text-center leading-tight">
                             {prop.name || prop.title}
                           </span>
                         </div>
@@ -280,9 +280,9 @@ const VergleichPage = () => {
                         <Link
                           to={link}
                           className="inline-flex items-center gap-1.5 text-white font-semibold px-6 py-3 transition-colors text-sm"
-                          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                         >
                           Details
                         </Link>

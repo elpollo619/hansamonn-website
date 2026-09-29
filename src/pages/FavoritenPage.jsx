@@ -87,7 +87,7 @@ const FavoriteCard = ({ item, index, t }) => {
           alt={image.alt}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/50 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B]/50 via-transparent to-transparent pointer-events-none" />
 
         {/* Top-left type badge */}
         <div className="absolute top-3 left-3">
@@ -103,7 +103,7 @@ const FavoriteCard = ({ item, index, t }) => {
         <div className="absolute bottom-3 right-3">
           <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5">
             {item.price ? (
-              <span className="font-semibold text-sm text-[#0F1B2D]">
+              <span className="font-semibold text-sm text-[#121D2B]">
                 CHF {item.price.toLocaleString('de-CH')}
                 <span className="text-gray-400 font-normal text-xs">
                   {isHotel ? t('vermietung.card.nightPrice') : `${t('vermietung.longStay.from')}${t('common.perMonth')}`}
@@ -121,8 +121,8 @@ const FavoriteCard = ({ item, index, t }) => {
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-3 mb-1">
-          <Link to={getDetailUrl(item)} className="hover:text-[#1D3D78] transition-colors">
-            <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] leading-tight">{item.title}</h3>
+          <Link to={getDetailUrl(item)} className="hover:text-[#1F497D] transition-colors">
+            <h3 className="font-display text-xl font-semibold text-[#121D2B] leading-tight">{item.title}</h3>
           </Link>
           <OccupancyBadge status={item.occupancy || 'frei'} />
         </div>
@@ -138,9 +138,9 @@ const FavoriteCard = ({ item, index, t }) => {
           <Link
             to={getDetailUrl(item)}
             className="w-full flex items-center justify-center gap-2 font-semibold py-3 px-6 transition-colors text-sm text-white"
-            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+            style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
           >
             Details ansehen
             <ArrowRight size={14} />
@@ -161,9 +161,9 @@ const EmptyState = () => (
     className="text-center py-12 md:py-16 px-4"
   >
     <div className="w-20 h-20 surface-warm flex items-center justify-center mx-auto mb-6">
-      <Heart size={32} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+      <Heart size={32} style={{ color: 'var(--brand-color, #1F497D)' }} />
     </div>
-    <h2 className="font-display uppercase text-3xl md:text-4xl font-semibold text-[#0F1B2D] leading-tight mb-4">
+    <h2 className="font-display text-3xl md:text-4xl font-semibold text-[#121D2B] leading-tight mb-4">
       Noch keine Favoriten gespeichert
     </h2>
     <p className="text-gray-600 leading-relaxed mb-8 max-w-md mx-auto">
@@ -172,9 +172,9 @@ const EmptyState = () => (
     <Link
       to="/immobilien"
       className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
-      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+      style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
     >
       Alle Immobilien ansehen
       <ArrowRight size={15} />

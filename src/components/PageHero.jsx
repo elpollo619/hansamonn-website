@@ -11,7 +11,7 @@ import { ChevronLeft } from 'lucide-react';
  *
  * Props:
  *   eyebrow   {string}     small uppercase kicker above the title
- *   title     {ReactNode}  main heading (rendered as h1, uppercase display font)
+ *   title     {ReactNode}  main heading (rendered as h1, display font, sentence case)
  *   subtitle  {ReactNode}  lead paragraph
  *   image     {string}     optional background photo
  *   back      {{to, label}} optional back link above the eyebrow
@@ -49,7 +49,7 @@ export default function PageHero({
   return (
     <section
       className={`relative overflow-hidden flex items-end ${pad} ${
-        dark ? 'bg-[#0B1220] text-white' : 'surface-warm border-b border-gray-100'
+        dark ? 'bg-[#0D1B2B] text-white' : 'surface-warm border-b border-gray-100'
       }`}
     >
       {dark && (
@@ -59,7 +59,7 @@ export default function PageHero({
             style={{ backgroundImage: `url(${image})` }}
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220] via-[#0B1220]/55 to-[#0B1220]/15" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B] via-[#0D1B2B]/55 to-[#0D1B2B]/15" />
         </>
       )}
       {overlay}
@@ -91,9 +91,9 @@ export default function PageHero({
             </p>
           )}
           <h1
-            className={`font-display uppercase font-semibold leading-[0.92] break-words hyphens-auto ${titleSize} ${
-              dark ? 'text-white' : 'text-[#0F1B2D]'
-            }`}
+            className={`font-display font-semibold leading-[1.04] break-words hyphens-auto ${titleSize} ${
+ dark ? 'text-white' : 'text-[#121D2B]'
+ }`}
           >
             {title}
           </h1>

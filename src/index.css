@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* AMONN brand typeface: Open Sans — the face of the HANS AMONN AG logo (bold HANS, regular AMONN AG).
-   Self-hosted via @fontsource (imported in main.jsx), no request to Google. Display headings use the
-   same family at a semi-condensed width for an architectural feel. */
+/* AMONN type and colour system
+   The HANS AMONN AG logo is set in a humanist sans (bold HANS, regular AMONN AG) in navy #1F497D.
+   Source Sans 3 is the closest open humanist face: compact caps like the logo, true weights from 200 to 900
+   and narrow enough for long German words without faking a condensed width. Self-hosted via @fontsource
+   (imported in main.jsx), no request to Google.
+   Rule of thumb: the logo is the only all-caps wordmark. Headings are sentence case; small uppercase labels
+   are kept rare and short. */
 
 :root {
   --background: 0 0% 100%;
@@ -15,7 +19,7 @@
   --card-foreground: 220 30% 10%;
   --popover: 0 0% 100%;
   --popover-foreground: 220 30% 10%;
-  /* AMONN Navy — matches logo color #1D3D78 */
+  /* AMONN Navy — matches logo color #1F497D */
   --primary: 218 61% 29%;
   --primary-foreground: 0 0% 100%;
   --secondary: 218 30% 94%;
@@ -26,13 +30,13 @@
   --accent-foreground: 218 61% 29%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
-  --border: 220 20% 90%;
-  --input: 220 20% 90%;
-  --ring: 218 61% 29%;
+  --border: 213 17% 89%;
+  --input: 213 17% 84%;
+  --ring: 213 60% 31%;
   --radius: 0.25rem;
-  --brand-blue: 218 61% 29%;
-  --brand-blue-light: 218 61% 40%;
-  --brand-blue-dark: 218 61% 20%;
+  --brand-blue: 213 60% 31%;
+  --brand-blue-light: 213 48% 42%;
+  --brand-blue-dark: 213 62% 24%;
 }
 
 * {
@@ -42,9 +46,11 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: 'Open Sans Variable', 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-optical-sizing: auto;
+  font-family: 'Source Sans 3 Variable', 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  /* Source Sans has a smaller x-height than the old face; this keeps text sizes readable without changing layout units */
+  font-size-adjust: 0.52;
   line-height: 1.6;
+  font-kerning: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -64,22 +70,22 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(29, 61, 120, 0.12);
+  box-shadow: 0 16px 40px rgba(31, 73, 125, 0.12);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #1D3D78 0%, #3070B8 100%);
+  background: linear-gradient(135deg, #1F497D 0%, #38669F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, #1D3D78 0%, #2A5BA8 100%);
+  background: linear-gradient(135deg, #1F497D 0%, #38669F 100%);
 }
 
 .brand-gradient-hover {
-  background: linear-gradient(135deg, #162E5A 0%, #1D3D78 100%);
+  background: linear-gradient(135deg, #173963 0%, #1F497D 100%);
 }
 
 .glass-effect {
@@ -99,30 +105,30 @@ body {
 
 .button-outline-white:hover {
   background: rgba(255, 255, 255, 0.95);
-  color: #1D3D78;
+  color: #1F497D;
   border-color: white;
 }
 
 .button-high-contrast {
-  background: #1D3D78;
+  background: #1F497D;
   color: white;
   font-weight: 600;
 }
 
 .button-high-contrast:hover {
-  background: #162E5A;
+  background: #173963;
 }
 
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  background: linear-gradient(90deg, transparent, #DFE3E8, transparent);
 }
 
 /* ── New global look (site-wide refresh) ─────────────────────────────────── */
 html { scroll-behavior: smooth; }
 
 ::selection {
-  background: #1D3D78;
+  background: #1F497D;
   color: #fff;
 }
 
@@ -131,25 +137,25 @@ html { scroll-behavior: smooth; }
 
 /* Small uppercase kicker used above headings */
 .eyebrow {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #656c78; /* WCAG AA on white and warm surfaces */
+  color: #5E6875; /* WCAG AA on white and on the light surface */
 }
 
-/* Condensed architectural display headings */
-.display-heading,
+/* Display headings: sentence case, semibold, slightly tightened. No condensed width, no forced capitals. */
 .font-display {
-  font-stretch: 87.5%;
+  letter-spacing: -0.015em;
 }
 .display-heading {
-  font-family: 'Open Sans Variable', 'Open Sans', system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.012em;
-  line-height: 1;
-  color: #0F1B2D;
+  font-family: 'Source Sans 3 Variable', 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #121D2B;
 }
+h1, h2, h3, .display-heading { text-wrap: balance; }
 
 /* Ken Burns slow zoom for cinematic imagery */
 @keyframes kenburns {

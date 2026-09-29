@@ -87,9 +87,9 @@ const CompareBar = () => {
                 <Link
                   to="/vergleich"
                   className="inline-flex items-center gap-2 text-white font-semibold px-4 py-2 transition-colors text-sm"
-                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                  style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                  onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                 >
                   Vergleichen
                   <ArrowRight size={14} />

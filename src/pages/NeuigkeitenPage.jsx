@@ -89,7 +89,7 @@ function BlogCard({ post, index, lang }) {
 
         {/* Title */}
         <Link to={to}>
-          <h2 className="font-display uppercase text-2xl font-semibold leading-tight text-[#0F1B2D] mb-3 group-hover:text-[#1D3D78] transition-colors line-clamp-2">
+          <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-3 group-hover:text-[#1F497D] transition-colors line-clamp-2">
             {displayTitle}
           </h2>
         </Link>
@@ -104,7 +104,7 @@ function BlogCard({ post, index, lang }) {
         {/* Weiterlesen */}
         <Link
           to={to}
-          className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all" style={{ color: 'var(--brand-color, #1D3D78)' }}
+          className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all" style={{ color: 'var(--brand-color, #1F497D)' }}
         >
           Weiterlesen <ArrowRight size={14} />
         </Link>

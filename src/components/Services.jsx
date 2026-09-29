@@ -33,7 +33,7 @@ const ServiceGrid = ({ services, indexOffset = 0 }) => (
               className="text-gray-300 group-hover:text-gray-700 group-hover:translate-x-1 transition-all"
             />
           </div>
-          <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3 break-words hyphens-auto">{s.title}</h3>
+          <h3 className="font-display text-2xl font-semibold text-[#121D2B] mb-3 break-words hyphens-auto">{s.title}</h3>
           <p className="text-gray-600 leading-relaxed">{s.shortDescription}</p>
           <div className="flex flex-wrap gap-2 mt-6">
             {s.features.map((f) => (
@@ -58,7 +58,7 @@ const SectionHeader = ({ label, title, bold }) => (
     className="mb-10"
   >
     <p className="eyebrow mb-3">{label}</p>
-    <h2 className="display-heading uppercase text-3xl md:text-4xl">
+    <h2 className="display-heading text-3xl md:text-4xl">
       {title} {bold}
     </h2>
   </motion.div>

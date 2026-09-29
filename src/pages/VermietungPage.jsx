@@ -17,7 +17,7 @@ import FavoriteButton from '@/components/FavoriteButton';
 import { useNextFree } from '@/hooks/useNextFree';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 // ─── Type config ──────────────────────────────────────────────────────────────
 
@@ -104,8 +104,8 @@ const NavyCTA = ({ to, label }) => (
     to={to}
     className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-6 transition-colors text-sm"
     style={{ backgroundColor: BRAND }}
-    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
   >
     {label}
     <ArrowRight size={15} />
@@ -142,7 +142,7 @@ const ListingCard = ({ item, index, t }) => {
           alt={image.alt}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/40 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B]/40 via-transparent to-transparent" />
 
         {/* Top-left type badge */}
         <div className="absolute top-3 left-3">
@@ -176,8 +176,8 @@ const ListingCard = ({ item, index, t }) => {
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-3 mb-2">
-          <Link to={getDetailUrl(item)} className="min-w-0 hover:text-[#1D3D78] transition-colors">
-            <h3 className="font-display uppercase text-xl font-semibold leading-tight">{item.title}</h3>
+          <Link to={getDetailUrl(item)} className="min-w-0 hover:text-[#1F497D] transition-colors">
+            <h3 className="font-display text-xl font-semibold leading-tight">{item.title}</h3>
           </Link>
           <div className="flex-shrink-0"><OccupancyBadge status={item.occupancy || 'frei'} /></div>
         </div>
@@ -263,7 +263,7 @@ const ApartmentsEmptyState = () => (
   >
     <div className="bg-white border border-gray-100 p-10 md:p-14 text-center max-w-xl mx-auto">
       <Home size={30} className="mx-auto mb-5" style={{ color: BRAND }} />
-      <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3">
+      <h3 className="font-display text-2xl font-semibold text-[#121D2B] mb-3">
         Aktuell keine Wohnungen verfügbar
       </h3>
       <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-sm mx-auto">
@@ -272,9 +272,9 @@ const ApartmentsEmptyState = () => (
       <a
         href="mailto:office@reto-amonn.ch?subject=Warteliste%20Wohnung&body=Ich%20m%C3%B6chte%20auf%20die%20Warteliste%20f%C3%BCr%20eine%20Mietwohnung%20gesetzt%20werden."
         className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
-        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-        onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+        style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+        onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
       >
         <Bell size={15} />
         Auf Warteliste setzen
@@ -494,8 +494,8 @@ const VermietungPage = () => {
                     style={{ backgroundColor: BRAND, opacity: isActive ? 1 : 0 }}
                     aria-hidden="true"
                   />
-                  <Icon size={22} className="mb-4" style={{ color: s.active ? BRAND : '#9ca3af' }} />
-                  <p className={`font-display uppercase text-xl font-semibold leading-none mb-2 ${s.active ? 'text-[#0F1B2D]' : 'text-gray-400'}`}>{s.label}</p>
+                  <Icon size={22} className="mb-4" style={{ color: s.active ? BRAND : '#8C96A2' }} />
+                  <p className={`font-display text-xl font-semibold leading-none mb-2 ${s.active ? 'text-[#121D2B]' : 'text-gray-400'}`}>{s.label}</p>
                   <p className={`text-xs mb-3 leading-snug ${s.active ? 'text-gray-500' : 'text-gray-400'}`}>{s.tagline}</p>
                   <p className={`text-xs font-semibold uppercase tracking-wider ${s.active ? '' : 'text-gray-400'}`} style={s.active ? { color: BRAND } : undefined}>{s.price}</p>
                 </button>
@@ -553,7 +553,7 @@ const VermietungPage = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Suchen nach Titel, Ort, Beschreibung …"
-                  className="w-full pl-9 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#1D3D78] transition-colors"
+                  className="w-full pl-9 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#1F497D] transition-colors"
                 />
                 {searchQuery && (
                   <button
@@ -573,7 +573,7 @@ const VermietungPage = () => {
                   aria-label="Nach Wohnform filtern"
                   value={typeFilter}
                   onChange={(e) => setTypeFilter(e.target.value)}
-                  className="w-full appearance-none pl-8 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
+                  className="w-full appearance-none pl-8 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1F497D] transition-colors cursor-pointer"
                 >
                   {Object.entries(TYPE_LABELS).map(([val, label]) => (
                     <option key={val} value={val}>{label}</option>
@@ -593,7 +593,7 @@ const VermietungPage = () => {
                   aria-label="Nach Standort filtern"
                   value={locationFilter}
                   onChange={(e) => setLocationFilter(e.target.value)}
-                  className="w-full appearance-none pl-8 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
+                  className="w-full appearance-none pl-8 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1F497D] transition-colors cursor-pointer"
                 >
                   {uniqueLocations.map((loc) => (
                     <option key={loc} value={loc}>
@@ -614,7 +614,7 @@ const VermietungPage = () => {
                   aria-label="Nach Preis filtern"
                   value={priceFilter}
                   onChange={(e) => setPriceFilter(e.target.value)}
-                  className="w-full appearance-none pl-4 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1D3D78] transition-colors cursor-pointer"
+                  className="w-full appearance-none pl-4 pr-8 py-3 text-sm bg-white border border-gray-200 text-gray-700 focus:outline-none focus:border-[#1F497D] transition-colors cursor-pointer"
                 >
                   {PRICE_RANGES.map((r) => (
                     <option key={r.key} value={r.key}>{r.label}</option>
@@ -637,7 +637,7 @@ const VermietungPage = () => {
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="flex items-center gap-1.5 text-xs font-medium transition-colors" style={{ color: 'var(--brand-color, #1D3D78)' }}
+                  className="flex items-center gap-1.5 text-xs font-medium transition-colors" style={{ color: 'var(--brand-color, #1F497D)' }}
                 >
                   <X size={12} />
                   Filter zurücksetzen
@@ -673,7 +673,7 @@ const VermietungPage = () => {
                 >
                   <div className="bg-white border border-gray-100 p-10 md:p-14 text-center max-w-lg mx-auto">
                     <Search size={26} className="mx-auto mb-5" style={{ color: BRAND }} />
-                    <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3">
+                    <h3 className="font-display text-2xl font-semibold text-[#121D2B] mb-3">
                       Keine Ergebnisse gefunden
                     </h3>
                     <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
@@ -682,9 +682,9 @@ const VermietungPage = () => {
                     <button
                       onClick={resetFilters}
                       className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
-                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                      style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                     >
                       <X size={14} />
                       Filter zurücksetzen
@@ -712,7 +712,7 @@ const VermietungPage = () => {
             viewport={{ once: true }}
             className="text-center"
           >
-            <h3 className="display-heading uppercase text-3xl md:text-4xl mb-5">
+            <h3 className="display-heading text-3xl md:text-4xl mb-5">
               {t('vermietung.cta.title')}
             </h3>
             <p className="text-gray-600 leading-relaxed max-w-md mx-auto mb-8">
@@ -723,8 +723,8 @@ const VermietungPage = () => {
                 href="tel:+41319518554"
                 className="inline-flex items-center justify-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
                 style={{ backgroundColor: BRAND }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <Phone size={15} />
                 +41 (0)31 951 85 54

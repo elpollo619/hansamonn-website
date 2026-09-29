@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Expand, Pause, Play }
 import Lightbox from '@/components/Lightbox';
 import { CR_PLANS, CR_TOUR } from '@/data/casaReto';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 const AUTOPLAY_MS = 6000;
 
 /**
@@ -131,7 +131,7 @@ export default function CasaRetoTour() {
                 key={im.url}
                 type="button"
                 onClick={() => { setPlaying(false); setPhoto(i); }}
-                className={`shrink-0 w-20 h-14 overflow-hidden border-2 transition-colors ${i === photo ? 'border-[#1D3D78]' : 'border-transparent opacity-70 hover:opacity-100'}`}
+                className={`shrink-0 w-20 h-14 overflow-hidden border-2 transition-colors ${i === photo ? 'border-[#1F497D]' : 'border-transparent opacity-70 hover:opacity-100'}`}
                 aria-label={`Foto ${i + 1}: ${im.alt}`}
               >
                 <img src={im.url} alt="" loading="lazy" className="w-full h-full object-cover" />
@@ -145,7 +145,7 @@ export default function CasaRetoTour() {
             <p className="text-sm text-gray-500 mb-1">
               Station {stop + 1} von {CR_TOUR.length} · {CR_PLANS[current.level].label}
             </p>
-            <h3 className="font-display uppercase text-2xl md:text-3xl font-semibold text-[#0F1B2D] leading-tight">
+            <h3 className="font-display text-2xl md:text-3xl font-semibold text-[#121D2B] leading-tight">
               {current.title}
             </h3>
             <p className="text-sm font-semibold mt-1" style={{ color: BRAND }}>{current.meta}</p>
@@ -201,7 +201,7 @@ export default function CasaRetoTour() {
           </button>
         </div>
 
-        <div className="relative border border-gray-200 bg-[#f8f6f1]" style={{ aspectRatio: `${plan.w} / ${plan.h}` }}>
+        <div className="relative border border-gray-200 bg-[#F6F8FA]" style={{ aspectRatio: `${plan.w} / ${plan.h}` }}>
           <img src={plan.src} alt={`Grundriss ${plan.label}`} className="absolute inset-0 w-full h-full object-contain" />
           {spots.map((s) => {
             const on = s.index === stop;
@@ -211,13 +211,13 @@ export default function CasaRetoTour() {
                 key={s.id}
                 type="button"
                 onClick={() => pick(s.index)}
-                className={`absolute flex items-center justify-center border-2 transition-colors ${on ? 'border-[#1D3D78] bg-[#1D3D78]/15' : 'border-transparent hover:border-[#1D3D78]/50 hover:bg-[#1D3D78]/10'}`}
+                className={`absolute flex items-center justify-center border-2 transition-colors ${on ? 'border-[#1F497D] bg-[#1F497D]/15' : 'border-transparent hover:border-[#1F497D]/50 hover:bg-[#1F497D]/10'}`}
                 style={{ left: `${x0}%`, top: `${y0}%`, width: `${x1 - x0}%`, height: `${y1 - y0}%` }}
                 aria-label={s.title}
                 aria-current={on ? 'step' : undefined}
               >
                 <span
-                  className={`pointer-events-none whitespace-nowrap px-2 py-1 text-[11px] sm:text-xs font-semibold shadow-sm ${on ? 'text-white' : 'bg-white/95 text-[#0F1B2D]'}`}
+                  className={`pointer-events-none whitespace-nowrap px-2 py-1 text-[11px] sm:text-xs font-semibold shadow-sm ${on ? 'text-white' : 'bg-white/95 text-[#121D2B]'}`}
                   style={on ? { backgroundColor: BRAND } : undefined}
                 >
                   {s.short || s.title}
@@ -237,11 +237,11 @@ export default function CasaRetoTour() {
             <button
               type="button"
               onClick={() => pick(i)}
-              className={`w-full flex items-center gap-2.5 py-2.5 border-b border-gray-100 text-left text-sm transition-colors ${i === stop ? 'font-semibold text-[#0F1B2D]' : 'text-gray-600 hover:text-gray-900'}`}
+              className={`w-full flex items-center gap-2.5 py-2.5 border-b border-gray-100 text-left text-sm transition-colors ${i === stop ? 'font-semibold text-[#121D2B]' : 'text-gray-600 hover:text-gray-900'}`}
             >
               <span
                 className="w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-[11px] font-bold"
-                style={i === stop ? { backgroundColor: BRAND, color: '#fff' } : { backgroundColor: '#eef0f4', color: '#0F1B2D' }}
+                style={i === stop ? { backgroundColor: BRAND, color: '#fff' } : { backgroundColor: '#EDF0F3', color: '#121D2B' }}
               >
                 {i + 1}
               </span>

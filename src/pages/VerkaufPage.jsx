@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Building2, Tag, MapPin, Mail } from 'lucide-react';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 
@@ -42,7 +42,7 @@ const VerkaufPage = () => (
         >
           <div className="bg-white border border-dashed border-gray-300 px-6 py-16 md:p-20 text-center mb-10">
             <Building2 size={34} className="mx-auto mb-6" style={{ color: BRAND }} />
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Aktuell keine Kaufobjekte verfügbar</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-4">Aktuell keine Kaufobjekte verfügbar</h2>
             <p className="text-gray-600 leading-relaxed max-w-md mx-auto mb-8">
               Wir bereiten neue Kaufobjekte vor. Kontaktieren Sie uns, um bei Verfügbarkeit benachrichtigt zu werden.
             </p>
@@ -51,8 +51,8 @@ const VerkaufPage = () => (
                 to="/kontakt"
                 className="inline-flex items-center gap-2 text-white px-6 py-3 text-sm font-semibold transition-colors"
                 style={{ backgroundColor: BRAND }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <Mail size={15} /> Kontakt aufnehmen
               </Link>
@@ -74,7 +74,7 @@ const VerkaufPage = () => (
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="bg-white p-8">
                 <Icon size={24} className="mb-5" style={{ color: BRAND }} />
-                <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-2">{title}</h3>
+                <h3 className="font-display text-xl font-semibold text-[#121D2B] mb-2">{title}</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
               </div>
             ))}

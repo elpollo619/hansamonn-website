@@ -68,13 +68,13 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
   };
 
   const inputCls =
-    'w-full border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1D3D78] transition';
+    'w-full border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1F497D] transition';
   const labelCls = 'block text-xs font-semibold text-gray-600 mb-1.5';
 
   if (success) {
     return (
       <div className="bg-gray-50 border border-gray-200 p-6 text-center">
-        <CheckCircle2 size={40} className="mx-auto mb-3" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+        <CheckCircle2 size={40} className="mx-auto mb-3" style={{ color: 'var(--brand-color, #1F497D)' }} />
         <p className="font-semibold text-gray-900 text-base">
           Ihr Terminwunsch wurde übermittelt. Wir melden uns in Kürze.
         </p>
@@ -209,9 +209,9 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
         type="submit"
         disabled={submitting}
         className="w-full flex items-center justify-center gap-2 disabled:opacity-60 text-white font-semibold py-3.5 px-4 transition-colors"
-        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-        onMouseOver={e => !submitting && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+        style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+        onMouseOver={e => !submitting && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
       >
         {submitting ? (
           <><Loader2 size={16} className="animate-spin" /> Wird gesendet…</>

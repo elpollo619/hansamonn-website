@@ -9,10 +9,10 @@ import PageHero from '@/components/PageHero';
 
 // ── Type labels & colours ─────────────────────────────────────────────────────
 const TYPE_CFG = {
-  'long-stay': { label: 'Long Stay',       hex: '#1D3D78', bg: 'bg-gray-100',   text: 'text-gray-600'  },
-  hotel:       { label: 'Short Stay',      hex: '#1D3D78', bg: 'bg-gray-100',  text: 'text-gray-600' },
-  project:     { label: 'Ferienhaus',      hex: '#1D3D78', bg: 'bg-gray-100',    text: 'text-gray-600'   },
-  apartment:   { label: 'Wohnung',         hex: '#1D3D78', bg: 'bg-gray-100',    text: 'text-gray-600'   },
+  'long-stay': { label: 'Long Stay',       hex: '#1F497D', bg: 'bg-gray-100',   text: 'text-gray-600'  },
+  hotel:       { label: 'Short Stay',      hex: '#1F497D', bg: 'bg-gray-100',  text: 'text-gray-600' },
+  project:     { label: 'Ferienhaus',      hex: '#1F497D', bg: 'bg-gray-100',    text: 'text-gray-600'   },
+  apartment:   { label: 'Wohnung',         hex: '#1F497D', bg: 'bg-gray-100',    text: 'text-gray-600'   },
 };
 function cfg(type) { return TYPE_CFG[type] || TYPE_CFG['long-stay']; }
 
@@ -122,7 +122,7 @@ function LeafletMap({ listings, activeId, onMarkerClick }) {
       const isActive = String(id) === String(activeId);
       inner.style.transform  = isActive ? 'scale(1.3)' : 'scale(1)';
       inner.style.boxShadow  = isActive
-        ? '0 0 0 6px rgba(29,61,120,0.25), 0 2px 8px rgba(0,0,0,0.22)'
+        ? '0 0 0 6px rgba(31, 73, 125,0.25), 0 2px 8px rgba(0,0,0,0.22)'
         : '0 2px 8px rgba(0,0,0,0.22)';
     });
   }, [activeId]);
@@ -234,7 +234,7 @@ export default function KartePage() {
                         >
                           {cfg(activeListing.type).label}
                         </span>
-                        <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] leading-tight">
+                        <h3 className="font-display text-2xl font-semibold text-[#121D2B] leading-tight">
                           {activeListing.title}
                         </h3>
                       </div>
@@ -263,9 +263,9 @@ export default function KartePage() {
                     <Link
                       to={detailLink(activeListing)}
                       className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-3 px-6 transition-colors"
-                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                      style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                     >
                       Details ansehen <ArrowRight size={13} />
                     </Link>
@@ -288,10 +288,10 @@ export default function KartePage() {
                         <div
                           className="w-9 h-9 surface-warm flex items-center justify-center flex-shrink-0"
                         >
-                          <MapPin size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                          <MapPin size={14} style={{ color: 'var(--brand-color, #1F497D)' }} />
                         </div>
                         <div className="min-w-0">
-                          <p className="font-display uppercase text-lg font-semibold text-[#0F1B2D] leading-tight truncate">{item.title}</p>
+                          <p className="font-display text-lg font-semibold text-[#121D2B] leading-tight truncate">{item.title}</p>
                           <p className="text-xs text-gray-500 truncate mt-0.5">{item.location}</p>
                         </div>
                         <ArrowRight size={14} className="text-gray-300 group-hover:text-gray-600 transition-colors ml-auto flex-shrink-0" />

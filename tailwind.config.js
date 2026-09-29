@@ -16,21 +16,33 @@ module.exports = {
 			},
 		},
 		extend: {
-			// Override the entire blue scale with AMONN brand navy
+			// Colours derived from the HANS AMONN AG logo navy #1F497D (hue 213°).
 			colors: {
-				// gray-400 darkened so small grey text keeps WCAG AA contrast (4.5:1) on white and warm surfaces
-				gray: { 400: '#656c78' },
+				// Neutrals tinted towards the logo hue, so greys sit with the navy instead of against it.
+				// 400 stays dark enough for small text (WCAG AA 4.5:1 on white and on the light surface).
+				gray: {
+					50:  '#F6F8FA',
+					100: '#EDF0F3',
+					200: '#DFE3E8',
+					300: '#C7CED6',
+					400: '#5E6875',
+					500: '#56606C',
+					600: '#454E5A',
+					700: '#343C47',
+					800: '#222A35',
+					900: '#141B25',
+				},
 				blue: {
-					50:  '#EFF4FB',
-					100: '#D9E6F5',
-					200: '#B3CEEB',
-					300: '#8DB5E1',
-					400: '#5B92D0',
-					500: '#3070B8',
-					600: '#1D3D78', // ← AMONN logo navy (primary action color)
-					700: '#162E5A',
-					800: '#0F1E3C',
-					900: '#0A1427',
+					50:  '#F2F6FA',
+					100: '#E6ECF5',
+					200: '#C9D7E8',
+					300: '#9CB5D3',
+					400: '#628ABC',
+					500: '#38669F',
+					600: '#1F497D', // ← logo navy (primary action colour)
+					700: '#173963',
+					800: '#122944',
+					900: '#0D1B2B',
 				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -67,11 +79,13 @@ module.exports = {
 				},
 			},
 			fontFamily: {
-				sans: ['"Open Sans Variable"', '"Open Sans"', 'system-ui', '-apple-system', '"Segoe UI"', 'sans-serif'],
-				display: ['"Open Sans Variable"', '"Open Sans"', 'system-ui', 'sans-serif'],
+				sans: ['"Source Sans 3 Variable"', '"Source Sans 3"', '"Segoe UI"', 'system-ui', '-apple-system', 'sans-serif'],
+				display: ['"Source Sans 3 Variable"', '"Source Sans 3"', '"Segoe UI"', 'system-ui', 'sans-serif'],
+				// Plan labels, measurements and codes: the monospaced member of the same family
+				mono: ['"Source Code Pro Variable"', '"Source Code Pro"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 			},
 			letterSpacing: {
-				'hairline': '0.28em',
+				'hairline': '0.14em',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

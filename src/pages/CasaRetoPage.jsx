@@ -18,7 +18,7 @@ import CasaRetoAnfrageForm from '@/components/CasaRetoAnfrageForm';
 import CasaRetoTour from '@/components/CasaRetoTour';
 import Model3DSection from '@/components/Model3DSection';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -62,7 +62,7 @@ function LocationMap({ lat, lng, label }) {
         .addTo(map);
       const icon = L.divIcon({
         className: '',
-        html: `<div style="width:36px;height:36px;border-radius:50%;background:#1D3D78;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
+        html: `<div style="width:36px;height:36px;border-radius:50%;background:#1F497D;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
           <svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M18.66 5.34l-1.41 1.41'/></svg>
         </div>`,
         iconSize: [36, 36],
@@ -92,7 +92,7 @@ function SectionHead({ eyebrow, title, text, className = '' }) {
   return (
     <motion.div {...fadeUp} className={`max-w-2xl mb-10 ${className}`}>
       {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-      <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">{title}</h2>
+      <h2 className="display-heading text-3xl md:text-4xl mb-4">{title}</h2>
       {text && <p className="text-gray-600 leading-relaxed">{text}</p>}
     </motion.div>
   );
@@ -144,7 +144,7 @@ export default function CasaRetoPage() {
       </Helmet>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[88vh] flex items-end overflow-hidden bg-[#0B1220]">
+      <section className="relative min-h-[88vh] flex items-end overflow-hidden bg-[#0D1B2B]">
         <img
           src="/images/casa-reto/titel.jpg"
           alt="Blick von der Casa Reto über den Lago Maggiore"
@@ -152,7 +152,7 @@ export default function CasaRetoPage() {
           loading="eager"
           fetchpriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/90 via-[#0B1220]/35 to-[#0B1220]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B]/90 via-[#0D1B2B]/35 to-[#0D1B2B]/10" />
 
         <div className="relative container mx-auto px-6 pb-14 pt-32">
           <motion.div
@@ -164,7 +164,7 @@ export default function CasaRetoPage() {
             <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/70 mb-4">
               Ferienhaus im Tessin
             </p>
-            <h1 className="font-display uppercase text-4xl md:text-6xl font-semibold leading-[0.95] mb-6">
+            <h1 className="font-display text-4xl md:text-6xl font-semibold leading-[1.04] mb-6">
               Casa Reto
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mb-7">
@@ -206,7 +206,7 @@ export default function CasaRetoPage() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 border-b border-gray-100 pb-10 mb-14">
           {CR_FACTS.map((f) => (
             <div key={f.label} className="border-t-2 pt-3" style={{ borderColor: BRAND }}>
-              <div className="font-display uppercase text-3xl md:text-4xl font-semibold text-[#0F1B2D] leading-none">{f.value}</div>
+              <div className="font-display text-3xl md:text-4xl font-semibold text-[#121D2B] leading-none">{f.value}</div>
               <div className="text-sm text-gray-500 mt-1.5">{f.label}</div>
             </div>
           ))}
@@ -214,7 +214,7 @@ export default function CasaRetoPage() {
 
         <div className="grid gap-12 lg:grid-cols-2 items-center">
           <motion.div {...fadeUp}>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Ankommen und durchatmen</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-6">Ankommen und durchatmen</h2>
             <p className="text-gray-600 leading-relaxed mb-5">
               Casa Reto steht im Dorfkern von Gordemo, am Hang oberhalb von Tenero und am Eingang
               zum Verzascatal. Im Erdgeschoss liegen Wohnzimmer mit Holzofen, Küche mit Essplatz
@@ -259,7 +259,7 @@ export default function CasaRetoPage() {
           <figure key={v.label} className="relative aspect-[4/3] md:aspect-auto md:h-[70vh] overflow-hidden bg-gray-900">
             <img src={v.src} alt={v.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
             <figcaption className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-              <span className="font-display uppercase text-white text-2xl md:text-3xl font-semibold">{v.label}</span>
+              <span className="font-display text-white text-2xl md:text-3xl font-semibold">{v.label}</span>
             </figcaption>
           </figure>
         ))}
@@ -275,7 +275,7 @@ export default function CasaRetoPage() {
           <div className="grid gap-px bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-3">
             {CR_AMENITIES.map((g) => (
               <motion.div {...fadeUp} key={g.group} className="bg-white p-7">
-                <h3 className="font-semibold text-[#0F1B2D] mb-4">{g.group}</h3>
+                <h3 className="font-semibold text-[#121D2B] mb-4">{g.group}</h3>
                 <ul className="space-y-2.5">
                   {g.items.map((it) => (
                     <li key={it} className="flex items-start gap-2.5 text-sm text-gray-600">
@@ -294,9 +294,9 @@ export default function CasaRetoPage() {
       <section className="container mx-auto px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-12 items-start">
           <motion.div {...fadeUp} className="lg:col-span-5">
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">Was Gäste sagen</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-6">Was Gäste sagen</h2>
             <div className="flex items-end gap-4 mb-4">
-              <span className="font-display text-5xl font-semibold leading-none text-[#0F1B2D]">{fmt(CR_RATING.score)}</span>
+              <span className="font-display text-5xl font-semibold leading-none text-[#121D2B]">{fmt(CR_RATING.score)}</span>
               <span className="pb-2 text-gray-500 text-sm leading-snug">
                 von 5 Sternen<br />{CR_RATING.count} Bewertungen auf {CR_RATING.source}
               </span>
@@ -323,7 +323,7 @@ export default function CasaRetoPage() {
                   <span className="h-1.5 bg-gray-100 relative overflow-hidden">
                     <span className="absolute inset-y-0 left-0" style={{ width: `${(c.value / 5) * 100}%`, backgroundColor: BRAND }} />
                   </span>
-                  <span className="font-semibold text-[#0F1B2D] text-right">{fmt(c.value)}</span>
+                  <span className="font-semibold text-[#121D2B] text-right">{fmt(c.value)}</span>
                 </li>
               ))}
             </ul>
@@ -345,14 +345,14 @@ export default function CasaRetoPage() {
               <p className="mt-2 text-xs text-gray-500">Ungefähre Lage. Die genaue Adresse erhalten Sie mit der Buchungsbestätigung.</p>
             </motion.div>
             <motion.div {...fadeUp} className="bg-white border border-gray-100">
-              <h3 className="flex items-center gap-2 font-semibold text-[#0F1B2D] px-6 pt-6 pb-3">
+              <h3 className="flex items-center gap-2 font-semibold text-[#121D2B] px-6 pt-6 pb-3">
                 <Clock size={17} style={{ color: BRAND }} /> Fahrzeiten mit dem Auto
               </h3>
               <ul>
                 {CR_DISTANCES.map((d) => (
                   <li key={d.place} className="flex items-center justify-between gap-4 px-6 py-3 border-t border-gray-100 text-sm">
                     <span className="text-gray-700">{d.place}</span>
-                    <span className="font-semibold text-[#0F1B2D] whitespace-nowrap">{d.time}</span>
+                    <span className="font-semibold text-[#121D2B] whitespace-nowrap">{d.time}</span>
                   </li>
                 ))}
               </ul>
@@ -362,7 +362,7 @@ export default function CasaRetoPage() {
           <div className="grid gap-px bg-gray-200 border border-gray-200 sm:grid-cols-2 lg:grid-cols-4">
             {CR_ACTIVITIES.map((a) => (
               <motion.div {...fadeUp} key={a.title} className="bg-white p-6">
-                <h3 className="font-semibold text-[#0F1B2D] mb-2">{a.title}</h3>
+                <h3 className="font-semibold text-[#121D2B] mb-2">{a.title}</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{a.text}</p>
               </motion.div>
             ))}
@@ -374,7 +374,7 @@ export default function CasaRetoPage() {
       <section className="container mx-auto px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <motion.div {...fadeUp} className="lg:col-span-4">
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Gut zu wissen</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-4">Gut zu wissen</h2>
             <p className="text-gray-600 leading-relaxed mb-6">
               Hausregeln und Details zur Anreise. Bei Fragen melden Sie sich einfach bei uns.
             </p>
@@ -386,7 +386,7 @@ export default function CasaRetoPage() {
           <motion.dl {...fadeUp} className="lg:col-span-8 grid sm:grid-cols-2 gap-x-10">
             {CR_RULES.map((r) => (
               <div key={r.label} className="py-4 border-b border-gray-100">
-                <dt className="text-sm font-semibold text-[#0F1B2D]">{r.label}</dt>
+                <dt className="text-sm font-semibold text-[#121D2B]">{r.label}</dt>
                 <dd className="text-sm text-gray-600 mt-0.5">{r.value}</dd>
               </div>
             ))}
@@ -443,14 +443,14 @@ export default function CasaRetoPage() {
       <section className="container mx-auto px-6 py-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <motion.div {...fadeUp} className="lg:col-span-4">
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Häufige Fragen</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-4">Häufige Fragen</h2>
             <p className="text-gray-600 leading-relaxed">Ihre Frage ist nicht dabei? Rufen Sie uns an oder schreiben Sie uns.</p>
           </motion.div>
           <motion.div {...fadeUp} className="lg:col-span-8">
             <div className="border-t border-gray-100">
               {CR_FAQ.map(({ q, a }) => (
                 <details key={q} className="group border-b border-gray-100">
-                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none font-semibold text-[#0F1B2D] [&::-webkit-details-marker]:hidden">
+                  <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none font-semibold text-[#121D2B] [&::-webkit-details-marker]:hidden">
                     {q}
                     <ChevronDown size={18} className="shrink-0 text-gray-400 transition-transform group-open:rotate-180" />
                   </summary>

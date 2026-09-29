@@ -34,7 +34,7 @@ function StatCard({ value, suffix, label, started, last }) {
       <span className="font-display text-4xl md:text-5xl font-semibold text-white tabular-nums leading-none">
         {count}{suffix}
       </span>
-      <span className="mt-3 text-white/75 text-[10px] font-semibold uppercase tracking-[0.22em]">
+      <span className="mt-3 text-white/80 text-sm leading-snug">
         {label}
       </span>
     </div>
@@ -57,7 +57,7 @@ export default function StatsSection() {
   }, []);
 
   return (
-    <section ref={ref} style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+    <section ref={ref} style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 divide-white/10">
           {STATS.map((s, i) => (

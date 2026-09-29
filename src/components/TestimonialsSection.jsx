@@ -11,7 +11,7 @@ function StarRating({ rating }) {
         <Star
           key={n}
           size={14}
-          className={n <= rating ? 'fill-[#1D3D78] text-[#1D3D78]' : 'text-gray-200 fill-gray-200'}
+          className={n <= rating ? 'fill-[#1F497D] text-[#1F497D]' : 'text-gray-200 fill-gray-200'}
         />
       ))}
     </div>
@@ -70,7 +70,7 @@ export default function TestimonialsSection() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="mb-12">
           <p className="eyebrow mb-3">Amonn Referenzen</p>
-          <h2 className="display-heading uppercase text-3xl md:text-4xl">
+          <h2 className="display-heading text-3xl md:text-4xl">
             Was unsere Kunden sagen
           </h2>
         </div>

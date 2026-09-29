@@ -18,12 +18,12 @@ const TeamMember = ({ member, index }) => {
       {/* Photo */}
       <div className="relative overflow-hidden aspect-[4/5] bg-gray-100">
         <MemberPortrait member={member} imgClassName="group-hover:scale-105 transition-transform duration-700" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/70 via-[#0B1220]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B]/70 via-[#0D1B2B]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Role icon badge */}
         {Icon && (
           <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 flex items-center justify-center">
-            <Icon size={18} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+            <Icon size={18} style={{ color: 'var(--brand-color, #1F497D)' }} />
           </div>
         )}
 
@@ -35,12 +35,12 @@ const TeamMember = ({ member, index }) => {
             className="w-10 h-10 bg-white flex items-center justify-center hover:bg-gray-100 transition-colors"
             title={`E-Mail an ${member.name}`}
           >
-            <Mail size={16} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+            <Mail size={16} style={{ color: 'var(--brand-color, #1F497D)' }} />
           </a>
           <Link
             to={`/team/${member.slug}`}
             className="flex-1 h-10 bg-white px-3 flex items-center justify-center gap-1.5 hover:bg-gray-100 transition-colors text-xs font-semibold uppercase tracking-wider"
-            style={{ color: 'var(--brand-color, #1D3D78)' }}
+            style={{ color: 'var(--brand-color, #1F497D)' }}
           >
             Profil ansehen <ArrowRight size={12} />
           </Link>
@@ -49,8 +49,8 @@ const TeamMember = ({ member, index }) => {
 
       {/* Info */}
       <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-display uppercase text-2xl font-semibold leading-tight text-[#0F1B2D]">{member.name}</h3>
-        <p className="text-xs font-semibold uppercase tracking-wider mt-1.5 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }}>{member.position}</p>
+        <h3 className="font-display text-2xl font-semibold leading-tight text-[#121D2B]">{member.name}</h3>
+        <p className="text-xs font-semibold uppercase tracking-wider mt-1.5 mb-4" style={{ color: 'var(--brand-color, #1F497D)' }}>{member.position}</p>
 
         {(member.education || member.experience) && (
           <div className="space-y-1.5 mb-4 text-xs text-gray-600">
@@ -76,7 +76,7 @@ const TeamMember = ({ member, index }) => {
         <Link
           to={`/team/${member.slug}`}
           className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all"
-          style={{ color: 'var(--brand-color, #1D3D78)' }}
+          style={{ color: 'var(--brand-color, #1F497D)' }}
         >
           Profil ansehen <ArrowRight size={14} />
         </Link>

@@ -10,7 +10,7 @@ import Lightbox from '@/components/Lightbox';
 import PanoramaViewer from '@/components/PanoramaViewer';
 import Model3DSection from '@/components/Model3DSection';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 const IMG = '/images/ns-hotel';
 
 function getBookingDates() {
@@ -114,13 +114,13 @@ export default function NsHotelPage() {
       </Helmet>
 
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[88vh] flex items-end overflow-hidden bg-[#0B1220]">
+      <section className="relative min-h-[88vh] flex items-end overflow-hidden bg-[#0D1B2B]">
         <div
           className="absolute inset-0 bg-cover bg-center kenburns"
           style={{ backgroundImage: `url(${IMG}/aussen.jpg)` }}
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220] via-[#0B1220]/45 to-[#0B1220]/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B] via-[#0D1B2B]/45 to-[#0D1B2B]/10" />
 
         <div className="relative container mx-auto px-6 pb-14 pt-32">
           <motion.div
@@ -132,7 +132,7 @@ export default function NsHotelPage() {
             <p className="text-[11px] font-semibold tracking-hairline text-white/70 uppercase mb-4">
               Hans Amonn AG · Short Stay · Kerzers
             </p>
-            <h1 className="font-display uppercase text-white text-4xl md:text-6xl font-semibold leading-[0.92] mb-6">
+            <h1 className="font-display text-white text-4xl md:text-6xl font-semibold leading-[1.04] mb-6">
               N&apos;s Hotel
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl leading-relaxed mb-9">
@@ -172,7 +172,7 @@ export default function NsHotelPage() {
               <div key={label} className="flex items-center gap-4 py-7 px-4 md:px-8">
                 <Icon size={22} style={{ color: BRAND }} className="shrink-0" />
                 <div>
-                  <div className="font-display uppercase text-lg font-semibold leading-none">{label}</div>
+                  <div className="font-display text-lg font-semibold leading-none">{label}</div>
                   <div className="text-xs text-gray-500 mt-1">{sub}</div>
                 </div>
               </div>
@@ -186,7 +186,7 @@ export default function NsHotelPage() {
         <div className="grid gap-12 lg:grid-cols-12 items-center">
           <motion.div {...fadeUp} className="lg:col-span-5">
             <p className="eyebrow mb-3">Ihr Aufenthalt</p>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-6">
+            <h2 className="display-heading text-3xl md:text-4xl mb-6">
               Ankommen, <br />einchecken, wohlfühlen
             </h2>
             <p className="text-gray-600 leading-relaxed mb-5">
@@ -233,7 +233,7 @@ export default function NsHotelPage() {
           <motion.div {...fadeUp} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
             <div>
               <p className="eyebrow mb-3">Zimmer & Räume</p>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl">Für jeden Aufenthalt</h2>
+              <h2 className="display-heading text-3xl md:text-4xl">Für jeden Aufenthalt</h2>
             </div>
             <div className="flex flex-wrap gap-2" role="tablist">
               {ROOMS.map((r) => (
@@ -277,7 +277,7 @@ export default function NsHotelPage() {
               </button>
 
               <div className="lg:col-span-4 flex flex-col">
-                <h3 className="font-display uppercase text-3xl font-semibold mb-3">{room.name}</h3>
+                <h3 className="font-display text-3xl font-semibold mb-3">{room.name}</h3>
                 <p className="text-gray-600 leading-relaxed mb-6">{room.text}</p>
                 <div className="grid grid-cols-2 gap-3 mt-auto">
                   {room.images.slice(1, 5).map((img, i) => (
@@ -299,14 +299,14 @@ export default function NsHotelPage() {
       </section>
 
       {/* ── 360° tour ────────────────────────────────────────────────────── */}
-      <section className="bg-[#0B1220] text-white py-24">
+      <section className="bg-[#0D1B2B] text-white py-24">
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
             <div>
               <p className="text-[11px] font-semibold tracking-hairline text-white/60 uppercase mb-3 inline-flex items-center gap-2">
                 <Rotate3d size={14} /> 360° Rundgang
               </p>
-              <h2 className="font-display uppercase text-3xl md:text-4xl font-semibold leading-none">
+              <h2 className="font-display text-3xl md:text-4xl font-semibold leading-none">
                 Das Musterzimmer
               </h2>
             </div>
@@ -354,7 +354,7 @@ export default function NsHotelPage() {
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="max-w-2xl mb-10">
             <p className="eyebrow mb-3">Von oben</p>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Allmendstrasse 12 + 14</h2>
+            <h2 className="display-heading text-3xl md:text-4xl mb-4">Allmendstrasse 12 + 14</h2>
             <p className="text-gray-600 leading-relaxed">
               Ruhig gelegen in Kerzers, direkt an der Bahnlinie Bern–Neuchâtel,
               mit begrünten Dächern, Garten und eigenen Parkplätzen.
@@ -386,7 +386,7 @@ export default function NsHotelPage() {
           <div className="grid lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-5">
               <MessageSquare style={{ color: BRAND }} size={30} className="mb-5" />
-              <h3 className="display-heading uppercase text-3xl md:text-4xl mb-4">
+              <h3 className="display-heading text-3xl md:text-4xl mb-4">
                 Fragen oder Probleme?
               </h3>
               <p className="text-gray-600 leading-relaxed">

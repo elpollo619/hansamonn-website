@@ -50,7 +50,7 @@ const ServiceDetailPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <p className="text-xl md:text-2xl text-[#0F1B2D] leading-relaxed mb-8">
+                <p className="text-xl md:text-2xl text-[#121D2B] leading-relaxed mb-8">
                   {service.shortDescription}
                 </p>
                 <p className="text-gray-600 leading-relaxed mb-12">
@@ -58,7 +58,7 @@ const ServiceDetailPage = () => {
                 </p>
 
                 {/* Bullet Points */}
-                <h2 className="display-heading uppercase text-3xl md:text-4xl mb-8">
+                <h2 className="display-heading text-3xl md:text-4xl mb-8">
                   Was wir für Sie tun
                 </h2>
                 <ul className="border-t border-gray-100 mb-10">
@@ -70,7 +70,7 @@ const ServiceDetailPage = () => {
                       transition={{ duration: 0.4, delay: i * 0.08 }}
                       className="flex items-start gap-4 py-4 border-b border-gray-100"
                     >
-                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                      <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: 'var(--brand-color, #1F497D)' }} />
                       <span className="text-gray-600 leading-relaxed">{bullet}</span>
                     </motion.li>
                   ))}
@@ -99,7 +99,7 @@ const ServiceDetailPage = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="surface-warm p-8 border border-gray-100"
               >
-                <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-3">
+                <h3 className="font-display text-2xl font-semibold text-[#121D2B] mb-3">
                   Haben Sie Fragen?
                 </h3>
                 <p className="text-gray-600 leading-relaxed mb-6">
@@ -109,9 +109,9 @@ const ServiceDetailPage = () => {
                   <a
                     href="tel:+41319518554"
                     className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 px-6 text-sm transition-colors"
-                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                    style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                   >
                     <Phone size={15} /> +41 (0)31 951 85 54
                   </a>
@@ -138,7 +138,7 @@ const ServiceDetailPage = () => {
                   transition={{ duration: 0.6, delay: 0.35 }}
                   className="surface-warm p-8 border border-gray-100"
                 >
-                  <h3 className="font-display uppercase text-2xl font-semibold text-[#0F1B2D] mb-5">
+                  <h3 className="font-display text-2xl font-semibold text-[#121D2B] mb-5">
                     Weitere Leistungen
                   </h3>
                   <ul className="space-y-2">
@@ -148,10 +148,10 @@ const ServiceDetailPage = () => {
                         <li key={s.slug}>
                           <Link
                             to={`/leistungen/${s.slug}`}
-                            className="flex items-center gap-3 bg-white border border-gray-100 hover:border-gray-300 p-3 text-gray-700 hover:text-[#1D3D78] transition-colors group"
+                            className="flex items-center gap-3 bg-white border border-gray-100 hover:border-gray-300 p-3 text-gray-700 hover:text-[#1F497D] transition-colors group"
                           >
                             <div className="w-9 h-9 border border-gray-200 flex items-center justify-center group-hover:border-gray-400 transition-colors shrink-0">
-                              <RelIcon className="w-4 h-4" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                              <RelIcon className="w-4 h-4" style={{ color: 'var(--brand-color, #1F497D)' }} />
                             </div>
                             <span className="text-sm font-semibold">{s.title}</span>
                           </Link>
@@ -161,7 +161,7 @@ const ServiceDetailPage = () => {
                   </ul>
                   <Link
                     to="/leistungen"
-                    className="mt-5 inline-flex items-center text-sm font-semibold" style={{ color: 'var(--brand-color, #1D3D78)' }}
+                    className="mt-5 inline-flex items-center text-sm font-semibold" style={{ color: 'var(--brand-color, #1F497D)' }}
                   >
                     <ArrowLeft size={14} className="mr-1" />
                     Alle Leistungen

@@ -323,7 +323,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
 
   const chip = (active) =>
     `px-3 py-2 text-xs font-semibold uppercase tracking-wider border transition-colors ${
-      active ? 'bg-[#0F1B2D] text-white border-[#0F1B2D]' : 'bg-white/90 text-gray-700 border-gray-200 hover:border-gray-400'
+      active ? 'bg-[#121D2B] text-white border-[#121D2B]' : 'bg-white/90 text-gray-700 border-gray-200 hover:border-gray-400'
     }`;
 
   return (
@@ -331,7 +331,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       <div
         ref={mountRef}
         onPointerDown={() => setActive(true)}
-        className={`absolute inset-0 cursor-grab active:cursor-grabbing transition-shadow ${active ? 'ring-2 ring-inset ring-[#1D3D78]/40' : ''}`}
+        className={`absolute inset-0 cursor-grab active:cursor-grabbing transition-shadow ${active ? 'ring-2 ring-inset ring-[#1F497D]/40' : ''}`}
         role="img"
         aria-label={`Interaktives 3D-Modell ${meta.name}, ${meta.address}`}
       />

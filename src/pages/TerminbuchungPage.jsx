@@ -5,7 +5,7 @@ import { Clock, MapPin, Phone, Mail } from 'lucide-react';
 import TerminbuchungForm from '@/components/TerminbuchungForm';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 export default function TerminbuchungPage() {
   return (
@@ -34,7 +34,7 @@ export default function TerminbuchungPage() {
               className="lg:col-span-7 min-w-0"
             >
               <div className="bg-white border border-gray-100 p-6 md:p-10">
-                <h2 className="display-heading uppercase text-3xl md:text-4xl mb-8">Terminanfrage senden</h2>
+                <h2 className="display-heading text-3xl md:text-4xl mb-8">Terminanfrage senden</h2>
                 <TerminbuchungForm />
               </div>
             </motion.div>
@@ -51,7 +51,7 @@ export default function TerminbuchungPage() {
               <div className="surface-warm p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-5">
                   <Clock size={18} style={{ color: BRAND }} />
-                  <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D]">Öffnungszeiten</h3>
+                  <h3 className="font-display text-xl font-semibold text-[#121D2B]">Öffnungszeiten</h3>
                 </div>
                 <div className="text-sm text-gray-600 divide-y divide-gray-200 border-t border-b border-gray-200">
                   <div className="flex justify-between gap-4 py-3">
@@ -73,7 +73,7 @@ export default function TerminbuchungPage() {
               <div className="border border-gray-100 p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-4">
                   <MapPin size={18} style={{ color: BRAND }} />
-                  <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D]">Adresse</h3>
+                  <h3 className="font-display text-xl font-semibold text-[#121D2B]">Adresse</h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
                   Hans Amonn AG<br />
@@ -83,11 +83,11 @@ export default function TerminbuchungPage() {
 
               {/* Contact */}
               <div className="border border-gray-100 p-6 md:p-8">
-                <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-5">Direkter Kontakt</h3>
+                <h3 className="font-display text-xl font-semibold text-[#121D2B] mb-5">Direkter Kontakt</h3>
                 <div className="space-y-3">
                   <a
                     href="tel:+41319518554"
-                    className="flex items-center gap-3 text-sm text-gray-700 hover:text-[#1D3D78] transition-colors"
+                    className="flex items-center gap-3 text-sm text-gray-700 hover:text-[#1F497D] transition-colors"
                   >
                     <div className="w-9 h-9 surface-warm flex items-center justify-center flex-shrink-0">
                       <Phone size={14} style={{ color: BRAND }} />
@@ -96,7 +96,7 @@ export default function TerminbuchungPage() {
                   </a>
                   <a
                     href="mailto:office@reto-amonn.ch"
-                    className="flex items-center gap-3 text-sm text-gray-700 hover:text-[#1D3D78] transition-colors break-all"
+                    className="flex items-center gap-3 text-sm text-gray-700 hover:text-[#1F497D] transition-colors break-all"
                   >
                     <div className="w-9 h-9 surface-warm flex items-center justify-center flex-shrink-0">
                       <Mail size={14} style={{ color: BRAND }} />
@@ -107,7 +107,7 @@ export default function TerminbuchungPage() {
               </div>
 
               {/* Info note */}
-              <div className="bg-[#0B1220] text-white p-6 md:p-8">
+              <div className="bg-[#0D1B2B] text-white p-6 md:p-8">
                 <p className="text-sm text-white/75 leading-relaxed">
                   <strong className="text-white">Hinweis:</strong> Wir bestätigen Terminwünsche in der Regel innerhalb von 1 Werktag.
                   Bei dringenden Anfragen empfehlen wir einen direkten Anruf.

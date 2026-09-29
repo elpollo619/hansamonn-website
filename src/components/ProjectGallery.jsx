@@ -19,8 +19,8 @@ const ProjectGallery = ({ project, onImageClick }) => {
               loading="lazy"
               decoding="async"
             />
-            <div className="absolute inset-0 bg-[#0B1220]/0 group-hover:bg-[#0B1220]/15 transition-colors"></div>
-            <div className="absolute top-4 left-4 text-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+            <div className="absolute inset-0 bg-[#0D1B2B]/0 group-hover:bg-[#0D1B2B]/15 transition-colors"></div>
+            <div className="absolute top-4 left-4 text-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
               Featured Project
             </div>
           </div>
@@ -35,7 +35,7 @@ const ProjectGallery = ({ project, onImageClick }) => {
                 loading="lazy"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-[#0B1220]/0 group-hover:bg-[#0B1220]/15 transition-colors"></div>
+              <div className="absolute inset-0 bg-[#0D1B2B]/0 group-hover:bg-[#0D1B2B]/15 transition-colors"></div>
             </div>
           ))}
         </div>

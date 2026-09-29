@@ -115,7 +115,7 @@ function AppRoutes() {
       <ScrollToTop />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#0F1B2D] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-white focus:text-[#121D2B] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:shadow-lg"
       >
         Zum Inhalt springen
       </a>

@@ -48,12 +48,12 @@ const MortgageCalculator = () => {
   return (
     <div className="bg-white border border-gray-100 overflow-hidden">
       {/* Header */}
-      <div className="bg-[#0B1220] px-6 py-5 flex items-center gap-3">
+      <div className="bg-[#0D1B2B] px-6 py-5 flex items-center gap-3">
         <div className="w-9 h-9 bg-white/10 flex items-center justify-center flex-shrink-0">
           <Calculator size={18} className="text-white" />
         </div>
         <div>
-          <h2 className="font-display uppercase text-white text-xl font-semibold leading-tight">Hypothekenrechner</h2>
+          <h2 className="font-display text-white text-xl font-semibold leading-tight">Hypothekenrechner</h2>
           <p className="text-gray-300 text-xs mt-0.5">Annuitätenmodell · Schweizer Standard</p>
         </div>
       </div>
@@ -75,7 +75,7 @@ const MortgageCalculator = () => {
               step={10000}
               value={kaufpreis}
               onChange={e => setKaufpreis(Number(e.target.value))}
-              className="w-full accent-[#1D3D78] h-1.5 cursor-pointer"
+              className="w-full accent-[#1F497D] h-1.5 cursor-pointer"
             />
             <div className="flex justify-between text-xs text-gray-400 mt-1">
               <span>CHF 100'000</span>
@@ -99,7 +99,7 @@ const MortgageCalculator = () => {
               step={1}
               value={ekPct}
               onChange={e => setEkPct(Number(e.target.value))}
-              className="w-full accent-[#1D3D78] h-1.5 cursor-pointer"
+              className="w-full accent-[#1F497D] h-1.5 cursor-pointer"
             />
             <div className="flex justify-between text-xs text-gray-400 mt-1">
               <span>10%</span>
@@ -120,7 +120,7 @@ const MortgageCalculator = () => {
               step={0.1}
               value={zinssatz}
               onChange={e => setZinssatz(Math.max(0.1, Math.min(10, Number(e.target.value))))}
-              className="w-full border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78]"
+              className="w-full border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
             />
           </div>
 
@@ -134,7 +134,7 @@ const MortgageCalculator = () => {
                   onClick={() => setLaufzeit(y)}
                   className={`py-2 text-sm font-semibold border transition-colors ${
                     laufzeit === y
-                      ? 'bg-[#1D3D78] text-white border-[#1D3D78]'
+                      ? 'bg-[#1F497D] text-white border-[#1F497D]'
                       : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
                   }`}
                 >
@@ -157,7 +157,7 @@ const MortgageCalculator = () => {
               step={500}
               value={monatseinkommen}
               onChange={e => setMonatseinkommen(Math.max(0, Number(e.target.value)))}
-              className="w-full border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78]"
+              className="w-full border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
             />
           </div>
         </div>
@@ -169,11 +169,11 @@ const MortgageCalculator = () => {
           {/* Hypothek */}
           <div className="surface-warm p-4">
             <p className="text-xs text-gray-500 mb-0.5">Hypothek (Finanzierungsbedarf)</p>
-            <p className="font-display text-3xl font-semibold text-[#0F1B2D] leading-none mt-1">{chf(hypothek)}</p>
+            <p className="font-display text-3xl font-semibold text-[#121D2B] leading-none mt-1">{chf(hypothek)}</p>
           </div>
 
           {/* Monatsrate */}
-          <div className="bg-[#0B1220] p-4 text-white">
+          <div className="bg-[#0D1B2B] p-4 text-white">
             <p className="text-xs text-white/70 mb-0.5">Monatliche Rate</p>
             <p className="font-display text-4xl font-semibold leading-none mt-1">{chf(monatsrate)}</p>
             <p className="text-xs text-white/70 mt-1">Annuität · {laufzeit} Jahre · {zinssatz.toFixed(1)}% p.a.</p>
@@ -238,9 +238,9 @@ const MortgageCalculator = () => {
         <Link
           to="/kontakt"
           className="flex-shrink-0 inline-flex items-center justify-center gap-2 text-white text-sm font-semibold px-5 py-2.5 transition-colors"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           Beratung anfragen
         </Link>

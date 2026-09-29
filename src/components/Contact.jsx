@@ -10,7 +10,7 @@ import { supabase } from '@/lib/supabase';
 import { getSetting } from '@/data/settingsStore';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
@@ -18,7 +18,7 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 const inputCls =
-  'w-full px-4 py-3 bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#1D3D78] transition-colors';
+  'w-full px-4 py-3 bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#1F497D] transition-colors';
 const labelCls = 'block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2';
 
 const Contact = () => {
@@ -121,7 +121,7 @@ const Contact = () => {
           <div className="grid gap-14 lg:grid-cols-12">
             {/* Contact Information */}
             <motion.div {...fadeUp} className="lg:col-span-5 min-w-0">
-              <h2 className="display-heading uppercase text-3xl md:text-4xl mb-10 hyphens-auto break-words">
+              <h2 className="display-heading text-3xl md:text-4xl mb-10 hyphens-auto break-words">
                 {t('contact.infoTitle')}
               </h2>
 
@@ -145,7 +145,7 @@ const Contact = () => {
                       {info.details.map((detail, detailIndex) => (
                         <p key={detailIndex} className="text-gray-900 leading-relaxed">
                           {info.href ? (
-                            <a href={info.href} className="hover:text-[#1D3D78] transition-colors">{detail}</a>
+                            <a href={info.href} className="hover:text-[#1F497D] transition-colors">{detail}</a>
                           ) : (
                             detail
                           )}
@@ -162,7 +162,7 @@ const Contact = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="mt-10 surface-warm p-8"
               >
-                <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-5">{t('contact.whyUs')}</h3>
+                <h3 className="font-display text-xl font-semibold text-[#121D2B] mb-5">{t('contact.whyUs')}</h3>
                 <ul className="space-y-3 text-gray-600 leading-relaxed">
                   {(t('contact.whyUsItems') || []).map((item, i) => (
                     <li key={i} className="flex gap-3">
@@ -177,7 +177,7 @@ const Contact = () => {
             {/* Contact Form */}
             <motion.div {...fadeUp} className="lg:col-span-7 min-w-0">
               <div className="border border-gray-100 p-6 md:p-10">
-                <h2 className="display-heading uppercase text-3xl md:text-4xl mb-8 hyphens-auto break-words">
+                <h2 className="display-heading text-3xl md:text-4xl mb-8 hyphens-auto break-words">
                   {t('contact.sendMessage')}
                 </h2>
 
@@ -267,8 +267,8 @@ const Contact = () => {
                     disabled={submitting}
                     className="w-full text-white px-6 py-3.5 text-sm font-semibold transition-colors disabled:opacity-60"
                     style={{ backgroundColor: BRAND }}
-                    onMouseOver={e => !e.currentTarget.disabled && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                    onMouseOver={e => !e.currentTarget.disabled && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                   >
                     {submitting ? 'Wird gesendet…' : t('contact.form.submit')}
                   </button>
@@ -285,7 +285,7 @@ const Contact = () => {
           <motion.div {...fadeUp} className="grid gap-6 lg:grid-cols-12 lg:items-end mb-12">
             <div className="lg:col-span-5">
               <p className="eyebrow mb-3">Muri bei Bern</p>
-              <h2 className="display-heading uppercase text-3xl md:text-4xl">
+              <h2 className="display-heading text-3xl md:text-4xl">
                 Unser Standort
               </h2>
             </div>
@@ -319,7 +319,7 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-display uppercase font-semibold text-[#0F1B2D] text-lg leading-none">Hans Amonn AG</h3>
+                    <h3 className="font-display font-semibold text-[#121D2B] text-lg leading-none">Hans Amonn AG</h3>
                     <p className="text-xs text-gray-600 mt-2">
                       Blümlisalpstrasse 4<br />
                       3074 Muri bei Bern
@@ -355,8 +355,8 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm text-white font-semibold transition-colors"
                 style={{ backgroundColor: BRAND }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <MapPin className="w-4 h-4" />
                 Route planen
@@ -367,13 +367,13 @@ const Contact = () => {
       </section>
 
       {/* Additional Contact CTA */}
-      <section className="bg-[#0B1220] text-white py-20 md:py-24">
+      <section className="bg-[#0D1B2B] text-white py-20 md:py-24">
         <motion.div
           {...fadeUp}
           className="container mx-auto px-6 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10"
         >
           <div className="max-w-2xl">
-            <h2 className="font-display uppercase font-semibold text-3xl md:text-4xl leading-none mb-5">
+            <h2 className="font-display font-semibold text-3xl md:text-4xl leading-none mb-5">
               Bereit für Ihr nächstes Projekt?
             </h2>
             <p className="text-white/70 leading-relaxed text-lg">

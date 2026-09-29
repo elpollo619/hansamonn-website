@@ -23,10 +23,10 @@ export default function LocationsMarquee() {
         duration={45}
         renderItem={(label) => (
           <span className="flex items-center pr-10">
-            <span className="font-display uppercase text-2xl md:text-3xl font-semibold tracking-tight text-gray-400 whitespace-nowrap">
+            <span className="font-display text-2xl md:text-3xl font-semibold tracking-tight text-gray-400 whitespace-nowrap">
               {label}
             </span>
-            <span className="ml-10 inline-block w-2 h-2 bg-[#1D3D78]" aria-hidden="true" />
+            <span className="ml-10 inline-block w-2 h-2 bg-[#1F497D]" aria-hidden="true" />
           </span>
         )}
       />

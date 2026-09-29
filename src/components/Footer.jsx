@@ -56,7 +56,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-[#0B1220] text-white">
+    <footer className="relative overflow-hidden bg-[#0D1B2B] text-white">
       {/* ── CTA band ── */}
       {showCta && (
       <div className="container mx-auto px-6 pt-20 pb-14 border-b border-white/10">
@@ -67,7 +67,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-display uppercase font-semibold leading-tight tracking-tight text-2xl md:text-3xl">
+            <h2 className="font-display font-semibold leading-tight tracking-tight text-2xl md:text-3xl">
               Haben Sie ein Projekt?<br />
               <span className="text-white/60">Sprechen wir darüber.</span>
             </h2>
@@ -140,7 +140,7 @@ const Footer = () => {
           {/* Link columns */}
           {cols.map((col) => (
             <div key={col.heading}>
-              <p className="text-[10px] font-semibold tracking-[0.22em] text-white/60 uppercase mb-4">
+              <p className="text-[11px] font-semibold tracking-hairline text-white/60 uppercase mb-4">
                 {col.heading}
               </p>
               <ul className="space-y-2.5">

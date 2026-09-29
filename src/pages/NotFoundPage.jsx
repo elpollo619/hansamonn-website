@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 export default function NotFoundPage() {
   return (
@@ -22,13 +22,13 @@ export default function NotFoundPage() {
           HANS AMONN AG
         </p>
         <h1
-          className="font-display font-semibold leading-[0.85] text-7xl md:text-8xl tracking-tight"
+          className="font-display font-semibold leading-[1.04] text-7xl md:text-8xl tracking-tight"
           style={{ color: BRAND }}
         >
           404
         </h1>
         <div className="mx-auto my-8 h-px w-16 bg-gray-300" aria-hidden="true" />
-        <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">
+        <h2 className="display-heading text-3xl md:text-4xl mb-4">
           Seite nicht gefunden
         </h2>
         <p className="text-gray-600 leading-relaxed mb-10">

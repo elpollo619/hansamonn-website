@@ -42,7 +42,7 @@ export default function BlogPostPage() {
   if (post === undefined) {
     return (
       <div className="min-h-screen surface-warm flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-gray-200 border-t-[#1D3D78] rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-gray-200 border-t-[#1F497D] rounded-full animate-spin" />
       </div>
     );
   }
@@ -107,7 +107,7 @@ export default function BlogPostPage() {
             >
               {/* Excerpt */}
               {displayExcerpt && (
-                <p className="text-xl text-[#0F1B2D] leading-relaxed mb-8 pb-8 border-b border-gray-100">
+                <p className="text-xl text-[#121D2B] leading-relaxed mb-8 pb-8 border-b border-gray-100">
                   {displayExcerpt}
                 </p>
               )}
@@ -116,13 +116,13 @@ export default function BlogPostPage() {
               {displayContent ? (
                 <div
                   className="prose prose-gray max-w-none text-gray-600 text-[17px] leading-relaxed
-                    [&_h2]:font-display [&_h2]:uppercase [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-[#0F1B2D] [&_h2]:mt-10 [&_h2]:mb-4
-                    [&_h3]:font-display [&_h3]:uppercase [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#0F1B2D] [&_h3]:mt-8 [&_h3]:mb-3
+                    [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-[#121D2B] [&_h2]:mt-10 [&_h2]:mb-4
+                    [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#121D2B] [&_h3]:mt-8 [&_h3]:mb-3
                     [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4
                     [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-4
-                    [&_li]:mb-1 [&_a]:text-[#1D3D78] [&_a]:underline
+                    [&_li]:mb-1 [&_a]:text-[#1F497D] [&_a]:underline
                     [&_strong]:font-bold [&_em]:italic
-                    [&_blockquote]:border-l-2 [&_blockquote]:border-[#1D3D78] [&_blockquote]:pl-5 [&_blockquote]:text-gray-500 [&_blockquote]:italic [&_img]:my-8"
+                    [&_blockquote]:border-l-2 [&_blockquote]:border-[#1F497D] [&_blockquote]:pl-5 [&_blockquote]:text-gray-500 [&_blockquote]:italic [&_img]:my-8"
                   dangerouslySetInnerHTML={{ __html: displayContent }}
                 />
               ) : (
@@ -168,7 +168,7 @@ export default function BlogPostPage() {
                                 />
                               </div>
                             )}
-                            <p className="font-display uppercase text-lg font-semibold text-[#0F1B2D] group-hover:text-[#1D3D78] transition-colors line-clamp-2 leading-tight">
+                            <p className="font-display text-lg font-semibold text-[#121D2B] group-hover:text-[#1F497D] transition-colors line-clamp-2 leading-tight">
                               {(lang === 'it' && p.title_it) || p.title}
                             </p>
                             <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1.5 flex items-center gap-1">

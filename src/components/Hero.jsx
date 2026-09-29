@@ -60,7 +60,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0B1220] text-white"
+      className="relative w-full overflow-hidden bg-[#0D1B2B] text-white"
       style={{ height: 'calc(100vh - 5rem)', minHeight: 560 }}
       onMouseLeave={() => setPaused(false)}
     >
@@ -112,7 +112,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display uppercase font-semibold leading-[0.92] tracking-tight text-white"
+            className="font-display font-semibold leading-[1.04] tracking-tight text-white"
             style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)' }}
           >
             Bauen. Wohnen.<br />Bleiben.
@@ -157,7 +157,7 @@ const Hero = () => {
                   to={s.to}
                   onMouseEnter={() => { setActiveIdx(i); setPaused(true); }}
                   className="group relative flex items-center gap-4 px-5 py-5 transition-colors"
-                  style={{ backgroundColor: isActive ? 'rgba(255,255,255,0.10)' : 'rgba(11,18,32,0.55)' }}
+                  style={{ backgroundColor: isActive ? 'rgba(255,255,255,0.10)' : 'rgba(13, 27, 43,0.55)' }}
                 >
                   {/* top active bar */}
                   <span
@@ -168,10 +168,10 @@ const Hero = () => {
                     {s.index}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <span className="block text-[10px] font-semibold tracking-widest uppercase text-white/50 mb-0.5">
+                    <span className="block text-[11px] font-semibold tracking-hairline uppercase text-white/50 mb-0.5">
                       {s.eyebrow}
                     </span>
-                    <span className="font-display uppercase text-lg md:text-xl font-semibold text-white leading-none truncate block">
+                    <span className="font-display text-lg md:text-xl font-semibold text-white leading-none truncate block">
                       {s.title}
                     </span>
                   </div>

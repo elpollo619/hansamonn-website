@@ -7,7 +7,7 @@ import { getNormalizedVisibleProperties } from '@/data/propertiesStore';
 import OccupancyBadge from '@/components/OccupancyBadge';
 import PageHero from '@/components/PageHero';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 // ─── Image with graceful fallback ─────────────────────────────────────────────
 
@@ -74,8 +74,8 @@ const ApartmentCard = ({ item, index }) => {
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-start justify-between gap-2 mb-2">
-          <Link to={detailUrl} className="min-w-0 hover:text-[#1D3D78] transition-colors">
-            <h3 className="font-display uppercase text-xl font-semibold leading-tight">{item.title}</h3>
+          <Link to={detailUrl} className="min-w-0 hover:text-[#1F497D] transition-colors">
+            <h3 className="font-display text-xl font-semibold leading-tight">{item.title}</h3>
           </Link>
           <div className="flex-shrink-0"><OccupancyBadge status={item.occupancy || 'frei'} /></div>
         </div>
@@ -125,7 +125,7 @@ const EmptyState = () => (
     className="max-w-lg mx-auto text-center"
   >
     <Home size={34} className="mx-auto mb-6" style={{ color: BRAND }} />
-    <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">Aktuell keine Wohnungen verfügbar</h2>
+    <h2 className="display-heading text-3xl md:text-4xl mb-4">Aktuell keine Wohnungen verfügbar</h2>
     <p className="text-gray-600 leading-relaxed mb-8">
       Wir haben derzeit keine freien Mietwohnungen. Lassen Sie sich auf unsere Warteliste setzen, wir informieren Sie sobald etwas verfügbar wird.
     </p>
@@ -148,7 +148,7 @@ const EmptyState = () => (
     >
       <div className="flex items-center justify-center gap-2 mb-3">
         <Clock size={18} style={{ color: BRAND }} />
-        <span className="font-display uppercase text-xl font-semibold text-[#0F1B2D]">Weitere Apartments folgen</span>
+        <span className="font-display text-xl font-semibold text-[#121D2B]">Weitere Apartments folgen</span>
       </div>
       <p className="text-sm text-gray-600 leading-relaxed mb-6">Neue Objekte werden laufend ergänzt. Schauen Sie regelmässig vorbei oder kontaktieren Sie uns direkt.</p>
       <Link

@@ -181,13 +181,13 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
   const current = STEPS[step];
 
   return (
-    <section ref={sectionRef} className="relative h-[280vh] md:h-[320vh] bg-[#0E2350]">
+    <section ref={sectionRef} className="relative h-[280vh] md:h-[320vh] bg-[#122944]">
       <div className="sticky top-0 h-[100svh] overflow-hidden text-white">
         {/* Blueprint paper: fine + major grid */}
         <div
           className="absolute inset-0"
           style={{
-            backgroundColor: '#0E2350',
+            backgroundColor: '#122944',
             backgroundImage:
               'linear-gradient(rgba(160,190,255,0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(160,190,255,0.10) 1px, transparent 1px), linear-gradient(rgba(160,190,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(160,190,255,0.05) 1px, transparent 1px)',
             backgroundSize: '120px 120px, 120px 120px, 24px 24px, 24px 24px',
@@ -211,7 +211,7 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="pointer-events-none absolute right-6 top-24 md:top-28 font-mono text-[11px] tracking-widest text-blue-100/70 space-y-1 text-right"
+              className="pointer-events-none absolute right-6 top-24 md:top-28 font-mono text-[11px] tracking-hairline text-blue-100/70 space-y-1 text-right"
             >
               {model.facts.map((f) => (
                 <p key={f.label}>{f.label}: {f.value}</p>
@@ -232,10 +232,10 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.35 }}
-                className="bg-[#0E2350]/70 md:bg-transparent backdrop-blur-sm md:backdrop-blur-0 p-4 -m-4 md:p-0 md:m-0"
+                className="bg-[#122944]/70 md:bg-transparent backdrop-blur-sm md:backdrop-blur-0 p-4 -m-4 md:p-0 md:m-0"
               >
                 <p className="font-mono text-sm text-blue-100/60 mb-2">{current.no} / 03</p>
-                <h2 className="font-display uppercase text-3xl md:text-4xl font-semibold leading-none mb-4">{current.title}</h2>
+                <h2 className="font-display text-3xl md:text-4xl font-semibold leading-none mb-4">{current.title}</h2>
                 <p className="text-blue-50/80 leading-relaxed">{current.text}</p>
               </motion.div>
             </AnimatePresence>
@@ -255,8 +255,8 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
         </div>
 
         {/* Architectural title block */}
-        <div className="absolute right-4 bottom-4 md:right-6 md:bottom-6 border border-blue-100/40 font-mono text-[10px] md:text-[11px] text-blue-50/80 bg-[#0E2350]/60 backdrop-blur-sm">
-          <div className="px-3 py-2 border-b border-blue-100/30 font-sans font-semibold tracking-[0.2em]">AMONN ARCHITEKTUR</div>
+        <div className="absolute right-4 bottom-4 md:right-6 md:bottom-6 border border-blue-100/40 font-mono text-[10px] md:text-[11px] text-blue-50/80 bg-[#122944]/60 backdrop-blur-sm">
+          <div className="px-3 py-2 border-b border-blue-100/30 font-sans font-semibold tracking-hairline">AMONN ARCHITEKTUR</div>
           <div className="px-3 py-1.5 border-b border-blue-100/30">{model.short} · {model.name}</div>
           <div className="grid grid-cols-2">
             <div className="px-3 py-1.5 border-r border-blue-100/30">Plan: {step === 0 ? `Grundriss ${planLabel}` : current.sheet}</div>

@@ -9,7 +9,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import GlobalSearch from '@/components/GlobalSearch';
 import AmonnLogo from '@/components/AmonnLogo';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 const PHONE = { href: 'tel:+41319518554', label: '+41 (0)31 951 85 54' };
 const EMAIL = { href: 'mailto:office@reto-amonn.ch', label: 'office@reto-amonn.ch' };
 
@@ -110,7 +110,7 @@ function useSectionVariant(pathname) {
 const FavoritesLink = ({ count, className = '' }) => (
   <Link
     to="/favoriten"
-    className={`relative p-2 text-gray-500 hover:text-[#0F1B2D] transition-colors ${className}`}
+    className={`relative p-2 text-gray-500 hover:text-[#121D2B] transition-colors ${className}`}
     aria-label="Meine Favoriten"
   >
     <Heart size={18} className={count > 0 ? 'fill-red-500 text-red-500' : ''} />
@@ -129,7 +129,7 @@ const MegaPanel = ({ menu, onClose }) => (
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -10 }}
     transition={{ duration: 0.2, ease: 'easeOut' }}
-    className="absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-[0_24px_48px_-24px_rgba(15,27,45,0.25)]"
+    className="absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-[0_24px_48px_-24px_rgba(18, 29, 43,0.25)]"
   >
     <div className="container mx-auto px-6 py-10 grid grid-cols-12 gap-10">
       <div className={`col-span-8 grid gap-10 ${menu.groups.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
@@ -147,17 +147,17 @@ const MegaPanel = ({ menu, onClose }) => (
                   <Link
                     to={l.to}
                     onClick={onClose}
-                    className="group flex items-start justify-between gap-4 py-3 border-b border-gray-100 hover:border-[#0F1B2D] transition-colors"
+                    className="group flex items-start justify-between gap-4 py-3 border-b border-gray-100 hover:border-[#121D2B] transition-colors"
                   >
                     <span>
-                      <span className="block font-display uppercase text-xl font-semibold text-[#0F1B2D] leading-tight">
+                      <span className="block font-display text-xl font-semibold text-[#121D2B] leading-tight">
                         {l.label}
                       </span>
                       <span className="block text-sm text-gray-500 mt-0.5">{l.sub}</span>
                     </span>
                     <ArrowUpRight
                       size={18}
-                      className="mt-1 text-gray-300 group-hover:text-[#0F1B2D] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+                      className="mt-1 text-gray-300 group-hover:text-[#121D2B] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
                     />
                   </Link>
                 </motion.li>
@@ -169,16 +169,16 @@ const MegaPanel = ({ menu, onClose }) => (
 
       <div className="col-span-4">
         {menu.feature && (
-          <Link to={menu.feature.to} onClick={onClose} className="group relative block aspect-[4/3] overflow-hidden bg-[#0B1220]">
+          <Link to={menu.feature.to} onClick={onClose} className="group relative block aspect-[4/3] overflow-hidden bg-[#0D1B2B]">
             <img
               src={menu.feature.image}
               alt=""
               className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220] via-[#0B1220]/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B] via-[#0D1B2B]/30 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white">
               <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/70 mb-2">{menu.feature.eyebrow}</p>
-              <p className="font-display uppercase text-2xl font-semibold leading-none flex items-center gap-2">
+              <p className="font-display text-2xl font-semibold leading-tight flex items-center gap-2">
                 {menu.feature.title}
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </p>
@@ -187,7 +187,7 @@ const MegaPanel = ({ menu, onClose }) => (
           </Link>
         )}
         {menu.contact && (
-          <div className="h-full bg-[#0B1220] text-white p-7 flex flex-col">
+          <div className="h-full bg-[#0D1B2B] text-white p-7 flex flex-col">
             <p className="text-[11px] font-semibold tracking-hairline uppercase text-white/60 mb-4">Direkt erreichbar</p>
             <a href={PHONE.href} className="flex items-center gap-3 py-3 border-b border-white/10 hover:text-white/80">
               <Phone size={16} /> <span className="font-semibold">{PHONE.label}</span>
@@ -220,7 +220,7 @@ const MobileMenu = ({ menus, isActive, onClose, top }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       style={{ top }}
-      className="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#0B1220] text-white overflow-y-auto"
+      className="lg:hidden fixed inset-x-0 bottom-0 z-40 bg-[#0D1B2B] text-white overflow-y-auto"
     >
       <div className="px-6 pt-6 pb-10 min-h-full flex flex-col">
         <nav className="flex-1">
@@ -236,10 +236,10 @@ const MobileMenu = ({ menus, isActive, onClose, top }) => {
               >
                 <button
                   onClick={() => setOpen(expanded ? null : m.key)}
-                  className="w-full flex items-center justify-between py-5 text-left"
+                  className="w-full flex items-center justify-between py-4 text-left"
                   aria-expanded={expanded}
                 >
-                  <span className={`font-display uppercase text-4xl font-semibold leading-none ${isActive(m.active) ? 'text-white' : 'text-white/80'}`}>
+                  <span className={`font-display text-[28px] font-semibold leading-tight ${isActive(m.active) ? 'text-white' : 'text-white/80'}`}>
                     {m.label}
                   </span>
                   <ChevronDown size={22} className={`text-white/60 transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`} />
@@ -360,7 +360,7 @@ const Header = () => {
       animate={{ y: hidden && !pinned ? '-100%' : 0 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow] duration-300 ${
-        isScrolled || pinned ? 'bg-white shadow-[0_1px_0_rgba(15,27,45,0.08)]' : 'bg-white/90 backdrop-blur-md'
+        isScrolled || pinned ? 'bg-white shadow-[0_1px_0_rgba(18, 29, 43,0.08)]' : 'bg-white/90 backdrop-blur-md'
       }`}
       onMouseLeave={closeSoon}
     >
@@ -392,8 +392,8 @@ const Header = () => {
                   <Link
                     to={m.to}
                     onFocus={() => openNow(m.key)}
-                    className={`flex items-center gap-1.5 px-3 h-full text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors ${
-                      active || open ? 'text-[#0F1B2D]' : 'text-gray-500 hover:text-[#0F1B2D]'
+                    className={`flex items-center gap-1.5 px-3 h-full text-[15px] font-semibold transition-colors ${
+                      active || open ? 'text-[#121D2B]' : 'text-gray-500 hover:text-[#121D2B]'
                     }`}
                     aria-expanded={open}
                   >
@@ -416,7 +416,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center gap-1" onMouseEnter={closeSoon}>
             <button
               onClick={() => setSearchOpen(true)}
-              className="p-2 text-gray-500 hover:text-[#0F1B2D] transition-colors"
+              className="p-2 text-gray-500 hover:text-[#121D2B] transition-colors"
               aria-label="Suche öffnen"
             >
               <Search size={18} />
@@ -425,7 +425,7 @@ const Header = () => {
             <LanguageSwitcher variant="light" />
             <Link
               to="/kontakt"
-              className="ml-2 inline-flex items-center gap-2 px-5 py-2.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-white transition-colors hover:brightness-110"
+              className="ml-2 inline-flex items-center gap-2 px-5 py-2.5 text-[15px] font-semibold text-white transition-colors hover:brightness-110"
               style={{ backgroundColor: BRAND }}
             >
               Kontakt <ArrowRight size={14} />
@@ -441,7 +441,7 @@ const Header = () => {
             <LanguageSwitcher variant="light" />
             <button
               onClick={() => setIsMobileMenuOpen((v) => !v)}
-              className="p-2 -mr-2 text-[#0F1B2D]"
+              className="p-2 -mr-2 text-[#121D2B]"
               aria-label={isMobileMenuOpen ? 'Menü schliessen' : 'Menü öffnen'}
               aria-expanded={isMobileMenuOpen}
             >

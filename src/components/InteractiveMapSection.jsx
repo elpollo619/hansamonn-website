@@ -7,10 +7,10 @@ import { getVisibleProperties } from '@/data/propertiesStore';
 
 // ── Type → visual config ──────────────────────────────────────────────────────
 const TYPE_CFG = {
-  'long-stay':  { icon: BedDouble, colorHex: '#1D3D78', label: 'Long Stay' },
-  'short-stay': { icon: Hotel,     colorHex: '#374151', label: 'Short Stay · Hotel' },
-  ferienhaus:   { icon: Sun,       colorHex: '#6B7280', label: 'Ferienhaus' },
-  apartment:    { icon: Home,      colorHex: '#1D3D78', label: 'Apartment' },
+  'long-stay':  { icon: BedDouble, colorHex: '#1F497D', label: 'Long Stay' },
+  'short-stay': { icon: Hotel,     colorHex: '#343C47', label: 'Short Stay · Hotel' },
+  ferienhaus:   { icon: Sun,       colorHex: '#56606C', label: 'Ferienhaus' },
+  apartment:    { icon: Home,      colorHex: '#1F497D', label: 'Apartment' },
 };
 function getCfg(type) { return TYPE_CFG[type] || TYPE_CFG['long-stay']; }
 
@@ -198,7 +198,7 @@ export default function InteractiveMapSection() {
             <div className="flex flex-wrap gap-4 mt-4 justify-center">
               {legendItems.map((item) => (
                 <div key={item.label} className="flex items-center gap-2 text-xs text-gray-500">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }} />
                   {item.label}
                 </div>
               ))}
@@ -236,9 +236,9 @@ export default function InteractiveMapSection() {
                     <Link
                       to={activeLocation.link}
                       className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-2.5 px-4 transition-colors"
-                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                      style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                     >
                       Details ansehen <ArrowRight size={13} />
                     </Link>
@@ -264,7 +264,7 @@ export default function InteractiveMapSection() {
                         className="w-full flex items-center gap-3 p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
                       >
                         <div className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0">
-                          <Icon size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                          <Icon size={14} style={{ color: 'var(--brand-color, #1F497D)' }} />
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-gray-900 truncate">{loc.name}</p>

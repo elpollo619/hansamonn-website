@@ -403,7 +403,7 @@ function PropertyForm({ property, onSave, onClose }) {
               </div>
             </div>
             <p className="text-xs text-gray-400 mt-1.5">
-              Koordinaten finden: <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}>Google Maps</a> → rechtsklick auf Adresse → Koordinaten kopieren
+              Koordinaten finden: <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--brand-color, #1F497D)' }}>Google Maps</a> → rechtsklick auf Adresse → Koordinaten kopieren
             </p>
           </div>
 
@@ -502,9 +502,9 @@ function PropertyForm({ property, onSave, onClose }) {
                 type="button"
                 onClick={addFeature}
                 className="px-3 py-2 text-white text-sm rounded-lg transition-colors flex-shrink-0"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <Tag size={14} />
               </button>
@@ -555,9 +555,9 @@ function PropertyForm({ property, onSave, onClose }) {
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 className="inline-flex items-center gap-2 px-3 py-2 text-white text-xs font-medium rounded-lg transition-colors"
-                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <Upload size={13} /> Fotos vom Computer wählen
               </button>
@@ -735,7 +735,7 @@ function PropertyForm({ property, onSave, onClose }) {
                   type="button"
                   onClick={() => set('seasons', [...(form.seasons || []), { name: 'Neue Saison', months: [], priceNight: 100, priceWeek: 600, minNights: 2 }])}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white rounded-lg"
-                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+                  style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
                 >
                   <Plus size={12} /> Saison hinzufügen
                 </button>
@@ -871,7 +871,7 @@ function PropertyForm({ property, onSave, onClose }) {
             <button
               type="button"
               onClick={() => set('visible', !form.visible)}
-              style={form.visible ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+              style={form.visible ? { backgroundColor: 'var(--brand-color, #1F497D)' } : {}}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
                 form.visible ? '' : 'bg-gray-300'
               }`}
@@ -902,9 +902,9 @@ function PropertyForm({ property, onSave, onClose }) {
             type="submit"
             onClick={handleSubmit}
             className="px-5 py-2 text-sm font-medium text-white rounded-lg transition-colors flex items-center gap-2"
-            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+            style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+            onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+            onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
           >
             <Save size={14} />
             Speichern
@@ -1096,9 +1096,9 @@ export default function PropertiesTab() {
         <button
           onClick={openNew}
           className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           <Plus size={16} />
           Neue Immobilie
@@ -1164,7 +1164,7 @@ export default function PropertiesTab() {
           <p className="text-sm">Keine Immobilien gefunden.</p>
           <button
             onClick={openNew}
-            className="mt-3 text-sm font-medium hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}
+            className="mt-3 text-sm font-medium hover:underline" style={{ color: 'var(--brand-color, #1F497D)' }}
           >
             Erste Immobilie erstellen
           </button>

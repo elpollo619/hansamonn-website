@@ -140,7 +140,7 @@ const PanoramaViewer = ({ src, alt = '360° Ansicht', autoRotate = true, initial
       ref={mountRef}
       role="img"
       aria-label={alt}
-      className={`relative w-full h-full cursor-grab active:cursor-grabbing touch-none select-none bg-[#0B1220] ${className}`}
+      className={`relative w-full h-full cursor-grab active:cursor-grabbing touch-none select-none bg-[#0D1B2B] ${className}`}
     >
       {failed && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/70 text-sm">

@@ -11,7 +11,7 @@ const STATS = [
 
 const TeamStats = () => {
   return (
-    <section className="bg-[#0B1220] text-white">
+    <section className="bg-[#0D1B2B] text-white">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +30,7 @@ const TeamStats = () => {
               <div className="font-display text-5xl md:text-6xl font-semibold leading-none tabular-nums">
                 {s.number}
               </div>
-              <div className="mt-3 text-[10px] md:text-xs font-semibold uppercase tracking-[0.22em] text-white/50">
+              <div className="mt-3 text-sm text-white/75 leading-snug">
                 {s.label}
               </div>
             </div>

@@ -32,11 +32,11 @@ export default function ObjekteGallery() {
       <div className="container mx-auto px-6">
         <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl">Wohnen bei Amonn</h2>
+            <h2 className="display-heading text-3xl md:text-4xl">Wohnen bei Amonn</h2>
           </div>
           <Link
             to="/immobilien"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#1D3D78] transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-[#1F497D] transition-colors"
           >
             Alle Immobilien <ArrowRight size={15} />
           </Link>
@@ -52,7 +52,7 @@ export default function ObjekteGallery() {
                 to={p.link || `/immobilien/${p.id}`}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
-                className="group relative overflow-hidden bg-gray-200 outline-none focus-visible:ring-2 focus-visible:ring-[#1D3D78]"
+                className="group relative overflow-hidden bg-gray-200 outline-none focus-visible:ring-2 focus-visible:ring-[#1F497D]"
                 style={{
                   flexGrow: isActive ? 5 : 1,
                   flexBasis: 0,
@@ -74,9 +74,9 @@ export default function ObjekteGallery() {
 
                 {/* Collapsed: vertical label */}
                 <span
-                  className={`absolute bottom-6 left-1/2 font-display uppercase text-lg font-semibold text-white whitespace-nowrap transition-opacity duration-300 ${
-                    isActive ? 'opacity-0' : 'opacity-100'
-                  }`}
+                  className={`absolute bottom-6 left-1/2 font-display text-lg font-semibold text-white whitespace-nowrap transition-opacity duration-300 ${
+ isActive ? 'opacity-0' : 'opacity-100'
+ }`}
                   style={{ writingMode: 'vertical-rl', transform: 'translateX(-50%) rotate(180deg)' }}
                 >
                   {shortName(p.name)}
@@ -89,10 +89,10 @@ export default function ObjekteGallery() {
                   transition={{ duration: 0.35, delay: isActive ? 0.15 : 0 }}
                   className="absolute bottom-0 left-0 right-0 p-7"
                 >
-                  <span className="block text-[10px] font-semibold uppercase tracking-hairline text-white/70 mb-2">
+                  <span className="block text-[11px] font-semibold uppercase tracking-hairline text-white/70 mb-2">
                     {TYPE_LABEL[p.type] || p.type}
                   </span>
-                  <span className="block font-display uppercase text-3xl lg:text-4xl font-semibold text-white leading-none mb-3">
+                  <span className="block font-display text-3xl lg:text-4xl font-semibold text-white leading-none mb-3">
                     {shortName(p.name)}
                   </span>
                   <span className="flex items-center justify-between gap-4 text-sm text-white/80">
@@ -116,10 +116,10 @@ export default function ObjekteGallery() {
               <img src={p.images[0]} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
-                <span className="block text-[10px] font-semibold uppercase tracking-hairline text-white/70 mb-1">
+                <span className="block text-[11px] font-semibold uppercase tracking-hairline text-white/70 mb-1">
                   {TYPE_LABEL[p.type] || p.type}
                 </span>
-                <span className="block font-display uppercase text-2xl font-semibold text-white leading-none">
+                <span className="block font-display text-2xl font-semibold text-white leading-none">
                   {shortName(p.name)}
                 </span>
               </div>

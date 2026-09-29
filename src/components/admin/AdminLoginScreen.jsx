@@ -34,16 +34,16 @@ export default function AdminLoginScreen() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#111827' }}>
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#141B25' }}>
       <div className="w-full max-w-md px-6">
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <p className="text-xs text-gray-400 tracking-[0.3em] uppercase mb-1">Admin Panel</p>
-          <h1 className="text-3xl font-black tracking-widest text-white uppercase">
+          <p className="text-xs text-gray-400 tracking-hairline uppercase mb-1">Admin Panel</p>
+          <h1 className="text-3xl font-black tracking-hairline text-white uppercase">
             Hans Amonn AG
           </h1>
-          <div className="mt-3 h-px w-16 mx-auto" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} />
+          <div className="mt-3 h-px w-16 mx-auto" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }} />
         </div>
 
         {/* Login card */}
@@ -112,9 +112,9 @@ export default function AdminLoginScreen() {
               type="submit"
               disabled={loading}
               className="w-full disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 flex items-center justify-center gap-2 transition-colors mt-2"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               {loading ? (
                 <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

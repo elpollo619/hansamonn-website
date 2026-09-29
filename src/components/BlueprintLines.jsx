@@ -63,14 +63,14 @@ export default function BlueprintLines({ className = '' }) {
       <motion.path d={`M510 ${G} V${G - 3 * FLOOR} M504 ${G} H516 M504 ${G - 3 * FLOOR} H516`} {...draw(2.7, 0.8)} />
       <motion.text
         x="300" y="392" textAnchor="middle" fill="currentColor" stroke="none"
-        fontSize="11" fontFamily="ui-monospace, monospace" letterSpacing="2"
+        fontSize="11" fontFamily="'Source Code Pro Variable', ui-monospace, monospace" letterSpacing="2"
         initial={{ opacity: 0 }} animate={{ opacity: 0.8 }} transition={{ delay: 3.2 }}
       >
         12.40
       </motion.text>
       <motion.text
         x="528" y={G - 1.5 * FLOOR} fill="currentColor" stroke="none"
-        fontSize="11" fontFamily="ui-monospace, monospace" letterSpacing="2"
+        fontSize="11" fontFamily="'Source Code Pro Variable', ui-monospace, monospace" letterSpacing="2"
         initial={{ opacity: 0 }} animate={{ opacity: 0.8 }} transition={{ delay: 3.3 }}
       >
         9.00

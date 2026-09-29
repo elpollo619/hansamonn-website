@@ -7,17 +7,17 @@ import PageHero from '@/components/PageHero';
 
 const RULES = [
   {
-    icon: <Percent size={22} style={{ color: 'var(--brand-color, #1D3D78)' }} />,
+    icon: <Percent size={22} style={{ color: 'var(--brand-color, #1F497D)' }} />,
     title: 'Maximale Belehnung (LTV)',
     body: 'Banken finanzieren in der Schweiz maximal 80% des Kaufpreises. Die restlichen 20% müssen als Eigenkapital eingebracht werden, wovon mindestens 10% aus eigenen Mitteln (nicht Pensionskasse) stammen müssen.',
   },
   {
-    icon: <ShieldCheck size={22} style={{ color: 'var(--brand-color, #1D3D78)' }} />,
+    icon: <ShieldCheck size={22} style={{ color: 'var(--brand-color, #1F497D)' }} />,
     title: 'Tragbarkeit (max. 33%)',
     body: 'Die jährlichen Wohnkosten (Zinsen kalkulatorisch mit 5%, Amortisation, Nebenkosten) dürfen in der Regel nicht mehr als ein Drittel des Bruttoeinkommens betragen. Dieser Richtwert gilt auch bei niedrigem Marktzins.',
   },
   {
-    icon: <Home size={22} style={{ color: 'var(--brand-color, #1D3D78)' }} />,
+    icon: <Home size={22} style={{ color: 'var(--brand-color, #1F497D)' }} />,
     title: 'Amortisation',
     body: 'Die Hypothek ist innert 15 Jahren auf 65% des Verkehrswertes amortisiert zu haben (Richtwert). Direkte oder indirekte Amortisation via Säule 3a sind möglich.',
   },
@@ -70,7 +70,7 @@ const HyporechnerPage = () => {
             className="max-w-5xl mx-auto"
           >
             <p className="eyebrow mb-3">Schweizer Standard</p>
-            <h2 className="display-heading uppercase text-3xl sm:text-3xl md:text-4xl mb-4">
+            <h2 className="display-heading text-3xl sm:text-3xl md:text-4xl mb-4">
               Schweizer Hypothekenregeln
             </h2>
             <p className="text-gray-600 leading-relaxed mb-10">
@@ -90,7 +90,7 @@ const HyporechnerPage = () => {
                   <div className="mb-5">
                     {r.icon}
                   </div>
-                  <h3 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-3">{r.title}</h3>
+                  <h3 className="font-display text-xl font-semibold text-[#121D2B] mb-3">{r.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{r.body}</p>
                 </motion.div>
               ))}

@@ -90,7 +90,7 @@ const RentCalculator = () => {
               step={5}
               value={flaeche}
               onChange={(e) => setFlaeche(Number(e.target.value))}
-              className="flex-1 accent-[#1D3D78] cursor-pointer"
+              className="flex-1 accent-[#1F497D] cursor-pointer"
             />
             <input
               aria-label="Wohnfläche in m² eingeben"
@@ -102,7 +102,7 @@ const RentCalculator = () => {
                 const v = Math.max(20, Math.min(200, Number(e.target.value)));
                 setFlaeche(v);
               }}
-              className="w-20 border border-gray-200 px-3 py-2 text-sm text-center font-semibold focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78]"
+              className="w-20 border border-gray-200 px-3 py-2 text-sm text-center font-semibold focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
             />
           </div>
         </div>
@@ -113,7 +113,7 @@ const RentCalculator = () => {
           <select aria-label="Standort"
             value={standort}
             onChange={(e) => setStandort(e.target.value)}
-            className="w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D3D78]/20 focus:border-[#1D3D78] bg-white"
+            className="w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D] bg-white"
           >
             {STANDORTE.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -133,7 +133,7 @@ const RentCalculator = () => {
                   value={t.value}
                   checked={typ === t.value}
                   onChange={() => setTyp(t.value)}
-                  className="accent-[#1D3D78]"
+                  className="accent-[#1F497D]"
                 />
                 <span className="text-sm text-gray-700">{t.label}</span>
               </label>
@@ -151,7 +151,7 @@ const RentCalculator = () => {
                   type="checkbox"
                   checked={options[opt.key]}
                   onChange={() => toggleOption(opt.key)}
-                  className="accent-[#1D3D78] w-4 h-4"
+                  className="accent-[#1F497D] w-4 h-4"
                 />
                 <span className="text-sm text-gray-700">{opt.label}</span>
                 <span className="ml-auto text-xs text-gray-400">{opt.suffix}</span>
@@ -169,11 +169,11 @@ const RentCalculator = () => {
 
         {/* Big price range */}
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-5">
-          <span className="font-display text-4xl md:text-5xl font-semibold text-[#0F1B2D] tabular-nums leading-none">
+          <span className="font-display text-4xl md:text-5xl font-semibold text-[#121D2B] tabular-nums leading-none">
             CHF {formatCHF(result.min)}
           </span>
           <span className="text-xl font-bold text-gray-400">–</span>
-          <span className="font-display text-4xl md:text-5xl font-semibold text-[#0F1B2D] tabular-nums leading-none">
+          <span className="font-display text-4xl md:text-5xl font-semibold text-[#121D2B] tabular-nums leading-none">
             {formatCHF(result.max)}
           </span>
           <span className="text-base text-gray-500 font-medium ml-1">{suffix}</span>
@@ -218,9 +218,9 @@ const RentCalculator = () => {
         <Link
           to="/immobilien/anfrage"
           className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 transition-colors text-sm"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           Jetzt Anfrage stellen
           <ArrowRight size={15} />

@@ -17,15 +17,15 @@ const ProjectInfo = ({ project, onButtonClick }) => {
       <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
         {/* Left Column */}
         <div className="lg:col-span-7">
-          <h2 className="display-heading uppercase text-3xl md:text-4xl mb-4">
+          <h2 className="display-heading text-3xl md:text-4xl mb-4">
             Über das Projekt
           </h2>
           <div className="flex flex-wrap items-center text-gray-500 mb-8 gap-x-5 gap-y-2 text-xs font-semibold uppercase tracking-wider">
-            <span className="flex items-center gap-1.5"><MapPin size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />{project.location}</span>
-            <span className="flex items-center gap-1.5"><Calendar size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />{project.year}</span>
+            <span className="flex items-center gap-1.5"><MapPin size={14} style={{ color: 'var(--brand-color, #1F497D)' }} />{project.location}</span>
+            <span className="flex items-center gap-1.5"><Calendar size={14} style={{ color: 'var(--brand-color, #1F497D)' }} />{project.year}</span>
           </div>
 
-          <div className="surface-warm border-l-2 p-5 mb-8" style={{ borderColor: 'var(--brand-color, #1D3D78)' }}>
+          <div className="surface-warm border-l-2 p-5 mb-8" style={{ borderColor: 'var(--brand-color, #1F497D)' }}>
             <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Eigentümer: {project.owner}</p>
             <p className="text-gray-600 leading-relaxed">
               {project.category === 'hotel'
@@ -48,7 +48,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
                   return (
                     <div key={index} className="flex items-center gap-3 border border-gray-100 px-4 py-3">
                       {Icon
-                        ? <Icon size={15} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                        ? <Icon size={15} style={{ color: 'var(--brand-color, #1F497D)' }} />
                         : <span className="w-3 h-3 border border-gray-300 flex-shrink-0" />
                       }
                       <span className="text-sm text-gray-700">{amenity.label}</span>
@@ -65,13 +65,13 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           {/* Project Stats */}
           <div className="grid grid-cols-2 gap-3 mb-8">
             <div className="p-5 min-w-0 surface-warm border border-gray-100">
-              <Building2 className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }} />
-              <div className="font-display uppercase text-base sm:text-xl font-semibold text-[#0F1B2D] leading-tight break-words hyphens-auto">{project.size}</div>
+              <Building2 className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1F497D)' }} />
+              <div className="font-display text-base sm:text-xl font-semibold text-[#121D2B] leading-tight break-words hyphens-auto">{project.size}</div>
               <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">Gesamtfläche</div>
             </div>
             <div className="p-5 min-w-0 surface-warm border border-gray-100">
-              <Award className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1D3D78)' }} />
-              <div className="font-display uppercase text-base sm:text-xl font-semibold text-[#0F1B2D] leading-tight break-words hyphens-auto">{project.status}</div>
+              <Award className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1F497D)' }} />
+              <div className="font-display text-base sm:text-xl font-semibold text-[#121D2B] leading-tight break-words hyphens-auto">{project.status}</div>
               <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">Status</div>
             </div>
           </div>
@@ -102,7 +102,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
                       <p className="text-xs text-gray-500 mt-0.5">{doc.description}</p>
                     </div>
                     <button onClick={handleDocumentClick} className="p-2.5 border border-gray-200 hover:bg-gray-50 transition-colors shrink-0">
-                      <Download size={16} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                      <Download size={16} style={{ color: 'var(--brand-color, #1F497D)' }} />
                     </button>
                   </div>
                 ))}
@@ -129,9 +129,9 @@ const ProjectInfo = ({ project, onButtonClick }) => {
             <Link
               to="/ns-hotel"
               className="flex items-center justify-center gap-2 text-white font-semibold py-3 px-6 w-full transition-colors text-sm"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               Hotel Details ansehen
             </Link>
@@ -139,9 +139,9 @@ const ProjectInfo = ({ project, onButtonClick }) => {
             <button
               onClick={onButtonClick}
               className="flex items-center justify-center gap-2 text-white font-semibold py-3 px-6 w-full transition-colors text-sm"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               Projekt anfragen
             </button>

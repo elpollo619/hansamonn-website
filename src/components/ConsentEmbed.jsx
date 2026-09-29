@@ -14,7 +14,7 @@ export default function ConsentEmbed({ provider = 'Google Maps', label = 'Karte 
   if (allowed || once) return children;
 
   return (
-    <div className={`flex flex-col items-center justify-center gap-3 text-center bg-[#eef0f3] p-6 ${className}`}>
+    <div className={`flex flex-col items-center justify-center gap-3 text-center bg-[#EDF0F3] p-6 ${className}`}>
       <p className="max-w-md text-sm text-gray-600 leading-relaxed">
         Dieser Inhalt wird von {provider} bereitgestellt. Beim Laden werden Daten, unter anderem Ihre
         IP-Adresse, an den Anbieter übermittelt.
@@ -23,7 +23,7 @@ export default function ConsentEmbed({ provider = 'Google Maps', label = 'Karte 
         <button
           type="button"
           onClick={() => setOnce(true)}
-          className="px-5 py-2.5 text-sm font-semibold text-white bg-[#1D3D78] hover:bg-[#162E5A] transition-colors"
+          className="px-5 py-2.5 text-sm font-semibold text-white bg-[#1F497D] hover:bg-[#173963] transition-colors"
         >
           {label}
         </button>

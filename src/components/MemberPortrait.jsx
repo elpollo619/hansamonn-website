@@ -34,7 +34,7 @@ export default function MemberPortrait({ member, className = '', imgClassName = 
     <div
       role="img"
       aria-label={`${member.name} – ${member.position}`}
-      className={`relative w-full h-full overflow-hidden bg-[#0F1B2D] ${className}`}
+      className={`relative w-full h-full overflow-hidden bg-[#121D2B] ${className}`}
     >
       <div
         aria-hidden="true"
@@ -45,13 +45,13 @@ export default function MemberPortrait({ member, className = '', imgClassName = 
           backgroundSize: '28px 28px',
         }}
       />
-      <div aria-hidden="true" className="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-[var(--brand-color,#1D3D78)] opacity-40 blur-2xl" />
+      <div aria-hidden="true" className="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-[var(--brand-color,#1F497D)] opacity-40 blur-2xl" />
       <div className="absolute inset-0 flex items-center justify-center">
         <span className={`font-display font-semibold text-white/90 leading-none tracking-tight text-5xl md:text-6xl ${imgClassName}`}>
           {initialsOf(member.name)}
         </span>
       </div>
-      <span className="absolute left-4 bottom-4 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/45">
+      <span className="absolute left-4 bottom-4 text-[11px] font-semibold uppercase tracking-hairline text-white/45">
         Hans Amonn AG
       </span>
     </div>

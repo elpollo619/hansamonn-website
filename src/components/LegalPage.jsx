@@ -22,7 +22,7 @@ export default function LegalPage({ title, asOf, intro, sections }) {
           <div className="divide-y divide-gray-100 border-y border-gray-100">
             {sections.map(({ title: t, body }) => (
               <section key={t} className="py-8">
-                <h2 className="font-display uppercase text-xl font-semibold text-[#0F1B2D] mb-4">{t}</h2>
+                <h2 className="font-display text-xl font-semibold text-[#121D2B] mb-4">{t}</h2>
                 <div className="text-gray-600 leading-relaxed space-y-3 [&_a]:underline [&_a]:text-gray-800 [&_strong]:text-gray-900 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5">
                   {body}
                 </div>

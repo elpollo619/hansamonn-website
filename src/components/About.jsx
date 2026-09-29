@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Award, Users, Building, Calendar, Linkedin } from 'lucide-react';
 
-const BRAND = 'var(--brand-color, #1D3D78)';
+const BRAND = 'var(--brand-color, #1F497D)';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -27,7 +27,7 @@ const About = () => {
             {/* Text Content */}
             <motion.div {...fadeUp} className="lg:col-span-5 min-w-0">
               <p className="eyebrow mb-3">Hans Amonn AG</p>
-              <p className="font-display text-2xl md:text-[1.75rem] font-semibold leading-snug text-[#0F1B2D] mb-6">
+              <p className="font-display text-2xl md:text-[1.75rem] font-semibold leading-snug text-[#121D2B] mb-6">
                 Mit langjähriger Erfahrung und einem engagierten Team bieten wir massgeschneiderte
                 Lösungen für Ihre Projekte an, von der Planung bis zur Umsetzung.
               </p>
@@ -43,8 +43,8 @@ const About = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-6 py-3 text-sm font-semibold text-white transition-colors"
                 style={{ backgroundColor: BRAND }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <Linkedin className="h-4 w-4" />
                 Unser Unternehmensprofil auf LinkedIn
@@ -76,7 +76,7 @@ const About = () => {
                 className="border-r border-b border-gray-100 px-5 py-8 md:px-8 md:py-10"
               >
                 <stat.icon className="w-5 h-5 mb-5" style={{ color: BRAND }} />
-                <div className="font-display text-4xl md:text-5xl font-semibold leading-none text-[#0F1B2D] mb-2">
+                <div className="font-display text-4xl md:text-5xl font-semibold leading-none text-[#121D2B] mb-2">
                   {stat.number}
                 </div>
                 <div className="text-xs font-semibold uppercase tracking-wider text-gray-500">
@@ -93,7 +93,7 @@ const About = () => {
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="max-w-3xl mb-14">
             <p className="eyebrow mb-3">Unsere Geschichte</p>
-            <h2 className="display-heading uppercase text-3xl md:text-4xl">
+            <h2 className="display-heading text-3xl md:text-4xl">
               Tradition und Vision seit 1968
             </h2>
           </motion.div>
@@ -124,7 +124,7 @@ const About = () => {
                 className="bg-white p-8 md:p-10"
               >
                 <div
-                  className="font-display uppercase text-3xl md:text-4xl font-semibold leading-none mb-5"
+                  className="font-display text-3xl md:text-4xl font-semibold leading-none mb-5"
                   style={{ color: BRAND }}
                 >
                   {item.mark}

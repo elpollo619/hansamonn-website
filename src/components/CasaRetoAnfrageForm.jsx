@@ -56,7 +56,7 @@ export default function CasaRetoAnfrageForm() {
       supabase.functions.invoke('send-email', {
         body: {
           subject: `Neue Casa Reto Anfrage: ${form.vorname} ${form.nachname}`,
-          html: `<h2 style="color:#1D3D78">Neue Anfrage für Casa Reto</h2>
+          html: `<h2 style="color:#1F497D">Neue Anfrage für Casa Reto</h2>
 <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
 <tr><td style="padding:4px 12px 4px 0;color:#666">Name</td><td><strong>${form.vorname} ${form.nachname}</strong></td></tr>
 <tr><td style="padding:4px 12px 4px 0;color:#666">E-Mail</td><td>${form.email}</td></tr>
@@ -77,27 +77,27 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
           to: form.email,
           subject: 'Ihre Casa Reto Anfrage – Hans Amonn AG',
           html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-<div style="background:#1D3D78;padding:24px 32px;color:white">
+<div style="background:#1F497D;padding:24px 32px;color:white">
   <h1 style="margin:0;font-size:22px;font-weight:700">Hans Amonn AG</h1>
   <p style="margin:6px 0 0;opacity:.8;font-size:14px">Casa Reto – Ferienhaus am Lago Maggiore</p>
 </div>
-<div style="padding:32px;background:#f9fafb;border:1px solid #e5e7eb">
-  <h2 style="color:#1D3D78;font-size:18px;margin-top:0">Ihre Buchungsanfrage ist eingegangen!</h2>
-  <p style="color:#374151">Guten Tag ${form.vorname} ${form.nachname},</p>
-  <p style="color:#374151">vielen Dank für Ihre Anfrage für <strong>Casa Reto</strong>. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 24 Stunden.</p>
-  <div style="background:white;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin:20px 0">
-    <p style="margin:0 0 8px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.05em">Ihre Buchungsdetails</p>
-    <p style="margin:4px 0;color:#374151"><strong>Ankunft:</strong> ${new Date(form.ankunft).toLocaleDateString('de-CH')}</p>
-    <p style="margin:4px 0;color:#374151"><strong>Abreise:</strong> ${new Date(form.abreise).toLocaleDateString('de-CH')}</p>
-    <p style="margin:4px 0;color:#374151"><strong>Nächte:</strong> ${nights}</p>
-    <p style="margin:4px 0;color:#374151"><strong>Gäste:</strong> ${form.gaeste} Person${form.gaeste > 1 ? 'en' : ''}</p>
-    ${form.nachricht ? `<p style="margin:8px 0 0;color:#374151"><strong>Ihre Nachricht:</strong> ${form.nachricht}</p>` : ''}
+<div style="padding:32px;background:#F6F8FA;border:1px solid #DFE3E8">
+  <h2 style="color:#1F497D;font-size:18px;margin-top:0">Ihre Buchungsanfrage ist eingegangen!</h2>
+  <p style="color:#343C47">Guten Tag ${form.vorname} ${form.nachname},</p>
+  <p style="color:#343C47">vielen Dank für Ihre Anfrage für <strong>Casa Reto</strong>. Wir prüfen die Verfügbarkeit und melden uns innerhalb von 24 Stunden.</p>
+  <div style="background:white;border:1px solid #DFE3E8;border-radius:8px;padding:16px;margin:20px 0">
+    <p style="margin:0 0 8px;font-size:12px;font-weight:600;color:#56606C;text-transform:uppercase;letter-spacing:.05em">Ihre Buchungsdetails</p>
+    <p style="margin:4px 0;color:#343C47"><strong>Ankunft:</strong> ${new Date(form.ankunft).toLocaleDateString('de-CH')}</p>
+    <p style="margin:4px 0;color:#343C47"><strong>Abreise:</strong> ${new Date(form.abreise).toLocaleDateString('de-CH')}</p>
+    <p style="margin:4px 0;color:#343C47"><strong>Nächte:</strong> ${nights}</p>
+    <p style="margin:4px 0;color:#343C47"><strong>Gäste:</strong> ${form.gaeste} Person${form.gaeste > 1 ? 'en' : ''}</p>
+    ${form.nachricht ? `<p style="margin:8px 0 0;color:#343C47"><strong>Ihre Nachricht:</strong> ${form.nachricht}</p>` : ''}
   </div>
-  <p style="color:#374151">Bei Fragen erreichen Sie uns direkt:</p>
-  <p style="margin:4px 0;color:#1D3D78"><strong>Tel:</strong> +41 31 951 85 54</p>
-  <p style="margin:4px 0;color:#1D3D78"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
-  <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
-  <p style="color:#9ca3af;font-size:12px;margin:0">Hans Amonn AG · Kerzers, Schweiz · hansamonn.ch</p>
+  <p style="color:#343C47">Bei Fragen erreichen Sie uns direkt:</p>
+  <p style="margin:4px 0;color:#1F497D"><strong>Tel:</strong> +41 31 951 85 54</p>
+  <p style="margin:4px 0;color:#1F497D"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
+  <hr style="border:none;border-top:1px solid #DFE3E8;margin:24px 0">
+  <p style="color:#8C96A2;font-size:12px;margin:0">Hans Amonn AG · Kerzers, Schweiz · hansamonn.ch</p>
 </div>
 </div>`,
         },
@@ -189,9 +189,9 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
         type="submit"
         disabled={loading}
         className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 transition-colors disabled:opacity-50"
-        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-        onMouseOver={e => { if (!e.currentTarget.disabled) e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)'); }}
-        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+        style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+        onMouseOver={e => { if (!e.currentTarget.disabled) e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)'); }}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
       >
         {loading ? <><Loader2 size={16} className="animate-spin" /> Senden…</> : <><Check size={16} /> Anfrage senden</>}
       </button>

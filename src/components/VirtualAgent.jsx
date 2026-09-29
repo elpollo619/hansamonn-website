@@ -760,7 +760,7 @@ export default function VirtualAgent() {
         </AnimatePresence>
         {/* Sparkle badge */}
         {!open && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+          <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
             <Sparkles size={10} className="text-white" />
           </span>
         )}
@@ -779,7 +779,7 @@ export default function VirtualAgent() {
           >
             {/* Header */}
             <div className="bg-gray-900 px-4 py-3 flex items-center gap-3 flex-shrink-0">
-              <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+              <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
                 <Bot size={17} className="text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -813,10 +813,10 @@ export default function VirtualAgent() {
                           key={code}
                           onClick={() => { setChatLang(code); setShowLangPicker(false); }}
                           className={`w-full flex items-center justify-between px-3 py-2 text-sm hover:bg-gray-50 transition-colors ${chatLang === code ? 'font-semibold' : 'text-gray-700'}`}
-                          style={chatLang === code ? { color: 'var(--brand-color, #1D3D78)' } : {}}
+                          style={chatLang === code ? { color: 'var(--brand-color, #1F497D)' } : {}}
                         >
                           <span>{info.label}</span>
-                          {chatLang === code && <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} />}
+                          {chatLang === code && <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }} />}
                         </button>
                       ))}
                     </motion.div>
@@ -833,7 +833,7 @@ export default function VirtualAgent() {
                     {/* Avatar */}
                     <div
                       className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mb-0.5"
-                      style={msg.from === 'bot' ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : { backgroundColor: '#374151' }}
+                      style={msg.from === 'bot' ? { backgroundColor: 'var(--brand-color, #1F497D)' } : { backgroundColor: '#343C47' }}
                     >
                       {msg.from === 'bot' ? <Bot size={11} className="text-white" /> : <User size={11} className="text-white" />}
                     </div>
@@ -849,7 +849,7 @@ export default function VirtualAgent() {
                         <Link
                           to={msg.link}
                           className={`flex items-center gap-1 text-xs mt-1.5 transition-colors font-medium ${msg.from === 'user' ? 'justify-end mr-1' : 'ml-1'}`}
-                          style={{ color: 'var(--brand-color, #1D3D78)' }}
+                          style={{ color: 'var(--brand-color, #1F497D)' }}
                         >
                           {msg.linkLabel || 'Mehr erfahren'} <ArrowRight size={10} />
                         </Link>
@@ -863,7 +863,7 @@ export default function VirtualAgent() {
               {typing && (
                 <div className="flex justify-start">
                   <div className="flex items-end gap-2">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
                       <Bot size={11} className="text-white" />
                     </div>
                     <div className="bg-white border border-gray-100 shadow-sm px-4 py-3.5 rounded-2xl rounded-bl-sm">

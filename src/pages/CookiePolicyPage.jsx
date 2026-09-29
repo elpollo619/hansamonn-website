@@ -51,7 +51,7 @@ const SECTIONS = [
   {
     title: '3. Übersicht',
     body: (
-      <div className="overflow-x-auto -mx-1">
+      <div className="overflow-x-auto -mx-1" tabIndex={0} role="region" aria-label="Tabelle der Cookies, seitlich scrollbar">
         <table className="w-full min-w-[560px] text-sm border-collapse">
           <caption className="sr-only">Cookies und lokale Speicherungen auf hansamonn.ch</caption>
           <thead>
