@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { User, Mail, Phone, MessageSquare, Check, Loader2, AlertCircle, Calendar } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -38,7 +39,7 @@ export default function PropertyAnfrageForm({ propertyName = '', contactEmail = 
     const subject = `Neue Anfrage: ${propertyName} – ${form.vorname} ${form.nachname}`;
 
     const companyHtml = `
-<h2 style="font-family:sans-serif;color:#1D3D78">Neue Anfrage: ${propertyName}</h2>
+<h2 style="font-family:sans-serif;color:#1F497D">Neue Anfrage: ${propertyName}</h2>
 <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
 <tr><td style="padding:4px 12px 4px 0;color:#666">Name</td><td><strong>${form.vorname} ${form.nachname}</strong></td></tr>
 <tr><td style="padding:4px 12px 4px 0;color:#666">E-Mail</td><td>${form.email}</td></tr>
@@ -49,25 +50,25 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
 
     const confirmHtml = `
 <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
-<div style="background:#1D3D78;padding:24px 32px;color:white">
+<div style="background:#1F497D;padding:24px 32px;color:white">
   <h1 style="margin:0;font-size:22px;font-weight:700">Hans Amonn AG</h1>
   <p style="margin:6px 0 0;opacity:.8;font-size:14px">Immobilien & Architektur</p>
 </div>
-<div style="padding:32px;background:#f9fafb;border:1px solid #e5e7eb">
-  <h2 style="color:#1D3D78;font-size:18px;margin-top:0">Ihre Anfrage ist bei uns eingegangen!</h2>
-  <p style="color:#374151">Guten Tag ${form.vorname} ${form.nachname},</p>
-  <p style="color:#374151">vielen Dank für Ihre Anfrage bezüglich <strong>${propertyName}</strong>. Wir haben Ihre Nachricht erhalten und werden uns innerhalb von 24 Stunden bei Ihnen melden.</p>
-  <div style="background:white;border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin:20px 0">
-    <p style="margin:0 0 8px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.05em">Ihre Angaben</p>
-    <p style="margin:4px 0;color:#374151"><strong>Objekt:</strong> ${propertyName}</p>
-    ${form.einzug ? `<p style="margin:4px 0;color:#374151"><strong>Gew. Einzug:</strong> ${new Date(form.einzug).toLocaleDateString('de-CH')}</p>` : ''}
-    ${form.nachricht ? `<p style="margin:4px 0;color:#374151"><strong>Ihre Nachricht:</strong> ${form.nachricht.replace(/\n/g, '<br>')}</p>` : ''}
+<div style="padding:32px;background:#F6F8FA;border:1px solid #DFE3E8">
+  <h2 style="color:#1F497D;font-size:18px;margin-top:0">Ihre Anfrage ist bei uns eingegangen!</h2>
+  <p style="color:#343C47">Guten Tag ${form.vorname} ${form.nachname},</p>
+  <p style="color:#343C47">vielen Dank für Ihre Anfrage bezüglich <strong>${propertyName}</strong>. Wir haben Ihre Nachricht erhalten und werden uns innerhalb von 24 Stunden bei Ihnen melden.</p>
+  <div style="background:white;border:1px solid #DFE3E8;border-radius:8px;padding:16px;margin:20px 0">
+    <p style="margin:0 0 8px;font-size:12px;font-weight:600;color:#56606C;text-transform:uppercase;letter-spacing:.05em">Ihre Angaben</p>
+    <p style="margin:4px 0;color:#343C47"><strong>Objekt:</strong> ${propertyName}</p>
+    ${form.einzug ? `<p style="margin:4px 0;color:#343C47"><strong>Gew. Einzug:</strong> ${new Date(form.einzug).toLocaleDateString('de-CH')}</p>` : ''}
+    ${form.nachricht ? `<p style="margin:4px 0;color:#343C47"><strong>Ihre Nachricht:</strong> ${form.nachricht.replace(/\n/g, '<br>')}</p>` : ''}
   </div>
-  <p style="color:#374151">Bei dringenden Fragen erreichen Sie uns auch direkt:</p>
-  <p style="margin:4px 0;color:#1D3D78"><strong>Tel:</strong> +41 31 951 85 54</p>
-  <p style="margin:4px 0;color:#1D3D78"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
-  <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
-  <p style="color:#9ca3af;font-size:12px;margin:0">Hans Amonn AG · Kerzers, Schweiz · hansamonn.ch</p>
+  <p style="color:#343C47">Bei dringenden Fragen erreichen Sie uns auch direkt:</p>
+  <p style="margin:4px 0;color:#1F497D"><strong>Tel:</strong> +41 31 951 85 54</p>
+  <p style="margin:4px 0;color:#1F497D"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
+  <hr style="border:none;border-top:1px solid #DFE3E8;margin:24px 0">
+  <p style="color:#8C96A2;font-size:12px;margin:0">Hans Amonn AG · Kerzers, Schweiz · hansamonn.ch</p>
 </div>
 </div>`;
 
@@ -124,39 +125,39 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className={lbl}><User size={11} className="inline mr-1" />Vorname *</label>
-          <input type="text" value={form.vorname} onChange={e => set('vorname', e.target.value)} placeholder="Max" className={inp} />
+          <label className={lbl} htmlFor="pa-vorname"><User size={11} className="inline mr-1" />Vorname *</label>
+          <input id="pa-vorname" type="text" value={form.vorname} onChange={e => set('vorname', e.target.value)} placeholder="Max" className={inp} />
           {errors.vorname && <p className="text-xs text-red-500 mt-1">{errors.vorname}</p>}
         </div>
         <div>
-          <label className={lbl}>Nachname *</label>
-          <input type="text" value={form.nachname} onChange={e => set('nachname', e.target.value)} placeholder="Mustermann" className={inp} />
+          <label className={lbl} htmlFor="pa-nachname">Nachname *</label>
+          <input id="pa-nachname" type="text" value={form.nachname} onChange={e => set('nachname', e.target.value)} placeholder="Mustermann" className={inp} />
           {errors.nachname && <p className="text-xs text-red-500 mt-1">{errors.nachname}</p>}
         </div>
       </div>
 
       <div>
-        <label className={lbl}><Mail size={11} className="inline mr-1" />E-Mail *</label>
-        <input type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="max@beispiel.ch" className={inp} />
+        <label className={lbl} htmlFor="pa-email"><Mail size={11} className="inline mr-1" />E-Mail *</label>
+        <input id="pa-email" type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="max@beispiel.ch" className={inp} />
         {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
       </div>
 
       <div>
-        <label className={lbl}><Phone size={11} className="inline mr-1" />Telefon</label>
-        <input type="tel" value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+41 79 123 45 67" className={inp} />
+        <label className={lbl} htmlFor="pa-telefon"><Phone size={11} className="inline mr-1" />Telefon</label>
+        <input id="pa-telefon" type="tel" value={form.telefon} onChange={e => set('telefon', e.target.value)} placeholder="+41 79 123 45 67" className={inp} />
       </div>
 
       {showDate && (
         <div>
-          <label className={lbl}><Calendar size={11} className="inline mr-1" />Gewünschter Einzug</label>
-          <input type="date" value={form.einzug} onChange={e => set('einzug', e.target.value)}
+          <label className={lbl} htmlFor="pa-einzug"><Calendar size={11} className="inline mr-1" />Gewünschter Einzug</label>
+          <input id="pa-einzug" type="date" value={form.einzug} onChange={e => set('einzug', e.target.value)}
             min={new Date().toISOString().split('T')[0]} className={inp} />
         </div>
       )}
 
       <div>
-        <label className={lbl}><MessageSquare size={11} className="inline mr-1" />Nachricht</label>
-        <textarea rows={3} value={form.nachricht} onChange={e => set('nachricht', e.target.value)}
+        <label className={lbl} htmlFor="pa-nachricht"><MessageSquare size={11} className="inline mr-1" />Nachricht</label>
+        <textarea id="pa-nachricht" rows={3} value={form.nachricht} onChange={e => set('nachricht', e.target.value)}
           placeholder="Ihre Fragen oder besonderen Wünsche…" className={inp + ' resize-none'} />
       </div>
 
@@ -166,13 +167,14 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
         </div>
       )}
 
+      <FormPrivacyNote className="mb-3" />
       <button
         type="submit"
         disabled={loading}
         className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 transition-colors disabled:opacity-50"
-        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-        onMouseOver={e => { if (!e.currentTarget.disabled) e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)'); }}
-        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+        style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+        onMouseOver={e => { if (!e.currentTarget.disabled) e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)'); }}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
       >
         {loading ? <><Loader2 size={16} className="animate-spin" /> Senden…</> : <><Check size={16} /> Anfrage senden</>}
       </button>

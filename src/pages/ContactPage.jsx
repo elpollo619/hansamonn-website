@@ -16,9 +16,7 @@ const ContactPage = () => {
         <meta name="twitter:card" content="summary" />
       </Helmet>
       
-      <div className="pt-8">
-        <Contact />
-      </div>
+      <Contact />
     </>
   );
 };

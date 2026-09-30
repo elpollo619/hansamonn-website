@@ -33,7 +33,7 @@ export default function VermietenPage() {
               Aktuelle Vermietungen
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+            <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
               Mietobjekte und
               <span className="text-blue-600"> verfügbare Flächen</span>
             </h1>

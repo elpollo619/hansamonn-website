@@ -42,12 +42,12 @@ const es = {
     meta: {
       title: 'Apartamentos en alquiler – Hans Amonn AG',
       description:
-        'Modernos apartamentos en alquiler en Kerzers y alrededores. Hans Amonn AG – su socio inmobiliario desde 1968.',
+        'Modernos apartamentos en alquiler en Kerzers y alrededores. Hans Amonn AG, su socio inmobiliario desde 1968.',
     },
     hero: {
       title: 'Alojamiento & Estancia',
       subtitle:
-        'Apartamentos, largas estancias amuebladas, hotel y proyectos exclusivos – todo en Kerzers y la región.',
+        'Apartamentos, largas estancias amuebladas, hotel y proyectos exclusivos, todo en Kerzers y la región.',
       badge: 'Ofertas actuales',
       offeringTypes: 'Apartamentos · Long Stay · Hotel · Proyectos',
       serviceApartments: 'Apartamentos modernos en Kerzers',
@@ -89,7 +89,7 @@ const es = {
       availableFrom: 'Disponible desde',
       contact: {
         title: '¿Interesado? Con gusto le asesoramos',
-        subtitle: 'Llámenos o escríbanos – respondemos rápido y sin complicaciones.',
+        subtitle: 'Llámenos o escríbanos, respondemos rápido y sin complicaciones.',
         call: 'Llamar',
         email: 'Enviar correo',
         form: 'Formulario de consulta',
@@ -97,7 +97,7 @@ const es = {
       rented: {
         title: 'Este apartamento está actualmente alquilado.',
         subtitle:
-          'Contáctenos – le informaremos en cuanto haya disponibilidad.',
+          'Contáctenos, le informaremos en cuanto haya disponibilidad.',
       },
       gallery: 'Galería',
       backToList: 'Ver todos los apartamentos',
@@ -192,13 +192,13 @@ const es = {
   immobilien: {
     hero: {
       title: 'Nuestros inmuebles',
-      subtitle: 'Alquilar o comprar — tenemos la oferta adecuada para usted',
+      subtitle: 'Alquilar o comprar, tenemos la oferta adecuada para usted',
     },
     vermietung: {
       tag: 'Alquiler',
       title: 'Estancia & Vivienda',
       subtitle: 'Habitaciones amuebladas, Apartamentos & Hotel',
-      desc: 'Desde estancias cortas hasta alquileres a largo plazo — soluciones flexibles para cada necesidad.',
+      desc: 'Desde estancias cortas hasta alquileres a largo plazo, soluciones flexibles para cada necesidad.',
       cta: 'Ver ofertas',
       highlights: ['Long Stay desde 1 mes', 'Gastos incluidos', 'Self Check-in Hotel', 'Casa de vacaciones Tesino'],
     },
@@ -213,6 +213,7 @@ const es = {
     contact: {
       title: '¿Interesado? Le asesoramos con gusto.',
       cta: 'Solicitar alquiler',
+      text: 'Cuéntenos qué busca: fechas, presupuesto, ubicación. Le respondemos en 24 horas.',
     },
   },
 
@@ -225,7 +226,7 @@ const es = {
     sectionFirma: 'Datos de la empresa (opcional)',
     sectionFirmaHint: 'Rellenar solo si el alquiler se realiza a través de una empresa.',
     sectionFahrzeug: 'Datos del vehículo',
-    sectionNotfall: 'Contacto de emergencia',
+    sectionNotfall: "Contacto de emergencia (opcional)",
     sectionBemerkungen: 'Observaciones (opcional)',
     sectionEinwilligung: 'Declaración',
     mietbeginn: 'Inicio del alquiler',
@@ -237,14 +238,14 @@ const es = {
     plz: 'Código postal',
     ort: 'Ciudad',
     geburtsdatum: 'Fecha de nacimiento',
-    nationalitaet: 'Nacionalidad',
+    nationalitaet: "Situación de residencia",
     sprache: 'Idioma',
     beruf: 'Profesión',
     handynummer: 'Número de móvil',
     email: 'Correo electrónico',
     whatsapp: '¿WhatsApp disponible?',
-    idUpload: 'Copia del pasaporte / DNI',
-    idHint: 'Pasaporte, DNI o permiso de residencia (JPG, PNG o PDF)',
+    idUpload: "Documento de identidad (opcional)",
+    idHint: "Pasaporte, DNI o permiso de residencia. Opcional, solo lo necesitamos si aceptamos su solicitud (JPG, PNG o PDF)",
     extraDocs: 'Documentos adicionales (opcional)',
     extraDocsHint: 'Nómina, contrato de trabajo, carta de referencia, etc.',
     fahrzeugVorhanden: '¿Vehículo?',
@@ -264,7 +265,7 @@ const es = {
     notfallEmail: 'Correo electrónico',
     bemerkungen: 'Información adicional o solicitudes especiales...',
     consent1: 'He proporcionado toda la información de forma veraz y correcta.',
-    consent2: 'He leído el reglamento interno y lo acepto.',
+    consent2: "Entiendo que el reglamento de la casa forma parte del contrato de alquiler.",
     consent3: 'He leído las condiciones generales y las acepto.',
     pdfNote: 'Tras el envío se descargará automáticamente un PDF de su solicitud.',
     uploadArea: 'Arrastre los archivos aquí o haga clic',
@@ -292,7 +293,7 @@ const es = {
       title: 'Hans Amonn AG',
       subtitle: 'Construcción e Inmobiliaria',
       tagline:
-        'Su socio en construcción e inmobiliaria desde 1968 – tradición e innovación unidas',
+        'Su socio en construcción e inmobiliaria desde 1968, tradición e innovación unidas',
       ctaProjects: 'Ver proyectos',
       ctaContact: 'Solicitar consulta',
     },
@@ -365,7 +366,7 @@ const es = {
     ],
     sendMessage: 'Enviar mensaje',
     ctaTitle: '¿Listo para su próximo proyecto?',
-    ctaDesc: 'Planificación arquitectónica, obra nueva, reforma o gestión inmobiliaria — somos su socio competente para todos los proyectos en la región de Berna.',
+    ctaDesc: 'Planificación arquitectónica, obra nueva, reforma o gestión inmobiliaria, somos su socio competente para todos los proyectos en la región de Berna.',
     ctaCall: 'Llamar ahora',
     ctaEmail: 'Enviar correo',
     form: {

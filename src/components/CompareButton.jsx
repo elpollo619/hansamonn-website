@@ -32,7 +32,7 @@ const CompareButton = ({ propertyId, propertyName }) => {
           : 'bg-white border-gray-300 text-gray-600 hover:border-gray-500 hover:text-gray-800 hover:bg-gray-50'
         }
       `}
-      style={active ? { backgroundColor: 'var(--brand-color, #1D3D78)', borderColor: 'var(--brand-color, #1D3D78)' } : {}}
+      style={active ? { backgroundColor: 'var(--brand-color, #1F497D)', borderColor: 'var(--brand-color, #1F497D)' } : {}}
     >
       {active ? (
         <>

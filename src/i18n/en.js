@@ -42,12 +42,12 @@ const en = {
     meta: {
       title: 'Apartments for Rent – Hans Amonn AG',
       description:
-        'Modern apartments for rent in Kerzers and surroundings. Hans Amonn AG – your real estate partner since 1968.',
+        'Modern apartments for rent in Kerzers and surroundings. Hans Amonn AG, your real estate partner since 1968.',
     },
     hero: {
       title: 'Stay & Live in Kerzers',
       subtitle:
-        'Apartments, furnished long stays, hotel and exclusive projects – everything in Kerzers and the region.',
+        'Apartments, furnished long stays, hotel and exclusive projects, everything in Kerzers and the region.',
       badge: 'Current Listings',
       offeringTypes: 'Apartments · Long Stay · Hotel · Projects',
       serviceApartments: 'Modern rental apartments in Kerzers',
@@ -90,7 +90,7 @@ const en = {
       contact: {
         title: 'Interested? We are happy to help',
         subtitle:
-          'Call us or write to us – we respond quickly and straightforwardly.',
+          'Call us or write to us, we respond quickly and straightforwardly.',
         call: 'Call',
         email: 'Send email',
         form: 'Enquiry form',
@@ -98,7 +98,7 @@ const en = {
       rented: {
         title: 'This apartment is currently rented.',
         subtitle:
-          'Contact us – we will notify you as soon as an apartment becomes available.',
+          'Contact us, we will notify you as soon as an apartment becomes available.',
       },
       gallery: 'Gallery',
       backToList: 'View all apartments',
@@ -106,7 +106,7 @@ const en = {
     empty: {
       title: 'No apartments available',
       subtitle:
-        'No apartments are currently available. Leave your contact details – we will get in touch as soon as something becomes free.',
+        'No apartments are currently available. Leave your contact details, we will get in touch as soon as something becomes free.',
     },
     cta: {
       title: "Didn't find what you were looking for?",
@@ -193,13 +193,13 @@ const en = {
   immobilien: {
     hero: {
       title: 'Our Properties',
-      subtitle: 'Rent or buy — we have the right offer for you',
+      subtitle: 'Rent or buy, we have the right offer for you',
     },
     vermietung: {
       tag: 'Rentals',
       title: 'Stay & Live',
       subtitle: 'Furnished Rooms, Apartments & Hotel',
-      desc: 'From short overnight stays to long-term living — flexible solutions for every need.',
+      desc: 'From short overnight stays to long-term living, flexible solutions for every need.',
       cta: 'View listings',
       highlights: ['Long Stay from 1 month', 'Utilities included', 'Self Check-in Hotel', 'Holiday house Ticino'],
     },
@@ -214,6 +214,7 @@ const en = {
     contact: {
       title: 'Interested? We are happy to advise you.',
       cta: 'Submit rental inquiry',
+      text: 'Tell us what you are looking for: dates, budget, location. We reply within 24 hours.',
     },
   },
 
@@ -226,7 +227,7 @@ const en = {
     sectionFirma: 'Company Details (optional)',
     sectionFirmaHint: 'Only fill in if the tenancy is through a company.',
     sectionFahrzeug: 'Vehicle Details',
-    sectionNotfall: 'Emergency Contact',
+    sectionNotfall: "Emergency contact (optional)",
     sectionBemerkungen: 'Remarks (optional)',
     sectionEinwilligung: 'Declaration',
     mietbeginn: 'Start of tenancy',
@@ -238,14 +239,14 @@ const en = {
     plz: 'Postcode',
     ort: 'City',
     geburtsdatum: 'Date of birth',
-    nationalitaet: 'Nationality',
+    nationalitaet: "Residence status",
     sprache: 'Language',
     beruf: 'Occupation',
     handynummer: 'Mobile number',
     email: 'Email',
     whatsapp: 'WhatsApp available?',
-    idUpload: 'Passport copy / ID',
-    idHint: 'Passport, ID card or residence permit (JPG, PNG or PDF)',
+    idUpload: "ID (optional)",
+    idHint: "Passport, ID card or residence permit. Optional, we only need it once we confirm your booking (JPG, PNG or PDF)",
     extraDocs: 'Additional documents (optional)',
     extraDocsHint: 'Pay slip, employment contract, reference letter, etc.',
     fahrzeugVorhanden: 'Vehicle?',
@@ -265,7 +266,7 @@ const en = {
     notfallEmail: 'Email',
     bemerkungen: 'Additional information or special requests...',
     consent1: 'I have provided all information truthfully and correctly.',
-    consent2: 'I have read the house rules and accept them.',
+    consent2: "I note that the house rules form part of the rental agreement.",
     consent3: 'I have read the Terms and Conditions and accept them.',
     pdfNote: 'After submitting, a PDF copy of your request will be downloaded automatically.',
     uploadArea: 'Drop files here or click',
@@ -293,7 +294,7 @@ const en = {
       title: 'Hans Amonn AG',
       subtitle: 'Construction & Real Estate',
       tagline:
-        'Your partner for construction and real estate since 1968 – tradition and innovation united',
+        'Your partner for construction and real estate since 1968, tradition and innovation united',
       ctaProjects: 'View projects',
       ctaContact: 'Request consultation',
     },
@@ -366,7 +367,7 @@ const en = {
     ],
     sendMessage: 'Send message',
     ctaTitle: 'Ready for your next project?',
-    ctaDesc: 'Whether architecture planning, new build, renovation or property management — we are your competent partner for all construction and real estate projects in the Bern region.',
+    ctaDesc: 'Whether architecture planning, new build, renovation or property management, we are your competent partner for all construction and real estate projects in the Bern region.',
     ctaCall: 'Call now',
     ctaEmail: 'Send email',
     form: {

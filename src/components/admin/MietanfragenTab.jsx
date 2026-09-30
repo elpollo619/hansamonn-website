@@ -88,18 +88,18 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
           to: row.email,
           subject: `Wie war Ihr Aufenthalt bei ${row.objekt ?? 'Hans Amonn AG'}?`,
           html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto">
-<div style="background:#1D3D78;padding:24px 32px;color:white">
+<div style="background:#1F497D;padding:24px 32px;color:white">
   <h1 style="margin:0;font-size:20px;font-weight:700">Hans Amonn AG</h1>
 </div>
-<div style="padding:32px;background:#f9fafb;border:1px solid #e5e7eb">
-  <h2 style="color:#1D3D78;font-size:17px;margin-top:0">Wie war Ihr Aufenthalt?</h2>
-  <p style="color:#374151">Guten Tag ${row.vorname} ${row.nachname},</p>
-  <p style="color:#374151">wir hoffen, Ihr Aufenthalt bei <strong>${row.objekt ?? 'uns'}</strong> war angenehm. Wir würden uns sehr über Ihr Feedback freuen — es hilft uns, unseren Service zu verbessern.</p>
-  <p style="color:#374151">Schreiben Sie uns einfach eine kurze Antwort auf diese E-Mail oder kontaktieren Sie uns direkt:</p>
-  <p style="margin:4px 0;color:#1D3D78"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
-  <p style="margin:4px 0;color:#1D3D78"><strong>Tel:</strong> +41 31 951 85 54</p>
-  <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0">
-  <p style="color:#9ca3af;font-size:12px;margin:0">Hans Amonn AG · hansamonn.ch</p>
+<div style="padding:32px;background:#F6F8FA;border:1px solid #DFE3E8">
+  <h2 style="color:#1F497D;font-size:17px;margin-top:0">Wie war Ihr Aufenthalt?</h2>
+  <p style="color:#343C47">Guten Tag ${row.vorname} ${row.nachname},</p>
+  <p style="color:#343C47">wir hoffen, Ihr Aufenthalt bei <strong>${row.objekt ?? 'uns'}</strong> war angenehm. Wir würden uns sehr über Ihr Feedback freuen — es hilft uns, unseren Service zu verbessern.</p>
+  <p style="color:#343C47">Schreiben Sie uns einfach eine kurze Antwort auf diese E-Mail oder kontaktieren Sie uns direkt:</p>
+  <p style="margin:4px 0;color:#1F497D"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
+  <p style="margin:4px 0;color:#1F497D"><strong>Tel:</strong> +41 31 951 85 54</p>
+  <hr style="border:none;border-top:1px solid #DFE3E8;margin:24px 0">
+  <p style="color:#8C96A2;font-size:12px;margin:0">Hans Amonn AG · hansamonn.ch</p>
 </div>
 </div>`,
           replyTo: 'office@reto-amonn.ch',
@@ -131,9 +131,9 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
           <div className="flex gap-2 flex-wrap">
             <a href={replyHref}
               className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-colors"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               <Mail size={14} /> Per E-Mail antworten
             </a>
@@ -185,9 +185,9 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
                   onClick={sendReply}
                   disabled={replySending || !replyText.trim()}
                   className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50 transition-colors"
-                  style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                  onMouseOver={e => !replySending && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                  style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                  onMouseOver={e => !replySending && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                  onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                 >
                   {replySending ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                   {replySending ? 'Senden…' : 'Senden'}
@@ -243,7 +243,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Dokument</p>
               <a href={`https://teioztcidolgyqlwzlrb.supabase.co/storage/v1/object/public/bewerber-dokumente/${row.dokument_url}`}
                 target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}>
+                className="inline-flex items-center gap-2 text-sm hover:underline" style={{ color: 'var(--brand-color, #1F497D)' }}>
                 Dokument öffnen
               </a>
             </div>

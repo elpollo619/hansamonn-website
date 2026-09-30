@@ -58,7 +58,7 @@ function ChangePasswordModal({ userId, onClose }) {
     }
   }
 
-  const inp = 'w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#1D3D78] transition pr-10';
+  const inp = 'w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-[#1F497D] transition pr-10';
   const PasswordField = ({ field, label }) => (
     <div>
       <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
@@ -95,9 +95,9 @@ function ChangePasswordModal({ userId, onClose }) {
           <div className="flex gap-3 pt-2">
             <button type="submit" disabled={loading}
               className="flex-1 inline-flex items-center justify-center gap-2 text-white py-2.5 text-sm font-semibold transition-colors disabled:opacity-50"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => !loading && e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
             >
               <Check size={15} /> Speichern
             </button>
@@ -167,7 +167,7 @@ export default function AdminPanel() {
       <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <p className="text-xs font-black tracking-widest text-gray-900 uppercase">HANS AMONN AG</p>
+            <p className="text-xs font-black tracking-hairline text-gray-900 uppercase">HANS AMONN AG</p>
             <span className="text-gray-300">|</span>
             <p className="text-xs text-gray-500">Admin Panel</p>
           </div>
@@ -240,7 +240,7 @@ export default function AdminPanel() {
                 className={`px-1.5 py-0.5 text-xs font-bold leading-none ${
                   count > 0 ? 'text-white' : 'bg-gray-100 text-gray-400'
                 }`}
-                style={count > 0 ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+                style={count > 0 ? { backgroundColor: 'var(--brand-color, #1F497D)' } : {}}
               >
                 {count}
               </span>

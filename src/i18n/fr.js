@@ -42,12 +42,12 @@ const fr = {
     meta: {
       title: 'Appartements à louer – Hans Amonn AG',
       description:
-        'Appartements modernes à louer à Kerzers et environs. Hans Amonn AG – votre partenaire immobilier depuis 1968.',
+        'Appartements modernes à louer à Kerzers et environs. Hans Amonn AG, votre partenaire immobilier depuis 1968.',
     },
     hero: {
       title: 'Logement & Séjour',
       subtitle:
-        'Appartements, longs séjours meublés, hôtel et projets exclusifs – tout à Kerzers et dans la région.',
+        'Appartements, longs séjours meublés, hôtel et projets exclusifs, tout à Kerzers et dans la région.',
       badge: 'Offres actuelles',
       offeringTypes: 'Appartements · Long Stay · Hôtel · Projets',
       serviceApartments: 'Appartements modernes à Kerzers',
@@ -90,7 +90,7 @@ const fr = {
       contact: {
         title: 'Intéressé(e)? Nous vous conseillons volontiers',
         subtitle:
-          'Appelez-nous ou écrivez-nous – nous répondons rapidement et sans formalités.',
+          'Appelez-nous ou écrivez-nous, nous répondons rapidement et sans formalités.',
         call: 'Appeler',
         email: 'Envoyer un e-mail',
         form: 'Formulaire de demande',
@@ -98,7 +98,7 @@ const fr = {
       rented: {
         title: 'Cet appartement est actuellement loué.',
         subtitle:
-          "Contactez-nous – nous vous informerons dès qu'un appartement se libère.",
+          "Contactez-nous, nous vous informerons dès qu'un appartement se libère.",
       },
       gallery: 'Galerie',
       backToList: 'Voir tous les appartements',
@@ -106,7 +106,7 @@ const fr = {
     empty: {
       title: 'Aucun appartement disponible',
       subtitle:
-        "Pour l'instant, aucun appartement n'est libre. Laissez vos coordonnées – nous vous contacterons dès qu'un logement se libère.",
+        "Pour l'instant, aucun appartement n'est libre. Laissez vos coordonnées, nous vous contacterons dès qu'un logement se libère.",
     },
     cta: {
       title: "Vous n'avez pas trouvé ce que vous cherchez?",
@@ -193,13 +193,13 @@ const fr = {
   immobilien: {
     hero: {
       title: 'Nos biens immobiliers',
-      subtitle: "Louer ou acheter — nous avons l'offre qui vous convient",
+      subtitle: "Louer ou acheter, nous avons l'offre qui vous convient",
     },
     vermietung: {
       tag: 'Location',
       title: 'Séjour & Logement',
       subtitle: 'Chambres meublées, Appartements & Hôtel',
-      desc: 'Des séjours courts aux locations longue durée — des solutions flexibles pour chaque besoin.',
+      desc: 'Des séjours courts aux locations longue durée, des solutions flexibles pour chaque besoin.',
       cta: 'Voir les offres',
       highlights: ['Long Stay dès 1 mois', 'Charges comprises', 'Self Check-in Hôtel', 'Maison de vacances Tessin'],
     },
@@ -214,6 +214,7 @@ const fr = {
     contact: {
       title: 'Intéressé ? Nous vous conseillons volontiers.',
       cta: 'Envoyer une demande de location',
+      text: 'Dites-nous ce que vous cherchez : période, budget, lieu. Nous répondons sous 24 heures.',
     },
   },
 
@@ -226,7 +227,7 @@ const fr = {
     sectionFirma: 'Informations entreprise (optionnel)',
     sectionFirmaHint: 'Remplir uniquement si la location se fait via une entreprise.',
     sectionFahrzeug: 'Informations véhicule',
-    sectionNotfall: "Contact d'urgence",
+    sectionNotfall: "Contact d'urgence (facultatif)",
     sectionBemerkungen: 'Remarques (optionnel)',
     sectionEinwilligung: 'Déclaration',
     mietbeginn: 'Début du bail',
@@ -238,14 +239,14 @@ const fr = {
     plz: 'Code postal',
     ort: 'Ville',
     geburtsdatum: 'Date de naissance',
-    nationalitaet: 'Nationalité',
+    nationalitaet: "Statut de séjour",
     sprache: 'Langue',
     beruf: 'Profession',
     handynummer: 'Numéro de mobile',
     email: 'E-mail',
     whatsapp: 'WhatsApp disponible ?',
-    idUpload: "Copie du passeport / pièce d'identité",
-    idHint: "Passeport, carte d'identité ou permis de séjour (JPG, PNG ou PDF)",
+    idUpload: "Pièce d'identité (facultatif)",
+    idHint: "Passeport, carte d'identité ou permis de séjour. Facultatif, nous en avons besoin seulement après confirmation (JPG, PNG ou PDF)",
     extraDocs: 'Documents supplémentaires (optionnel)',
     extraDocsHint: 'Fiche de salaire, contrat de travail, lettre de référence, etc.',
     fahrzeugVorhanden: 'Véhicule ?',
@@ -265,7 +266,7 @@ const fr = {
     notfallEmail: 'E-mail',
     bemerkungen: 'Informations complémentaires ou demandes particulières...',
     consent1: "J'ai fourni toutes les informations de manière véridique et correcte.",
-    consent2: "J'ai lu le règlement intérieur et l'accepte.",
+    consent2: "Je prends acte que le règlement de maison fait partie du contrat de bail.",
     consent3: "J'ai lu les conditions générales et les accepte.",
     pdfNote: "Après l'envoi, une copie PDF de votre demande sera téléchargée automatiquement.",
     uploadArea: 'Déposer les fichiers ici ou cliquer',
@@ -293,7 +294,7 @@ const fr = {
       title: 'Hans Amonn AG',
       subtitle: 'Construction & Immobilier',
       tagline:
-        'Votre partenaire en construction et immobilier depuis 1968 – tradition et innovation réunies',
+        'Votre partenaire en construction et immobilier depuis 1968, tradition et innovation réunies',
       ctaProjects: 'Voir les projets',
       ctaContact: 'Demander un conseil',
     },
@@ -366,7 +367,7 @@ const fr = {
     ],
     sendMessage: 'Envoyer le message',
     ctaTitle: 'Prêt pour votre prochain projet ?',
-    ctaDesc: 'Planification architecturale, construction neuve, rénovation ou gestion immobilière — nous sommes votre partenaire compétent pour tous les projets dans la région de Berne.',
+    ctaDesc: 'Planification architecturale, construction neuve, rénovation ou gestion immobilière, nous sommes votre partenaire compétent pour tous les projets dans la région de Berne.',
     ctaCall: 'Appeler maintenant',
     ctaEmail: 'Envoyer un e-mail',
     form: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Compass } from 'lucide-react';
+import ConsentEmbed from '@/components/ConsentEmbed';
 
 /**
  * VirtualTour — renders an embedded virtual tour (Matterport, 360°, etc.).
@@ -18,14 +19,16 @@ export default function VirtualTour({ tourUrl }) {
         </span>
       </h2>
       <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingTop: '56.25%' }}>
-        <iframe
-          src={tourUrl.trim()}
-          title="Virtueller Rundgang"
-          allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full rounded-xl"
-          loading="lazy"
-        />
+        <ConsentEmbed provider="dem Anbieter des Rundgangs (z. B. Matterport)" label="Rundgang laden" className="absolute inset-0">
+          <iframe
+            src={tourUrl.trim()}
+            title="Virtueller Rundgang"
+            allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full rounded-xl"
+            loading="lazy"
+          />
+        </ConsentEmbed>
       </div>
     </div>
   );

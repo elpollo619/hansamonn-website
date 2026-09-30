@@ -107,7 +107,7 @@ function DetailDrawer({ row, onClose, onStatusChange }) {
             <div className="pt-2 border-t border-gray-100">
               <a
                 href={`mailto:${row.email}?subject=Ihr Terminwunsch bei Hans Amonn AG`}
-                className="inline-flex items-center gap-2 text-sm hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}
+                className="inline-flex items-center gap-2 text-sm hover:underline" style={{ color: 'var(--brand-color, #1F497D)' }}
               >
                 E-Mail senden
               </a>

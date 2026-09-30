@@ -128,7 +128,7 @@ const RecentlyViewedSection = ({ currentId }) => {
                 </span>
 
                 {/* Title */}
-                <p className="text-sm font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#1D3D78] transition-colors">
+                <p className="text-sm font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-[#1F497D] transition-colors">
                   {item.title}
                 </p>
 

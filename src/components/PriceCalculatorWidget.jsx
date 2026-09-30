@@ -95,16 +95,16 @@ export default function PriceCalculatorWidget({ seasons = [], priceClean = 0, cu
             )}
             <div className="flex justify-between items-baseline pt-2 border-t border-gray-100">
               <span className="font-bold text-gray-900">Geschätzter Gesamtpreis</span>
-              <span className="text-xl font-bold" style={{ color: 'var(--brand-color, #1D3D78)' }}>{currency} {result.total}</span>
+              <span className="text-xl font-bold" style={{ color: 'var(--brand-color, #1F497D)' }}>{currency} {result.total}</span>
             </div>
-            <p className="text-xs text-gray-400">Richtwert · Endpreis auf Anfrage bestätigt.</p>
+            <p className="text-xs text-gray-400">Richtwert, zuzüglich Kurtaxe. Den Endpreis bestätigen wir mit der Offerte.</p>
             {onInquire && (
               <button
                 onClick={() => onInquire({ ankunft, abreise, nights: result.nights, total: result.total })}
                 className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm mt-1"
-                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <ChevronRight size={16} /> Jetzt anfragen
               </button>

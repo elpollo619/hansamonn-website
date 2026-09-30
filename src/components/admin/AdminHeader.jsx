@@ -41,9 +41,9 @@ const AdminHeader = ({ isEditing, setIsEditing }) => {
             <>
               <Button
                 onClick={handleSave}
-                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+              onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+              onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               className="text-white"
               >
                 <Save size={16} className="mr-2" />

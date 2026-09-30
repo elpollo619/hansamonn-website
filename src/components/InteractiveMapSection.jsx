@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { loadLeaflet } from '@/lib/leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, BedDouble, Hotel, Sun, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -6,10 +7,10 @@ import { getVisibleProperties } from '@/data/propertiesStore';
 
 // ── Type → visual config ──────────────────────────────────────────────────────
 const TYPE_CFG = {
-  'long-stay':  { icon: BedDouble, colorHex: '#1D3D78', label: 'Long Stay' },
-  'short-stay': { icon: Hotel,     colorHex: '#374151', label: 'Short Stay · Hotel' },
-  ferienhaus:   { icon: Sun,       colorHex: '#6B7280', label: 'Ferienhaus' },
-  apartment:    { icon: Home,      colorHex: '#1D3D78', label: 'Apartment' },
+  'long-stay':  { icon: BedDouble, colorHex: '#1F497D', label: 'Long Stay' },
+  'short-stay': { icon: Hotel,     colorHex: '#343C47', label: 'Short Stay · Hotel' },
+  ferienhaus:   { icon: Sun,       colorHex: '#56606C', label: 'Ferienhaus' },
+  apartment:    { icon: Home,      colorHex: '#1F497D', label: 'Apartment' },
 };
 function getCfg(type) { return TYPE_CFG[type] || TYPE_CFG['long-stay']; }
 
@@ -33,15 +34,8 @@ function LeafletMap({ locations, activeId, onPinClick }) {
   useEffect(() => {
     if (typeof window === 'undefined' || mapInstanceRef.current) return;
 
-    import('leaflet').then((L) => {
+    loadLeaflet().then((L) => {
       leafletRef.current = L;
-
-      delete L.Icon.Default.prototype._getIconUrl;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl:       'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl:     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
 
       const map = L.map(mapRef.current, {
         center: [47.0, 7.9],
@@ -98,7 +92,7 @@ function LeafletMap({ locations, activeId, onPinClick }) {
         iconAnchor: [18, 18],
       });
 
-      const marker = L.marker([loc.lat, loc.lng], { icon })
+      const marker = L.marker([loc.lat, loc.lng], { icon, title: loc.name, alt: loc.name })
         .addTo(map)
         .on('click', () => clickHandler(loc.id));
 
@@ -155,13 +149,7 @@ export default function InteractiveMapSection() {
   const activeLocation = locations.find((l) => l.id === active);
 
   useEffect(() => {
-    if (document.getElementById('leaflet-css')) { setLeafletCssLoaded(true); return; }
-    const link = document.createElement('link');
-    link.id   = 'leaflet-css';
-    link.rel  = 'stylesheet';
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    link.onload = () => setLeafletCssLoaded(true);
-    document.head.appendChild(link);
+    loadLeaflet().then(() => setLeafletCssLoaded(true));
   }, []);
 
   const legendItems = [
@@ -177,7 +165,7 @@ export default function InteractiveMapSection() {
         <div className="text-center mb-10">
           <h2 className="text-3xl font-light text-gray-900 mb-3">Unsere Standorte</h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Alle Objekte auf einem Blick — von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
+            Alle Objekte auf einem Blick, von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
           </p>
         </div>
 
@@ -210,7 +198,7 @@ export default function InteractiveMapSection() {
             <div className="flex flex-wrap gap-4 mt-4 justify-center">
               {legendItems.map((item) => (
                 <div key={item.label} className="flex items-center gap-2 text-xs text-gray-500">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }} />
                   {item.label}
                 </div>
               ))}
@@ -248,9 +236,9 @@ export default function InteractiveMapSection() {
                     <Link
                       to={activeLocation.link}
                       className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-2.5 px-4 transition-colors"
-                      style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                      style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                      onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                      onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                     >
                       Details ansehen <ArrowRight size={13} />
                     </Link>
@@ -276,7 +264,7 @@ export default function InteractiveMapSection() {
                         className="w-full flex items-center gap-3 p-3 border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all duration-200 text-left mb-2"
                       >
                         <div className="w-8 h-8 bg-gray-100 flex items-center justify-center flex-shrink-0">
-                          <Icon size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                          <Icon size={14} style={{ color: 'var(--brand-color, #1F497D)' }} />
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-gray-900 truncate">{loc.name}</p>

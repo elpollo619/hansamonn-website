@@ -155,7 +155,7 @@ export default function AvailabilityCalendar({ icalUrls, icalUrl }) {
         </div>
       )}
 
-      <p className="text-[10px] text-gray-300 mt-3 text-center">
+      <p className="text-[10px] text-gray-500 mt-3 text-center">
         {urls.length > 1
           ? `Synchronisiert mit ${urls.length} Plattformen · Airbnb · Booking.com · Fewo-direkt`
           : 'Synchronisiert mit Airbnb · Booking.com · Alle Plattformen'}

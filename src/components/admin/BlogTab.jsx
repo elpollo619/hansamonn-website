@@ -42,7 +42,7 @@ function markdownToHtml(text) {
 
     // Horizontal rule
     if (/^---+$/.test(line.trim())) {
-      output.push('<hr style="border:none;border-top:1px solid #e5e7eb;margin:1.25rem 0;" />');
+      output.push('<hr style="border:none;border-top:1px solid #DFE3E8;margin:1.25rem 0;" />');
       i++;
       continue;
     }
@@ -116,7 +116,7 @@ function inlineMarkdown(text) {
     // Italic (avoid matching leftover single * from lists)
     .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
     // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#1d4ed8;text-decoration:underline;">$1</a>');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:#1F497D;text-decoration:underline;">$1</a>');
 }
 
 // ── ToolbarButton ────────────────────────────────────────────────────────────
@@ -132,15 +132,15 @@ function ToolbarButton({ onClick, title, children }) {
         justifyContent: 'center',
         width: 28,
         height: 28,
-        border: '1px solid #e5e7eb',
+        border: '1px solid #DFE3E8',
         borderRadius: 4,
         background: '#fff',
-        color: '#374151',
+        color: '#343C47',
         cursor: 'pointer',
         padding: 0,
         flexShrink: 0,
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.background = '#f3f4f6'; }}
+      onMouseEnter={(e) => { e.currentTarget.style.background = '#EDF0F3'; }}
       onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; }}
     >
       {children}
@@ -211,11 +211,11 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
     padding: '4px 14px',
     fontSize: '0.75rem',
     fontWeight: 600,
-    border: '1px solid #e5e7eb',
-    borderBottom: active ? '1px solid #fff' : '1px solid #e5e7eb',
+    border: '1px solid #DFE3E8',
+    borderBottom: active ? '1px solid #fff' : '1px solid #DFE3E8',
     borderRadius: '4px 4px 0 0',
-    background: active ? '#fff' : '#f9fafb',
-    color: active ? '#111827' : '#6b7280',
+    background: active ? '#fff' : '#F6F8FA',
+    color: active ? '#141B25' : '#56606C',
     cursor: 'pointer',
     marginBottom: -1,
     position: 'relative',
@@ -223,9 +223,9 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
   });
 
   return (
-    <div style={{ border: '1px solid #e5e7eb', borderRadius: 6, overflow: 'hidden' }}>
+    <div style={{ border: '1px solid #DFE3E8', borderRadius: 6, overflow: 'hidden' }}>
       {/* Tab bar */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', padding: '6px 8px 0', background: '#f9fafb', borderBottom: '1px solid #e5e7eb', gap: 4 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', padding: '6px 8px 0', background: '#F6F8FA', borderBottom: '1px solid #DFE3E8', gap: 4 }}>
         <button type="button" style={tabBtnStyle(tab === 'edit')} onClick={() => setTab('edit')}>
           Bearbeiten
         </button>
@@ -241,8 +241,8 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
           flexWrap: 'wrap',
           gap: 4,
           padding: '6px 8px',
-          background: '#f9fafb',
-          borderBottom: '1px solid #e5e7eb',
+          background: '#F6F8FA',
+          borderBottom: '1px solid #DFE3E8',
         }}>
           <ToolbarButton title="Fett (Bold)" onClick={() => insert('**', '**')}>
             <Bold size={13} />
@@ -252,7 +252,7 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
           </ToolbarButton>
 
           {/* Divider */}
-          <div style={{ width: 1, background: '#e5e7eb', margin: '2px 2px' }} />
+          <div style={{ width: 1, background: '#DFE3E8', margin: '2px 2px' }} />
 
           <ToolbarButton title="Überschrift 1" onClick={() => insertLinePrefix('# ')}>
             <span style={{ fontSize: 11, fontWeight: 800, lineHeight: 1 }}>H1</span>
@@ -264,7 +264,7 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
             <span style={{ fontSize: 11, fontWeight: 600, lineHeight: 1 }}>H3</span>
           </ToolbarButton>
 
-          <div style={{ width: 1, background: '#e5e7eb', margin: '2px 2px' }} />
+          <div style={{ width: 1, background: '#DFE3E8', margin: '2px 2px' }} />
 
           <ToolbarButton title="Aufzählungsliste" onClick={() => insertLinePrefix('- ')}>
             <List size={13} />
@@ -273,7 +273,7 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
             <ListOrdered size={13} />
           </ToolbarButton>
 
-          <div style={{ width: 1, background: '#e5e7eb', margin: '2px 2px' }} />
+          <div style={{ width: 1, background: '#DFE3E8', margin: '2px 2px' }} />
 
           <ToolbarButton
             title="Link einfügen"
@@ -310,7 +310,7 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
             outline: 'none',
             resize: 'vertical',
             background: '#fff',
-            color: '#111827',
+            color: '#141B25',
             boxSizing: 'border-box',
             minHeight: rows * 22,
           }}
@@ -326,10 +326,10 @@ function MarkdownEditor({ value, onChange, rows = 10, placeholder = '' }) {
             background: '#fff',
             fontSize: '0.875rem',
             lineHeight: 1.6,
-            color: '#1f2937',
+            color: '#222A35',
             overflowY: 'auto',
           }}
-          dangerouslySetInnerHTML={{ __html: value.trim() ? markdownToHtml(value) : '<span style="color:#9ca3af;font-style:italic;">Noch kein Inhalt zum Vorschauen…</span>' }}
+          dangerouslySetInnerHTML={{ __html: value.trim() ? markdownToHtml(value) : '<span style="color:#8C96A2;font-style:italic;">Noch kein Inhalt zum Vorschauen…</span>' }}
         />
       )}
     </div>

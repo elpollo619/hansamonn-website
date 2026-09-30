@@ -129,7 +129,7 @@ const HotelSidebar = ({ apt, t }) => (
     className="bg-white border border-gray-100 overflow-hidden sticky top-24"
   >
     {/* Price header */}
-    <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+    <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
       <div className="flex items-center gap-2 flex-wrap">
         <TypeBadge type="hotel" t={t} />
         <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -152,14 +152,14 @@ const HotelSidebar = ({ apt, t }) => (
           target="_blank"
           rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2.5 text-white font-bold py-4 px-4 transition-colors text-base"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           <ExternalLink size={18} />
           {t('vermietung.hotel.bookDirectly')}
         </a>
-        <p className="text-xs text-gray-400 text-center mt-1.5">ns-hotel.ch – {t('vermietung.hotel.directBookingNote')}</p>
+        <p className="text-xs text-gray-400 text-center mt-1.5">ns-hotel.ch · {t('vermietung.hotel.directBookingNote')}</p>
       </div>
 
       {/* Divider */}
@@ -231,7 +231,7 @@ const LongStaySidebar = ({ apt, t }) => (
     className="bg-white border border-gray-100 overflow-hidden sticky top-24"
   >
     {/* Header */}
-    <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+    <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
       <div className="flex items-center gap-2 flex-wrap">
         <TypeBadge type="long-stay" t={t} />
         <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -302,9 +302,9 @@ const LongStaySidebar = ({ apt, t }) => (
       <a
         href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
         className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
-        style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-        onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+        style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+        onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+        onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
       >
         <Mail size={18} />
         {t('vermietung.longStay.requestTitle')}
@@ -330,12 +330,12 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
     {/* Main card */}
     <div className="bg-white border border-gray-100 overflow-hidden">
       {/* Header */}
-      <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+      <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
         <div className="flex items-center gap-2 flex-wrap">
           <TypeBadge type="project" t={t} />
           <OccupancyBadge status={apt.occupancy || 'frei'} />
         </div>
-        <h3 className="text-xl font-semibold mt-3 mb-0.5">{apt.title}</h3>
+        <h3 className="font-display text-2xl font-semibold leading-none mt-3 mb-1">{apt.title}</h3>
         <p className="text-sm opacity-75">{apt.location}</p>
       </div>
 
@@ -370,9 +370,9 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
         <a
           href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=Anfrage Casa Reto – Ferienhaus Tessin`}
           className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           <Mail size={18} />
           Aufenthalt anfragen
@@ -411,7 +411,7 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
     >
       {/* Info card */}
       <div className="bg-white border border-gray-100 overflow-hidden">
-        <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}>
+        <div className="px-6 py-5 text-white" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
           <div className="flex items-center gap-2 flex-wrap">
             <TypeBadge type="apartment" t={t} />
             <OccupancyBadge status={apt.occupancy || 'frei'} />
@@ -439,9 +439,9 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
               <button
                 onClick={() => setShowForm(!showForm)}
                 className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
-                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <Mail size={18} />
                 {t('vermietung.card.requestInquiry')}
@@ -539,7 +539,7 @@ function PropertyTestimonials({ propertyTitle }) {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Bewertungen</h2>
+      <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-4">Bewertungen</h2>
       <div className="space-y-3">
         {items.map(t => (
           <div key={t.id} className="bg-gray-50 border border-gray-100 p-4">
@@ -917,14 +917,14 @@ const ApartmentDetailPage = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl py-3 flex items-center justify-between">
           <Link
             to="/immobilien/vermietung"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1D3D78] transition-colors"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-[#1F497D] transition-colors"
           >
             <ArrowLeft size={16} />
             {t('vermietung.detail.back')}
           </Link>
           <button
             onClick={handleExposeDownload}
-            className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-[#1D3D78] border border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50 px-3 py-1.5 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-[#1F497D] border border-gray-200 hover:border-gray-400 bg-white hover:bg-gray-50 px-3 py-1.5 transition-colors"
           >
             <Download size={14} />
             Exposé herunterladen
@@ -934,7 +934,7 @@ const ApartmentDetailPage = () => {
 
       {/* ── Hero image (all property types) ── */}
       {apt.images[0]?.url && (
-        <div className="relative h-64 md:h-[380px] overflow-hidden">
+        <div className="relative h-72 md:h-[460px] overflow-hidden bg-[#0D1B2B]">
           <img
             src={apt.images[0].url}
             alt={apt.images[0].alt}
@@ -942,11 +942,11 @@ const ApartmentDetailPage = () => {
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2B]/90 via-[#0D1B2B]/30 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
             <div className="container mx-auto max-w-6xl">
               <TypeBadge type={apt.type} t={t} />
-              <h1 className="text-3xl md:text-4xl font-semibold mt-3 mb-2">{apt.title}</h1>
+              <h1 className="font-display text-3xl md:text-5xl font-semibold leading-[1.04] mt-4 mb-3">{apt.title}</h1>
               <p className="text-white/80 flex items-center gap-2 text-sm">
                 <MapPin size={14} />
                 {apt.location}
@@ -996,17 +996,17 @@ const ApartmentDetailPage = () => {
             {(apt.type === 'apartment') && apt.rooms && (
               <div className="grid grid-cols-3 gap-3">
                 <div className="bg-gray-50 p-4 text-center">
-                  <Home size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                  <Home size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1F497D)' }} />
                   <p className="text-lg font-bold text-gray-900">{apt.rooms}</p>
                   <p className="text-xs text-gray-500">{t('vermietung.card.rooms')}</p>
                 </div>
                 <div className="bg-gray-50 p-4 text-center">
-                  <Maximize2 size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                  <Maximize2 size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1F497D)' }} />
                   <p className="text-lg font-bold text-gray-900">{apt.size}</p>
                   <p className="text-xs text-gray-500">m²</p>
                 </div>
                 <div className="bg-gray-50 p-4 text-center">
-                  <Calendar size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                  <Calendar size={20} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1F497D)' }} />
                   <p className="text-sm font-bold text-gray-900 leading-tight">
                     {apt.availableFrom
                       ? new Date(apt.availableFrom).toLocaleDateString('de-CH', { month: 'short', year: 'numeric' })
@@ -1020,7 +1020,7 @@ const ApartmentDetailPage = () => {
             {/* Description */}
             {apt.description && (
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
+                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">
                   {t('vermietung.detail.description')}
                 </h2>
                 <p className="text-gray-600 leading-relaxed whitespace-pre-line">{apt.description}</p>
@@ -1036,7 +1036,7 @@ const ApartmentDetailPage = () => {
             {/* Long Stay: pricing table (mobile – shown in sidebar on desktop) */}
             {apt.type === 'long-stay' && apt.longStayRooms && (
               <div className="lg:hidden">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">{t('vermietung.longStay.pricingTitle')}</h2>
+                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">{t('vermietung.longStay.pricingTitle')}</h2>
                 <div className="space-y-2">
                   {apt.longStayRooms.map((room, i) => (
                     <div key={i} className={`flex items-center justify-between px-4 py-3 text-sm bg-gray-50`}>
@@ -1067,13 +1067,13 @@ const ApartmentDetailPage = () => {
             {/* Features */}
             {apt.features && apt.features.length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">
+                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">
                   {t('vermietung.detail.features')}
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {apt.features.map((f) => (
                     <div key={f} className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-3 py-2.5">
-                      <CheckCircle2 size={14} className="flex-shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                      <CheckCircle2 size={14} className="flex-shrink-0" style={{ color: 'var(--brand-color, #1F497D)' }} />
                       {f}
                     </div>
                   ))}
@@ -1087,7 +1087,7 @@ const ApartmentDetailPage = () => {
             {/* Availability calendar (main content — shown for all types when icalUrl set) */}
             {apt.icalUrl && (
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">Verfügbarkeit</h2>
+                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">Verfügbarkeit</h2>
                 <AvailabilityCalendar
                   icalUrls={[apt.icalUrl, apt.icalUrl2, apt.icalUrl3].filter(Boolean)}
                 />
@@ -1097,7 +1097,7 @@ const ApartmentDetailPage = () => {
             {/* Location map */}
             {apt.lat && apt.lng && (
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-1">Lage & Standort</h2>
+                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-2">Lage & Standort</h2>
                 <p className="flex items-center gap-1.5 text-sm text-gray-500 mb-3">
                   <MapPin size={13} />
                   {apt.location}
@@ -1117,7 +1117,7 @@ const ApartmentDetailPage = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs hover:underline mt-2"
-                  style={{ color: 'var(--brand-color, #1D3D78)' }}
+                  style={{ color: 'var(--brand-color, #1F497D)' }}
                 >
                   <MapPin size={11} />
                   Auf Google Maps öffnen
@@ -1129,13 +1129,13 @@ const ApartmentDetailPage = () => {
             {apt.type === 'apartment' && apt.status === 'available' && (
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900">
+                  <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B]">
                     {t('vermietung.mietanfrage.title')}
                   </h2>
                   <button
                     onClick={() => setShowForm(!showForm)}
                     className="text-sm hover:underline"
-                    style={{ color: 'var(--brand-color, #1D3D78)' }}
+                    style={{ color: 'var(--brand-color, #1F497D)' }}
                   >
                     {showForm ? 'Formular ausblenden' : 'Formular öffnen'}
                   </button>
@@ -1156,9 +1156,9 @@ const ApartmentDetailPage = () => {
                   <button
                     onClick={() => setShowForm(true)}
                     className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors"
-                    style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                    style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                    onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                    onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
                   >
                     <Mail size={18} />
                     {t('vermietung.card.requestInquiry')}
@@ -1174,17 +1174,17 @@ const ApartmentDetailPage = () => {
             {apt.holidayHome && (
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="bg-gray-50 p-5 text-center border border-gray-100">
-                  <Sun size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                  <Sun size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1F497D)' }} />
                   <p className="font-semibold text-gray-800 text-sm">Lago Maggiore</p>
                   <p className="text-xs text-gray-500 mt-1">Gordemo, Tessin</p>
                 </div>
                 <div className="bg-gray-50 p-5 text-center border border-gray-100">
-                  <Wifi size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                  <Wifi size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1F497D)' }} />
                   <p className="font-semibold text-gray-800 text-sm">Vollmöbliert</p>
                   <p className="text-xs text-gray-500 mt-1">Alles vorhanden</p>
                 </div>
                 <div className="bg-gray-50 p-5 text-center border border-gray-100">
-                  <MapPin size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1D3D78)' }} />
+                  <MapPin size={24} className="mx-auto mb-2" style={{ color: 'var(--brand-color, #1F497D)' }} />
                   <p className="font-semibold text-gray-800 text-sm">Familien</p>
                   <p className="text-xs text-gray-500 mt-1">Ideal für Gruppen</p>
                 </div>
@@ -1194,7 +1194,7 @@ const ApartmentDetailPage = () => {
             {/* Vorher / Nachher Slider */}
             {apt.beforeImage && apt.afterImage && (
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">Vorher / Nachher</h2>
+                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">Vorher / Nachher</h2>
                 <BeforeAfterSlider
                   beforeImage={apt.beforeImage}
                   afterImage={apt.afterImage}
@@ -1204,7 +1204,7 @@ const ApartmentDetailPage = () => {
 
             {/* Terminbuchung */}
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Termin vereinbaren</h2>
+              <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-4">Termin vereinbaren</h2>
               <div className="bg-white border border-gray-200 p-5">
                 <TerminbuchungForm
                   propertyId={apt.id ?? apt.slug}
@@ -1218,12 +1218,12 @@ const ApartmentDetailPage = () => {
               <div className="border-t border-gray-100 pt-8">
                 <div className="grid lg:grid-cols-2 gap-10 items-start">
                   <div>
-                    <h2 className="text-2xl font-light text-gray-900 mb-3">
-                      Direkt <span className="font-black">anfragen</span>
+                    <h2 className="display-heading text-3xl md:text-4xl mb-3">
+                      Direkt <span>anfragen</span>
                     </h2>
                     <p className="text-gray-500 text-sm mb-6 leading-relaxed">
                       {apt.type === 'long-stay'
-                        ? 'Interesse an einer Unterkunft? Füllen Sie das Formular aus — wir melden uns innerhalb von 24 Stunden.'
+                        ? 'Interesse an einer Unterkunft? Füllen Sie das Formular aus, wir melden uns innerhalb von 24 Stunden.'
                         : 'Fragen oder Buchungswunsch? Wir melden uns innerhalb von 24 Stunden.'}
                     </p>
                     <div className="space-y-3">
@@ -1233,7 +1233,7 @@ const ApartmentDetailPage = () => {
                       ].map(({ href, icon: Icon, label, value }) => (
                         <a key={label} href={href}
                           className="flex items-center gap-4 bg-gray-50 border border-gray-100 p-4 hover:bg-gray-100 transition-colors">
-                          <Icon className="shrink-0" style={{ color: 'var(--brand-color, #1D3D78)' }} size={20} />
+                          <Icon className="shrink-0" style={{ color: 'var(--brand-color, #1F497D)' }} size={20} />
                           <div>
                             <div className="font-semibold text-xs text-gray-500 uppercase tracking-wider">{label}</div>
                             <div className="text-sm font-medium text-gray-900">{value}</div>
@@ -1279,7 +1279,7 @@ const ApartmentDetailPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
             >
               <ExternalLink size={15} />
               {t('vermietung.hotel.bookDirectly')}
@@ -1295,7 +1295,7 @@ const ApartmentDetailPage = () => {
           <a
             href={`mailto:${apt.contact.email}?subject=Anfrage Casa Reto`}
             className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
-            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
           >
             <Mail size={16} />
             Aufenthalt anfragen
@@ -1304,7 +1304,7 @@ const ApartmentDetailPage = () => {
           <a
             href={`mailto:${apt.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
             className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
-            style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+            style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
           >
             <Mail size={16} />
             {t('vermietung.longStay.requestTitle')}
@@ -1314,7 +1314,7 @@ const ApartmentDetailPage = () => {
             <button
               onClick={() => { setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="flex-1 flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
-              style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
+              style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
             >
               <Mail size={15} />
               {t('vermietung.card.requestInquiry')}

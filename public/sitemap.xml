@@ -43,5 +43,8 @@
   <!-- ── Legal ── -->
   <url><loc>https://www.hansamonn.ch/impressum</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://www.hansamonn.ch/datenschutz</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/agb</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/cookies</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://www.hansamonn.ch/stornierung</loc><lastmod>2026-04-09</lastmod><priority>0.3</priority><changefreq>yearly</changefreq></url>
 
 </urlset>
