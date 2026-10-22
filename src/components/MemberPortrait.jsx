@@ -34,26 +34,22 @@ export default function MemberPortrait({ member, className = '', imgClassName = 
     <div
       role="img"
       aria-label={`${member.name} – ${member.position}`}
-      className={`relative w-full h-full overflow-hidden bg-[#121D2B] ${className}`}
+      className={`relative w-full h-full overflow-hidden bg-[#E6ECF5] ${className}`}
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-[0.14]"
+        className="absolute inset-0 opacity-[0.35]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
+            'linear-gradient(rgba(31,73,125,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(31,73,125,.18) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
         }}
       />
-      <div aria-hidden="true" className="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-[var(--brand-color,#1F497D)] opacity-40 blur-2xl" />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={`font-display font-semibold text-white/90 leading-none tracking-tight text-5xl md:text-6xl ${imgClassName}`}>
+        <span className={`font-display font-semibold text-[#1F497D] leading-none tracking-tight text-4xl md:text-5xl ${imgClassName}`}>
           {initialsOf(member.name)}
         </span>
       </div>
-      <span className="absolute left-4 bottom-4 text-[11px] font-semibold uppercase tracking-hairline text-white/45">
-        Hans Amonn AG
-      </span>
     </div>
   );
 }

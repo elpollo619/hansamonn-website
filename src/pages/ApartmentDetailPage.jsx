@@ -335,7 +335,7 @@ const ProjectSidebar = ({ apt, t, icalUrl }) => (
           <TypeBadge type="project" t={t} />
           <OccupancyBadge status={apt.occupancy || 'frei'} />
         </div>
-        <h3 className="font-display text-2xl font-semibold leading-none mt-3 mb-1">{apt.title}</h3>
+        <h3 className="font-display text-2xl font-semibold leading-tight mt-3 mb-1">{apt.title}</h3>
         <p className="text-sm opacity-75">{apt.location}</p>
       </div>
 
@@ -539,7 +539,7 @@ function PropertyTestimonials({ propertyTitle }) {
 
   return (
     <div>
-      <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-4">Bewertungen</h2>
+      <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-4">Bewertungen</h2>
       <div className="space-y-3">
         {items.map(t => (
           <div key={t.id} className="bg-gray-50 border border-gray-100 p-4">
@@ -1020,7 +1020,7 @@ const ApartmentDetailPage = () => {
             {/* Description */}
             {apt.description && (
               <div>
-                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">
+                <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-3">
                   {t('vermietung.detail.description')}
                 </h2>
                 <p className="text-gray-600 leading-relaxed whitespace-pre-line">{apt.description}</p>
@@ -1036,7 +1036,7 @@ const ApartmentDetailPage = () => {
             {/* Long Stay: pricing table (mobile – shown in sidebar on desktop) */}
             {apt.type === 'long-stay' && apt.longStayRooms && (
               <div className="lg:hidden">
-                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">{t('vermietung.longStay.pricingTitle')}</h2>
+                <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-3">{t('vermietung.longStay.pricingTitle')}</h2>
                 <div className="space-y-2">
                   {apt.longStayRooms.map((room, i) => (
                     <div key={i} className={`flex items-center justify-between px-4 py-3 text-sm bg-gray-50`}>
@@ -1067,7 +1067,7 @@ const ApartmentDetailPage = () => {
             {/* Features */}
             {apt.features && apt.features.length > 0 && (
               <div>
-                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">
+                <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-3">
                   {t('vermietung.detail.features')}
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -1087,7 +1087,7 @@ const ApartmentDetailPage = () => {
             {/* Availability calendar (main content — shown for all types when icalUrl set) */}
             {apt.icalUrl && (
               <div>
-                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">Verfügbarkeit</h2>
+                <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-3">Verfügbarkeit</h2>
                 <AvailabilityCalendar
                   icalUrls={[apt.icalUrl, apt.icalUrl2, apt.icalUrl3].filter(Boolean)}
                 />
@@ -1097,7 +1097,7 @@ const ApartmentDetailPage = () => {
             {/* Location map */}
             {apt.lat && apt.lng && (
               <div>
-                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-2">Lage & Standort</h2>
+                <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-2">Lage & Standort</h2>
                 <p className="flex items-center gap-1.5 text-sm text-gray-500 mb-3">
                   <MapPin size={13} />
                   {apt.location}
@@ -1129,7 +1129,7 @@ const ApartmentDetailPage = () => {
             {apt.type === 'apartment' && apt.status === 'available' && (
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B]">
+                  <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B]">
                     {t('vermietung.mietanfrage.title')}
                   </h2>
                   <button
@@ -1194,7 +1194,7 @@ const ApartmentDetailPage = () => {
             {/* Vorher / Nachher Slider */}
             {apt.beforeImage && apt.afterImage && (
               <div>
-                <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-3">Vorher / Nachher</h2>
+                <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-3">Vorher / Nachher</h2>
                 <BeforeAfterSlider
                   beforeImage={apt.beforeImage}
                   afterImage={apt.afterImage}
@@ -1204,7 +1204,7 @@ const ApartmentDetailPage = () => {
 
             {/* Terminbuchung */}
             <div>
-              <h2 className="font-display text-2xl font-semibold leading-none text-[#121D2B] mb-4">Termin vereinbaren</h2>
+              <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-4">Termin vereinbaren</h2>
               <div className="bg-white border border-gray-200 p-5">
                 <TerminbuchungForm
                   propertyId={apt.id ?? apt.slug}

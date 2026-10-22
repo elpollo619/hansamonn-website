@@ -18,8 +18,8 @@ const fadeUp = {
   transition: { duration: 0.6 },
 };
 const inputCls =
-  'w-full px-4 py-3 bg-white border border-gray-200 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#1F497D] transition-colors';
-const labelCls = 'block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2';
+  'w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-[#1F497D] transition-colors';
+const labelCls = 'block text-sm font-semibold text-gray-700 mb-2';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -139,7 +139,7 @@ const Contact = () => {
                       <info.icon className="w-5 h-5" style={{ color: BRAND }} />
                     </div>
                     <div>
-                      <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1.5">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-1.5">
                         {info.title}
                       </h3>
                       {info.details.map((detail, detailIndex) => (
@@ -319,7 +319,7 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-display font-semibold text-[#121D2B] text-lg leading-none">Hans Amonn AG</h3>
+                    <h3 className="font-display font-semibold text-[#121D2B] text-lg leading-tight">Hans Amonn AG</h3>
                     <p className="text-xs text-gray-600 mt-2">
                       Blümlisalpstrasse 4<br />
                       3074 Muri bei Bern
@@ -339,7 +339,7 @@ const Contact = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Anfahrt</h3>
+                <h3 className="text-sm font-semibold text-gray-700 mb-2">Anfahrt</h3>
                 <p className="text-gray-900 leading-relaxed">
                   Parkplätze vorhanden<br />
                   ÖV: Bus Linie 21
@@ -373,12 +373,12 @@ const Contact = () => {
           className="container mx-auto px-6 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10"
         >
           <div className="max-w-2xl">
-            <h2 className="font-display font-semibold text-3xl md:text-4xl leading-none mb-5">
+            <h2 className="font-display font-semibold text-3xl md:text-4xl leading-tight mb-5">
               Bereit für Ihr nächstes Projekt?
             </h2>
             <p className="text-white/70 leading-relaxed text-lg">
-              Ob Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung -
-              wir sind Ihr kompetenter Partner für alle Bau- und Immobilienprojekte in der Region Bern.
+              Architekturplanung, Neubau, Sanierung oder Immobilienvermittlung: Wir begleiten Bau- und
+              Immobilienprojekte in der Region Bern.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">

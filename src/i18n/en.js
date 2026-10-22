@@ -399,7 +399,7 @@ const en = {
 
   footer: {
     tagline:
-      'Your partner for construction and real estate since 1968. Quality, reliability, and innovation.',
+      'Architecture and real estate from one source, in Muri near Bern since 1968.',
     navigation: 'Navigation',
     services: 'Services',
     contact: 'Contact',

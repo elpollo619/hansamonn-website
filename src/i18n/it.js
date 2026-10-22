@@ -398,7 +398,7 @@ const it = {
 
   footer: {
     tagline:
-      'Il vostro partner per costruzione e immobili dal 1968. Qualità, affidabilità e innovazione.',
+      'Architettura e immobili da un’unica fonte, a Muri presso Berna dal 1968.',
     navigation: 'Navigazione',
     services: 'Servizi',
     contact: 'Contatto',

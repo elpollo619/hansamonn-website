@@ -130,7 +130,7 @@ export default function LongStayPage() {
                   <RentalImage src={loc.image} alt={loc.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
                 <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-display text-2xl font-semibold leading-none text-[#121D2B]">{loc.title}</h3>
+                  <h3 className="font-display text-2xl font-semibold leading-tight text-[#121D2B]">{loc.title}</h3>
                   <p className="text-gray-600 text-sm leading-relaxed mt-2">{loc.subtitle}</p>
                   <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-3 mb-5">
                     <MapPin size={12} /> {loc.address}

@@ -123,8 +123,9 @@ const SECTIONS = [
       <>
         <p>
           <strong>Karten.</strong> Unsere Objektkarten nutzen Leaflet (auf unserem Server) mit Kartenkacheln
-          von OpenStreetMap (OpenStreetMap Foundation, Vereinigtes Königreich) und CARTO (Spanien). Beim Laden
-          der Karte wird Ihre IP-Adresse an diese Anbieter übermittelt.
+          des Bundesamts für Landestopografie swisstopo (Schweiz). Auf einzelnen Objektseiten ist zudem eine
+          Karte von OpenStreetMap (OpenStreetMap Foundation, Vereinigtes Königreich) eingebunden. Beim Laden
+          der Karte wird Ihre IP-Adresse an diese Anbieter übermittelt, es werden keine Cookies gesetzt.
         </p>
         <p>
           <strong>Google Maps und Videos</strong> (Google LLC, USA; YouTube; Vimeo; Matterport) laden wir erst,
@@ -243,7 +244,7 @@ const PrivacyPolicyPage = () => (
       <title>Datenschutzerklärung | Hans Amonn AG</title>
       <meta name="description" content="Datenschutzerklärung der Hans Amonn AG nach Schweizer DSG: welche Daten wir bearbeiten, wofür, bei welchen Dienstleistern und welche Rechte Sie haben." />
     </Helmet>
-    <LegalPage title="Datenschutzerklärung" asOf="26. September 2026" sections={SECTIONS} />
+    <LegalPage title="Datenschutzerklärung" asOf="22. Oktober 2026" sections={SECTIONS} />
   </>
 );
 

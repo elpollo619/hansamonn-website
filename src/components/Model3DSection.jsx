@@ -49,8 +49,8 @@ export default function Model3DSection({
           <div className="mt-4 grid grid-cols-3 gap-3">
             {single.facts.map((f) => (
               <div key={f.label} className="border-t border-gray-200 pt-3">
-                <div className="font-display text-2xl md:text-3xl font-semibold text-[#121D2B] leading-none">{f.value}</div>
-                <div className="text-xs text-gray-500 mt-1">{f.label}</div>
+                <div className="font-display text-xl md:text-3xl font-semibold text-[#121D2B] leading-tight">{f.value}</div>
+                <div className="text-sm text-gray-600 mt-1">{f.label}</div>
               </div>
             ))}
           </div>

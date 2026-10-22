@@ -306,7 +306,7 @@ export default function NsHotelPage() {
               <p className="text-[11px] font-semibold tracking-hairline text-white/60 uppercase mb-3 inline-flex items-center gap-2">
                 <Rotate3d size={14} /> 360° Rundgang
               </p>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold leading-none">
+              <h2 className="font-display text-3xl md:text-4xl font-semibold leading-tight">
                 Das Musterzimmer
               </h2>
             </div>
@@ -408,7 +408,7 @@ export default function NsHotelPage() {
                 >
                   <Icon style={{ color: BRAND }} className="shrink-0" size={24} />
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-gray-500">{label}</div>
+                    <div className="text-sm text-gray-600">{label}</div>
                     <div className="text-base font-semibold" style={{ color: BRAND }}>{value}</div>
                   </div>
                 </a>

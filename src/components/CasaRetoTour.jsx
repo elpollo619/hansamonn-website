@@ -164,9 +164,9 @@ export default function CasaRetoTour() {
               onClick={() => pick(stop + 1)}
               className="h-11 px-4 inline-flex items-center gap-2 text-white text-sm font-semibold"
               style={{ backgroundColor: BRAND }}
-              aria-label="Nächster Raum"
             >
-              <span className="hidden sm:inline">{CR_TOUR[(stop + 1) % CR_TOUR.length].title}</span>
+              <span className="sr-only sm:hidden">Nächster Raum</span>
+              <span className="hidden sm:inline"><span className="sr-only">Weiter zu </span>{CR_TOUR[(stop + 1) % CR_TOUR.length].title}</span>
               <ArrowRight size={18} />
             </button>
           </div>

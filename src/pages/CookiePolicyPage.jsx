@@ -8,7 +8,7 @@ const ROWS = [
   ['Notwendig', 'ha_cookie_consent', 'Ihre Cookie-Auswahl und deren Datum', 'Local Storage, bis zur Änderung'],
   ['Notwendig', 'ha_lang', 'gewählte Sprache', 'Local Storage, bis zur Löschung'],
   ['Funktional', 'ha_favorites_v1, ha_comparison_v1, ha_recently_viewed', 'Merkliste, Objektvergleich, zuletzt angesehene Objekte', 'Local Storage, bis zur Löschung'],
-  ['Funktional', 'ha_properties_v3, ha_projects_v10, ha_team_v6, ha_settings_v2', 'Zwischenspeicher der Website-Inhalte für schnelleres Laden', 'Local Storage, bis zur Löschung'],
+  ['Funktional', 'ha_properties_v3, ha_projects_v10, ha_team_v7, ha_settings_v2', 'Zwischenspeicher der Website-Inhalte für schnelleres Laden', 'Local Storage, bis zur Löschung'],
   ['Funktional', 'Service Worker «ha-v2»', 'Startseite im Browser-Cache, damit die Website schneller lädt', 'Browser-Cache, bis zur Löschung'],
   ['Nur Verwaltung', 'ha_admin_user', 'Anmeldung von Mitarbeitenden im Verwaltungsbereich', 'Session Storage, bis der Tab geschlossen wird'],
   ['Statistik (Einwilligung)', '_ga, _ga_*', 'Google Analytics 4: Zählung von Besuchen und Seitenaufrufen', 'Cookie, bis 2 Jahre'],
@@ -80,7 +80,7 @@ const SECTIONS = [
     title: '4. Ohne Cookies, aber mit Datenübermittlung',
     body: (
       <ul>
-        <li>Kartenkacheln von OpenStreetMap und CARTO auf den Objektkarten: Ihre IP-Adresse wird an diese Anbieter übermittelt, es werden keine Cookies gesetzt.</li>
+        <li>Kartenkacheln von swisstopo (Bundesamt für Landestopografie) auf den Objektkarten und eine Karte von OpenStreetMap auf einzelnen Objektseiten: Ihre IP-Adresse wird an diese Anbieter übermittelt, es werden keine Cookies gesetzt.</li>
         <li>Aufrufzähler: Beim Öffnen einer Objektseite speichern wir bei unserem Dienstleister Supabase nur, welches Objekt aufgerufen wurde, ohne Angaben zu Ihrer Person.</li>
         <li>Hosting bei Vercel: technische Server-Logfiles, siehe Datenschutzerklärung Ziffer 3.</li>
       </ul>
@@ -103,7 +103,7 @@ const CookiePolicyPage = () => (
       <title>Cookie-Richtlinie | Hans Amonn AG</title>
       <meta name="description" content="Welche Cookies und lokalen Speicherungen hansamonn.ch verwendet, wofür und wie lange, und wie Sie Ihre Einwilligung ändern." />
     </Helmet>
-    <LegalPage title="Cookie-Richtlinie" asOf="26. September 2026" sections={SECTIONS} />
+    <LegalPage title="Cookie-Richtlinie" asOf="22. Oktober 2026" sections={SECTIONS} />
   </>
 );
 

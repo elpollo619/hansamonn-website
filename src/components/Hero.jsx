@@ -7,7 +7,6 @@ import { getSettings } from '@/data/settingsStore';
 const SECTIONS = [
   {
     to: '/immobilien',
-    index: '01',
     eyebrow: 'Immobilien',
     title: 'Wohnen & Mieten',
     sub: 'Long Stay · Short Stay · Apartments · Verkauf',
@@ -15,7 +14,6 @@ const SECTIONS = [
   },
   {
     to: '/architektur',
-    index: '02',
     eyebrow: 'Architektur',
     title: 'Bauen & Gestalten',
     sub: 'Planung · Neubauten · Sanierungen',
@@ -23,7 +21,6 @@ const SECTIONS = [
   },
   {
     to: '/uber-uns',
-    index: '03',
     eyebrow: 'Über uns',
     title: 'Menschen & Geschichte',
     sub: 'Team · Geschichte · Kontakt',
@@ -95,15 +92,10 @@ const Hero = () => {
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="pt-10 flex items-center gap-4"
+          className="pt-10 flex items-center gap-3"
         >
-          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/90 whitespace-nowrap">
-            Hans Amonn AG
-          </span>
-          <span className="h-px w-10 bg-white/40 hidden sm:block" />
-          <span className="text-[11px] font-semibold tracking-hairline uppercase text-white/60 whitespace-nowrap hidden sm:inline">
-            Seit 1968 · Muri bei Bern
-          </span>
+          <span className="h-px w-8 bg-white/50" aria-hidden="true" />
+          <span className="text-sm font-medium text-white/85">Seit 1968 in Muri bei Bern</span>
         </motion.div>
 
         {/* Headline */}
@@ -164,14 +156,9 @@ const Hero = () => {
                     className="absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-300"
                     style={{ backgroundColor: '#fff', opacity: isActive ? 1 : 0 }}
                   />
-                  <span className="font-display text-xl font-semibold tabular-nums text-white/60 group-hover:text-white transition-colors">
-                    {s.index}
-                  </span>
                   <div className="flex-1 min-w-0">
-                    <span className="block text-[11px] font-semibold tracking-hairline uppercase text-white/50 mb-0.5">
-                      {s.eyebrow}
-                    </span>
-                    <span className="font-display text-lg md:text-xl font-semibold text-white leading-none truncate block">
+                    <span className="block text-[13px] text-white/65 mb-1">{s.eyebrow}</span>
+                    <span className="font-display text-lg md:text-xl font-semibold text-white leading-tight truncate block">
                       {s.title}
                     </span>
                   </div>

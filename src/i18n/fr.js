@@ -399,7 +399,7 @@ const fr = {
 
   footer: {
     tagline:
-      'Votre partenaire en construction et immobilier depuis 1968. Qualité, fiabilité et innovation.',
+      'Architecture et immobilier réunis, à Muri près de Berne depuis 1968.',
     navigation: 'Navigation',
     services: 'Services',
     contact: 'Contact',

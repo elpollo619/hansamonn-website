@@ -190,3 +190,8 @@ input[type='range']:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
+
+/* swisstopo base map, softened to a light grey so navy markers and labels stand out */
+.ha-basemap { filter: grayscale(1) contrast(0.44) brightness(1.32); }
+.leaflet-container { font-family: inherit; background: #F6F8FA; }
+.leaflet-control-attribution { font-size: 11px; }

@@ -1,107 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import TiltCard from '@/components/TiltCard';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { servicesData } from '@/components/servicesData';
 
-// Asymmetric bento layout (desktop). Index = position in servicesData.
-const SPANS = [
-  'lg:col-span-2 lg:row-span-2', // Planung und Entwurf (featured)
-  '',
-  '',
-  'lg:col-span-2',
-  '',
-  'lg:col-span-2',                // Vermietung (featured)
-  '',
-  'lg:col-span-3',
+// The two halves of the company, each with its own services.
+const GROUPS = [
+  { key: 'architektur', title: 'Architektur', intro: 'Vom ersten Entwurf bis zur Bauabnahme.', to: '/architektur' },
+  { key: 'immobilien', title: 'Immobilien', intro: 'Kaufen, vermieten und Liegenschaften pflegen.', to: '/immobilien' },
 ];
-const TONE = { 0: 'navy', 5: 'warm' };
 
-const CATEGORY_LABEL = { architektur: 'Architektur', immobilien: 'Immobilien' };
-
-function BentoCard({ service, index }) {
+function ServiceRow({ service }) {
   const Icon = service.icon;
-  const tone = TONE[index];
-  const isNavy = tone === 'navy';
-  const isFeatured = Boolean(tone);
-
-  const toneClass = isNavy
-    ? 'text-white border-transparent'
-    : tone === 'warm'
-      ? 'surface-warm border-gray-200 text-gray-900'
-      : 'bg-white border-gray-200 text-gray-900 hover:border-gray-400';
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.5, delay: (index % 4) * 0.06 }}
-      className={SPANS[index] || ''}
-    >
-      <TiltCard className="h-full" max={index === 0 ? 3 : 6}>
+    <li>
       <Link
         to={`/leistungen/${service.slug}`}
-        className={`group relative flex h-full min-h-[180px] flex-col justify-between border p-6 md:p-7 transition-colors ${toneClass}`}
-        style={isNavy ? { backgroundColor: 'var(--brand-color, #1F497D)' } : undefined}
+        className="group flex items-start gap-4 py-4 border-t border-gray-200 hover:border-[#1F497D] transition-colors"
       >
-        <div className="flex items-start justify-between gap-4">
-          <div
-            className={`flex h-11 w-11 items-center justify-center ${isNavy ? 'bg-white/10' : 'bg-gray-100'}`}
-          >
-            <Icon size={20} className={isNavy ? 'text-white' : 'text-[#1F497D]'} />
-          </div>
-          <ArrowUpRight
-            size={20}
-            className={`transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${
-              isNavy ? 'text-white/60 group-hover:text-white' : 'text-gray-300 group-hover:text-[#1F497D]'
-            }`}
-          />
-        </div>
-
-        <div className="mt-8">
-          <span
-            className={`block text-[11px] font-semibold uppercase tracking-hairline mb-2 ${
-              isNavy ? 'text-white/75' : 'text-gray-400'
-            }`}
-          >
-            {CATEGORY_LABEL[service.category]}
-          </span>
-          <h3
-            className={`font-display font-semibold leading-none tracking-tight ${
- index === 0 ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
- }`}
-          >
+        <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center bg-blue-50 text-[#1F497D]">
+          <Icon size={17} />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-display text-lg md:text-xl font-semibold leading-snug text-[#121D2B] group-hover:text-[#1F497D] transition-colors">
             {service.title}
-          </h3>
-          {isFeatured && (
-            <p className={`mt-4 text-sm leading-relaxed line-clamp-3 max-w-md ${isNavy ? 'text-white/75' : 'text-gray-600'}`}>
-              {service.shortDescription}
-            </p>
-          )}
-          {index === 0 && (
-            <div className="mt-6 flex flex-wrap gap-2">
-              {service.features.map((f) => (
-                <span key={f} className="border border-white/25 px-3 py-1 text-xs text-white/85">
-                  {f}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+          </span>
+          <span className="block mt-0.5 text-sm text-gray-500 leading-snug">{service.features.join(' · ')}</span>
+        </span>
+        <ArrowUpRight
+          size={18}
+          className="mt-1 shrink-0 text-gray-300 transition-all group-hover:text-[#1F497D] group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          aria-hidden="true"
+        />
       </Link>
-      </TiltCard>
-    </motion.div>
+    </li>
   );
 }
 
-/** Services as a modern asymmetric bento grid (21st-style, brand-aligned). */
+/** Services grouped by the two business areas, as compact link lists. */
 export default function ServicesBento() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-20 md:py-24 bg-white">
       <div className="container mx-auto px-6">
-        <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div className="mb-10 md:mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="eyebrow mb-3">Leistungen</p>
             <h2 className="display-heading text-3xl md:text-4xl">Alles aus einer Hand</h2>
@@ -111,29 +52,38 @@ export default function ServicesBento() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[minmax(190px,auto)] gap-3 lg:grid-flow-dense">
-          {servicesData.map((s, i) => (
-            <BentoCard key={s.slug} service={s} index={i} />
-          ))}
-
-          {/* CTA tile */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.5 }}
-          >
-            <Link
-              to="/leistungen"
-              className="group flex h-full min-h-[180px] flex-col justify-end border border-gray-900 bg-gray-900 p-6 md:p-7 text-white hover:bg-black transition-colors"
+        <div className="grid gap-12 md:grid-cols-2 md:gap-16">
+          {GROUPS.map((g, gi) => (
+            <motion.div
+              key={g.key}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.5, delay: gi * 0.08 }}
             >
-              <span className="text-[11px] font-semibold uppercase tracking-hairline text-white/50 mb-2">Übersicht</span>
-              <span className="flex items-center gap-2 font-display text-xl md:text-2xl font-semibold leading-none">
-                Alle Leistungen
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-              </span>
-            </Link>
-          </motion.div>
+              <div className="mb-4 flex items-baseline justify-between gap-4">
+                <h3 className="font-display text-2xl font-semibold text-[#1F497D]">{g.title}</h3>
+                <Link to={g.to} className="text-sm font-semibold text-gray-600 hover:text-[#1F497D] inline-flex items-center gap-1">
+                  Übersicht <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
+              <p className="mb-5 text-gray-600">{g.intro}</p>
+              <ul className="border-b border-gray-200">
+                {servicesData.filter((s) => s.category === g.key).map((s) => (
+                  <ServiceRow key={s.slug} service={s} />
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-10">
+          <Link
+            to="/leistungen"
+            className="inline-flex items-center gap-2 bg-[#1F497D] px-5 py-3 text-sm font-semibold text-white hover:bg-[#173963] transition-colors"
+          >
+            Alle Leistungen im Detail <ArrowRight size={15} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>

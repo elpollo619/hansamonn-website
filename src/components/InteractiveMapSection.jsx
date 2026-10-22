@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { loadLeaflet } from '@/lib/leaflet';
+import { loadLeaflet, addBaseMap } from '@/lib/leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, X, BedDouble, Hotel, Sun, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -46,15 +46,7 @@ function LeafletMap({ locations, activeId, onPinClick }) {
       });
       mapInstanceRef.current = map;
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-        subdomains: 'abcd',
-      }).addTo(map);
-
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-      L.control.attribution({ position: 'bottomleft', prefix: false })
-        .addAttribution('© <a href="https://carto.com/">CARTO</a>')
-        .addTo(map);
+      addBaseMap(L, map);
 
       // Draw markers for initial locations
       addMarkers(L, map, locations, onPinClick);

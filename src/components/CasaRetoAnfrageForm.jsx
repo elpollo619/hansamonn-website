@@ -3,7 +3,7 @@ import FormPrivacyNote from '@/components/FormPrivacyNote';
 import { Calendar, Users, User, Mail, Phone, MessageSquare, Check, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
-const inp = 'w-full border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition';
+const inp = 'w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition';
 const lbl = 'block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5';
 
 const INIT = { ankunft: '', abreise: '', gaeste: 2, vorname: '', nachname: '', email: '', telefon: '', nachricht: '' };

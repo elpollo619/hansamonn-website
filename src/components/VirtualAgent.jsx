@@ -921,7 +921,7 @@ export default function VirtualAgent() {
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && !typing && send()}
                   placeholder={L.placeholder}
-                  className="flex-1 text-sm border border-gray-200 rounded px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900/20 focus:border-gray-400 placeholder-gray-400 transition-all"
+                  className="flex-1 text-sm border border-gray-300 rounded px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-gray-900/20 focus:border-gray-400 placeholder-gray-400 transition-all"
                   disabled={typing}
                 />
                 <motion.button

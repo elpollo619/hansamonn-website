@@ -54,14 +54,8 @@ const TeamInfo = () => {
                 key={p.title}
                 {...fadeUp}
                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="bg-white border border-gray-100 hover:border-gray-300 transition-colors p-8"
+                className="bg-white border-t-2 border-[#1F497D] p-6 md:p-8"
               >
-                <div
-                  className="font-display text-sm font-semibold tracking-wider mb-6"
-                  style={{ color: BRAND }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </div>
                 <h3 className="font-display text-xl font-semibold text-[#121D2B] mb-3">
                   {p.title}
                 </h3>

@@ -223,8 +223,8 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
         {/* Copy + steps */}
         <div className="relative h-full container mx-auto px-6 flex flex-col justify-end md:justify-center pb-28 md:pb-0 pointer-events-none">
           <div className="max-w-sm pointer-events-auto">
-            <p className="text-[11px] font-semibold tracking-hairline uppercase text-blue-100/70 mb-1">Vom Plan zum Gebäude</p>
-            <p className="font-mono text-[11px] text-blue-100/50 mb-4">Projekt: {model.name}, {model.address}</p>
+            <p className="text-sm font-semibold text-blue-100/80 mb-1">Vom Plan zum Gebäude</p>
+            <p className="font-mono text-[11px] text-blue-100/60 mb-4">Projekt: {model.address.startsWith(model.name) ? model.address : `${model.name}, ${model.address}`}</p>
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.no}
@@ -235,7 +235,7 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
                 className="bg-[#122944]/70 md:bg-transparent backdrop-blur-sm md:backdrop-blur-0 p-4 -m-4 md:p-0 md:m-0"
               >
                 <p className="font-mono text-sm text-blue-100/60 mb-2">{current.no} / 03</p>
-                <h2 className="font-display text-3xl md:text-4xl font-semibold leading-none mb-4">{current.title}</h2>
+                <h2 className="font-display text-3xl md:text-4xl font-semibold leading-tight mb-4">{current.title}</h2>
                 <p className="text-blue-50/80 leading-relaxed">{current.text}</p>
               </motion.div>
             </AnimatePresence>
@@ -255,7 +255,7 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
         </div>
 
         {/* Architectural title block */}
-        <div className="absolute right-4 bottom-4 md:right-6 md:bottom-6 border border-blue-100/40 font-mono text-[10px] md:text-[11px] text-blue-50/80 bg-[#122944]/60 backdrop-blur-sm">
+        <div className="hidden md:block absolute right-6 bottom-6 border border-blue-100/40 font-mono text-[10px] md:text-[11px] text-blue-50/80 bg-[#122944]/60 backdrop-blur-sm">
           <div className="px-3 py-2 border-b border-blue-100/30 font-sans font-semibold tracking-hairline">AMONN ARCHITEKTUR</div>
           <div className="px-3 py-1.5 border-b border-blue-100/30">{model.short} · {model.name}</div>
           <div className="grid grid-cols-2">
@@ -268,7 +268,7 @@ export default function BlueprintBuilding({ modelId = 'a14' }) {
 
         {/* Scroll hint */}
         <motion.p
-          className="absolute left-1/2 -translate-x-1/2 bottom-6 hidden md:block text-[11px] tracking-hairline uppercase text-blue-100/50"
+          className="absolute left-1/2 -translate-x-1/2 bottom-6 hidden md:block text-[13px] text-blue-100/60"
           animate={{ opacity: step === 2 ? 0 : 1 }}
         >
           Scrollen

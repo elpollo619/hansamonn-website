@@ -58,11 +58,10 @@ export default function ObjekteGallery() {
                   flexBasis: 0,
                   transition: 'flex-grow 600ms cubic-bezier(0.22, 1, 0.36, 1)',
                 }}
-                aria-label={p.name}
               >
                 <img
                   src={p.images[0]}
-                  alt={p.name}
+                  alt=""
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -92,7 +91,7 @@ export default function ObjekteGallery() {
                   <span className="block text-[11px] font-semibold uppercase tracking-hairline text-white/70 mb-2">
                     {TYPE_LABEL[p.type] || p.type}
                   </span>
-                  <span className="block font-display text-3xl lg:text-4xl font-semibold text-white leading-none mb-3">
+                  <span className="block font-display text-3xl lg:text-4xl font-semibold text-white leading-tight mb-3">
                     {shortName(p.name)}
                   </span>
                   <span className="flex items-center justify-between gap-4 text-sm text-white/80">
@@ -119,7 +118,7 @@ export default function ObjekteGallery() {
                 <span className="block text-[11px] font-semibold uppercase tracking-hairline text-white/70 mb-1">
                   {TYPE_LABEL[p.type] || p.type}
                 </span>
-                <span className="block font-display text-2xl font-semibold text-white leading-none">
+                <span className="block font-display text-2xl font-semibold text-white leading-tight">
                   {shortName(p.name)}
                 </span>
               </div>

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 import { getListingBySlug } from '@/data/rentalData';
-import { loadLeaflet } from '@/lib/leaflet';
+import { loadLeaflet, addBaseMap } from '@/lib/leaflet';
 import {
   CR_FACTS, CR_RATING, CR_AMENITIES, CR_DISTANCES, CR_ACTIVITIES, CR_RULES,
   CR_REGISTRATION, CR_FAQ,
@@ -29,7 +29,7 @@ const fadeUp = {
 
 const fmt = (n) => (Number.isInteger(Math.round(n * 100) / 10) ? n.toFixed(1) : n.toFixed(2)).replace('.', ',');
 
-/* Small self-contained Leaflet map with a single marker (bundled Leaflet + CARTO tiles). */
+/* Small self-contained Leaflet map with a single marker (bundled Leaflet + swisstopo tiles). */
 function LocationMap({ lat, lng, label }) {
   const mapRef = useRef(null);
   const instanceRef = useRef(null);
@@ -46,20 +46,13 @@ function LocationMap({ lat, lng, label }) {
       if (cancelled || instanceRef.current || !mapRef.current) return;
       const map = L.map(mapRef.current, {
         center: [lat, lng],
-        zoom: 12,
+        zoom: 13,
         zoomControl: false,
         scrollWheelZoom: false,
         attributionControl: false,
       });
       instanceRef.current = map;
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19,
-        subdomains: 'abcd',
-      }).addTo(map);
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-      L.control.attribution({ position: 'bottomleft', prefix: false })
-        .addAttribution('© <a href="https://carto.com/">CARTO</a>')
-        .addTo(map);
+      addBaseMap(L, map);
       const icon = L.divIcon({
         className: '',
         html: `<div style="width:36px;height:36px;border-radius:50%;background:#1F497D;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
@@ -206,7 +199,7 @@ export default function CasaRetoPage() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 border-b border-gray-100 pb-10 mb-14">
           {CR_FACTS.map((f) => (
             <div key={f.label} className="border-t-2 pt-3" style={{ borderColor: BRAND }}>
-              <div className="font-display text-3xl md:text-4xl font-semibold text-[#121D2B] leading-none">{f.value}</div>
+              <div className="font-display text-3xl md:text-4xl font-semibold text-[#121D2B] leading-tight">{f.value}</div>
               <div className="text-sm text-gray-500 mt-1.5">{f.label}</div>
             </div>
           ))}

@@ -185,7 +185,7 @@ export default function FAQPage() {
               className="mt-16 bg-[#0D1B2B] text-white p-8 md:p-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6"
             >
               <div>
-                <h2 className="font-display font-semibold text-3xl md:text-4xl leading-none mb-3">Noch Fragen?</h2>
+                <h2 className="font-display font-semibold text-3xl md:text-4xl leading-tight mb-3">Noch Fragen?</h2>
                 <p className="text-white/70">
                   Unser Team hilft Ihnen gerne persönlich weiter.
                 </p>

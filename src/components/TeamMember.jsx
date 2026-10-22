@@ -39,7 +39,7 @@ const TeamMember = ({ member, index }) => {
           </a>
           <Link
             to={`/team/${member.slug}`}
-            className="flex-1 h-10 bg-white px-3 flex items-center justify-center gap-1.5 hover:bg-gray-100 transition-colors text-xs font-semibold uppercase tracking-wider"
+            className="flex-1 h-10 bg-white px-3 flex items-center justify-center gap-1.5 hover:bg-gray-100 transition-colors text-sm font-semibold"
             style={{ color: 'var(--brand-color, #1F497D)' }}
           >
             Profil ansehen <ArrowRight size={12} />
@@ -48,9 +48,9 @@ const TeamMember = ({ member, index }) => {
       </div>
 
       {/* Info */}
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-display text-2xl font-semibold leading-tight text-[#121D2B]">{member.name}</h3>
-        <p className="text-xs font-semibold uppercase tracking-wider mt-1.5 mb-4" style={{ color: 'var(--brand-color, #1F497D)' }}>{member.position}</p>
+      <div className="p-4 sm:p-6 flex flex-col flex-1">
+        <h3 className="font-display text-lg sm:text-xl font-semibold leading-tight text-[#121D2B]">{member.name}</h3>
+        <p className="text-[13px] sm:text-sm font-medium leading-snug mt-1 mb-3 sm:mb-4" style={{ color: 'var(--brand-color, #1F497D)' }}>{member.position}</p>
 
         {(member.education || member.experience) && (
           <div className="space-y-1.5 mb-4 text-xs text-gray-600">
@@ -69,13 +69,13 @@ const TeamMember = ({ member, index }) => {
           </div>
         )}
 
-        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-5">
+        <p className="hidden sm:block text-gray-600 text-sm leading-relaxed line-clamp-3 mb-5">
           {member.description}
         </p>
 
         <Link
           to={`/team/${member.slug}`}
-          className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 transition-all"
+          className="mt-auto inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-semibold hover:gap-2.5 transition-all"
           style={{ color: 'var(--brand-color, #1F497D)' }}
         >
           Profil ansehen <ArrowRight size={14} />

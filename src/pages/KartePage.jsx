@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { loadLeaflet } from '@/lib/leaflet';
+import { loadLeaflet, addBaseMap } from '@/lib/leaflet';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
@@ -56,14 +56,7 @@ function LeafletMap({ listings, activeId, onMarkerClick }) {
       });
       mapInstanceRef.current = map;
 
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-      }).addTo(map);
-
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-      L.control.attribution({ position: 'bottomleft', prefix: false })
-        .addAttribution('© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>')
-        .addTo(map);
+      addBaseMap(L, map);
 
       // Add markers
       listings.forEach((item) => {
@@ -99,7 +92,7 @@ function LeafletMap({ listings, activeId, onMarkerClick }) {
         const bounds = L.latLngBounds(listings.map((i) => [i.lat, i.lng]));
         map.fitBounds(bounds, { padding: [60, 60] });
       } else if (listings.length === 1) {
-        map.setView([listings[0].lat, listings[0].lng], 12);
+        map.setView([listings[0].lat, listings[0].lng], 13);
       }
     });
 
@@ -205,7 +198,7 @@ export default function KartePage() {
               {/* Legend */}
               <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4">
                 {Object.entries(TYPE_CFG).map(([type, c]) => (
-                  <div key={type} className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+                  <div key={type} className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                     <span
                       className="inline-block w-2.5 h-2.5"
                       style={{ background: c.hex }}
@@ -274,7 +267,7 @@ export default function KartePage() {
               ) : (
                 /* Property list */
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">
+                  <p className="text-sm font-semibold text-gray-700 mb-4">
                     Pin auf der Karte anklicken
                   </p>
                   {LISTINGS.map((item) => {

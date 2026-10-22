@@ -81,7 +81,7 @@ const ServiceDetailPage = () => {
                   {service.features.map((feature) => (
                     <span
                       key={feature}
-                      className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 border border-gray-200 px-2.5 py-1"
+                      className="text-[13px] text-gray-600 bg-gray-100 px-2.5 py-1"
                     >
                       {feature}
                     </span>

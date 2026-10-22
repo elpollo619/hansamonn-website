@@ -87,9 +87,7 @@ const ArchitekturPage = () => {
                   className="group flex flex-col bg-white border border-gray-100 hover:border-gray-300 p-8 transition-colors h-full"
                 >
                   <div className="flex items-start justify-between mb-6">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
+                    <span className="flex h-10 w-10 items-center justify-center bg-blue-50 text-[#1F497D]">{s.icon && <s.icon size={18} aria-hidden="true" />}</span>
                     <ArrowRight
                       size={16}
                       className="text-gray-300 group-hover:translate-x-1 transition-transform"
@@ -99,7 +97,7 @@ const ArchitekturPage = () => {
                   <p className="text-gray-600 leading-relaxed">{s.shortDescription}</p>
                   <div className="flex flex-wrap gap-2 mt-6">
                     {s.features.map((f) => (
-                      <span key={f} className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 border border-gray-200 px-2.5 py-1">
+                      <span key={f} className="text-[13px] text-gray-600 bg-gray-100 px-2.5 py-1">
                         {f}
                       </span>
                     ))}
@@ -165,7 +163,7 @@ const ArchitekturPage = () => {
                     />
                   </div>
                   <div className="p-6">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">
                       {p.year} · {p.category}
                     </p>
                     <h3 className="font-display text-xl font-semibold text-[#121D2B]">

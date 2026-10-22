@@ -92,10 +92,10 @@ const Footer = () => {
 
       {/* ── Columns ── */}
       <div className="container mx-auto px-6 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10">
 
           {/* Brand column */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <Link to="/" className="block mb-5">
               <AmonnLogo variant="main" size="md" color="#fff" lightColor="rgba(255,255,255,0.8)" />
             </Link>

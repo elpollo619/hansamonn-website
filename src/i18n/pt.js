@@ -398,7 +398,7 @@ const pt = {
 
   footer: {
     tagline:
-      'O seu parceiro em construção e imobiliária desde 1968. Qualidade, fiabilidade e inovação.',
+      'Arquitetura e imobiliário numa só empresa, em Muri bei Bern desde 1968.',
     navigation: 'Navegação',
     services: 'Serviços',
     contact: 'Contacto',

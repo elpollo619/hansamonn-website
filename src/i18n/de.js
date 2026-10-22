@@ -403,7 +403,7 @@ const de = {
 
   footer: {
     tagline:
-      'Ihr Partner für Bau und Immobilien seit 1968. Qualität, Zuverlässigkeit und Innovation.',
+      'Architektur und Immobilien aus einer Hand, seit 1968 in Muri bei Bern.',
     navigation: 'Navigation',
     services: 'Leistungen',
     contact: 'Kontakt',

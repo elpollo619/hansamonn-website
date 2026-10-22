@@ -94,7 +94,6 @@ const SECTION_VARIANTS = [
   { paths: ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto'], variant: 'immobilien' },
   { paths: ['/architektur', '/leistungen', '/projekte', '/neuigkeiten'], variant: 'architektur' },
   { paths: ['/team'], variant: 'team' },
-  { paths: ['/uber-uns'], variant: 'default' },
 ];
 
 function useSectionVariant(pathname) {
@@ -368,7 +367,7 @@ const Header = () => {
         <div className={`flex items-center justify-between gap-4 transition-[height] duration-300 ${isScrolled ? 'h-14' : 'h-16'}`}>
 
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0" aria-label="Hans Amonn AG – Startseite">
+          <Link to="/" className="flex-shrink-0">
             <AnimatePresence mode="wait">
               <motion.div
                 key={sectionVariant}
@@ -380,6 +379,7 @@ const Header = () => {
                 <AmonnLogo variant={sectionVariant} size="sm" />
               </motion.div>
             </AnimatePresence>
+            <span className="sr-only"> – Startseite</span>
           </Link>
 
           {/* Desktop nav */}

@@ -6,9 +6,8 @@ import { Link } from 'react-router-dom';
 const BRAND = 'var(--brand-color, #1F497D)';
 
 /**
- * ScrollShowcase — modern scroll-driven reveal (Container-Scroll pattern,
- * re-authored brand-aligned). A tilted frame straightens and scales up as it
- * enters the viewport, revealing a flagship project image.
+ * ScrollShowcase: a flagship project image that grows slightly as it scrolls into view.
+ * It is fully visible at rest; the motion is only a gentle scale.
  */
 export default function ScrollShowcase({
   image = '/images/ns-hotel/drohne-2.jpg',
@@ -23,25 +22,23 @@ export default function ScrollShowcase({
     offset: ['start end', 'end start'],
   });
 
-  const rotate = useTransform(scrollYProgress, [0, 0.5], [18, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.86, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [0.4, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.45], [0.94, 1]);
 
   return (
-    <section ref={ref} className="py-24 bg-white overflow-hidden">
+    <section ref={ref} className="py-20 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-6">
         {/* Heading */}
-        <div className="max-w-2xl mx-auto text-center mb-14">
+        <div className="max-w-2xl mx-auto text-center mb-10 md:mb-14">
           {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
           <h2 className="display-heading text-3xl md:text-4xl mb-4">{title}</h2>
           <p className="text-gray-500 leading-relaxed">{caption}</p>
         </div>
 
         {/* Perspective stage */}
-        <div style={{ perspective: '1200px' }} className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <motion.div
-            style={{ rotateX: rotate, scale, opacity, transformStyle: 'preserve-3d' }}
-            className="relative overflow-hidden border border-gray-200 shadow-2xl bg-gray-100"
+            style={{ scale }}
+            className="relative overflow-hidden bg-gray-100"
           >
             <div className="aspect-[4/3] md:aspect-[16/9]">
               <img

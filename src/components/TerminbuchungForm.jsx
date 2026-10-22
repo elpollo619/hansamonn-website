@@ -68,7 +68,7 @@ export default function TerminbuchungForm({ propertyId = '', propertyName = '' }
   };
 
   const inputCls =
-    'w-full border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1F497D] transition';
+    'w-full border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1F497D] transition';
   const labelCls = 'block text-xs font-semibold text-gray-600 mb-1.5';
 
   if (success) {

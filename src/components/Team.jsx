@@ -16,7 +16,7 @@ const Team = () => {
       <section id="team" className="bg-white py-20 md:py-24">
         <div className="container mx-auto px-6">
           {/* Team Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {teamMembers.map((member, index) => (
               <TeamMember key={member.id} member={member} index={index} />
             ))}

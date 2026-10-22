@@ -150,7 +150,7 @@ const TeamMemberPage = () => {
             )}
             <Link
               to="/team"
-              className="justify-self-center text-center text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-gray-900 transition-colors"
+              className="justify-self-center text-center text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors"
             >
               Alle Teammitglieder
             </Link>

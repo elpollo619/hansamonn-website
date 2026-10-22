@@ -26,7 +26,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           </div>
 
           <div className="surface-warm border-l-2 p-5 mb-8" style={{ borderColor: 'var(--brand-color, #1F497D)' }}>
-            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Eigentümer: {project.owner}</p>
+            <p className="text-sm font-semibold text-gray-700 mb-2">Eigentümer: {project.owner}</p>
             <p className="text-gray-600 leading-relaxed">
               {project.category === 'hotel'
                 ? 'Stolz präsentieren wir unser eigenes Hotel-Projekt, ein modernes Self-Check-in Hotel in Kerzers.'
@@ -41,7 +41,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           {/* Amenities */}
           {project.amenities?.length > 0 && (
             <div className="mb-8">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">Leistungen:</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">Leistungen</h4>
               <div className="grid sm:grid-cols-2 gap-3">
                 {project.amenities.map((amenity, index) => {
                   const Icon = amenity.icon ?? null;
@@ -67,22 +67,22 @@ const ProjectInfo = ({ project, onButtonClick }) => {
             <div className="p-5 min-w-0 surface-warm border border-gray-100">
               <Building2 className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1F497D)' }} />
               <div className="font-display text-base sm:text-xl font-semibold text-[#121D2B] leading-tight break-words hyphens-auto">{project.size}</div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">Gesamtfläche</div>
+              <div className="text-sm text-gray-600 mt-1">Gesamtfläche</div>
             </div>
             <div className="p-5 min-w-0 surface-warm border border-gray-100">
               <Award className="w-6 h-6 mb-4" style={{ color: 'var(--brand-color, #1F497D)' }} />
               <div className="font-display text-base sm:text-xl font-semibold text-[#121D2B] leading-tight break-words hyphens-auto">{project.status}</div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">Status</div>
+              <div className="text-sm text-gray-600 mt-1">Status</div>
             </div>
           </div>
 
           {/* Features */}
           {project.features?.length > 0 && (
             <div className="mb-8">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">Besonderheiten:</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">Besonderheiten</h4>
               <div className="flex flex-wrap gap-2">
                 {project.features.map((feature, index) => (
-                  <span key={index} className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 border border-gray-200 px-2.5 py-1">
+                  <span key={index} className="text-[13px] text-gray-600 bg-gray-100 px-2.5 py-1">
                     {feature}
                   </span>
                 ))}
@@ -93,7 +93,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           {/* Documents */}
           {project.documents?.length > 0 && (
             <div className="mb-8">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">Projektdokumente:</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">Projektdokumente</h4>
               <div className="space-y-3">
                 {project.documents.map((doc, index) => (
                   <div key={index} className="bg-white border border-gray-100 hover:border-gray-300 transition-colors p-4 flex items-center justify-between gap-4">
@@ -113,7 +113,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           {/* Distances */}
           {project.distances?.length > 0 && (
             <div className="mb-8">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">Entfernungen:</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">Entfernungen</h4>
               <div className="border-t border-gray-100">
                 {project.distances.map((distance, index) => (
                   <div key={index} className="flex justify-between gap-4 text-sm border-b border-gray-100 py-2.5">

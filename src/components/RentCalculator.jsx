@@ -79,7 +79,7 @@ const RentCalculator = () => {
       <div className="p-6 md:p-8 grid md:grid-cols-2 gap-6">
         {/* Wohnfläche */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
             Wohnfläche (m²)
           </label>
           <div className="flex items-center gap-3">
@@ -102,18 +102,18 @@ const RentCalculator = () => {
                 const v = Math.max(20, Math.min(200, Number(e.target.value)));
                 setFlaeche(v);
               }}
-              className="w-20 border border-gray-200 px-3 py-2 text-sm text-center font-semibold focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
+              className="w-20 border border-gray-300 px-3 py-2 text-sm text-center font-semibold focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
             />
           </div>
         </div>
 
         {/* Standort */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Standort</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">Standort</label>
           <select aria-label="Standort"
             value={standort}
             onChange={(e) => setStandort(e.target.value)}
-            className="w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D] bg-white"
+            className="w-full border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D] bg-white"
           >
             {STANDORTE.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -123,7 +123,7 @@ const RentCalculator = () => {
 
         {/* Typ */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Miettyp</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">Miettyp</label>
           <div className="flex flex-col gap-2">
             {TYPEN.map((t) => (
               <label key={t.value} className="flex items-center gap-2.5 cursor-pointer">
@@ -143,7 +143,7 @@ const RentCalculator = () => {
 
         {/* Optionen */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Optionen</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">Optionen</label>
           <div className="flex flex-col gap-2.5">
             {OPTIONEN.map((opt) => (
               <label key={opt.key} className="flex items-center gap-2.5 cursor-pointer">

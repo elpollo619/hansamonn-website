@@ -57,7 +57,7 @@ export default function ShortStayPage() {
               </div>
             </div>
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-4">
                 <MapPin size={13} /> Kerzers, 3210
                 <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-[#1F497D] text-[#1F497D]" />)}</span>
               </div>
@@ -118,7 +118,7 @@ export default function ShortStayPage() {
             className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center"
           >
             <div className="lg:col-span-5 flex flex-col justify-center order-2 lg:order-1">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-4">
                 <MapPin size={13} /> Gordemo / Lago Maggiore, Tessin
               </div>
               <div className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 mb-5 w-fit">

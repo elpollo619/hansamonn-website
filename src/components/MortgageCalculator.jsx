@@ -65,7 +65,7 @@ const MortgageCalculator = () => {
           {/* Kaufpreis */}
           <div>
             <div className="flex justify-between items-baseline mb-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Kaufpreis</label>
+              <label className="text-sm font-semibold text-gray-700">Kaufpreis</label>
               <span className="text-sm font-bold text-gray-900">{chf(kaufpreis)}</span>
             </div>
             <input aria-label="Kaufpreis"
@@ -86,7 +86,7 @@ const MortgageCalculator = () => {
           {/* Eigenkapital */}
           <div>
             <div className="flex justify-between items-baseline mb-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Eigenkapital</label>
+              <label className="text-sm font-semibold text-gray-700">Eigenkapital</label>
               <span className="text-sm font-bold text-gray-900">
                 {ekPct}% &nbsp;
                 <span className="text-gray-500 font-normal">({chf(eigenkapital)})</span>
@@ -110,7 +110,7 @@ const MortgageCalculator = () => {
           {/* Zinssatz */}
           <div>
             <div className="flex justify-between items-baseline mb-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Zinssatz (p.a.)</label>
+              <label className="text-sm font-semibold text-gray-700">Zinssatz (p.a.)</label>
               <span className="text-sm font-bold text-gray-900">{zinssatz.toFixed(1)}%</span>
             </div>
             <input aria-label="Zinssatz (p.a.)"
@@ -120,13 +120,13 @@ const MortgageCalculator = () => {
               step={0.1}
               value={zinssatz}
               onChange={e => setZinssatz(Math.max(0.1, Math.min(10, Number(e.target.value))))}
-              className="w-full border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
+              className="w-full border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
             />
           </div>
 
           {/* Laufzeit */}
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-gray-500 block mb-2">Laufzeit</label>
+            <label className="text-sm font-semibold text-gray-700 block mb-2">Laufzeit</label>
             <div className="grid grid-cols-4 gap-2">
               {LAUFZEIT_OPTIONS.map(y => (
                 <button
@@ -147,7 +147,7 @@ const MortgageCalculator = () => {
           {/* Monatliches Haushaltseinkommen */}
           <div>
             <div className="flex justify-between items-baseline mb-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-gray-500">Brutto-Monatseinkommen</label>
+              <label className="text-sm font-semibold text-gray-700">Brutto-Monatseinkommen</label>
               <span className="text-sm font-bold text-gray-900">{chf(monatseinkommen)}</span>
             </div>
             <input aria-label="Brutto-Monatseinkommen"
@@ -157,7 +157,7 @@ const MortgageCalculator = () => {
               step={500}
               value={monatseinkommen}
               onChange={e => setMonatseinkommen(Math.max(0, Number(e.target.value)))}
-              className="w-full border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
+              className="w-full border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1F497D]/20 focus:border-[#1F497D]"
             />
           </div>
         </div>

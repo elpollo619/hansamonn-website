@@ -128,7 +128,7 @@ const FavoriteCard = ({ item, index, t }) => {
         </div>
         <p className="text-sm text-gray-600 mb-3 leading-relaxed">{item.subtitle}</p>
 
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 mb-6">
+        <div className="flex items-center gap-1.5 text-sm font-semibold text-gray-700 mb-6">
           <MapPin size={11} className="flex-shrink-0" />
           <span>{item.location}</span>
         </div>

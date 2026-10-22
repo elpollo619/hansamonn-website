@@ -171,7 +171,7 @@ export default function BlogPostPage() {
                             <p className="font-display text-lg font-semibold text-[#121D2B] group-hover:text-[#1F497D] transition-colors line-clamp-2 leading-tight">
                               {(lang === 'it' && p.title_it) || p.title}
                             </p>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1.5 flex items-center gap-1">
+                            <p className="text-sm font-semibold text-gray-700 mt-1.5 flex items-center gap-1">
                               <Tag size={11} />
                               {p.category}
                             </p>
