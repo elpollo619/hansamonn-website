@@ -164,7 +164,7 @@ const MortgageCalculator = () => {
 
         {/* ── RIGHT: Results ───────────────────────────────────────── */}
         <div className="space-y-4">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Ergebnis</h3>
+          <h3 className="text-sm font-semibold text-gray-700">Ergebnis</h3>
 
           {/* Hypothek */}
           <div className="surface-warm p-4">

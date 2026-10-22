@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, Phone, Mail, MapPin, Home, Maximize2,
   CheckCircle2, Calendar, ExternalLink, Sun, Coffee,
-  Building2, Car, Wifi, Download,
+  Building2, Car, Wifi, Download, ChevronDown,
 } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import { getListingBySlug } from '@/data/rentalData';
@@ -31,6 +31,7 @@ import { addRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import TerminbuchungForm from '@/components/TerminbuchungForm';
 import PropertyAnfrageForm from '@/components/PropertyAnfrageForm';
+import LocationMap from '@/components/LocationMap';
 
 // Normalize a propertiesStore property to the format ApartmentDetailPage expects
 function normalizeStoreProperty(p) {
@@ -144,7 +145,7 @@ const HotelSidebar = ({ apt, t }) => (
     <div className="p-5 space-y-3">
       {/* 1. Direct booking — PRIMARY */}
       <div>
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+        <p className="text-sm font-semibold text-gray-700 mb-2">
           {t('vermietung.hotel.bookDirectly')}
         </p>
         <a
@@ -246,7 +247,7 @@ const LongStaySidebar = ({ apt, t }) => (
     {/* Pricing table */}
     {apt.longStayRooms && apt.longStayRooms.length > 0 && (
       <div className="px-5 pt-5">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+        <p className="text-sm font-semibold text-gray-700 mb-3">
           {t('vermietung.longStay.pricingTitle')}
         </p>
         <div className="space-y-2">
@@ -275,7 +276,7 @@ const LongStaySidebar = ({ apt, t }) => (
     {/* Includes */}
     {apt.includes && (
       <div className="px-5 pt-4">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+        <p className="text-sm font-semibold text-gray-700 mb-2">
           {t('vermietung.longStay.includes')}
         </p>
         <div className="flex flex-wrap gap-1.5">
@@ -300,7 +301,7 @@ const LongStaySidebar = ({ apt, t }) => (
     {/* CTA */}
     <div className="p-5">
       <a
-        href={`mailto:${apt.contact?.email ?? 'office@reto-amonn.ch'}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
+        href="#anfrage"
         className="w-full flex items-center justify-center gap-2 text-white font-semibold py-4 px-4 transition-colors text-base"
         style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
         onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
@@ -482,7 +483,7 @@ const ApartmentSidebar = ({ apt, t, showForm, setShowForm }) => {
       {/* Details card */}
       {apt.details && (
         <div className="bg-white border border-gray-100 p-5">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Objektdetails</p>
+          <p className="text-sm font-semibold text-gray-700 mb-3">Objektdetails</p>
           <div className="space-y-2 text-sm">
             {apt.details.heating && (
               <div className="flex justify-between">
@@ -596,6 +597,12 @@ const Gallery = ({ images, onOpen }) => {
 // ─── Page ──────────────────────────────────────────────────────────────────
 
 const ApartmentDetailPage = () => {
+  // The fixed mobile CTA bar sits at the bottom; lift the floating chat buttons above it
+  useEffect(() => {
+    document.body.classList.add('has-bottom-bar');
+    return () => document.body.classList.remove('has-bottom-bar');
+  }, []);
+
   const { slug }    = useParams();
   const { t }       = useTranslation();
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
@@ -1102,25 +1109,20 @@ const ApartmentDetailPage = () => {
                   <MapPin size={13} />
                   {apt.location}
                 </p>
-                <div className="overflow-hidden border border-gray-100" style={{ height: 300 }}>
-                  <iframe
-                    title={`Standort ${apt.title}`}
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${apt.lng - 0.008},${apt.lat - 0.006},${apt.lng + 0.008},${apt.lat + 0.006}&layer=mapnik&marker=${apt.lat},${apt.lng}`}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                  />
-                </div>
+                {/* Street address known → building level; otherwise only the village */}
+                <LocationMap lat={apt.lat} lng={apt.lng} label={apt.title} zoom={/strasse|weg|platz|gasse/i.test(apt.location || '') ? 16 : 13} height={320} />
+                {!/strasse|weg|platz|gasse/i.test(apt.location || '') && (
+                  <p className="mt-2 text-sm text-gray-600">Ungefähre Lage. Die genaue Adresse erhalten Sie mit der Bestätigung.</p>
+                )}
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(apt.location)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs hover:underline mt-2"
+                  className="inline-flex items-center gap-1 text-sm hover:underline mt-2"
                   style={{ color: 'var(--brand-color, #1F497D)' }}
                 >
-                  <MapPin size={11} />
-                  Auf Google Maps öffnen
+                  <MapPin size={13} />
+                  Route in Google Maps öffnen
                 </a>
               </div>
             )}
@@ -1202,25 +1204,29 @@ const ApartmentDetailPage = () => {
               </div>
             )}
 
-            {/* Terminbuchung */}
-            <div>
-              <h2 className="font-display text-2xl font-semibold leading-tight text-[#121D2B] mb-4">Termin vereinbaren</h2>
-              <div className="bg-white border border-gray-200 p-5">
+            {/* Terminbuchung (collapsed, the inquiry form below is the main path) */}
+            <details className="group border border-gray-200 bg-white">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 [&::-webkit-details-marker]:hidden">
+                <span>
+                  <span className="block font-display text-xl font-semibold text-[#121D2B]">Besichtigung vereinbaren</span>
+                  <span className="block text-sm text-gray-600 mt-0.5">Wunschtermin für eine Besichtigung oder ein Gespräch vorschlagen</span>
+                </span>
+                <ChevronDown size={20} className="shrink-0 text-gray-500 transition-transform group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div className="border-t border-gray-200 p-5">
                 <TerminbuchungForm
                   propertyId={apt.id ?? apt.slug}
                   propertyName={apt.title}
                 />
               </div>
-            </div>
+            </details>
 
             {/* Direct contact + inquiry form (long-stay & ferienhaus/project) */}
             {(apt.type === 'long-stay' || apt.type === 'project') && (
-              <div className="border-t border-gray-100 pt-8">
+              <div id="anfrage" className="scroll-mt-24 border-t border-gray-100 pt-8">
                 <div className="grid lg:grid-cols-2 gap-10 items-start">
                   <div>
-                    <h2 className="display-heading text-3xl md:text-4xl mb-3">
-                      Direkt <span>anfragen</span>
-                    </h2>
+                    <h2 className="display-heading text-2xl md:text-3xl mb-3">Direkt anfragen</h2>
                     <p className="text-gray-500 text-sm mb-6 leading-relaxed">
                       {apt.type === 'long-stay'
                         ? 'Interesse an einer Unterkunft? Füllen Sie das Formular aus, wir melden uns innerhalb von 24 Stunden.'
@@ -1235,7 +1241,7 @@ const ApartmentDetailPage = () => {
                           className="flex items-center gap-4 bg-gray-50 border border-gray-100 p-4 hover:bg-gray-100 transition-colors">
                           <Icon className="shrink-0" style={{ color: 'var(--brand-color, #1F497D)' }} size={20} />
                           <div>
-                            <div className="font-semibold text-xs text-gray-500 uppercase tracking-wider">{label}</div>
+                            <div className="text-sm text-gray-600">{label}</div>
                             <div className="text-sm font-medium text-gray-900">{value}</div>
                           </div>
                         </a>
@@ -1258,7 +1264,7 @@ const ApartmentDetailPage = () => {
           </div>
 
           {/* ── Sidebar ── */}
-          <div className="lg:col-span-1 space-y-4">
+          <div className="order-first lg:order-none lg:col-span-1 space-y-4">
             {apt.type === 'hotel'      && <HotelSidebar apt={apt} t={t} />}
             {apt.type === 'long-stay'  && <LongStaySidebar apt={apt} t={t} />}
             {apt.type === 'project'    && <ProjectSidebar apt={apt} t={t} icalUrl={apt.icalUrl} />}
@@ -1302,7 +1308,7 @@ const ApartmentDetailPage = () => {
           </a>
         ) : apt.type === 'long-stay' ? (
           <a
-            href={`mailto:${apt.contact.email}?subject=${encodeURIComponent(`Long Stay Anfrage – ${apt.title}`)}`}
+            href="#anfrage"
             className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm"
             style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
           >

@@ -30,7 +30,9 @@ export function addBaseMap(L, map) {
   const opts = { className: 'ha-basemap' };
   // swisstopo's Web-Mercator tiles at zoom 11 and 12 are enlarged from a small-scale map and look blurred,
   // so those two levels borrow sharper tiles from the neighbouring levels.
+  // Fix the zoom range first: otherwise Leaflet clamps the view to the max zoom of the first layer added (10)
   map.setMinZoom(7);
+  map.setMaxZoom(19);
   L.tileLayer(url, { ...opts, minZoom: 7, maxZoom: 10 }).addTo(map);
   L.tileLayer(url, { ...opts, minZoom: 11, maxZoom: 11, maxNativeZoom: 10 }).addTo(map);
   L.tileLayer(url, { ...opts, minZoom: 12, maxZoom: 12, minNativeZoom: 13 }).addTo(map);

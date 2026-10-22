@@ -47,7 +47,7 @@ const fr = {
     hero: {
       title: 'Logement & Séjour',
       subtitle:
-        'Appartements, longs séjours meublés, hôtel et projets exclusifs, tout à Kerzers et dans la région.',
+        'Chambres meublées, hôtel et appartements dans la région de Berne, et une maison de vacances au bord du lac Majeur.',
       badge: 'Offres actuelles',
       offeringTypes: 'Appartements · Long Stay · Hôtel · Projets',
       serviceApartments: 'Appartements modernes à Kerzers',
@@ -61,7 +61,7 @@ const fr = {
       apartment: 'Appartements',
       longStay: 'Long Stay',
       hotel: 'Hôtel & Court',
-      project: 'Projets',
+      project: 'Maison de vacances',
     },
     card: {
       rooms: 'Pièces',
@@ -79,7 +79,7 @@ const fr = {
       bookNow: 'Réserver',
       requestInquiry: 'Envoyer une demande',
       requestAvailability: 'Vérifier disponibilité',
-      viewProject: 'Voir le projet',
+      viewProject: 'Voir les détails',
     },
     detail: {
       back: "Retour à l'aperçu",
@@ -118,7 +118,7 @@ const fr = {
       apartment: 'Appartement',
       longStay: 'Long Stay',
       hotel: 'Hôtel',
-      project: 'Projet',
+      project: 'Maison de vacances',
     },
     hotel: {
       bookingTitle: 'Réserver directement',
@@ -353,6 +353,7 @@ const fr = {
 
   contact: {
     title: 'Nous contacter',
+    subtitle: 'Appelez-nous, écrivez-nous ou rendez-nous visite à Muri près de Berne.',
     meta: {
       title: 'Contact – Hans Amonn AG',
       description: 'Contactez Hans Amonn AG pour votre projet de construction ou immobilier.',

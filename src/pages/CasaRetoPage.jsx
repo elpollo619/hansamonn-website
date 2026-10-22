@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 import { getListingBySlug } from '@/data/rentalData';
-import { loadLeaflet, addBaseMap } from '@/lib/leaflet';
+import LocationMap from '@/components/LocationMap';
 import {
   CR_FACTS, CR_RATING, CR_AMENITIES, CR_DISTANCES, CR_ACTIVITIES, CR_RULES,
   CR_REGISTRATION, CR_FAQ,
@@ -28,58 +28,6 @@ const fadeUp = {
 };
 
 const fmt = (n) => (Number.isInteger(Math.round(n * 100) / 10) ? n.toFixed(1) : n.toFixed(2)).replace('.', ',');
-
-/* Small self-contained Leaflet map with a single marker (bundled Leaflet + swisstopo tiles). */
-function LocationMap({ lat, lng, label }) {
-  const mapRef = useRef(null);
-  const instanceRef = useRef(null);
-  const [cssReady, setCssReady] = useState(false);
-
-  useEffect(() => {
-    loadLeaflet().then(() => setCssReady(true));
-  }, []);
-
-  useEffect(() => {
-    if (!cssReady || instanceRef.current || !mapRef.current) return;
-    let cancelled = false;
-    loadLeaflet().then((L) => {
-      if (cancelled || instanceRef.current || !mapRef.current) return;
-      const map = L.map(mapRef.current, {
-        center: [lat, lng],
-        zoom: 13,
-        zoomControl: false,
-        scrollWheelZoom: false,
-        attributionControl: false,
-      });
-      instanceRef.current = map;
-      addBaseMap(L, map);
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="width:36px;height:36px;border-radius:50%;background:#1F497D;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;">
-          <svg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='4'/><path d='M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M18.66 5.34l-1.41 1.41'/></svg>
-        </div>`,
-        iconSize: [36, 36],
-        iconAnchor: [18, 18],
-      });
-      L.marker([lat, lng], { icon, title: label }).addTo(map);
-    });
-    return () => {
-      cancelled = true;
-      if (instanceRef.current) { instanceRef.current.remove(); instanceRef.current = null; }
-    };
-  }, [cssReady, lat, lng, label]);
-
-  return (
-    <div className="relative border border-gray-100 overflow-hidden bg-gray-50" style={{ height: 380 }}>
-      <div ref={mapRef} className="w-full h-full" style={{ minHeight: 380 }} />
-      {!cssReady && (
-        <div className="absolute inset-0 flex items-center justify-center text-gray-300 text-sm">
-          Karte wird geladen…
-        </div>
-      )}
-    </div>
-  );
-}
 
 function SectionHead({ eyebrow, title, text, className = '' }) {
   return (
@@ -334,7 +282,7 @@ export default function CasaRetoPage() {
           />
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_1fr] items-start mb-12">
             <motion.div {...fadeUp} className="min-w-0">
-              <LocationMap lat={listing?.lat ?? 46.18} lng={listing?.lng ?? 8.86} label="Casa Reto · Gordemo" />
+              <LocationMap lat={listing?.lat ?? 46.18} lng={listing?.lng ?? 8.86} label="Casa Reto · Gordemo" icon="sun" />
               <p className="mt-2 text-xs text-gray-500">Ungefähre Lage. Die genaue Adresse erhalten Sie mit der Buchungsbestätigung.</p>
             </motion.div>
             <motion.div {...fadeUp} className="bg-white border border-gray-100">
@@ -472,7 +420,7 @@ export default function CasaRetoPage() {
               >
                 <Icon style={{ color: BRAND }} className="shrink-0" size={24} />
                 <div>
-                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</div>
+                  <div className="text-sm font-semibold text-gray-700">{label}</div>
                   <div className="text-sm font-semibold text-gray-900">{value}</div>
                 </div>
               </a>

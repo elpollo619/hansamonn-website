@@ -51,7 +51,7 @@ const TeamMemberPage = () => {
               className="lg:col-span-4 min-w-0"
             >
               <div className="bg-white overflow-hidden border border-gray-100">
-                <div className="relative aspect-[4/5] bg-gray-100">
+                <div className={`relative bg-gray-100 ${member.hasPhoto !== false && member.photoUrl ? 'aspect-[4/5] max-sm:max-h-[420px] max-sm:w-full' : 'aspect-[16/9] sm:aspect-[4/5]'}`}>
                   <MemberPortrait member={member} />
                   {Icon && (
                   <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 flex items-center justify-center">

@@ -273,7 +273,7 @@ function Section({ icon: Icon, title, children, className = "" }) {
 
 const inp = "w-full border border-gray-300 px-4 py-2.5 text-sm outline-none focus:border-[#1F497D] transition bg-white";
 const sel = inp + " cursor-pointer";
-const lbl = "block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide";
+const lbl = "block text-sm font-semibold text-gray-700 mb-1.5";
 
 // Ties the label to its control (id / htmlFor); groups of controls get a labelled group instead.
 function Field({ label, required, children, className = "" }) {

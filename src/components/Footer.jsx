@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays, Clock, Send } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { openCookieSettings } from '@/lib/consent';
@@ -10,11 +10,26 @@ import { getSetting } from '@/data/settingsStore';
 import { OFFICE_HOURS_SHORT, PHONE_HOURS_SHORT } from '@/data/officeHours';
 
 // Pages that already end in their own contact block skip the footer CTA band
-const NO_CTA = ['/kontakt', '/termin'];
+const NO_CTA = ['/kontakt', '/termin', '/immobilien', '/immobilien/vermietung', '/immobilien/long-stay', '/immobilien/short-stay', '/immobilien/anfrage', '/ns-hotel', '/team', '/faq'];
+
+// Rental and property pages get a CTA about offers instead of building projects
+const PROPERTY_PATHS = ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/vergleich', '/favoriten', '/hyporechner', '/preisrechner'];
+const CTA = {
+  project: {
+    title: 'Haben Sie ein Projekt?', sub: 'Sprechen wir darüber.',
+    secondary: { to: '/termin', label: 'Termin buchen', icon: CalendarDays },
+  },
+  property: {
+    title: 'Fragen zu unseren Angeboten?', sub: 'Wir beraten Sie gern.',
+    secondary: { to: '/immobilien/anfrage', label: 'Mietanfrage stellen', icon: Send },
+  },
+};
 
 const Footer = () => {
   const { pathname } = useLocation();
   const showCta = !NO_CTA.includes(pathname);
+  const cta = PROPERTY_PATHS.some((p) => pathname === p || pathname.startsWith(p + '/')) ? CTA.property : CTA.project;
+  const SecondaryIcon = cta.secondary.icon;
   const { t } = useTranslation();
   const year    = new Date().getFullYear();
   const phone   = getSetting('phone');
@@ -69,8 +84,8 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-display font-semibold leading-tight tracking-tight text-2xl md:text-3xl">
-              Haben Sie ein Projekt?<br />
-              <span className="text-white/60">Sprechen wir darüber.</span>
+              {cta.title}<br />
+              <span className="text-white/60">{cta.sub}</span>
             </h2>
           </motion.div>
           <div className="flex flex-wrap gap-3">
@@ -81,10 +96,10 @@ const Footer = () => {
               Kontakt aufnehmen <ArrowRight size={16} />
             </Link>
             <Link
-              to="/termin"
+              to={cta.secondary.to}
               className="inline-flex items-center gap-2 border border-white/30 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
             >
-              <CalendarDays size={16} /> Termin buchen
+              <SecondaryIcon size={16} /> {cta.secondary.label}
             </Link>
           </div>
         </div>

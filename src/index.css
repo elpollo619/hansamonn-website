@@ -156,6 +156,8 @@ html { scroll-behavior: smooth; }
   color: #121D2B;
 }
 h1, h2, h3, .display-heading { text-wrap: balance; }
+/* Long German compounds (e.g. Immobilienbewirtschaftung) break with a hyphen instead of overflowing */
+h1, h2, h3, h4 { overflow-wrap: break-word; hyphens: auto; }
 
 /* Ken Burns slow zoom for cinematic imagery */
 @keyframes kenburns {
@@ -195,3 +197,9 @@ input[type='range']:focus-visible {
 .ha-basemap { filter: grayscale(1) contrast(0.44) brightness(1.32); }
 .leaflet-container { font-family: inherit; background: #F6F8FA; }
 .leaflet-control-attribution { font-size: 11px; }
+
+/* Pages with a fixed bottom action bar on phones lift the floating buttons above it */
+@media (max-width: 1023px) {
+  body.has-bottom-bar .floating-raise { bottom: 5.5rem; }
+  body.has-bottom-bar .floating-raise-panel { bottom: 10rem; }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Hotel, ArrowRight, ExternalLink, Star, MapPin, Mail, Sun } from 'lucide-react';
+import { Hotel, ArrowRight, ExternalLink, MapPin, Mail, Sun } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import PageHero from '@/components/PageHero';
 
@@ -59,7 +59,6 @@ export default function ShortStayPage() {
             <div className="lg:col-span-5 flex flex-col justify-center">
               <div className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-4">
                 <MapPin size={13} /> Kerzers, 3210
-                <span className="flex gap-0.5 ml-2">{[1,2,3,4,5].map(i => <Star key={i} size={11} className="fill-[#1F497D] text-[#1F497D]" />)}</span>
               </div>
               <h2 className="display-heading text-3xl md:text-4xl mb-6">N's Hotel</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
@@ -126,10 +125,11 @@ export default function ShortStayPage() {
               </div>
               <h2 className="display-heading text-3xl md:text-4xl mb-6">Casa Reto</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Stellen Sie sich vor: Aufwachen mit dem Rauschen des Lago Maggiore, Zitronenbäume im Garten, keine Verpflichtungen. Casa Reto ist unser privates Ferienhaus in Gordemo, Tessin, ein stiller Ort zum Atmen, Geniessen und Loslassen.
+                Unser Ferienhaus in Gordemo oberhalb von Tenero, am Eingang zum Verzascatal: vier Schlafzimmer für bis
+                zu acht Gäste, Wohnzimmer mit Holzofen, Garten mit Pergola und ein weiter Blick über den Lago Maggiore.
               </p>
               <div className="flex flex-wrap gap-2 mb-8">
-                {['Lago Maggiore', 'Privater Garten', 'Naturlage', 'Ruhige Umgebung', 'Tessin'].map(tag => (
+                {['Seeblick', 'Garten mit Pergola', 'Bis 8 Gäste', '4 Schlafzimmer', 'Tessin'].map(tag => (
                   <span key={tag} className="text-xs bg-white text-gray-600 px-3 py-1.5 border border-gray-200">{tag}</span>
                 ))}
               </div>

@@ -194,19 +194,6 @@ export default function KartePage() {
                   </div>
                 )}
               </div>
-
-              {/* Legend */}
-              <div className="flex flex-wrap gap-x-5 gap-y-2 mt-4">
-                {Object.entries(TYPE_CFG).map(([type, c]) => (
-                  <div key={type} className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                    <span
-                      className="inline-block w-2.5 h-2.5"
-                      style={{ background: c.hex }}
-                    />
-                    {c.label}
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Sidebar */}

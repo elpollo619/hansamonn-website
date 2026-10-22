@@ -9,8 +9,8 @@ export const projectsData = [
     category: 'hotel',
     location: 'Allmendstrasse 14, Kerzers',
     year: '2024',
-    description: 'Modernes Self-Check-in Hotel in Kerzers, 22 km von Bern Hauptbahnhof entfernt. Das N\'s Hotel bietet komfortable Nichtraucher-Unterkünfte mit Garten, kostenlosem Privatparkplatz und Terrasse.',
-    fullDescription: 'Die Unterkunft N\'s Hotel - Self-Check-in Hotel, die in Kerzers, 22 km von Bern Hauptbahnhof entfernt gelegen ist, verfügt über Übernachtungsmöglichkeiten mit einem Garten, einem kostenlosen Privatparkplatz und einer Terrasse. Dieses Hotel liegt ungefähr 22 km von Forum Fribourg entfernt, hat kostenloses WLAN und ist außerdem 23 km entfernt von Bundeshaus Bern. Die Nichtraucher Unterkunft ist 22 km von Universität Bern entfernt gelegen. In der Unterkunft N\'s Hotel - Self-Check-in Hotel sind alle Zimmer ergänzt mit einem Schreibtisch, einem Flachbild-TV, einem eigenen Badezimmer, Bettwäsche und Handtüchern. Die Zimmer bieten den Gästen einen Kleiderschrank und eine Kaffeemaschine.',
+    description: 'Hotel mit Self Check-in an der Allmendstrasse 14 in Kerzers, geplant von AMONN ARCHITEKTUR: 36 Zimmer auf vier Geschossen, Parkplätze beim Haus, rund 22 km von Bern.',
+    fullDescription: 'Das N\'s Hotel an der Allmendstrasse 14 in Kerzers wurde von AMONN ARCHITEKTUR geplant und gehört der Hans Amonn AG. Die Ausführungspläne im Massstab 1:50 entstanden 2022. Auf Untergeschoss, Erdgeschoss und zwei Obergeschossen liegen 36 Zimmer, vom Doppel- bis zum Familienzimmer, dazu eine Gemeinschaftsküche und eine Lounge. Gäste checken kontaktlos ein und parken direkt beim Haus. Das Gebäude steht an der Bahnlinie Bern–Neuchâtel, neben der Wohnüberbauung Allmendstrasse 12/12a, und hat begrünte Dächer.',
     coverImage: '/images/ns-hotel/aussen.jpg',
     gallery: [
       { type: 'image', url: '/images/ns-hotel/drohne-1.jpg', alt: "N's Hotel Kerzers – Luftaufnahme" },

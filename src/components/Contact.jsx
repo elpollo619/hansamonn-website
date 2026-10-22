@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { OFFICE_HOURS } from '@/data/officeHours';
 import FormPrivacyNote from '@/components/FormPrivacyNote';
-import ConsentEmbed from '@/components/ConsentEmbed';
+import LocationMap from '@/components/LocationMap';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -118,15 +118,16 @@ const Contact = () => {
     <>
       <PageHero
         title={t('contact.title')}
+        subtitle={t('contact.subtitle')}
         size="sm"
       />
 
-      <section id="contact" className="bg-white py-20 md:py-24">
+      <section id="contact" className="bg-white py-14 md:py-20">
         <div className="container mx-auto px-6">
           <div className="grid gap-14 lg:grid-cols-12">
             {/* Contact Information */}
             <motion.div {...fadeUp} className="lg:col-span-5 min-w-0">
-              <h2 className="display-heading text-3xl md:text-4xl mb-10 hyphens-auto break-words">
+              <h2 className="display-heading text-2xl md:text-3xl mb-8">
                 {t('contact.infoTitle')}
               </h2>
 
@@ -285,7 +286,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Google Maps Section */}
+      {/* Location */}
       <section className="surface-warm py-20 md:py-24">
         <div className="container mx-auto px-6">
           <motion.div {...fadeUp} className="grid gap-6 lg:grid-cols-12 lg:items-end mb-12">
@@ -302,71 +303,29 @@ const Contact = () => {
           </motion.div>
 
           <motion.div {...fadeUp} className="bg-white border border-gray-100 overflow-hidden">
-            {/* Map Container */}
-            <div className="relative h-96 md:h-[500px] bg-gray-100">
-              <ConsentEmbed className="absolute inset-0 pt-40 sm:pt-6">
-                <iframe
-                  src="https://www.google.com/maps?q=Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern&z=16&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Hans Amonn AG Standort - Blümlisalpstrasse 4, 3074 Muri bei Bern"
-                  className="w-full h-full"
-                ></iframe>
-              </ConsentEmbed>
+            <LocationMap lat={46.92771} lng={7.47653} label="Hans Amonn AG, Blümlisalpstrasse 4, 3074 Muri bei Bern" zoom={16} height={420} />
 
-              {/* Map Overlay with Company Info */}
-              <div className="absolute top-4 left-4 right-4 sm:right-auto bg-white p-5 border border-gray-100 max-w-xs">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 flex items-center justify-center flex-shrink-0" style={{ backgroundColor: BRAND }}>
-                    <MapPin className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-semibold text-[#121D2B] text-lg leading-tight">Hans Amonn AG</h3>
-                    <p className="text-xs text-gray-600 mt-2">
-                      Blümlisalpstrasse 4<br />
-                      3074 Muri bei Bern
-                    </p>
-                    <a href="tel:+41319518554" className="inline-block text-xs mt-2 font-semibold hover:underline" style={{ color: BRAND }}>
-                      +41 (0)31 951 85 54
-                    </a>
-                  </div>
-                </div>
+            {/* Address, directions and route */}
+            <div className="grid gap-6 p-6 md:p-8 md:grid-cols-3 md:items-center">
+              <div>
+                <h3 className="font-display font-semibold text-[#121D2B] text-lg leading-tight">Hans Amonn AG</h3>
+                <p className="text-gray-700 mt-1 leading-relaxed">Blümlisalpstrasse 4<br />3074 Muri bei Bern</p>
               </div>
-            </div>
-
-            {/* Map Footer with Directions */}
-            <div className="border-t border-gray-100">
-              <div className="p-6 md:p-8">
-                <svg className="w-5 h-5 mb-4" style={{ color: BRAND }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <h3 className="text-sm font-semibold text-gray-700 mb-2">Anfahrt</h3>
-                <p className="text-gray-900 leading-relaxed">
-                  Parkplätze vorhanden<br />
-                  ÖV: Bus Linie 21
-                </p>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-700 mb-1">Anfahrt</h3>
+                <p className="text-gray-700 leading-relaxed">Parkplätze vorhanden<br />ÖV: Bus Linie 21</p>
               </div>
-            </div>
-
-            {/* Directions Button */}
-            <div className="border-t border-gray-100 p-6 md:px-8 flex justify-start md:justify-end">
-              <a
-                href="https://www.google.com/maps/dir//Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern,+Switzerland"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 text-sm text-white font-semibold transition-colors"
-                style={{ backgroundColor: BRAND }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
-              >
-                <MapPin className="w-4 h-4" />
-                Route planen
-              </a>
+              <div className="md:text-right">
+                <a
+                  href="https://www.google.com/maps/dir//Bl%C3%BCmlisalpstrasse+4,+3074+Muri+bei+Bern,+Switzerland"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-sm text-white font-semibold transition-colors bg-[#1F497D] hover:bg-[#173963]"
+                >
+                  <MapPin className="w-4 h-4" />
+                  Route planen
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>

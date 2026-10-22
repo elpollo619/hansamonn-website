@@ -246,7 +246,7 @@ function PropertyForm({ property, onSave, onClose }) {
     const files = Array.from(e.target.files || []);
     files.forEach((file) => {
       if (file.size > 3 * 1024 * 1024) {
-        alert(`"${file.name}" ist zu groß (max. 3 MB pro Bild).`);
+        alert(`"${file.name}" ist zu gross (max. 3 MB pro Bild).`);
         return;
       }
       const reader = new FileReader();

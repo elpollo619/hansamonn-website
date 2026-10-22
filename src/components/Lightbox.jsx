@@ -75,7 +75,7 @@ const Lightbox = ({ images = [], initialIndex = 0, onClose }) => {
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors"
-          aria-label="Schließen"
+          aria-label="Schliessen"
         >
           <X size={22} />
         </button>

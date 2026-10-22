@@ -158,11 +158,10 @@ const ListingCard = ({ item, index, t }) => {
         <div className="absolute bottom-3 right-3">
           <div className="bg-white px-3 py-2">
             {item.price ? (
-              <span className="font-bold text-sm text-gray-900">
-                CHF {item.price.toLocaleString('de-CH')}
-                <span className="text-gray-400 font-normal text-xs">
-                  {isHotel ? t('vermietung.card.nightPrice') : `${t('vermietung.longStay.from')}${t('common.perMonth')}`}
-                </span>
+              <span className="text-sm text-gray-900">
+                {!isHotel && <span className="text-gray-600 text-xs">{t('vermietung.longStay.from').trim()} </span>}
+                <span className="font-bold">CHF {item.price.toLocaleString('de-CH')}</span>
+                <span className="text-gray-600 text-xs"> {isHotel ? t('vermietung.card.nightPrice').trim() : t('common.perMonth')}</span>
               </span>
             ) : (
               <span className="text-gray-600 font-semibold text-xs">
@@ -181,7 +180,7 @@ const ListingCard = ({ item, index, t }) => {
           </Link>
           <div className="flex-shrink-0"><OccupancyBadge status={item.occupancy || 'frei'} /></div>
         </div>
-        <p className="text-sm text-gray-600 mb-3 leading-relaxed">{item.subtitle}</p>
+        <p className="text-sm text-gray-600 mb-3 leading-relaxed line-clamp-3">{item.subtitle}</p>
 
         <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-5">
           <MapPin size={12} className="flex-shrink-0" />
@@ -445,8 +444,8 @@ const VermietungPage = () => {
 
       {/* ── Hero ── */}
       <PageHero
-        eyebrow="Immobilien"
-        title={<span className="block">Immobilien &amp; <br className="hidden sm:block" />Wohnlösungen</span>}
+        eyebrow="Vermietung"
+        title={<span className="block">Wohnen auf Zeit <br className="hidden sm:block" />und auf Dauer</span>}
         subtitle={t('vermietung.hero.subtitle')}
         image="/images/muri/titel.jpg"
       >
@@ -495,9 +494,9 @@ const VermietungPage = () => {
                     aria-hidden="true"
                   />
                   <Icon size={22} className="mb-4" style={{ color: s.active ? BRAND : '#8C96A2' }} />
-                  <p className={`font-display text-xl font-semibold leading-none mb-2 ${s.active ? 'text-[#121D2B]' : 'text-gray-400'}`}>{s.label}</p>
+                  <p className={`font-display text-xl font-semibold leading-tight mb-1.5 ${s.active ? 'text-[#121D2B]' : 'text-gray-400'}`}>{s.label}</p>
                   <p className={`text-xs mb-3 leading-snug ${s.active ? 'text-gray-500' : 'text-gray-400'}`}>{s.tagline}</p>
-                  <p className={`text-xs font-semibold uppercase tracking-wider ${s.active ? '' : 'text-gray-400'}`} style={s.active ? { color: BRAND } : undefined}>{s.price}</p>
+                  <p className={`text-sm font-semibold ${s.active ? '' : 'text-gray-400'}`} style={s.active ? { color: BRAND } : undefined}>{s.price}</p>
                 </button>
               );
             })}

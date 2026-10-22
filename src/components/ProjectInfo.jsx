@@ -41,7 +41,7 @@ const ProjectInfo = ({ project, onButtonClick }) => {
           {/* Amenities */}
           {project.amenities?.length > 0 && (
             <div className="mb-8">
-              <h4 className="text-sm font-semibold text-gray-700 mb-4">Leistungen</h4>
+              <h4 className="text-sm font-semibold text-gray-700 mb-4">{project.category === 'hotel' ? 'Ausstattung' : 'Leistungen'}</h4>
               <div className="grid sm:grid-cols-2 gap-3">
                 {project.amenities.map((amenity, index) => {
                   const Icon = amenity.icon ?? null;

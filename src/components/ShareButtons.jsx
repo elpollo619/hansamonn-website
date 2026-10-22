@@ -32,7 +32,7 @@ const ShareButtons = ({ title, url }) => {
 
   return (
     <div>
-      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+      <p className="text-sm font-semibold text-gray-700 mb-2">
         Teilen
       </p>
       <div className="flex gap-2 flex-wrap">

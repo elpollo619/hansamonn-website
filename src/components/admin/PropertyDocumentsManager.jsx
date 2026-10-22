@@ -25,7 +25,7 @@ export default function PropertyDocumentsManager({ propertyId }) {
   async function handleUpload(e) {
     const file = e.target.files?.[0];
     if (!file || !propertyId) return;
-    if (file.size > 20 * 1024 * 1024) { toast({ title: 'Datei zu groß (max. 20 MB)', variant: 'destructive' }); return; }
+    if (file.size > 20 * 1024 * 1024) { toast({ title: 'Datei zu gross (max. 20 MB)', variant: 'destructive' }); return; }
     setUploading(true);
     try {
       await uploadDocument(String(propertyId), file, nameInput.trim() || file.name);

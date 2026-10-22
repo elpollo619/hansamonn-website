@@ -744,7 +744,7 @@ export default function VirtualAgent() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleOpen}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center transition-colors group"
+        className="floating-raise fixed bottom-6 right-6 z-50 w-14 h-14 bg-gray-900 hover:bg-gray-800 text-white rounded-full flex items-center justify-center transition-colors group"
         aria-label="Chat öffnen"
       >
         <AnimatePresence mode="wait">
@@ -774,7 +774,7 @@ export default function VirtualAgent() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.97 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white border border-gray-100 overflow-hidden flex flex-col"
+            className="floating-raise-panel fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-white border border-gray-100 overflow-hidden flex flex-col"
             style={{ maxHeight: 'min(560px, calc(100vh - 120px))' }}
           >
             {/* Header */}

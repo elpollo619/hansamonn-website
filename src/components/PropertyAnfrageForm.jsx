@@ -4,7 +4,7 @@ import { User, Mail, Phone, MessageSquare, Check, Loader2, AlertCircle, Calendar
 import { supabase } from '@/lib/supabase';
 
 const inp = 'w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition';
-const lbl = 'block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5';
+const lbl = 'block text-sm font-semibold text-gray-700 mb-1.5';
 
 const INIT = { vorname: '', nachname: '', email: '', telefon: '', einzug: '', nachricht: '' };
 

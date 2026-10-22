@@ -42,7 +42,7 @@ const VerkaufPage = () => (
         >
           <div className="bg-white border border-dashed border-gray-300 px-6 py-16 md:p-20 text-center mb-10">
             <Building2 size={34} className="mx-auto mb-6" style={{ color: BRAND }} />
-            <h2 className="display-heading text-3xl md:text-4xl mb-4">Aktuell keine Kaufobjekte verfügbar</h2>
+            <h2 className="display-heading text-2xl md:text-3xl mb-4">Aktuell keine Kaufobjekte verfügbar</h2>
             <p className="text-gray-600 leading-relaxed max-w-md mx-auto mb-8">
               Wir bereiten neue Kaufobjekte vor. Kontaktieren Sie uns, um bei Verfügbarkeit benachrichtigt zu werden.
             </p>

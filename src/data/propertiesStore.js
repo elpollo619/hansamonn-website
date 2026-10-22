@@ -5,13 +5,19 @@
 const STORAGE_KEY = 'ha_properties_v3';
 
 // Known coordinates for default properties (used for migration when lat/lng is missing)
+// Kerzers and Münchenbuchsee: village centre (no street address published); Muri: Blümlisalpstrasse 4;
+// N's Hotel: Allmendstrasse 14; Casa Reto: village level only (Gordola). Source: swisstopo address search.
 const COORDS_DEFAULTS = {
-  'kerzers-ls':        { lat: 46.9949, lng: 7.1985 },
-  'munchenbuchsee-ls': { lat: 47.0214, lng: 7.4484 },
-  'muri-ls':           { lat: 46.9261, lng: 7.5039 },
-  'ns-hotel':          { lat: 47.002,  lng: 7.199  },
-  'casa-reto':         { lat: 46.0503, lng: 8.7026 },
+  'kerzers-ls':        { lat: 46.9749, lng: 7.1968 },
+  'munchenbuchsee-ls': { lat: 47.0202, lng: 7.4487 },
+  'muri-ls':           { lat: 46.9277, lng: 7.4765 },
+  'ns-hotel':          { lat: 46.9709, lng: 7.1906 },
+  'casa-reto':         { lat: 46.18, lng: 8.86 },
 };
+
+// Coordinates that earlier versions stored for the default properties, which were off by up to several km
+const WRONG_COORDS = { '46.9949,7.1985': 1, '47.0214,7.4484': 1, '46.9261,7.5039': 1, '47.002,7.199': 1, '46.0503,8.7026': 1 };
+
 
 const DEFAULT_PROPERTIES = [
   {
@@ -42,8 +48,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Strom inkl.', 'Internet inkl.', 'Wasser inkl.', 'Möbliert', 'Parkplatz möglich', 'Ruhige Lage'],
-    lat: 46.9949,
-    lng: 7.1985,
+    lat: 46.9749,
+    lng: 7.1968,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -70,8 +76,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Möbliert', 'Gemeinschaftsküche', 'Parking möglich', 'ÖV-nah', 'Strom inkl.', 'Internet inkl.'],
-    lat: 47.0214,
-    lng: 7.4484,
+    lat: 47.0202,
+    lng: 7.4487,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -101,8 +107,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Möbliert', 'Zentral gelegen', 'ÖV-nah', 'Strom inkl.', 'Internet inkl.', 'Ruhige Lage'],
-    lat: 46.9261,
-    lng: 7.5039,
+    lat: 46.9277,
+    lng: 7.4765,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -138,8 +144,8 @@ const DEFAULT_PROPERTIES = [
     contactEmail: 'office@reto-amonn.ch',
     visible: true,
     features: ['Self Check-in', 'Boutique', 'Geschäftsreisen'],
-    lat: 47.002,
-    lng: 7.199,
+    lat: 46.9709,
+    lng: 7.1906,
     createdAt: Date.now(),
     updatedAt: Date.now(),
   },
@@ -210,8 +216,13 @@ function migrate(props) {
       icalUrl,
       icalUrl2,
       icalUrl3,
-      lat: p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
-      lng: p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
+      ...(() => {
+        const wrong = WRONG_COORDS[`${p.lat},${p.lng}`] && COORDS_DEFAULTS[p.id];
+        return {
+          lat: wrong ? COORDS_DEFAULTS[p.id].lat : p.lat ?? COORDS_DEFAULTS[p.id]?.lat ?? null,
+          lng: wrong ? COORDS_DEFAULTS[p.id].lng : p.lng ?? COORDS_DEFAULTS[p.id]?.lng ?? null,
+        };
+      })(),
       seasons: p.seasons || def?.seasons || [],
       priceClean: p.priceClean ?? def?.priceClean ?? null,
       occupancy: p.occupancy || 'frei',

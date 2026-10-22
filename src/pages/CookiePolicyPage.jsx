@@ -8,7 +8,7 @@ const ROWS = [
   ['Notwendig', 'ha_cookie_consent', 'Ihre Cookie-Auswahl und deren Datum', 'Local Storage, bis zur Änderung'],
   ['Notwendig', 'ha_lang', 'gewählte Sprache', 'Local Storage, bis zur Löschung'],
   ['Funktional', 'ha_favorites_v1, ha_comparison_v1, ha_recently_viewed', 'Merkliste, Objektvergleich, zuletzt angesehene Objekte', 'Local Storage, bis zur Löschung'],
-  ['Funktional', 'ha_properties_v3, ha_projects_v10, ha_team_v7, ha_settings_v2', 'Zwischenspeicher der Website-Inhalte für schnelleres Laden', 'Local Storage, bis zur Löschung'],
+  ['Funktional', 'ha_properties_v3, ha_projects_v11, ha_team_v7, ha_settings_v2', 'Zwischenspeicher der Website-Inhalte für schnelleres Laden', 'Local Storage, bis zur Löschung'],
   ['Funktional', 'Service Worker «ha-v2»', 'Startseite im Browser-Cache, damit die Website schneller lädt', 'Browser-Cache, bis zur Löschung'],
   ['Nur Verwaltung', 'ha_admin_user', 'Anmeldung von Mitarbeitenden im Verwaltungsbereich', 'Session Storage, bis der Tab geschlossen wird'],
   ['Statistik (Einwilligung)', '_ga, _ga_*', 'Google Analytics 4: Zählung von Besuchen und Seitenaufrufen', 'Cookie, bis 2 Jahre'],

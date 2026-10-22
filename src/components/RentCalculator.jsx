@@ -163,7 +163,7 @@ const RentCalculator = () => {
 
       {/* Result */}
       <div className="border-t border-gray-100 surface-warm p-6 md:p-8">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+        <p className="text-sm font-semibold text-gray-700 mb-3">
           Geschätzter Mietpreis
         </p>
 

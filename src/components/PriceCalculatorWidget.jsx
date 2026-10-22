@@ -48,12 +48,12 @@ export default function PriceCalculatorWidget({ seasons = [], priceClean = 0, cu
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Ankunft</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Ankunft</label>
           <input type="date" value={ankunft} onChange={e => { setAnkunft(e.target.value); if (abreise && e.target.value >= abreise) setAbreise(''); }}
             min={today} className={inp} />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Abreise</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Abreise</label>
           <input type="date" value={abreise} onChange={e => setAbreise(e.target.value)}
             min={ankunft || today} className={inp} />
         </div>

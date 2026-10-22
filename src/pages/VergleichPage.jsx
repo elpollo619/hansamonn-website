@@ -52,7 +52,7 @@ function collectAllFeatures(properties) {
 
 // ─── Table Row helpers ────────────────────────────────────────────────────────
 
-const ROW_LABEL_CLASS = 'text-xs font-semibold text-gray-500 uppercase tracking-wider py-4 pr-4 pl-3 whitespace-nowrap w-36';
+const ROW_LABEL_CLASS = 'text-sm font-semibold text-gray-700 py-4 pr-4 pl-3 whitespace-nowrap w-36';
 const CELL_CLASS = 'text-sm text-gray-700 py-4 px-3 text-center';
 
 function FeatureCell({ hasFeature }) {

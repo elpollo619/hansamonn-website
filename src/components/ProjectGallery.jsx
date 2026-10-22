@@ -20,9 +20,6 @@ const ProjectGallery = ({ project, onImageClick }) => {
               decoding="async"
             />
             <div className="absolute inset-0 bg-[#0D1B2B]/0 group-hover:bg-[#0D1B2B]/15 transition-colors"></div>
-            <div className="absolute top-4 left-4 text-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}>
-              Featured Project
-            </div>
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-2 gap-3">

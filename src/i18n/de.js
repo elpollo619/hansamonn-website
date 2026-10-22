@@ -48,9 +48,9 @@ const de = {
     hero: {
       title: 'Wohnen & Übernachten',
       subtitle:
-        'Wohnungen, möblierte Langzeitaufenthalte, Hotel und exklusive Projekte, alles in Kerzers und Umgebung.',
+        'Möblierte Zimmer, Hotel und Wohnungen in der Region Bern, dazu ein Ferienhaus am Lago Maggiore.',
       badge: 'Aktuelle Angebote',
-      offeringTypes: 'Wohnungen · Long Stay · Hotel · Projekte',
+      offeringTypes: 'Wohnungen · Long Stay · Hotel · Ferienhaus',
       serviceApartments: 'Moderne Mietwohnungen in Kerzers',
       serviceLongStay: 'Möblierte Zimmer ab 1 Monat',
       serviceHotel: 'Self-Check-in Boutique-Hotel',
@@ -62,7 +62,7 @@ const de = {
       apartment: 'Wohnungen',
       longStay: 'Long Stay',
       hotel: 'Hotel & Kurz',
-      project: 'Projekte',
+      project: 'Ferienhaus',
     },
     card: {
       rooms: 'Zimmer',
@@ -80,7 +80,7 @@ const de = {
       bookNow: 'Jetzt buchen',
       requestInquiry: 'Anfrage senden',
       requestAvailability: 'Verfügbarkeit anfragen',
-      viewProject: 'Projekt ansehen',
+      viewProject: 'Details ansehen',
     },
     detail: {
       back: 'Zurück zur Übersicht',
@@ -119,7 +119,7 @@ const de = {
       apartment: 'Wohnung',
       longStay: 'Long Stay',
       hotel: 'Hotel',
-      project: 'Projekt',
+      project: 'Ferienhaus',
     },
     hotel: {
       bookingTitle: 'Direkt buchen',
@@ -356,6 +356,7 @@ const de = {
 
   contact: {
     title: 'Kontakt aufnehmen',
+    subtitle: 'Rufen Sie an, schreiben Sie uns oder besuchen Sie uns in Muri bei Bern.',
     meta: {
       title: 'Kontakt – Hans Amonn AG',
       description:

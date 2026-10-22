@@ -172,7 +172,7 @@ export default function NsHotelPage() {
               <div key={label} className="flex items-center gap-4 py-7 px-4 md:px-8">
                 <Icon size={22} style={{ color: BRAND }} className="shrink-0" />
                 <div>
-                  <div className="font-display text-lg font-semibold leading-none">{label}</div>
+                  <div className="font-display text-base md:text-lg font-semibold leading-tight">{label}</div>
                   <div className="text-xs text-gray-500 mt-1">{sub}</div>
                 </div>
               </div>
@@ -390,7 +390,7 @@ export default function NsHotelPage() {
                 Fragen oder Probleme?
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                Kontaktiere uns, wir helfen gerne weiter, auch kurzfristig.
+                Kontaktieren Sie uns, wir helfen gerne weiter, auch kurzfristig.
               </p>
             </div>
             <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">

@@ -144,18 +144,12 @@ export default function InteractiveMapSection() {
     loadLeaflet().then(() => setLeafletCssLoaded(true));
   }, []);
 
-  const legendItems = [
-    { label: 'Long Stay' },
-    { label: 'Hotel' },
-    { label: 'Ferienhaus' },
-    { label: 'Apartment' },
-  ];
 
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-light text-gray-900 mb-3">Unsere Standorte</h2>
+          <h2 className="display-heading text-3xl md:text-4xl mb-3">Unsere Standorte</h2>
           <p className="text-gray-500 max-w-xl mx-auto">
             Alle Objekte auf einem Blick, von Long Stay in der Region Bern bis zum Ferienhaus am Lago Maggiore.
           </p>
@@ -185,16 +179,6 @@ export default function InteractiveMapSection() {
                 </div>
               )}
             </div>
-
-            {/* Legend */}
-            <div className="flex flex-wrap gap-4 mt-4 justify-center">
-              {legendItems.map((item) => (
-                <div key={item.label} className="flex items-center gap-2 text-xs text-gray-500">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }} />
-                  {item.label}
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Sidebar */}
@@ -209,21 +193,22 @@ export default function InteractiveMapSection() {
                   transition={{ duration: 0.2 }}
                   className="bg-white border border-gray-100 overflow-hidden"
                 >
-                  <div className="h-2" style={{ backgroundColor: activeLocation.colorHex }} />
+                  <div className="h-1" style={{ backgroundColor: 'var(--brand-color, #1F497D)' }} />
                   <div className="p-5">
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <p className="text-xs text-gray-400 mb-0.5">{activeLocation.typeLabel}</p>
+                        <p className="text-xs text-gray-600 mb-0.5">{activeLocation.typeLabel}</p>
                         <h3 className="text-lg font-bold text-gray-900">{activeLocation.name}</h3>
                       </div>
                       <button
                         onClick={() => setActive(null)}
                         className="p-1.5 hover:bg-gray-100 transition-colors"
+                        aria-label="Zurück zur Liste"
                       >
                         <X size={14} className="text-gray-400" />
                       </button>
                     </div>
-                    <p className="text-xs text-gray-400 mb-3">{activeLocation.address}</p>
+                    <p className="text-xs text-gray-600 mb-3">{activeLocation.address}</p>
                     <p className="text-sm text-gray-600 leading-relaxed mb-4">{activeLocation.description}</p>
                     <Link
                       to={activeLocation.link}
@@ -244,9 +229,7 @@ export default function InteractiveMapSection() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <p className="text-xs text-gray-400 mb-3 font-medium uppercase tracking-wider">
-                    Klicken Sie auf einen Pin
-                  </p>
+                  <p className="text-sm text-gray-600 mb-3">Wählen Sie einen Standort auf der Karte oder in der Liste.</p>
                   {locations.map((loc) => {
                     const Icon = loc.typeIcon;
                     return (
@@ -260,7 +243,7 @@ export default function InteractiveMapSection() {
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-semibold text-gray-900 truncate">{loc.name}</p>
-                          <p className="text-xs text-gray-400">{loc.typeLabel}</p>
+                          <p className="text-xs text-gray-600">{loc.typeLabel}</p>
                         </div>
                         <ArrowRight size={14} className="text-gray-300 ml-auto flex-shrink-0" />
                       </button>

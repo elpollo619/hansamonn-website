@@ -8,7 +8,7 @@ export const servicesData = [
     icon: PenTool,
     title: 'Planung und Entwurf',
     shortDescription:
-      'Jede erfolgreiche Baugeschichte beginnt mit einer klaren Vision. Gemeinsam entwickeln wir kreative und maßgeschneiderte Konzepte, die genau auf Ihre Anforderungen abgestimmt sind.',
+      'Jede erfolgreiche Baugeschichte beginnt mit einer klaren Vision. Gemeinsam entwickeln wir kreative und massgeschneiderte Konzepte, die genau auf Ihre Anforderungen abgestimmt sind.',
     fullDescription:
       'Von der ersten Skizze bis zur baureifen Ausführungsplanung begleiten wir Sie durch sämtliche Phasen der Planung. Unser erfahrenes Team analysiert Ihre Bedürfnisse, berücksichtigt behördliche Vorgaben und entwickelt Konzepte, die Ästhetik, Funktion und Wirtschaftlichkeit in Einklang bringen. Dabei legen wir grossen Wert auf offene Kommunikation und enge Abstimmung mit Ihnen als Bauherrschaft.',
     features: ['Entwurfsplanung', 'Genehmigungsplanung', 'Ausführungsplanung'],
@@ -48,7 +48,7 @@ export const servicesData = [
     icon: Cog,
     title: 'Sanierungen und Umbauten',
     shortDescription:
-      'Bestehende Gebäude erhalten durch uns eine neue Perspektive. Wir schaffen moderne Lösungen, die den Charakter des Bestands bewahren und gleichzeitig zeitgemäße Standards erfüllen.',
+      'Bestehende Gebäude erhalten durch uns eine neue Perspektive. Wir schaffen moderne Lösungen, die den Charakter des Bestands bewahren und gleichzeitig zeitgemässe Standards erfüllen.',
     fullDescription:
       'Sanierungen und Umbauten stellen besondere Anforderungen an Planung und Ausführung. Wir analysieren den Bestand sorgfältig, erarbeiten massgeschneiderte Lösungen und setzen die Massnahmen fachgerecht um, ob denkmalgeschütztes Fachwerkhaus oder Nachkriegsblock. Das Ergebnis: mehr Komfort, höhere Energieeffizienz und ein stimmiges Erscheinungsbild.',
     features: ['Modernisierung', 'Energetische Sanierung', 'Umbauten'],
@@ -129,9 +129,9 @@ export const servicesData = [
     icon: TrendingUp,
     title: 'Projektentwicklung',
     shortDescription:
-      'Sie haben eine Vision? Wir entwickeln maßgeschneiderte Immobilienprojekte, die sowohl funktional als auch nachhaltig überzeugen.',
+      'Sie haben eine Vision? Wir entwickeln massgeschneiderte Immobilienprojekte, die sowohl funktional als auch nachhaltig überzeugen.',
     fullDescription:
-      'Von der Grundstückssuche über die Machbarkeitsstudie bis zur Realisierung: Wir begleiten Investoren und private Bauherren bei der Entwicklung von Immobilienprojekten jeder Größenordnung. Unser interdisziplinäres Team vereint Architektur, Marktkenntnis und Projektmanagement.',
+      'Von der Grundstückssuche über die Machbarkeitsstudie bis zur Realisierung: Wir begleiten Investoren und private Bauherren bei der Entwicklung von Immobilienprojekten jeder Grössenordnung. Unser interdisziplinäres Team vereint Architektur, Marktkenntnis und Projektmanagement.',
     features: ['Standortanalyse', 'Konzeptentwicklung', 'Realisierung'],
     bullets: [
       'Grundstücksakquisition und Due Diligence',
