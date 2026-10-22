@@ -44,7 +44,7 @@ export default function TeamEditTab() {
     const file = e.target.files?.[0];
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
-      toast({ title: 'Datei zu groß', description: 'Maximale Dateigrösse: 5 MB.', variant: 'destructive' });
+      toast({ title: 'Datei zu gross', description: 'Maximale Dateigrösse: 5 MB.', variant: 'destructive' });
       return;
     }
     setUploading(true);

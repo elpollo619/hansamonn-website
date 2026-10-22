@@ -20,7 +20,6 @@ const CompareButton = ({ propertyId, propertyName }) => {
       onClick={() => !maxReached && toggleCompare(propertyId)}
       disabled={maxReached}
       title={label}
-      aria-label={label}
       aria-pressed={active}
       className={`
         inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
@@ -32,17 +31,17 @@ const CompareButton = ({ propertyId, propertyName }) => {
           : 'bg-white border-gray-300 text-gray-600 hover:border-gray-500 hover:text-gray-800 hover:bg-gray-50'
         }
       `}
-      style={active ? { backgroundColor: 'var(--brand-color, #1D3D78)', borderColor: 'var(--brand-color, #1D3D78)' } : {}}
+      style={active ? { backgroundColor: 'var(--brand-color, #1F497D)', borderColor: 'var(--brand-color, #1F497D)' } : {}}
     >
       {active ? (
         <>
           <Check size={11} />
-          Ausgewählt
+          Ausgewählt<span className="sr-only"> zum Vergleich: {propertyName}</span>
         </>
       ) : (
         <>
           <Plus size={11} />
-          Vergleichen
+          Vergleichen<span className="sr-only">: {propertyName}</span>
         </>
       )}
     </button>

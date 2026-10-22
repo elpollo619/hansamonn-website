@@ -1,6 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import About from '@/components/About';
+import PageHero from '@/components/PageHero';
+
+const HERO_IMAGE = '/images/ns-hotel/drohne-2.jpg';
 
 const AboutPage = () => {
   return (
@@ -15,9 +18,15 @@ const AboutPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       
-      <div className="pt-8">
-        <About />
-      </div>
+      <PageHero
+        eyebrow="Seit 1968"
+        title="Über uns"
+        subtitle="Seit unserer Gründung 1968 stehen wir bei der Hans Amonn AG für Qualität, Zuverlässigkeit und Innovation in der Bau- und Immobilienbranche."
+        image={HERO_IMAGE}
+        size="md"
+      />
+
+      <About />
     </>
   );
 };

@@ -49,10 +49,11 @@ function MonthGrid({ year, month, isBlocked, todayStr }) {
           return (
             <div
               key={i}
+              aria-disabled={isPast || undefined}
               className={[
                 'aspect-square flex items-center justify-center rounded-md text-xs font-medium select-none',
-                isPast  ? 'text-gray-200'                              : '',
-                blocked ? 'bg-red-100 text-red-400 line-through'       : '',
+                isPast  ? 'text-gray-300'                              : '',
+                blocked ? 'bg-red-50 text-red-800 line-through'        : '',
                 free    ? 'bg-gray-100 text-gray-700 font-semibold' : '',
                 isToday ? 'ring-2 ring-gray-800 ring-offset-1'         : '',
               ].join(' ')}
@@ -145,7 +146,7 @@ export default function AvailabilityCalendar({ icalUrls, icalUrl }) {
             <span className="text-xs text-gray-500">Verfügbar</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded bg-red-100 border border-red-200" />
+            <div className="w-3 h-3 rounded bg-red-50 border border-red-200" />
             <span className="text-xs text-gray-500">Gebucht</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -155,7 +156,7 @@ export default function AvailabilityCalendar({ icalUrls, icalUrl }) {
         </div>
       )}
 
-      <p className="text-[10px] text-gray-300 mt-3 text-center">
+      <p className="text-[10px] text-gray-500 mt-3 text-center">
         {urls.length > 1
           ? `Synchronisiert mit ${urls.length} Plattformen · Airbnb · Booking.com · Fewo-direkt`
           : 'Synchronisiert mit Airbnb · Booking.com · Alle Plattformen'}

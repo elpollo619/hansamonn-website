@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ChevronRight } from 'lucide-react';
 
-const inp = 'w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 bg-white';
+const inp = 'w-full border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 bg-white';
 
 /**
  * Price calculator for ferienhaus / short-stay properties.
@@ -48,12 +48,12 @@ export default function PriceCalculatorWidget({ seasons = [], priceClean = 0, cu
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Ankunft</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Ankunft</label>
           <input type="date" value={ankunft} onChange={e => { setAnkunft(e.target.value); if (abreise && e.target.value >= abreise) setAbreise(''); }}
             min={today} className={inp} />
         </div>
         <div>
-          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Abreise</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Abreise</label>
           <input type="date" value={abreise} onChange={e => setAbreise(e.target.value)}
             min={ankunft || today} className={inp} />
         </div>
@@ -95,16 +95,16 @@ export default function PriceCalculatorWidget({ seasons = [], priceClean = 0, cu
             )}
             <div className="flex justify-between items-baseline pt-2 border-t border-gray-100">
               <span className="font-bold text-gray-900">Geschätzter Gesamtpreis</span>
-              <span className="text-xl font-bold" style={{ color: 'var(--brand-color, #1D3D78)' }}>{currency} {result.total}</span>
+              <span className="text-xl font-bold" style={{ color: 'var(--brand-color, #1F497D)' }}>{currency} {result.total}</span>
             </div>
-            <p className="text-xs text-gray-400">Richtwert · Endpreis auf Anfrage bestätigt.</p>
+            <p className="text-xs text-gray-400">Richtwert, zuzüglich Kurtaxe. Den Endpreis bestätigen wir mit der Offerte.</p>
             {onInquire && (
               <button
                 onClick={() => onInquire({ ankunft, abreise, nights: result.nights, total: result.total })}
                 className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3 text-sm mt-1"
-                style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+                style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+                onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+                onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
               >
                 <ChevronRight size={16} /> Jetzt anfragen
               </button>

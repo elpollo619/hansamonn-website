@@ -1,9 +1,9 @@
 /**
  * settingsStore.js — Global site settings (contact info, branding, integrations)
- * Stored in localStorage. Read by WhatsAppButton, Footer, Contact, etc.
+ * Stored in localStorage. Read by the chat assistant, Footer, Contact, etc.
  */
 
-const KEY = 'ha_settings_v1';
+const KEY = 'ha_settings_v2';
 
 export const DEFAULT_SETTINGS = {
   // ── Contact ─────────────────────────────────────────────────────────────────
@@ -12,15 +12,15 @@ export const DEFAULT_SETTINGS = {
   phone:           '+41 (0)31 951 85 54',
   email:           'office@reto-amonn.ch',
   address:         'Blümlisalpstrasse 4, 3074 Muri bei Bern',
-  hours:           'Mo–Fr 08:00–12:00, 13:30–17:30',
+  hours:           'Büro Mo–Fr 07:30–12:00, 13:00–17:00 · Telefon 08:00–12:00, 13:00–17:00',
   companyName:     'Hans Amonn AG',
 
   // ── Branding ────────────────────────────────────────────────────────────────
-  brandColor:      '#1D3D78',              // Primary brand colour (navy)
+  brandColor:      '#1F497D',              // Primary brand colour (navy)
 
   // ── Hero content (Homepage) ─────────────────────────────────────────────────
   heroHeadline:    'Ihr Zuhause in der Region Bern',
-  heroSubtitle:    'Vom möblierten Long Stay bis zum Ferienhaus am Lago Maggiore — Hans Amonn AG bietet Ihnen passende Wohnlösungen.',
+  heroSubtitle:    'Vom möblierten Long Stay bis zum Ferienhaus am Lago Maggiore: Hans Amonn AG bietet Ihnen passende Wohnlösungen.',
   heroCtaLabel:    'Alle Angebote entdecken',
   heroCtaLink:     '/immobilien',
 
@@ -39,20 +39,23 @@ export function getSettings() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
-    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    const stored = JSON.parse(raw);
+    // Old default navy (before the logo colour was matched): fall back to the current default
+    if (stored.brandColor && stored.brandColor.toUpperCase() === '#1D3D78') delete stored.brandColor;
+    // Old placeholder hours (before the office confirmed its hours in October 2026)
+    if (stored.hours === 'Mo–Fr 08:00–12:00, 13:30–17:30') delete stored.hours;
+    return { ...DEFAULT_SETTINGS, ...stored };
   } catch {
     return { ...DEFAULT_SETTINGS };
   }
 }
 
-/** Darken a hex color by `amount` (0–1 fraction of 255). */
-export function darkenHex(hex, amount = 0.14) {
+/** Darken a hex color by scaling each channel towards black (amount 0–1), which keeps the hue. */
+export function darkenHex(hex, amount = 0.24) {
   const clean = (hex || '').replace('#', '');
   if (clean.length !== 6) return hex;
-  const r = Math.max(0, parseInt(clean.slice(0, 2), 16) - Math.round(255 * amount));
-  const g = Math.max(0, parseInt(clean.slice(2, 4), 16) - Math.round(255 * amount));
-  const b = Math.max(0, parseInt(clean.slice(4, 6), 16) - Math.round(255 * amount));
-  return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+  const ch = (i) => Math.round(parseInt(clean.slice(i, i + 2), 16) * (1 - amount));
+  return '#' + [ch(0), ch(2), ch(4)].map(x => x.toString(16).padStart(2, '0')).join('');
 }
 
 export function saveSettings(patch) {

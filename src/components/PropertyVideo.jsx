@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play } from 'lucide-react';
+import ConsentEmbed from '@/components/ConsentEmbed';
 
 /**
  * PropertyVideo — renders an embedded YouTube or Vimeo video.
@@ -12,15 +13,15 @@ function getEmbedUrl(url) {
 
   // YouTube: https://www.youtube.com/watch?v=ID or https://youtube.com/watch?v=ID
   const ytWatch = trimmed.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?.*v=([A-Za-z0-9_-]{11})/);
-  if (ytWatch) return `https://www.youtube.com/embed/${ytWatch[1]}`;
+  if (ytWatch) return `https://www.youtube-nocookie.com/embed/${ytWatch[1]}`;
 
   // YouTube short: https://youtu.be/ID
   const ytShort = trimmed.match(/(?:https?:\/\/)?youtu\.be\/([A-Za-z0-9_-]{11})/);
-  if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}`;
+  if (ytShort) return `https://www.youtube-nocookie.com/embed/${ytShort[1]}`;
 
   // YouTube embed already: https://www.youtube.com/embed/ID
   const ytEmbed = trimmed.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([A-Za-z0-9_-]{11})/);
-  if (ytEmbed) return `https://www.youtube.com/embed/${ytEmbed[1]}`;
+  if (ytEmbed) return `https://www.youtube-nocookie.com/embed/${ytEmbed[1]}`;
 
   // Vimeo: https://vimeo.com/ID
   const vimeo = trimmed.match(/(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)/);
@@ -40,14 +41,16 @@ export default function PropertyVideo({ videoUrl }) {
         Video
       </h2>
       <div className="relative w-full overflow-hidden" style={{ paddingTop: '56.25%' }}>
-        <iframe
-          src={embedUrl}
-          title="Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full"
-          loading="lazy"
-        />
+        <ConsentEmbed provider={embedUrl.includes('vimeo') ? 'Vimeo' : 'YouTube (Google)'} label="Video laden" className="absolute inset-0">
+          <iframe
+            src={embedUrl}
+            title="Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+            loading="lazy"
+          />
+        </ConsentEmbed>
       </div>
     </div>
   );

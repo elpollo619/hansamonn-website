@@ -8,7 +8,7 @@ import {
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from '@/data/settingsStore';
 
 const inputCls =
-  'w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:border-[#1D3D78] transition bg-white';
+  'w-full border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:border-[#1F497D] transition bg-white';
 const labelCls = 'block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5';
 
 function SettingField({ icon: Icon, label, name, value, onChange, placeholder, hint, type = 'text' }) {
@@ -53,7 +53,7 @@ function GuideBox({ children }) {
         className="w-full flex items-center justify-between px-4 py-2.5 text-left text-gray-700 font-medium hover:bg-gray-100 transition-colors"
       >
         <span className="flex items-center gap-2">
-          <Info size={14} style={{ color: 'var(--brand-color, #1D3D78)' }} />
+          <Info size={14} style={{ color: 'var(--brand-color, #1F497D)' }} />
           Anleitung: iCal-URL einrichten
         </span>
         {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -78,7 +78,7 @@ export default function SettingsTab() {
   const handleSave = () => {
     saveSettings(form);
     // Update CSS variable immediately
-    document.documentElement.style.setProperty('--brand-color', form.brandColor || '#1D3D78');
+    document.documentElement.style.setProperty('--brand-color', form.brandColor || '#1F497D');
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
@@ -113,16 +113,16 @@ export default function SettingsTab() {
             <div className="flex items-center gap-3">
               <input
                 type="color"
-                value={form.brandColor || '#1D3D78'}
+                value={form.brandColor || '#1F497D'}
                 onChange={(e) => set('brandColor', e.target.value)}
                 className="w-12 h-10 border border-gray-200 cursor-pointer p-0.5 bg-white"
               />
               <input
                 type="text"
-                value={form.brandColor || '#1D3D78'}
+                value={form.brandColor || '#1F497D'}
                 onChange={(e) => set('brandColor', e.target.value)}
                 className={`${inputCls} flex-1`}
-                placeholder="#1D3D78"
+                placeholder="#1F497D"
                 maxLength={7}
               />
               <button
@@ -213,7 +213,7 @@ export default function SettingsTab() {
           </div>
           <div className="text-xs text-gray-400 bg-white border border-gray-100 px-3 py-2 flex items-start gap-2 break-all">
             <span className="flex-shrink-0 font-semibold text-gray-500">Vorschau:</span>
-            <a href={waUrl} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--brand-color, #1D3D78)' }}>
+            <a href={waUrl} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'var(--brand-color, #1F497D)' }}>
               {waUrl}
             </a>
           </div>
@@ -226,7 +226,7 @@ export default function SettingsTab() {
         <div className="space-y-4 bg-gray-50 p-4 border border-gray-100">
           <SettingField icon={Phone} label="Telefon" name="phone" value={form.phone} onChange={set} placeholder="+41 (0)31 951 85 54" />
           <SettingField icon={Mail} label="E-Mail" name="email" value={form.email} onChange={set} placeholder="office@reto-amonn.ch" type="email" />
-          <SettingField icon={Clock} label="Öffnungszeiten" name="hours" value={form.hours} onChange={set} placeholder="Mo–Fr 08:00–12:00, 13:30–17:30" />
+          <SettingField icon={Clock} label="Öffnungszeiten" name="hours" value={form.hours} onChange={set} placeholder="Büro Mo–Fr 07:30–12:00, 13:00–17:00 · Telefon 08:00–12:00, 13:00–17:00" />
         </div>
       </section>
 
@@ -294,7 +294,7 @@ export default function SettingsTab() {
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
                   form[key] ? '' : 'bg-gray-300'
                 }`}
-                style={form[key] ? { backgroundColor: 'var(--brand-color, #1D3D78)' } : {}}
+                style={form[key] ? { backgroundColor: 'var(--brand-color, #1F497D)' } : {}}
               >
                 <span
                   className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
@@ -328,9 +328,9 @@ export default function SettingsTab() {
         <button
           onClick={handleSave}
           className="inline-flex items-center gap-2 text-white font-semibold px-5 py-2.5 text-sm transition-colors"
-          style={{ backgroundColor: 'var(--brand-color, #1D3D78)' }}
-          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #162E5A)')}
-          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1D3D78)')}
+          style={{ backgroundColor: 'var(--brand-color, #1F497D)' }}
+          onMouseOver={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color-dark, #173963)')}
+          onMouseOut={e => e.currentTarget.style.setProperty('background-color', 'var(--brand-color, #1F497D)')}
         >
           {saved ? <CheckCircle2 size={16} /> : <Save size={16} />}
           {saved ? 'Gespeichert!' : 'Speichern'}
