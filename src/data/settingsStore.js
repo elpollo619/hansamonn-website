@@ -1,6 +1,6 @@
 /**
  * settingsStore.js — Global site settings (contact info, branding, integrations)
- * Stored in localStorage. Read by WhatsAppButton, Footer, Contact, etc.
+ * Stored in localStorage. Read by the chat assistant, Footer, Contact, etc.
  */
 
 const KEY = 'ha_settings_v2';

@@ -12,6 +12,7 @@
     "sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.1.0",
     "@babel/traverse": "^7.26.4",
     "@emailjs/browser": "^4.4.1",
     "@emotion/is-prop-valid": "^1.2.1",

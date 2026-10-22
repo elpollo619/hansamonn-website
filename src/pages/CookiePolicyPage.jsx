@@ -10,6 +10,7 @@ const ROWS = [
   ['Funktional', 'ha_favorites_v1, ha_comparison_v1, ha_recently_viewed', 'Merkliste, Objektvergleich, zuletzt angesehene Objekte', 'Local Storage, bis zur Löschung'],
   ['Funktional', 'ha_properties_v3, ha_projects_v11, ha_team_v7, ha_settings_v2', 'Zwischenspeicher der Website-Inhalte für schnelleres Laden', 'Local Storage, bis zur Löschung'],
   ['Funktional', 'Service Worker «ha-v2»', 'Startseite im Browser-Cache, damit die Website schneller lädt', 'Browser-Cache, bis zur Löschung'],
+  ['Funktional', 'ha_assistant_v1, ha_assistant_ai', 'Verlauf des Chat-Assistenten und ob der KI-Modus eingeschaltet ist', 'Session Storage, bis der Tab geschlossen wird'],
   ['Nur Verwaltung', 'ha_admin_user', 'Anmeldung von Mitarbeitenden im Verwaltungsbereich', 'Session Storage, bis der Tab geschlossen wird'],
   ['Statistik (Einwilligung)', '_ga, _ga_*', 'Google Analytics 4: Zählung von Besuchen und Seitenaufrufen', 'Cookie, bis 2 Jahre'],
   ['Externe Inhalte (Einwilligung)', 'Cookies von Google, YouTube, Vimeo, Matterport', 'Google Maps, Videos und Rundgänge von Drittanbietern', 'gemäss Anbieter'],

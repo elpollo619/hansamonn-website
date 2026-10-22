@@ -201,7 +201,11 @@ input[type='range']:focus-visible {
 /* Pages with a fixed bottom action bar on phones lift the floating buttons above it */
 @media (max-width: 1023px) {
   body.has-bottom-bar .floating-raise { bottom: 5.5rem; }
-  body.has-bottom-bar .floating-raise-panel { bottom: 10rem; }
+  body.has-bottom-bar .floating-raise-stack { bottom: 9.25rem; }
+}
+/* On phones the chat is a full-screen sheet; from tablet width it floats above the launcher */
+@media (min-width: 640px) and (max-width: 1023px) {
+  body.has-bottom-bar .floating-raise-panel { bottom: 9.25rem; }
 }
 
 /* Horizontal chip rows that scroll on phones without a visible scrollbar */

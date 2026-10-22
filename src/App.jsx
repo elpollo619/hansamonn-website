@@ -18,7 +18,6 @@ import { getBrandColor, darkenHex } from '@/data/settingsStore';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import VirtualAgent from '@/components/VirtualAgent';
-import WhatsAppButton from '@/components/WhatsAppButton';
 import CookieBanner from '@/components/CookieBanner';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import BackToTop from '@/components/BackToTop';
@@ -223,7 +222,6 @@ function AppRoutes() {
       <Footer />
       <CompareBar />
       <Toaster />
-      <WhatsAppButton />
       <VirtualAgent />
       <CookieBanner />
       <BackToTop />

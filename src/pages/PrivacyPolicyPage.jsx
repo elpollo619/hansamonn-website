@@ -142,8 +142,20 @@ const SECTIONS = [
           jeweiligen Anbieter.
         </p>
         <p>
-          Der Chat-Assistent läuft vollständig in Ihrem Browser; Ihre Eingaben werden nicht übermittelt.
-          Schriften sind lokal eingebunden, es besteht keine Verbindung zu Google Fonts.
+          <strong>Chat-Assistent.</strong> Standardmässig beantwortet der Assistent Ihre Fragen direkt in Ihrem
+          Browser aus den Angaben dieser Website; Ihre Nachrichten werden nicht übermittelt. Fragen Sie nach
+          freien Daten der Casa Reto, wird nur der Belegungskalender abgefragt (siehe oben). Der Gesprächsverlauf
+          bleibt im Session Storage Ihres Browser-Tabs und wird beim Schliessen des Tabs gelöscht.
+        </p>
+        <p>
+          Ist der KI-Modus eingeschaltet (im Chat-Fenster steht dann «KI-Assistent»), senden wir Ihre Nachrichten
+          und den bisherigen Gesprächsverlauf über unseren Server bei Vercel an Anthropic PBC (USA), damit deren
+          Sprachmodell eine Antwort erstellt. Anthropic ist unsere Auftragsbearbeiterin. Wir selbst speichern
+          die Chatinhalte nicht. Bitte geben Sie im Chat keine Personendaten wie Namen, Adressen oder
+          Ausweisangaben ein; für Anfragen nutzen Sie bitte die Formulare.
+        </p>
+        <p>
+          <strong>Schriften</strong> sind lokal eingebunden, es besteht keine Verbindung zu Google Fonts.
         </p>
       </>
     ),
@@ -164,7 +176,7 @@ const SECTIONS = [
     body: (
       <p>
         Unsere Mitarbeitenden, soweit sie die Daten für ihre Aufgabe brauchen; unsere Auftragsbearbeiter
-        (Vercel, Supabase, Resend, mit Einwilligung Google); Behörden und Tourismusorganisationen, soweit das
+        (Vercel, Supabase, Resend, im KI-Modus des Chats Anthropic, mit Einwilligung Google); Behörden und Tourismusorganisationen, soweit das
         Gesetz es verlangt; bei Buchungen die jeweilige Plattform. Wir verkaufen keine Daten.
       </p>
     ),
@@ -178,6 +190,7 @@ const SECTIONS = [
         <li>Mieter- und Gästedaten: für die Vertragsdauer und danach gemäss gesetzlichen Pflichten (Geschäftsbücher und Belege 10 Jahre, Art. 958f OR; Meldescheine nach kantonalen Vorgaben).</li>
         <li>Newsletter: bis zur Abmeldung.</li>
         <li>Analysedaten: siehe Ziffer 3.</li>
+        <li>Chat-Assistent: Verlauf nur in Ihrem Browser-Tab, bis Sie ihn schliessen (siehe Ziffer 6).</li>
       </ul>
     ),
   },
@@ -185,7 +198,7 @@ const SECTIONS = [
     title: '10. Bekanntgabe ins Ausland',
     body: (
       <p>
-        USA: Vercel und Google LLC (Data Privacy Framework), Supabase und Resend (EU-Standardvertragsklauseln
+        USA: Vercel und Google LLC (Data Privacy Framework), Supabase, Resend und im KI-Modus des Chats Anthropic (EU-Standardvertragsklauseln
         mit Anpassungen für die Schweiz, Art. 16 Abs. 2 lit. d DSG). EU/EWR und Vereinigtes Königreich:
         angemessener Datenschutz gemäss Anhang 1 der Datenschutzverordnung. Bei Buchungen über internationale
         Plattformen erfolgt die Bekanntgabe zur Abwicklung des Vertrags (Art. 17 Abs. 1 lit. b DSG).
