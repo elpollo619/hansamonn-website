@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import HomeHero from '@/components/home/HomeHero';
 import HomeWohnen from '@/components/home/HomeWohnen';
 import HomeBauen from '@/components/home/HomeBauen';
+import Home3D from '@/components/home/Home3D';
 import HomeFirma from '@/components/home/HomeFirma';
 import HomeKontakt from '@/components/home/HomeKontakt';
 import TestimonialsSection from '@/components/TestimonialsSection';
@@ -50,6 +51,7 @@ const HomePage = () => {
       <HomeHero />
       <HomeWohnen />
       <HomeBauen />
+      <Home3D />
       <TestimonialsSection />
       <HomeFirma />
       <RecentlyViewedSection />

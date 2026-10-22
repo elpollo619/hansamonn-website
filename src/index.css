@@ -203,3 +203,7 @@ input[type='range']:focus-visible {
   body.has-bottom-bar .floating-raise { bottom: 5.5rem; }
   body.has-bottom-bar .floating-raise-panel { bottom: 10rem; }
 }
+
+/* Horizontal chip rows that scroll on phones without a visible scrollbar */
+.no-scrollbar { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

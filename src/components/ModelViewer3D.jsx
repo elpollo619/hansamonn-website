@@ -9,8 +9,9 @@ import { buildSite } from '@/lib/siteScene';
  *  • project switch (when several model ids are given)
  *  • floor cutaway (Gesamt / EG / 1. OG …) and exploded view
  *  • build-up animation when it first comes into view, soft shadows, PBR light
+ *  • compact: no floor/zoom controls and a short hint, for small showcase frames (home hero)
  */
-export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
+export default function ModelViewer3D({ ids = ['a14'], className = '', compact = false }) {
   const mountRef = useRef(null);
   const stateRef = useRef({ level: 'all', explode: false });
   const apiRef = useRef(null);
@@ -322,7 +323,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
   }, [modelId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const chip = (active) =>
-    `px-3 py-1.5 text-[13px] font-semibold border transition-colors ${
+    `shrink-0 whitespace-nowrap px-3 py-1.5 text-[13px] font-semibold border transition-colors ${
       active ? 'bg-[#1F497D] text-white border-[#1F497D]' : 'bg-white/90 text-gray-700 border-gray-200 hover:border-gray-400'
     }`;
 
@@ -347,9 +348,10 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
       )}
 
       {/* Controls */}
-      <div className="absolute left-3 top-3 right-3 md:left-5 md:top-5 md:right-5 flex flex-col gap-2 items-start">
+      {!compact && (
+      <div className="absolute left-3 top-3 right-3 md:left-5 md:top-5 md:right-5 flex flex-col gap-2 items-start min-w-0">
         {ids.length > 1 && (
-          <div className="flex flex-wrap gap-1.5">
+          <div className="no-scrollbar flex w-full gap-1.5 overflow-x-auto md:flex-wrap md:overflow-visible">
             {ids.map((id) => (
               <button key={id} type="button" onClick={() => setModelId(id)} aria-pressed={modelId === id} className={chip(modelId === id)}>
                 {BUILDING_MODELS[id].short} · <span className="font-medium">{BUILDING_MODELS[id].name}</span>
@@ -357,7 +359,7 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
             ))}
           </div>
         )}
-        <div className="flex flex-wrap gap-1.5">
+        <div className="no-scrollbar flex w-full gap-1.5 overflow-x-auto md:flex-wrap md:overflow-visible">
           <button type="button" onClick={() => setLevel('all')} aria-pressed={level === 'all'} className={chip(level === 'all')}>Gesamt</button>
           {levels.map((l, i) => (
             <button key={l.label} type="button" onClick={() => setLevel(i)} aria-pressed={level === i} className={chip(level === i)}>
@@ -375,24 +377,31 @@ export default function ModelViewer3D({ ids = ['a14'], className = '' }) {
           </button>
         </div>
       </div>
+      )}
 
       {/* Zoom */}
+      {!compact && (
       <div className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 flex flex-col border border-gray-200 bg-white/95 shadow-sm">
         <button type="button" onClick={() => apiRef.current?.zoom(0.72)} className="w-10 h-10 flex items-center justify-center text-gray-700 hover:bg-gray-100" aria-label="Hineinzoomen"><Plus size={16} /></button>
         <button type="button" onClick={() => apiRef.current?.zoom(1.38)} className="w-10 h-10 flex items-center justify-center text-gray-700 hover:bg-gray-100 border-t border-gray-200" aria-label="Herauszoomen"><Minus size={16} /></button>
         <button type="button" onClick={() => apiRef.current?.reset()} className="w-10 h-10 flex items-center justify-center text-gray-700 hover:bg-gray-100 border-t border-gray-200" aria-label="Ansicht zurücksetzen"><Maximize2 size={14} /></button>
       </div>
+      )}
 
       {/* Hint and credits share one bottom bar so they never overlap; on phones they stack */}
-      <div className="pointer-events-none absolute inset-x-3 bottom-3 md:inset-x-5 md:bottom-5 flex flex-col-reverse items-start gap-2 md:flex-row md:items-end md:justify-between md:gap-6">
+      <div className={`pointer-events-none absolute inset-x-3 md:inset-x-5 flex flex-col-reverse items-start gap-2 md:flex-row md:items-end md:justify-between md:gap-6 ${compact ? 'top-3 md:top-4 md:items-start' : 'bottom-3 md:bottom-5'}`}>
         <div className="inline-flex items-center gap-2 text-[11px] leading-snug text-gray-600 bg-white/90 px-3 py-1.5 md:max-w-[46%]">
           <Rotate3d size={14} className="shrink-0" />
-          {active ? 'Zoom & Verschieben aktiv · Esc oder daneben klicken beendet' : 'Ziehen zum Drehen · klicken, dann scrollen oder mit zwei Fingern zoomen'}
+          {compact
+            ? 'Ziehen zum Drehen'
+            : active ? 'Zoom & Verschieben aktiv · Esc oder daneben klicken beendet' : 'Ziehen zum Drehen · klicken, dann scrollen oder mit zwei Fingern zoomen'}
         </div>
-        <div className="font-mono text-[10px] md:text-[11px] text-gray-600 md:text-right leading-relaxed bg-white/75 md:bg-transparent px-2 py-1 md:p-0">
-          AMONN ARCHITEKTUR · {meta.source}<br />{meta.address}
-          {meta.site && <><br />{meta.siteNote ?? 'Umgebung: Amtliche Vermessung · GWR (BFS) · © swisstopo'}</>}
-        </div>
+        {!compact && (
+          <div className="font-mono text-[10px] md:text-[11px] text-gray-600 md:text-right leading-relaxed bg-white/75 md:bg-transparent px-2 py-1 md:p-0">
+            AMONN ARCHITEKTUR · {meta.source}<br />{meta.address}
+            {meta.site && <><br />{meta.siteNote ?? 'Umgebung: Amtliche Vermessung · GWR (BFS) · © swisstopo'}</>}
+          </div>
+        )}
       </div>
     </div>
   );

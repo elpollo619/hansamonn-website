@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import LazyMount from '@/components/LazyMount';
+
+const ModelViewer3D = lazy(() => import('@/components/ModelViewer3D'));
+
+/** Small "sheet" with a label row, used for the plan and the photo next to the 3D model. */
+function SheetCard({ src, alt, label, note, plan = false, className = '' }) {
+  return (
+    <div className={`bg-white border border-gray-200 shadow-[0_12px_40px_rgba(18,29,43,0.12)] ${className}`}>
+      <img
+        src={src}
+        alt={alt}
+        className={`block w-full aspect-[4/3] object-cover ${plan ? 'object-left-top mix-blend-multiply' : ''}`}
+        loading="eager"
+      />
+      <div className="flex justify-between gap-2 border-t border-gray-200 px-3 py-2 font-mono text-[11px] text-gray-600 whitespace-nowrap overflow-hidden">
+        <span className="font-semibold text-[#121D2B]">{label}</span>
+        <span>{note}</span>
+      </div>
+    </div>
+  );
+}
 
 // The two reasons people come to the site: a place to stay, or a building to plan.
 const ROUTES = [
@@ -63,40 +84,43 @@ export default function HomeHero() {
             </nav>
           </motion.div>
 
-          {/* Building and its plan */}
+          {/* One building, three ways: the plan we drew, the 3D model made from it, the finished house */}
           <motion.figure
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="lg:col-span-6 min-w-0 m-0"
           >
-            <div className="relative">
-              <img
-                src="/images/ns-hotel/aussen.jpg"
-                alt="N's Hotel an der Allmendstrasse 14 in Kerzers, Aussenansicht"
-                className="w-full aspect-[4/3] md:aspect-[3/2] object-cover bg-gray-100"
-                width="1024"
-                height="683"
-                fetchpriority="high"
-              />
-              {/* Plan sheet: overlaps the photo on larger screens, sits below it on phones */}
-              <div className="relative -mt-10 mx-4 sm:mx-0 sm:absolute sm:mt-0 sm:-bottom-8 sm:-left-6 lg:-left-10 sm:w-[58%] bg-white border border-gray-200 shadow-[0_12px_40px_rgba(18,29,43,0.12)]">
-                <img
+            <div className="relative lg:mb-24">
+              <div className="relative aspect-[4/3] border border-gray-200 bg-gradient-to-b from-white to-[#E9EDF2] overflow-hidden">
+                <LazyMount className="absolute inset-0" rootMargin="0px">
+                  <Suspense fallback={null}>
+                    <ModelViewer3D ids={['a14']} compact className="h-full" />
+                  </Suspense>
+                </LazyMount>
+              </div>
+
+              <div className="mt-3 grid grid-cols-2 gap-3 lg:mt-0">
+                <SheetCard
+                  className="lg:absolute lg:-left-8 lg:-bottom-24 lg:w-[34%]"
                   src="/images/home/ns-hotel-1og-plan.webp"
                   alt="Grundriss 1. Obergeschoss des N's Hotel mit den Zimmern 101 bis 109"
-                  className="block w-full aspect-[4/3] object-cover object-left-top mix-blend-multiply"
-                  loading="eager"
-                  width="1200"
-                  height="945"
+                  label="Plan"
+                  note="1. OG · 2022"
+                  plan
                 />
-                <div className="grid grid-cols-2 border-t border-gray-200 font-mono text-[11px] text-gray-600">
-                  <span className="px-3 py-2 border-r border-gray-200">N's Hotel · 1. OG</span>
-                  <span className="px-3 py-2">Ausführungsplan 2022</span>
-                </div>
+                <SheetCard
+                  className="lg:absolute lg:-right-4 lg:-bottom-20 lg:w-[30%]"
+                  src="/images/ns-hotel/aussen.jpg"
+                  alt="Das fertige N's Hotel an der Allmendstrasse 14 in Kerzers"
+                  label="Gebäude"
+                  note="Kerzers · 2024"
+                />
               </div>
             </div>
-            <figcaption className="mt-4 sm:mt-12 text-sm text-gray-600 sm:text-right">
-              Von uns geplant, von uns vermietet: das N's Hotel in Kerzers.
+            <figcaption className="mt-4 text-sm text-gray-600 lg:text-right">
+              N's Hotel in Kerzers: Grundriss, 3D-Modell aus dem Ausführungsplan 1:50 (2022) und das fertige Gebäude.
+              <span className="block font-mono text-[11px] mt-1">Umgebung: Amtliche Vermessung · © swisstopo</span>
             </figcaption>
           </motion.figure>
         </div>
