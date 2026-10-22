@@ -12,7 +12,7 @@ export const DEFAULT_SETTINGS = {
   phone:           '+41 (0)31 951 85 54',
   email:           'office@reto-amonn.ch',
   address:         'Blümlisalpstrasse 4, 3074 Muri bei Bern',
-  hours:           'Mo–Fr 08:00–12:00, 13:30–17:30',
+  hours:           'Büro Mo–Fr 07:30–12:00, 13:00–17:00 · Telefon 08:00–12:00, 13:00–17:00',
   companyName:     'Hans Amonn AG',
 
   // ── Branding ────────────────────────────────────────────────────────────────
@@ -42,6 +42,8 @@ export function getSettings() {
     const stored = JSON.parse(raw);
     // Old default navy (before the logo colour was matched): fall back to the current default
     if (stored.brandColor && stored.brandColor.toUpperCase() === '#1D3D78') delete stored.brandColor;
+    // Old placeholder hours (before the office confirmed its hours in October 2026)
+    if (stored.hours === 'Mo–Fr 08:00–12:00, 13:30–17:30') delete stored.hours;
     return { ...DEFAULT_SETTINGS, ...stored };
   } catch {
     return { ...DEFAULT_SETTINGS };

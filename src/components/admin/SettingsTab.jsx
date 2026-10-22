@@ -226,7 +226,7 @@ export default function SettingsTab() {
         <div className="space-y-4 bg-gray-50 p-4 border border-gray-100">
           <SettingField icon={Phone} label="Telefon" name="phone" value={form.phone} onChange={set} placeholder="+41 (0)31 951 85 54" />
           <SettingField icon={Mail} label="E-Mail" name="email" value={form.email} onChange={set} placeholder="office@reto-amonn.ch" type="email" />
-          <SettingField icon={Clock} label="Öffnungszeiten" name="hours" value={form.hours} onChange={set} placeholder="Mo–Fr 08:00–12:00, 13:30–17:30" />
+          <SettingField icon={Clock} label="Öffnungszeiten" name="hours" value={form.hours} onChange={set} placeholder="Büro Mo–Fr 07:30–12:00, 13:00–17:00 · Telefon 08:00–12:00, 13:00–17:00" />
         </div>
       </section>
 

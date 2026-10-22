@@ -8,6 +8,7 @@ import { useTranslation } from '@/i18n';
 import { useFavorites } from '@/context/FavoritesContext';
 import GlobalSearch from '@/components/GlobalSearch';
 import AmonnLogo from '@/components/AmonnLogo';
+import { OFFICE_HOURS_SHORT, PHONE_HOURS_SHORT } from '@/data/officeHours';
 
 const BRAND = 'var(--brand-color, #1F497D)';
 const PHONE = { href: 'tel:+41319518554', label: '+41 (0)31 951 85 54' };
@@ -194,7 +195,8 @@ const MegaPanel = ({ menu, onClose }) => (
             <a href={EMAIL.href} className="flex items-center gap-3 py-3 border-b border-white/10 hover:text-white/80">
               <Mail size={16} /> <span className="font-semibold">{EMAIL.label}</span>
             </a>
-            <p className="text-sm text-white/60 mt-4 leading-relaxed">Blümlisalpstrasse 4<br />3074 Muri bei Bern</p>
+            <p className="text-sm text-white/70 mt-4 leading-relaxed">{PHONE_HOURS_SHORT}<br />{OFFICE_HOURS_SHORT}</p>
+            <p className="text-sm text-white/60 mt-3 leading-relaxed">Blümlisalpstrasse 4<br />3074 Muri bei Bern</p>
             <Link
               to="/termin"
               onClick={onClose}
@@ -285,6 +287,7 @@ const MobileMenu = ({ menus, isActive, onClose, top }) => {
           className="pt-10 space-y-3"
         >
           <a href={PHONE.href} className="flex items-center gap-3 text-white/80"><Phone size={16} /> {PHONE.label}</a>
+          <p className="pl-7 -mt-1 text-sm text-white/60">{PHONE_HOURS_SHORT}</p>
           <a href={EMAIL.href} className="flex items-center gap-3 text-white/80"><Mail size={16} /> {EMAIL.label}</a>
           <Link
             to="/kontakt"

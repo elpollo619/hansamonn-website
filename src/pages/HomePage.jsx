@@ -9,6 +9,7 @@ import ObjekteGallery from '@/components/ObjekteGallery';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import NewsletterSection from '@/components/NewsletterSection';
 import StructuredData from '@/components/StructuredData';
+import { OPENING_HOURS_SCHEMA } from '@/data/officeHours';
 import RecentlyViewedSection from '@/components/RecentlyViewedSection';
 
 const organizationSchema = {
@@ -29,6 +30,7 @@ const organizationSchema = {
     addressRegion: 'BE',
     addressCountry: 'CH',
   },
+  openingHoursSpecification: OPENING_HOURS_SCHEMA,
 };
 
 const HomePage = () => {

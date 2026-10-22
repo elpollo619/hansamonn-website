@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { OFFICE_HOURS } from '@/data/officeHours';
 import FormPrivacyNote from '@/components/FormPrivacyNote';
 import ConsentEmbed from '@/components/ConsentEmbed';
 import { motion } from 'framer-motion';
@@ -50,7 +51,11 @@ const Contact = () => {
     {
       icon: Clock,
       title: t('common.hours'),
-      details: ['Mo-Fr: 08:00 - 18:00', 'Sa: Nach Vereinbarung']
+      details: [
+        <><span className="block text-sm text-gray-600">Büro, Montag – Freitag</span>07:30–12:00 und 13:00–17:00</>,
+        <><span className="block mt-2 text-sm text-gray-600">Telefon, Montag – Freitag</span>08:00–12:00 und 13:00–17:00</>,
+      ],
+      note: OFFICE_HOURS.urgent,
     }
   ];
 
@@ -151,6 +156,7 @@ const Contact = () => {
                           )}
                         </p>
                       ))}
+                      {info.note && <p className="mt-2 text-sm text-gray-600 leading-relaxed">{info.note}</p>}
                     </div>
                   </motion.div>
                 ))}

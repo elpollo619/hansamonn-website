@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Clock, MapPin, Phone, Mail } from 'lucide-react';
+import { OFFICE_HOURS } from '@/data/officeHours';
 import TerminbuchungForm from '@/components/TerminbuchungForm';
 import PageHero from '@/components/PageHero';
 
@@ -55,18 +56,15 @@ export default function TerminbuchungPage() {
                 </div>
                 <div className="text-sm text-gray-600 divide-y divide-gray-200 border-t border-b border-gray-200">
                   <div className="flex justify-between gap-4 py-3">
-                    <span>Montag – Freitag</span>
-                    <span className="font-semibold text-gray-900">08:00 – 17:00</span>
+                    <span>Büro, {OFFICE_HOURS.days}</span>
+                    <span className="font-semibold text-gray-900 text-right">07:30–12:00<br />13:00–17:00</span>
                   </div>
                   <div className="flex justify-between gap-4 py-3">
-                    <span>Samstag</span>
-                    <span className="font-semibold text-gray-900">Nach Vereinbarung</span>
-                  </div>
-                  <div className="flex justify-between gap-4 py-3">
-                    <span>Sonntag</span>
-                    <span className="text-gray-400">Geschlossen</span>
+                    <span>Telefon, {OFFICE_HOURS.days}</span>
+                    <span className="font-semibold text-gray-900 text-right">08:00–12:00<br />13:00–17:00</span>
                   </div>
                 </div>
+                <p className="mt-4 text-sm text-gray-600 leading-relaxed">{OFFICE_HOURS.urgent}</p>
               </div>
 
               {/* Address */}
@@ -77,7 +75,8 @@ export default function TerminbuchungPage() {
                 </div>
                 <p className="text-gray-600 leading-relaxed">
                   Hans Amonn AG<br />
-                  Kerzers, Schweiz
+                  Blümlisalpstrasse 4<br />
+                  3074 Muri bei Bern
                 </p>
               </div>
 

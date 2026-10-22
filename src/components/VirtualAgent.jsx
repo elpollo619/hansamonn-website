@@ -13,7 +13,7 @@ const KB = {
     welcome: 'Guten Tag! Ich bin der digitale Assistent von Hans Amonn AG, Architektur & Immobilien. Womit kann ich Ihnen helfen?',
     placeholder: 'Ihre Frage…',
     suggestionsLabel: 'Häufige Fragen',
-    fallback: 'Zu dieser Frage helfe ich Ihnen am besten persönlich weiter. Schreiben Sie uns an office@reto-amonn.ch oder rufen Sie +41 (0)31 951 85 54 an, Mo–Fr 08:00–17:00 Uhr. Sie können auch eine Mietanfrage direkt online stellen.',
+    fallback: 'Zu dieser Frage helfe ich Ihnen am besten persönlich weiter. Schreiben Sie uns an office@reto-amonn.ch oder rufen Sie +41 (0)31 951 85 54 an (Mo–Fr 08:00–12:00 und 13:00–17:00 Uhr, in dringenden Fällen auch ausserhalb dieser Zeiten). Sie können auch eine Mietanfrage direkt online stellen.',
     fallbackLink: '/kontakt',
     suggestions: [
       { label: 'Long Stay', q: 'Was ist Long Stay?' },
@@ -85,7 +85,7 @@ const KB = {
       {
         id: 'contact',
         triggers: ['kontakt', 'erreich', 'telefon', 'email', 'e-mail', 'büro', 'office', 'öffnungszeiten', 'anrufen', 'schreiben', 'adresse'],
-        answer: 'Telefon: +41 (0)31 951 85 54 | E-Mail: office@reto-amonn.ch | Adresse: Blümlisalpstrasse 4, 3074 Muri bei Bern. Bürozeiten: Mo–Fr 08:00–17:00 Uhr.',
+        answer: 'Telefon: +41 (0)31 951 85 54 | E-Mail: office@reto-amonn.ch | Adresse: Blümlisalpstrasse 4, 3074 Muri bei Bern. Büro: Mo–Fr 07:30–12:00 und 13:00–17:00 Uhr. Telefon: Mo–Fr 08:00–12:00 und 13:00–17:00 Uhr, in dringenden Fällen auch ausserhalb dieser Zeiten.',
         link: '/kontakt',
         linkLabel: 'Kontaktseite',
       },
@@ -285,7 +285,7 @@ const KB = {
       {
         id: 'contact',
         triggers: ['contact', 'phone', 'email', 'office', 'reach', 'call', 'write'],
-        answer: 'Phone: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Address: Blümlisalpstrasse 4, 3074 Muri bei Bern.',
+        answer: 'Phone: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Address: Blümlisalpstrasse 4, 3074 Muri bei Bern. Office: Mon–Fri 7:30–12:00 and 13:00–17:00. Phone: Mon–Fri 8:00–12:00 and 13:00–17:00; for urgent matters also outside these hours.',
         link: '/kontakt',
         linkLabel: 'Contact page',
       },
@@ -394,7 +394,7 @@ const KB = {
       {
         id: 'contact',
         triggers: ['contact', 'téléphone', 'email', 'bureau', 'joindre', 'appeler'],
-        answer: 'Téléphone : +41 (0)31 951 85 54 | E-mail : office@reto-amonn.ch | Adresse : Blümlisalpstrasse 4, 3074 Muri bei Bern.',
+        answer: 'Téléphone : +41 (0)31 951 85 54 | E-mail : office@reto-amonn.ch | Adresse : Blümlisalpstrasse 4, 3074 Muri bei Bern. Bureau : lu–ve 7h30–12h00 et 13h00–17h00. Téléphone : lu–ve 8h00–12h00 et 13h00–17h00 ; en cas d’urgence aussi en dehors de ces heures.',
         link: '/kontakt',
         linkLabel: 'Page contact',
       },
@@ -468,7 +468,7 @@ const KB = {
       {
         id: 'contact',
         triggers: ['contatto', 'telefono', 'email', 'ufficio', 'raggiungere'],
-        answer: 'Telefono: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Indirizzo: Blümlisalpstrasse 4, 3074 Muri bei Bern.',
+        answer: 'Telefono: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Indirizzo: Blümlisalpstrasse 4, 3074 Muri bei Bern. Ufficio: lu–ve 7:30–12:00 e 13:00–17:00. Telefono: lu–ve 8:00–12:00 e 13:00–17:00; per urgenze anche fuori orario.',
         link: '/kontakt',
         linkLabel: 'Pagina contatti',
       },
@@ -535,7 +535,7 @@ const KB = {
       {
         id: 'contact',
         triggers: ['contacto', 'teléfono', 'email', 'correo', 'oficina'],
-        answer: 'Teléfono: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Dirección: Blümlisalpstrasse 4, 3074 Muri bei Bern.',
+        answer: 'Teléfono: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Dirección: Blümlisalpstrasse 4, 3074 Muri bei Bern. Oficina: lu–vi 7:30–12:00 y 13:00–17:00. Teléfono: lu–vi 8:00–12:00 y 13:00–17:00; para urgencias también fuera de ese horario.',
         link: '/kontakt',
         linkLabel: 'Página de contacto',
       },
@@ -609,7 +609,7 @@ const KB = {
       {
         id: 'contact',
         triggers: ['contacto', 'telefone', 'email', 'escritório'],
-        answer: 'Telefone: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Morada: Blümlisalpstrasse 4, 3074 Muri bei Bern.',
+        answer: 'Telefone: +41 (0)31 951 85 54 | Email: office@reto-amonn.ch | Morada: Blümlisalpstrasse 4, 3074 Muri bei Bern. Escritório: seg–sex 7:30–12:00 e 13:00–17:00. Telefone: seg–sex 8:00–12:00 e 13:00–17:00; para urgências também fora deste horário.',
         link: '/kontakt',
         linkLabel: 'Página de contacto',
       },

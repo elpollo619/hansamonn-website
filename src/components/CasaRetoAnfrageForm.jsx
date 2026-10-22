@@ -97,7 +97,7 @@ ${form.nachricht ? `<tr><td style="padding:4px 12px 4px 0;color:#666;vertical-al
   <p style="margin:4px 0;color:#1F497D"><strong>Tel:</strong> +41 31 951 85 54</p>
   <p style="margin:4px 0;color:#1F497D"><strong>E-Mail:</strong> office@reto-amonn.ch</p>
   <hr style="border:none;border-top:1px solid #DFE3E8;margin:24px 0">
-  <p style="color:#8C96A2;font-size:12px;margin:0">Hans Amonn AG · Kerzers, Schweiz · hansamonn.ch</p>
+  <p style="color:#8C96A2;font-size:12px;margin:0">Hans Amonn AG · Blümlisalpstrasse 4, 3074 Muri bei Bern · hansamonn.ch</p>
 </div>
 </div>`,
         },

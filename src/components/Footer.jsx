@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, ArrowRight, CalendarDays, Clock } from 'lucide-react';
 import { useTranslation } from '@/i18n';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { openCookieSettings } from '@/lib/consent';
 import AmonnLogo from '@/components/AmonnLogo';
 import { getSetting } from '@/data/settingsStore';
+import { OFFICE_HOURS_SHORT, PHONE_HOURS_SHORT } from '@/data/officeHours';
 
 // Pages that already end in their own contact block skip the footer CTA band
 const NO_CTA = ['/kontakt', '/termin'];
@@ -112,6 +113,10 @@ const Footer = () => {
                 <a href={`tel:${phone.replace(/\D/g, '')}`} className="text-white/55 hover:text-white text-sm transition-colors">
                   {phone}
                 </a>
+              </div>
+              <div className="flex items-start gap-2.5">
+                <Clock size={14} className="text-white/40 mt-0.5 flex-shrink-0" />
+                <p className="text-white/55 text-sm leading-relaxed">{PHONE_HOURS_SHORT}<br />{OFFICE_HOURS_SHORT}</p>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail size={14} className="text-white/40 flex-shrink-0" />
