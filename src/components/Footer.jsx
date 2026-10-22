@@ -10,7 +10,7 @@ import { getSetting } from '@/data/settingsStore';
 import { OFFICE_HOURS_SHORT, PHONE_HOURS_SHORT } from '@/data/officeHours';
 
 // Pages that already end in their own contact block skip the footer CTA band
-const NO_CTA = ['/kontakt', '/termin', '/immobilien', '/immobilien/vermietung', '/immobilien/long-stay', '/immobilien/short-stay', '/immobilien/anfrage', '/ns-hotel', '/team', '/faq'];
+const NO_CTA = ['/', '/kontakt', '/termin', '/immobilien', '/immobilien/vermietung', '/immobilien/long-stay', '/immobilien/short-stay', '/immobilien/anfrage', '/ns-hotel', '/team', '/faq'];
 
 // Rental and property pages get a CTA about offers instead of building projects
 const PROPERTY_PATHS = ['/immobilien', '/long-stay', '/ns-hotel', '/casa-reto', '/karte', '/vergleich', '/favoriten', '/hyporechner', '/preisrechner'];
